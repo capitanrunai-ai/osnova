@@ -6,27 +6,33 @@ import {
   Asterisk,
   Check,
   ChevronDown,
-  CircleDot,
   Menu,
-  Mic2,
   Pause,
   Play,
-  Plus,
   Send,
-  Sparkles,
   X,
 } from 'lucide-react'
 import { content, languages } from './data/content'
+import { serviceContent } from './data/serviceContent'
+import './services.css'
 
 const languageCodes = Object.keys(languages)
+const serviceRoutes = ['automation', 'development', 'performance']
+
+function parseLocation() {
+  const parts = window.location.pathname.split('/').filter(Boolean)
+  const lang = languageCodes.includes(parts[0]) ? parts[0] : null
+  const route = parts.slice(lang ? 1 : 0).join('/')
+  return { lang, route, hash: window.location.hash }
+}
 
 function getInitialLanguage() {
-  const pathLanguage = window.location.pathname.split('/').filter(Boolean)[0]
-  if (languageCodes.includes(pathLanguage)) return pathLanguage
+  const { lang } = parseLocation()
+  if (lang) return lang
   const saved = localStorage.getItem('osnova-language')
   if (languageCodes.includes(saved)) return saved
   const browser = navigator.language?.slice(0, 2)
-  return languageCodes.includes(browser) ? browser : 'en'
+  return browser === 'uk' ? 'uk' : languageCodes.includes(browser) ? browser : 'en'
 }
 
 function Reveal({ children, className = '', delay = 0, as: Tag = 'div' }) {
@@ -41,19 +47,65 @@ function Reveal({ children, className = '', delay = 0, as: Tag = 'div' }) {
           observer.unobserve(node)
         }
       },
-      { threshold: 0.08 },
+      { threshold: 0.06 },
     )
     observer.observe(node)
     return () => observer.disconnect()
   }, [])
+  return <Tag ref={ref} className={`reveal ${className}`} style={{ '--reveal-delay': `${delay}ms` }}>{children}</Tag>
+}
+
+function BrandMark({ brand }) {
+  if (brand === 'google') {
+    return (
+      <svg className="brand-svg google-mark" viewBox="0 0 24 24" role="img" aria-label="Google">
+        <path fill="#4285F4" d="M21.6 12.23c0-.71-.06-1.4-.18-2.06H12v3.89h5.38a4.6 4.6 0 0 1-2 3.01v2.52h3.24c1.9-1.75 2.98-4.32 2.98-7.36Z" />
+        <path fill="#34A853" d="M12 22c2.7 0 4.97-.9 6.62-2.41l-3.24-2.52c-.9.6-2.04.96-3.38.96-2.61 0-4.82-1.76-5.61-4.13H3.04v2.6A10 10 0 0 0 12 22Z" />
+        <path fill="#FBBC05" d="M6.39 13.9A6 6 0 0 1 6.08 12c0-.66.11-1.3.31-1.9V7.5H3.04A10 10 0 0 0 2 12c0 1.61.38 3.14 1.04 4.5l3.35-2.6Z" />
+        <path fill="#EA4335" d="M12 5.97c1.47 0 2.79.5 3.82 1.5l2.87-2.86A9.62 9.62 0 0 0 12 2a10 10 0 0 0-8.96 5.5l3.35 2.6C7.18 7.73 9.39 5.97 12 5.97Z" />
+      </svg>
+    )
+  }
+  if (brand === 'meta') {
+    return (
+      <svg className="brand-svg meta-mark" viewBox="0 0 96 54" role="img" aria-label="Meta">
+        <defs>
+          <linearGradient id="meta-gradient" x1="4" y1="27" x2="92" y2="27" gradientUnits="userSpaceOnUse">
+            <stop stopColor="#0081fb" /><stop offset=".48" stopColor="#0064e0" /><stop offset="1" stopColor="#0081fb" />
+          </linearGradient>
+        </defs>
+        <path d="M8 38.5C12.4 22.3 20.5 9 29.3 9c11.8 0 19 27 28.7 27 6.1 0 10.3-7.9 14.5-17.1C76 11.2 79.5 9 83 9c7 0 10.7 9.2 5 27" fill="none" stroke="url(#meta-gradient)" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    )
+  }
   return (
-    <Tag ref={ref} className={`reveal ${className}`} style={{ '--reveal-delay': `${delay}ms` }}>
-      {children}
-    </Tag>
+    <svg className="brand-svg tiktok-mark" viewBox="0 0 24 24" role="img" aria-label="TikTok">
+      <path className="tik-shadow-cyan" d="M13.53 1.02h3.83c.1 1.42.64 2.82 1.69 3.8A7.5 7.5 0 0 0 23 6.83v3.7a11.2 11.2 0 0 1-5.58-1.65v7.02a7.1 7.1 0 1 1-6.1-7.03v3.77a3.43 3.43 0 1 0 2.18 3.2Z" />
+      <path className="tik-shadow-pink" d="M12.5 1.02h3.83c.1 1.42.64 2.82 1.69 3.8a7.5 7.5 0 0 0 3.95 2.01v3.7a11.2 11.2 0 0 1-5.58-1.65v7.02a7.1 7.1 0 1 1-6.1-7.03v3.77a3.43 3.43 0 1 0 2.18 3.2Z" />
+      <path className="tik-main" d="M13.02 1.02h3.83c.1 1.42.64 2.82 1.69 3.8a7.5 7.5 0 0 0 3.95 2.01v3.7a11.2 11.2 0 0 1-5.58-1.65v7.02a7.1 7.1 0 1 1-6.1-7.03v3.77a3.43 3.43 0 1 0 2.18 3.2Z" />
+    </svg>
   )
 }
 
-function Header({ t, lang, setLang }) {
+function RouteLink({ href, navigate, world = 'neutral', className = '', children, onClick, ...props }) {
+  return (
+    <a
+      href={href}
+      className={className}
+      {...props}
+      onClick={(event) => {
+        onClick?.()
+        if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return
+        event.preventDefault()
+        navigate(href, world)
+      }}
+    >
+      {children}
+    </a>
+  )
+}
+
+function Header({ t, s, lang, route, setLang, navigate }) {
   const [open, setOpen] = useState(false)
   const [languageOpen, setLanguageOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
@@ -65,23 +117,22 @@ function Header({ t, lang, setLang }) {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  const navigate = () => setOpen(false)
-
+  const close = () => setOpen(false)
+  const home = `/${lang}/`
   return (
-    <header className={`site-header ${scrolled ? 'is-scrolled' : ''}`}>
-      <a className="brand" href="#top" aria-label="OSNOVA home" onClick={navigate}>
-        <span className="brand-mark">O</span>
-        <span>OSNOVA</span>
-      </a>
-
-      <nav className={`main-nav ${open ? 'is-open' : ''}`} aria-label="Main navigation">
-        <a href="#services" onClick={navigate}>{t.nav.services}</a>
-        <a href="#approach" onClick={navigate}>{t.nav.approach}</a>
-        <a href="#cases" onClick={navigate}>{t.nav.cases}</a>
-        <a href="#pricing" onClick={navigate}>{t.nav.pricing}</a>
-        <a className="nav-cta" href="#contact" onClick={navigate}>{t.nav.contact}<ArrowUpRight size={15} /></a>
+    <header className={`site-header route-header ${scrolled ? 'is-scrolled' : ''}`}>
+      <RouteLink className="brand" href={home} navigate={navigate} onClick={close} aria-label="OSNOVA home">
+        <span className="brand-mark">O</span><span>OSNOVA</span>
+      </RouteLink>
+      <nav className={`main-nav ${open ? 'is-open' : ''}`} aria-label={s.common.menu}>
+        <RouteLink href={`/${lang}/services`} navigate={navigate} onClick={close}>{s.common.services}</RouteLink>
+        <RouteLink href={`${home}#cases`} navigate={navigate} onClick={close}>{s.common.cases}</RouteLink>
+        <RouteLink href={`${home}#about`} navigate={navigate} onClick={close}>{s.common.about}</RouteLink>
+        <RouteLink href={`${home}#pricing`} navigate={navigate} onClick={close}>{s.common.pricing}</RouteLink>
+        <RouteLink className="nav-cta" href={`${home}#contact`} navigate={navigate} onClick={close}>
+          {s.common.discuss}<ArrowUpRight size={15} />
+        </RouteLink>
       </nav>
-
       <div className="header-actions">
         <div className="language-control">
           <button className="language-current" onClick={() => setLanguageOpen(!languageOpen)} aria-expanded={languageOpen}>
@@ -90,38 +141,27 @@ function Header({ t, lang, setLang }) {
           {languageOpen && (
             <div className="language-menu">
               {Object.entries(languages).map(([code, item]) => (
-                <button
-                  className={code === lang ? 'active' : ''}
-                  key={code}
-                  onClick={() => {
-                    setLang(code)
-                    setLanguageOpen(false)
-                    setOpen(false)
-                  }}
-                >
+                <button className={code === lang ? 'active' : ''} key={code} onClick={() => {
+                  setLang(code)
+                  setLanguageOpen(false)
+                  setOpen(false)
+                }}>
                   <span>{item.label}</span>{item.name}{code === lang && <Check size={14} />}
                 </button>
               ))}
             </div>
           )}
         </div>
-        <button className="menu-button" onClick={() => setOpen(!open)} aria-label={t.nav.menu} aria-expanded={open}>
+        <button className="menu-button" onClick={() => setOpen(!open)} aria-label={open ? s.common.close : s.common.menu} aria-expanded={open}>
           {open ? <X /> : <Menu />}
         </button>
       </div>
+      {route.startsWith('services/') && <span className="header-route-code">{route.split('/')[1]?.toUpperCase()}</span>}
     </header>
   )
 }
 
 function SystemMap({ nodes, signal }) {
-  const positions = [
-    ['node-a', nodes[0]],
-    ['node-b', nodes[1]],
-    ['node-c', nodes[2]],
-    ['node-d', nodes[3]],
-    ['node-e', nodes[4]],
-    ['node-f', nodes[5]],
-  ]
   return (
     <div className="system-map" aria-label={signal}>
       <svg className="map-lines" viewBox="0 0 660 440" aria-hidden="true">
@@ -132,365 +172,91 @@ function SystemMap({ nodes, signal }) {
         <circle cx="330" cy="220" r="4" className="map-pulse pulse-one" />
         <circle cx="330" cy="220" r="4" className="map-pulse pulse-two" />
       </svg>
-      <div className="system-core">
-        <span className="core-orbit" />
-        <span className="core-dot" />
-        <small>{signal}</small>
-      </div>
-      {positions.map(([className, label], index) => (
-        <div className={`map-node ${className}`} key={label}>
-          <span>{index === 1 ? <Sparkles size={13} /> : <CircleDot size={12} />}</span>
-          {label}
-        </div>
-      ))}
+      <div className="system-core"><span className="core-orbit" /><span className="core-dot" /><small>{signal}</small></div>
+      {nodes.map((label, index) => <div className={`map-node node-${String.fromCharCode(97 + index)}`} key={label}><span>0{index + 1}</span>{label}</div>)}
     </div>
   )
 }
 
-function Hero({ t }) {
+function HomeHero({ t, s, lang, navigate }) {
   return (
     <main id="top">
-      <section className="hero">
-        <div className="hero-image" aria-hidden="true" />
-        <div className="hero-grid" aria-hidden="true" />
+      <section className="hero home-hero">
+        <div className="hero-image" aria-hidden="true" /><div className="hero-grid" aria-hidden="true" />
         <div className="hero-content">
           <Reveal className="hero-copy">
             <div className="eyebrow light"><span className="live-dot" />{t.hero.eyebrow}</div>
-            <h1>
-              <span>{t.hero.titleA}</span>
-              <em>{t.hero.titleB}</em>
-            </h1>
+            <h1><span>{t.hero.titleA}</span><em>{t.hero.titleB}</em></h1>
             <p>{t.hero.text}</p>
             <div className="hero-actions">
-              <a className="button button-primary" href="#contact">{t.hero.primary}<ArrowUpRight size={18} /></a>
-              <a className="button button-ghost" href="#services">{t.hero.secondary}<ArrowDown size={18} /></a>
+              <RouteLink className="button button-primary" href={`/${lang}/#contact`} navigate={navigate}>{t.hero.primary}<ArrowUpRight size={18} /></RouteLink>
+              <RouteLink className="button button-ghost" href={`/${lang}/services`} navigate={navigate}>{t.hero.secondary}<ArrowRight size={18} /></RouteLink>
             </div>
           </Reveal>
-          <Reveal className="hero-map-wrap" delay={160}>
-            <SystemMap nodes={t.hero.nodes} signal={t.hero.signal} />
-          </Reveal>
+          <Reveal className="hero-map-wrap" delay={160}><SystemMap nodes={t.hero.nodes} signal={t.hero.signal} /></Reveal>
         </div>
-        <div className="hero-index">
-          <span>OS / 01</span>
-          <span>PARIS · REMOTE</span>
-          <span>SCROLL TO DECODE</span>
-        </div>
+        <div className="hero-index"><span>OS / 01</span><span>PARIS · REMOTE</span><span>SYSTEMS, CONNECTED</span></div>
       </section>
     </main>
   )
 }
 
-function Statement({ t }) {
+function SystemContinuum({ s }) {
+  return (
+    <section className="continuum">
+      <div className="continuum-track">
+        {s.common.system.map((item, index) => <span key={item}><i>0{index + 1}</i>{item}{index < s.common.system.length - 1 && <ArrowRight />}</span>)}
+      </div>
+    </section>
+  )
+}
+
+function ServiceWorlds({ s, lang, navigate, compact = false }) {
+  const [active, setActive] = useState(-1)
+  const move = (event) => {
+    const bounds = event.currentTarget.getBoundingClientRect()
+    event.currentTarget.style.setProperty('--px', `${((event.clientX - bounds.left) / bounds.width) * 100}%`)
+    event.currentTarget.style.setProperty('--py', `${((event.clientY - bounds.top) / bounds.height) * 100}%`)
+  }
+  return (
+    <section className={`service-worlds ${compact ? 'is-compact' : ''}`} id="services">
+      <div className="worlds-grid" aria-hidden="true" />
+      <div className="container worlds-heading">
+        <Reveal>
+          <span className="eyebrow light">{s.servicesPage.label}</span>
+          <h2>{s.servicesPage.title}<em>{s.servicesPage.titleAccent}</em></h2>
+        </Reveal>
+        <Reveal delay={80}><p>{s.servicesPage.intro}</p><small>{s.servicesPage.hint}</small></Reveal>
+      </div>
+      <div className="world-list" onMouseLeave={() => setActive(-1)}>
+        {s.directions.map((direction, index) => (
+          <RouteLink
+            key={direction.id}
+            href={`/${lang}/services/${direction.id}`}
+            navigate={navigate}
+            world={direction.id}
+            className={`world-entry world-${direction.id} ${active === index ? 'is-active' : ''} ${active >= 0 && active !== index ? 'is-muted' : ''}`}
+            onMouseEnter={() => setActive(index)}
+            onMouseMove={move}
+          >
+            <span className="world-number">{direction.number}</span>
+            <div className="world-copy"><h3>{direction.name}</h3><p>{direction.short}</p></div>
+            <div className="world-signal" aria-hidden="true"><i /><i /><i /><b /></div>
+            <div className="world-items">{direction.items.slice(0, compact ? 4 : 6).map((item) => <span key={item}>{item}</span>)}</div>
+            <span className="world-enter">{s.common.explore}<ArrowUpRight /></span>
+          </RouteLink>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+function HomeStatement({ t }) {
   return (
     <section className="statement section-pad">
       <div className="container statement-grid">
         <Reveal className="section-label"><Asterisk size={16} />{t.statement.label}</Reveal>
-        <Reveal className="statement-copy" delay={80}>
-          <h2>{t.statement.text}</h2>
-          <p>{t.statement.sub}</p>
-        </Reveal>
-      </div>
-    </section>
-  )
-}
-
-function ServiceExplorer({ t }) {
-  const [active, setActive] = useState(0)
-  const current = t.explorer.categories[active]
-  return (
-    <section className="services section-pad" id="services">
-      <div className="container">
-        <Reveal className="section-heading">
-          <div>
-            <span className="section-number">00 — 04</span>
-            <div className="eyebrow">{t.explorer.label}</div>
-          </div>
-          <div>
-            <h2>{t.explorer.title}</h2>
-            <p>{t.explorer.intro}</p>
-          </div>
-        </Reveal>
-
-        <Reveal className="service-explorer" delay={100}>
-          <div className="service-tabs" role="tablist">
-            {t.explorer.categories.map((category, index) => (
-              <button
-                key={category.id}
-                className={active === index ? 'active' : ''}
-                onClick={() => setActive(index)}
-                role="tab"
-                aria-selected={active === index}
-              >
-                <span>0{index + 1}</span>
-                <strong>{category.label}</strong>
-                <Plus size={18} />
-              </button>
-            ))}
-          </div>
-          <div className={`service-stage stage-${current.id}`} role="tabpanel" key={current.id}>
-            <div className="stage-meta">
-              <span>{current.kicker}</span>
-              <span className="stage-icon"><Asterisk /></span>
-            </div>
-            <div className="stage-copy">
-              <h3>{current.title}</h3>
-              <p>{current.text}</p>
-              <a href={current.id === 'automation' ? '#automation' : current.id === 'development' ? '#development' : '#marketing'}>
-                {t.explorer.explore}<ArrowRight size={18} />
-              </a>
-            </div>
-            <ol className="stage-list">
-              {current.items.map((item, index) => <li key={item}><span>0{index + 1}</span>{item}</li>)}
-            </ol>
-            <div className="stage-visual" aria-hidden="true">
-              <span />
-              <span />
-              <span />
-            </div>
-          </div>
-        </Reveal>
-      </div>
-    </section>
-  )
-}
-
-function AutomationIntro({ t }) {
-  return (
-    <section className="automation section-pad" id="automation">
-      <div className="container">
-        <Reveal className="split-heading">
-          <div className="eyebrow light">{t.automation.label}</div>
-          <h2>{t.automation.title}</h2>
-          <p>{t.automation.intro}</p>
-        </Reveal>
-        <div className="value-grid">
-          {t.automation.values.map(([title, text], index) => (
-            <Reveal className="value-item" key={title} delay={index * 80}>
-              <span className="value-index">0{index + 1}</span>
-              <div className="value-glyph"><span /><span /><span /></div>
-              <h3>{title}</h3>
-              <p>{text}</p>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
-function VoiceDemo({ voice }) {
-  const [step, setStep] = useState(-1)
-  const running = step >= 0 && step < voice.transcript.length
-
-  useEffect(() => {
-    if (!running) return
-    const timer = setTimeout(() => setStep((value) => value + 1), 1450)
-    return () => clearTimeout(timer)
-  }, [step, running])
-
-  const start = () => setStep(0)
-  const visible = step < 0 ? [] : voice.transcript.slice(0, Math.min(step + 1, voice.transcript.length))
-
-  return (
-    <div className="voice-console">
-      <div className="voice-topbar">
-        <div><span className={`call-status ${running ? 'active' : ''}`} /><div><small>{voice.live}</small><strong>{voice.business}</strong></div></div>
-        <span>AI / CRM</span>
-      </div>
-      <div className="voice-wave" aria-hidden="true">
-        {Array.from({ length: 34 }).map((_, index) => <i key={index} style={{ '--bar': (index * 17) % 38 + 8, '--i': index }} />)}
-      </div>
-      <div className="transcript">
-        {visible.length === 0 ? (
-          <div className="transcript-idle"><Mic2 size={30} /><span>{voice.demo}</span></div>
-        ) : visible.map(([speaker, line], index) => (
-          <div className={`message message-${index}`} key={`${speaker}-${index}`}>
-            <small>{speaker}</small>
-            <p>{line}</p>
-          </div>
-        ))}
-      </div>
-      <button className="call-button" onClick={start} disabled={running}>
-        {running ? <Pause size={18} /> : <Play size={18} fill="currentColor" />}
-        {step >= voice.transcript.length ? voice.restart : voice.start}
-      </button>
-    </div>
-  )
-}
-
-function VoiceSection({ t }) {
-  return (
-    <section className="voice-section section-pad">
-      <div className="container voice-layout">
-        <Reveal className="voice-copy">
-          <div className="eyebrow">{t.voice.label}</div>
-          <h2>{t.voice.title}</h2>
-          <p>{t.voice.text}</p>
-          <div className="feature-chips">
-            {t.voice.features.map((feature) => <span key={feature}><Check size={14} />{feature}</span>)}
-          </div>
-          <small className="voice-note">{t.voice.note}</small>
-        </Reveal>
-        <Reveal delay={120}><VoiceDemo voice={t.voice} /></Reveal>
-      </div>
-    </section>
-  )
-}
-
-function Assistants({ t }) {
-  return (
-    <section className="assistants section-pad">
-      <div className="container">
-        <Reveal className="assistants-heading">
-          <div className="eyebrow">{t.assistants.label}</div>
-          <h2>{t.assistants.title}</h2>
-          <p>{t.assistants.text}</p>
-        </Reveal>
-        <Reveal className="assistant-flow" delay={80}>
-          {t.assistants.flow.map((item, index) => (
-            <div key={item}><span>0{index + 1}</span><strong>{item}</strong>{index < 3 && <ArrowRight />}</div>
-          ))}
-        </Reveal>
-        <div className="role-grid">
-          {t.assistants.roles.map(([name, text], index) => (
-            <Reveal className="role-card" key={name} delay={index * 60}>
-              <span>{index + 1}</span><h3>{name}</h3><p>{text}</p>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
-function CrmSection({ t }) {
-  const [active, setActive] = useState(0)
-  useEffect(() => {
-    const timer = setInterval(() => setActive((value) => (value + 1) % t.crm.flow.length), 1600)
-    return () => clearInterval(timer)
-  }, [t.crm.flow.length])
-
-  return (
-    <section className="crm section-pad" id="crm">
-      <div className="container crm-layout">
-        <Reveal className="crm-copy">
-          <div className="eyebrow light">{t.crm.label}</div>
-          <h2>{t.crm.title}</h2>
-          <p>{t.crm.text}</p>
-          <ul>{t.crm.automations.map((item) => <li key={item}><Check size={15} />{item}</li>)}</ul>
-        </Reveal>
-        <Reveal className="crm-board" delay={100}>
-          <div className="board-header">
-            <span><i />{t.crm.status}</span>
-            <span>FLOW / 001</span>
-          </div>
-          <div className="crm-flow">
-            {t.crm.flow.map((item, index) => (
-              <button className={active === index ? 'active' : active > index ? 'passed' : ''} key={item} onClick={() => setActive(index)}>
-                <span>{index + 1}</span><strong>{item}</strong>
-              </button>
-            ))}
-          </div>
-          <div className="board-log">
-            <span>EVENT</span>
-            <p><b>→</b> {t.crm.flow[active]}</p>
-            <small>{new Date(2026, 6, 23, 14, 28, active * 7).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}</small>
-          </div>
-        </Reveal>
-      </div>
-    </section>
-  )
-}
-
-function Process({ t }) {
-  return (
-    <section className="process section-pad" id="approach">
-      <div className="container process-layout">
-        <Reveal className="process-intro">
-          <div className="eyebrow">{t.process.label}</div>
-          <h2>{t.process.title}</h2>
-          <div className="process-graphic" aria-hidden="true">
-            <div /><div /><div />
-          </div>
-        </Reveal>
-        <div className="process-steps">
-          {t.process.steps.map(([number, title, text], index) => (
-            <Reveal className="process-step" key={number} delay={index * 40}>
-              <span>{number}</span><h3>{title}</h3><p>{text}</p><ArrowDown size={18} />
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
-function Development({ t }) {
-  return (
-    <section className="development section-pad" id="development">
-      <div className="container">
-        <Reveal className="development-head">
-          <div className="eyebrow">{t.development.label}</div>
-          <h2>{t.development.title}</h2>
-          <p>{t.development.text}</p>
-        </Reveal>
-        <Reveal className="product-marquee" delay={80}>
-          {t.development.products.map((item, index) => <span key={item}><i>0{index + 1}</i>{item}</span>)}
-        </Reveal>
-        <Reveal className="website-feature" delay={120}>
-          <div className="website-preview" aria-hidden="true">
-            <div className="browser-bar"><i /><i /><i /></div>
-            <div className="preview-copy"><span>MAKE THE COMPLEX</span><strong>FEEL<br />INEVITABLE.</strong></div>
-            <div className="preview-orbit"><span /><span /><span /></div>
-          </div>
-          <div className="website-copy">
-            <div className="eyebrow light">{t.development.websites.label}</div>
-            <h3>{t.development.websites.title}</h3>
-            <p>{t.development.websites.text}</p>
-            <div className="website-price"><strong>{t.development.websites.price}</strong><span>{t.development.websites.priceNote}</span></div>
-            <a className="button button-light" href="#contact">{t.development.websites.cta}<ArrowUpRight size={17} /></a>
-          </div>
-        </Reveal>
-      </div>
-    </section>
-  )
-}
-
-function Marketing({ t }) {
-  const [active, setActive] = useState(0)
-  const channel = t.marketing.channels[active]
-  return (
-    <section className="marketing section-pad" id="marketing">
-      <div className="container">
-        <Reveal className="marketing-head">
-          <div className="eyebrow">{t.marketing.label}</div>
-          <h2>{t.marketing.title}</h2>
-          <p>{t.marketing.intro}</p>
-        </Reveal>
-        <Reveal className="channel-selector" delay={80}>
-          <div className="channel-tabs">
-            {t.marketing.channels.map((item, index) => (
-              <button className={active === index ? 'active' : ''} onClick={() => setActive(index)} key={item.id}>
-                <span>0{index + 1}</span>{item.name}
-              </button>
-            ))}
-          </div>
-          <div className={`channel-stage channel-${channel.id}`} key={channel.id}>
-            <div className="channel-radar" aria-hidden="true">
-              <span /><span /><span /><i />
-              <b>{channel.name.slice(0, 1)}</b>
-            </div>
-            <div className="channel-copy">
-              <small>{channel.name} / STRATEGY</small>
-              <h3>{channel.verb}</h3>
-              <p>{channel.text}</p>
-              <div>{channel.fit.map((item) => <span key={item}>{item}</span>)}</div>
-            </div>
-          </div>
-          <div className="channel-formula">
-            {t.marketing.formula.map((item, index) => <span key={item}>{item}{index < t.marketing.formula.length - 1 && <b>×</b>}</span>)}
-          </div>
-        </Reveal>
+        <Reveal className="statement-copy" delay={80}><h2>{t.statement.text}</h2><p>{t.statement.sub}</p></Reveal>
       </div>
     </section>
   )
@@ -500,25 +266,17 @@ function Cases({ t }) {
   return (
     <section className="cases section-pad" id="cases">
       <div className="container">
-        <Reveal className="cases-head">
-          <div><div className="eyebrow light">{t.cases.label}</div><h2>{t.cases.title}</h2></div>
-          <p>{t.cases.intro}</p>
-        </Reveal>
+        <Reveal className="cases-head"><div><div className="eyebrow light">{t.cases.label}</div><h2>{t.cases.title}</h2></div><p>{t.cases.intro}</p></Reveal>
         <div className="case-grid">
           {t.cases.cards.map((item, index) => (
             <Reveal className={`case-card case-${index + 1}`} key={item.tag} delay={index * 70}>
               <div className="case-visual">
                 {index === 0 && <img src="/assets/system-convergence.jpg" alt="" loading="lazy" />}
                 {index === 1 && <div className="case-dashboard"><span /><span /><span /><span /></div>}
-                {index === 2 && <div className="case-next"><Plus size={52} /></div>}
+                {index === 2 && <div className="case-next"><Asterisk size={52} /></div>}
                 <span className="case-tag">{item.tag}</span>
               </div>
-              <div className="case-body">
-                <small>{item.type}</small>
-                <h3>{item.title}</h3>
-                <p>{item.note}</p>
-                <span className="case-link">{t.cases.view}<ArrowUpRight size={16} /></span>
-              </div>
+              <div className="case-body"><small>{item.type}</small><h3>{item.title}</h3><p>{item.note}</p><span className="case-link">{t.cases.view}<ArrowUpRight size={16} /></span></div>
             </Reveal>
           ))}
         </div>
@@ -529,30 +287,12 @@ function Cases({ t }) {
 
 function About({ t }) {
   return (
-    <section className="about section-pad">
+    <section className="about section-pad" id="about">
       <div className="container">
-        <Reveal className="about-intro">
-          <div className="eyebrow">{t.about.label}</div>
-          <h2>{t.about.title}</h2>
-          <p>{t.about.text}</p>
-        </Reveal>
-        <div className="about-grid">
-          <div className="team-placeholder">
-            {t.about.team.map((item, index) => (
-              <Reveal className="team-card" key={`${item}-${index}`} delay={index * 70}>
-                <div className="portrait-placeholder"><span>0{index + 1}</span></div>
-                <strong>{item}</strong><small>PROFILE PLACEHOLDER</small>
-              </Reveal>
-            ))}
-          </div>
-          <Reveal className="numbers-panel" delay={100}>
-            {t.about.placeholders.map((item, index) => <div key={item}><span>—</span><p>{item}</p><small>DATA / {index + 1}</small></div>)}
-          </Reveal>
-        </div>
-        <Reveal className="testimonial-placeholder">
-          <span>{t.about.demo}</span>
-          <blockquote>“{t.about.testimonials}”</blockquote>
-          <div><i /><strong>CLIENT NAME / COMPANY</strong></div>
+        <Reveal className="about-intro"><div className="eyebrow">{t.about.label}</div><h2>{t.about.title}</h2><p>{t.about.text}</p></Reveal>
+        <Reveal className="about-system">
+          <div className="about-system-core">OSNOVA<span>WHOLE SYSTEM VIEW</span></div>
+          {['DESIGN', 'AI', 'CODE', 'DATA', 'MEDIA'].map((item, index) => <span key={item} style={{ '--i': index }}>{item}</span>)}
         </Reveal>
       </div>
     </section>
@@ -563,19 +303,8 @@ function Pricing({ t }) {
   return (
     <section className="pricing section-pad" id="pricing">
       <div className="container pricing-layout">
-        <Reveal className="pricing-intro">
-          <div className="eyebrow light">{t.pricing.label}</div>
-          <h2>{t.pricing.title}</h2>
-          <p>{t.pricing.text}</p>
-          <span className="pricing-big">{t.pricing.from}</span>
-        </Reveal>
-        <div className="pricing-list">
-          {t.pricing.items.map(([service, price], index) => (
-            <Reveal className="price-row" key={service} delay={index * 35}>
-              <span>0{index + 1}</span><strong>{service}</strong><em>{price}</em><ArrowUpRight size={18} />
-            </Reveal>
-          ))}
-        </div>
+        <Reveal className="pricing-intro"><div className="eyebrow light">{t.pricing.label}</div><h2>{t.pricing.title}</h2><p>{t.pricing.text}</p><span className="pricing-big">{t.pricing.from}</span></Reveal>
+        <div className="pricing-list">{t.pricing.items.map(([service, price], index) => <Reveal className="price-row" key={service} delay={index * 35}><span>0{index + 1}</span><strong>{service}</strong><em>{price}</em><ArrowUpRight size={18} /></Reveal>)}</div>
       </div>
     </section>
   )
@@ -583,41 +312,23 @@ function Pricing({ t }) {
 
 function Contact({ t }) {
   const [sent, setSent] = useState(false)
-  const submit = (event) => {
-    event.preventDefault()
-    setSent(true)
-  }
   return (
     <section className="contact section-pad" id="contact">
       <div className="contact-orb" aria-hidden="true" />
       <div className="container contact-layout">
         <Reveal className="contact-copy">
-          <div className="eyebrow light">{t.contact.label}</div>
-          <h2>{t.contact.title}</h2>
-          <p>{t.contact.text}</p>
-          <div className="direct-contact">
-            <small>{t.contact.or}</small>
-            <a href={`mailto:${t.contact.email}`}>{t.contact.email}<ArrowUpRight size={15} /></a>
-            <a href="https://t.me/your_agency" target="_blank" rel="noreferrer">{t.contact.telegram}<ArrowUpRight size={15} /></a>
-          </div>
+          <div className="eyebrow light">{t.contact.label}</div><h2>{t.contact.title}</h2><p>{t.contact.text}</p>
+          <div className="direct-contact"><small>{t.contact.or}</small><a href={`mailto:${t.contact.email}`}>{t.contact.email}<ArrowUpRight size={15} /></a><a href="https://t.me/your_agency" target="_blank" rel="noreferrer">{t.contact.telegram}<ArrowUpRight size={15} /></a></div>
         </Reveal>
         <Reveal className="contact-form-wrap" delay={120}>
-          {sent ? (
-            <div className="form-success"><Check size={30} /><p>{t.contact.sent}</p><button onClick={() => setSent(false)}>OK</button></div>
-          ) : (
-            <form onSubmit={submit}>
+          {sent ? <div className="form-success"><Check size={30} /><p>{t.contact.sent}</p><button onClick={() => setSent(false)}>OK</button></div> : (
+            <form onSubmit={(event) => { event.preventDefault(); setSent(true) }}>
               <div className="form-row">
                 <label><span>{t.contact.fields.name}</span><input name="name" required autoComplete="name" /></label>
                 <label><span>{t.contact.fields.contact}</span><input name="contact" required autoComplete="email" /></label>
               </div>
               <label><span>{t.contact.fields.company}</span><input name="company" autoComplete="organization" /></label>
-              <label>
-                <span>{t.contact.fields.help}</span>
-                <select name="service" defaultValue="">
-                  <option value="" disabled>—</option>
-                  {t.contact.options.map((option) => <option key={option}>{option}</option>)}
-                </select>
-              </label>
+              <label><span>{t.contact.fields.help}</span><select name="service" defaultValue=""><option value="" disabled>—</option>{t.contact.options.map((option) => <option key={option}>{option}</option>)}</select></label>
               <label><span>{t.contact.fields.message}</span><textarea name="message" rows="3" required /></label>
               <button className="form-submit" type="submit">{t.contact.submit}<Send size={17} /></button>
             </form>
@@ -628,60 +339,379 @@ function Contact({ t }) {
   )
 }
 
-function Footer({ t }) {
+function DirectionHero({ direction, data, children }) {
+  return (
+    <section className={`direction-hero direction-${direction}`}>
+      <div className="direction-grid" aria-hidden="true" />
+      <div className="direction-orbit" aria-hidden="true"><i /><i /><i /></div>
+      <div className="container direction-hero-inner">
+        <Reveal className="direction-breadcrumb"><span>OSNOVA</span><ArrowRight />{data.label}</Reveal>
+        <Reveal className="direction-title" delay={60}><h1>{data.title}<em>{data.titleAccent}</em></h1><p>{data.intro}</p></Reveal>
+        <Reveal className="direction-visual" delay={140}>{children}</Reveal>
+      </div>
+      <div className="direction-scroll"><ArrowDown /> SCROLL / DECODE</div>
+    </section>
+  )
+}
+
+function AutomationHeroVisual({ label, flow }) {
+  return (
+    <div className="automation-hero-visual" aria-label={label}>
+      {flow.map((item, index) => <span key={item} className={`ah-node ah-node-${index + 1}`}><i>0{index + 1}</i>{item}</span>)}
+      <svg viewBox="0 0 650 330" aria-hidden="true"><path d="M80 70C180 70 165 165 325 165S470 75 570 75" /><path d="M80 260C180 260 180 165 325 165S470 260 570 260" /><circle cx="325" cy="165" r="5" /></svg>
+      <div className="ah-core"><b>AI</b><small>{label}</small></div>
+    </div>
+  )
+}
+
+function VoiceOperator({ data }) {
+  const [step, setStep] = useState(-1)
+  const running = step >= 0 && step < data.steps.length
+  useEffect(() => {
+    if (!running) return undefined
+    const timer = window.setTimeout(() => setStep((value) => value + 1), 1100)
+    return () => window.clearTimeout(timer)
+  }, [running, step, data.steps.length])
+  return (
+    <section className="voice-product section-pad">
+      <div className="container voice-product-grid">
+        <Reveal className="voice-product-copy">
+          <span className="eyebrow">{data.label}</span><h2>{data.title}</h2><p>{data.text}</p>
+          <div className="capability-list">{data.capabilities.map((item) => <span key={item}><Check />{item}</span>)}</div>
+          <small>{data.useCases}</small>
+        </Reveal>
+        <Reveal className="call-system" delay={100}>
+          <div className="call-head"><span><i className={running ? 'live' : ''} />{data.incoming}</span><b>00:{String(Math.max(step + 1, 0) * 7).padStart(2, '0')}</b></div>
+          <div className="call-intent" data-intent={data.intentLabel}>
+            <span>{data.client}</span><p>{data.transcript[0]}</p>
+            {step >= 1 && <div className="operator-reply"><span>{data.operator}</span><p>{data.transcript[Math.min(step, 2)]}</p></div>}
+          </div>
+          <div className="call-pipeline">
+            {data.steps.map((item, index) => <div className={step === index ? 'active' : step > index ? 'passed' : ''} key={item}><span>0{index + 1}</span><strong>{item}</strong><i /></div>)}
+          </div>
+          <button onClick={() => setStep(0)} disabled={running}>{running ? <Pause /> : <Play fill="currentColor" />}{step >= data.steps.length ? data.replay : data.start}</button>
+        </Reveal>
+      </div>
+    </section>
+  )
+}
+
+function AssistantsSection({ data }) {
+  return (
+    <section className="assistant-system section-pad">
+      <div className="container">
+        <Reveal className="wide-heading"><span className="eyebrow">{data.label}</span><h2>{data.title}</h2><p>{data.text}</p></Reveal>
+        <Reveal className="assistant-context-flow">
+          {data.flow.map((item, index) => <div key={item}><span>0{index + 1}</span><strong>{item}</strong>{index < data.flow.length - 1 && <ArrowRight />}</div>)}
+        </Reveal>
+        <div className="assistant-role-list">
+          {data.roles.map(([title, text], index) => <Reveal key={title} delay={index * 55}><span>0{index + 1}</span><h3>{title}</h3><p>{text}</p><ArrowUpRight /></Reveal>)}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function CrmIntegrations({ crm, integrations }) {
+  const [active, setActive] = useState(0)
+  useEffect(() => {
+    const timer = window.setInterval(() => setActive((value) => (value + 1) % crm.stages.length), 1500)
+    return () => window.clearInterval(timer)
+  }, [crm.stages.length])
+  return (
+    <>
+      <section className="crm-system section-pad">
+        <div className="container crm-system-grid">
+          <Reveal><span className="eyebrow light">{crm.label}</span><h2>{crm.title}</h2><p>{crm.text}</p><div className="crm-items">{crm.items.map((item) => <span key={item}><Check />{item}</span>)}</div></Reveal>
+          <Reveal className="crm-sequence" delay={100}>
+            <div className="crm-sequence-head"><span>LIVE / PIPELINE</span><i /></div>
+            {crm.stages.map((item, index) => <button className={active === index ? 'active' : active > index ? 'passed' : ''} onClick={() => setActive(index)} key={item}><span>0{index + 1}</span><strong>{item}</strong><i /></button>)}
+          </Reveal>
+        </div>
+      </section>
+      <section className="integration-system section-pad">
+        <div className="container integration-grid">
+          <Reveal className="integration-copy"><span className="eyebrow">{integrations.label}</span><h2>{integrations.title}</h2></Reveal>
+          <Reveal className="integration-field" delay={100}>
+            <svg viewBox="0 0 760 520" aria-hidden="true">
+              <path d="M90 90C250 90 220 260 380 260S520 95 675 95" /><path d="M85 425C220 425 240 260 380 260S540 425 680 425" />
+              <path d="M180 25C200 160 310 145 380 260S470 390 560 500" /><circle cx="380" cy="260" r="7" />
+            </svg>
+            <div className="integration-core">OS<span>CONTEXT</span></div>
+            {integrations.nodes.map((node, index) => <span className={`integration-node in-${index + 1}`} key={node}><i />{node}</span>)}
+          </Reveal>
+        </div>
+      </section>
+    </>
+  )
+}
+
+function CustomAutomation({ data }) {
+  return (
+    <section className="custom-automation section-pad">
+      <div className="container">
+        <Reveal className="custom-head"><span className="eyebrow light">{data.label}</span><h2>{data.title}</h2><p>{data.text}</p></Reveal>
+        <div className="custom-path">{data.steps.map(([number, title], index) => <Reveal key={title} delay={index * 60}><span>{number}</span><strong>{title}</strong><i /></Reveal>)}</div>
+      </div>
+    </section>
+  )
+}
+
+function DevelopmentCatalogue({ data }) {
+  const [active, setActive] = useState(0)
+  return (
+    <section className="development-catalogue section-pad">
+      <div className="container">
+        <Reveal className="dev-principle"><span className="eyebrow">{data.label}</span><p>{data.principle}</p></Reveal>
+        <div className="product-index">
+          {data.products.map(([number, title, text, price], index) => (
+            <Reveal key={title} delay={index * 35}>
+              <button className={active === index ? 'active' : ''} onMouseEnter={() => setActive(index)} onFocus={() => setActive(index)} onClick={() => setActive(index)}>
+                <span>{number}</span><h2>{title}</h2><p>{text}</p><small>{price}</small><ArrowUpRight />
+              </button>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function DevelopmentVisual({ labels }) {
+  return (
+    <div className="build-visual" aria-hidden="true">
+      <div className="build-window"><span /><span /><span /><b>{labels[0]} / 01</b><i /><i /><i /></div>
+      <div className="build-layer layer-one">{labels[1]}</div><div className="build-layer layer-two">{labels[2]}</div>
+    </div>
+  )
+}
+
+function LandingFeature({ data, lang, navigate }) {
+  return (
+    <section className="landing-feature-new section-pad">
+      <div className="container landing-new-grid">
+        <Reveal className="landing-art">
+          <span>OS / WEB</span><h3>{data.art[0]}<br />{data.art[1]}<br /><em>{data.art[2]}</em></h3><div className="landing-cursor" /><div className="landing-grid-lines" />
+        </Reveal>
+        <Reveal className="landing-new-copy" delay={90}>
+          <span className="eyebrow light">{data.label}</span><h2>{data.title}</h2><p>{data.text}</p><strong>{data.price}</strong>
+          <RouteLink className="button button-primary" href={`/${lang}/#contact`} navigate={navigate}>{data.cta}<ArrowUpRight /></RouteLink>
+        </Reveal>
+      </div>
+    </section>
+  )
+}
+
+function BuildSequence({ data }) {
+  return (
+    <section className="build-sequence section-pad"><div className="container"><span className="eyebrow">{data.label}</span><div>{data.steps.map((item, index) => <Reveal key={item} delay={index * 50}><i>0{index + 1}</i><strong>{item}</strong><span style={{ '--progress': `${(index + 1) * 16.6}%` }} /></Reveal>)}</div></div></section>
+  )
+}
+
+function PerformanceHeroVisual({ axis }) {
+  return (
+    <div className="performance-hero-visual" aria-hidden="true">
+      <div className="attention-field"><span /><span /><span /><span /><i /></div>
+      <div className="conversion-axis"><span>{axis[0]}</span><i /><span>{axis[1]}</span><i /><span>{axis[2]}</span></div>
+    </div>
+  )
+}
+
+function ChannelExperience({ data }) {
+  const [active, setActive] = useState(0)
+  const channel = data.channels[active]
+  return (
+    <section className="channel-experience section-pad">
+      <div className="container">
+        <Reveal className="channel-experience-head"><span className="eyebrow">{data.selector}</span></Reveal>
+        <Reveal className="channel-navigation">
+          {data.channels.map((item, index) => <button className={active === index ? 'active' : ''} onClick={() => setActive(index)} key={item.id}><span>0{index + 1}</span><BrandMark brand={item.id} /><strong>{item.name}</strong><i /></button>)}
+        </Reveal>
+        <div className={`brand-world brand-world-${channel.id}`} key={channel.id}>
+          <div className="brand-composition">
+            <div className="brand-grid" />
+            <div className="brand-orbits"><span /><span /><span /><i /><i /></div>
+            {channel.id === 'tiktok' && <div className="vertical-frames">{[1, 2, 3].map((item) => <span key={item}>FRAME / 0{item}</span>)}</div>}
+            {channel.id === 'google' && <div className="search-intents">{channel.examples.map((item) => <span key={item}>{item}</span>)}</div>}
+            {channel.id === 'meta' && <div className="audience-points">{Array.from({ length: 18 }, (_, i) => <i key={i} style={{ '--i': i }} />)}</div>}
+            <div className="brand-object"><BrandMark brand={channel.id} /><small>{channel.label}</small></div>
+          </div>
+          <div className="brand-copy">
+            <span>{channel.label}</span><h2>{channel.verb}</h2><p>{channel.text}</p>
+            <div className="channel-capabilities">{channel.items.map((item) => <span key={item}>{item}</span>)}</div>
+            <div className="channel-logic">{channel.formula.map((item, index) => <span key={item}><i>0{index + 1}</i>{item}{index < channel.formula.length - 1 && <ArrowRight />}</span>)}</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function AnalyticsSystem({ data }) {
+  return (
+    <section className="analytics-system section-pad">
+      <div className="container analytics-grid">
+        <Reveal className="analytics-copy"><span className="eyebrow light">{data.label}</span><h2>{data.title}</h2><p>{data.text}</p><div>{data.items.map((item) => <span key={item}>{item}</span>)}</div></Reveal>
+        <Reveal className="analytics-board" delay={100}>
+          <div className="analytics-flow">{data.flow.map((item, index) => <span key={item} className={`af-${index + 1}`}><i>0{index + 1}</i>{item}</span>)}</div>
+          <svg viewBox="0 0 680 450" aria-hidden="true"><path d="M75 90C230 90 185 225 340 225S490 90 610 90" /><path d="M75 360C220 360 200 225 340 225S490 360 610 360" /><circle cx="340" cy="225" r="5" /></svg>
+          <div className="data-pulse" />
+        </Reveal>
+      </div>
+    </section>
+  )
+}
+
+function DirectionFooter({ s, lang, current, navigate }) {
+  const index = serviceRoutes.indexOf(current)
+  const next = serviceRoutes[(index + 1) % serviceRoutes.length]
+  const direction = s.directions.find((item) => item.id === next)
+  return (
+    <section className={`next-direction next-${next}`}>
+      <RouteLink href={`/${lang}/services/${next}`} navigate={navigate} world={next}>
+        <span>{s.common.next} / {direction.number}</span><h2>{direction.name}</h2><p>{direction.statement}</p><ArrowUpRight />
+      </RouteLink>
+    </section>
+  )
+}
+
+function Footer({ t, s, lang, navigate }) {
   return (
     <footer>
-      <div className="footer-marquee"><span>{t.footer.line} <Asterisk /> {t.footer.line} <Asterisk /> {t.footer.line}</span></div>
+      <div className="footer-marquee"><span>{s.common.system.join(' · ')} <Asterisk /> {s.common.system.join(' · ')}</span></div>
       <div className="container footer-bottom">
-        <a className="brand footer-brand" href="#top"><span className="brand-mark">O</span><span>OSNOVA</span></a>
+        <RouteLink className="brand footer-brand" href={`/${lang}/`} navigate={navigate}><span className="brand-mark">O</span><span>OSNOVA</span></RouteLink>
         <p>{t.footer.rights}</p>
-        <a href="#top">{t.footer.top}<ArrowUpRight size={14} /></a>
+        <RouteLink href={`/${lang}/services`} navigate={navigate}>{s.common.services}<ArrowUpRight size={14} /></RouteLink>
       </div>
     </footer>
   )
 }
 
+function HomePage({ t, s, lang, navigate }) {
+  return <><HomeHero t={t} s={s} lang={lang} navigate={navigate} /><SystemContinuum s={s} /><HomeStatement t={t} /><ServiceWorlds s={s} lang={lang} navigate={navigate} compact /><Cases t={t} /><About t={t} /><Pricing t={t} /><Contact t={t} /></>
+}
+
+function ServicesPage({ s, lang, navigate }) {
+  return <main className="services-page"><ServiceWorlds s={s} lang={lang} navigate={navigate} /></main>
+}
+
+function AutomationPage({ s, lang, navigate }) {
+  const data = s.automation
+  return (
+    <main className="direction-page automation-page">
+      <DirectionHero direction="automation" data={data}><AutomationHeroVisual label={data.signal} flow={data.heroFlow} /></DirectionHero>
+      <section className="direction-proposition"><div className="container"><Reveal><span>{data.propositionLabel}</span><h2>{data.proposition}</h2></Reveal></div></section>
+      <VoiceOperator data={data.voice} /><AssistantsSection data={data.assistants} /><CrmIntegrations crm={data.crm} integrations={data.integrations} /><CustomAutomation data={data.custom} />
+      <DirectionFooter s={s} lang={lang} current="automation" navigate={navigate} />
+    </main>
+  )
+}
+
+function DevelopmentPage({ s, lang, navigate }) {
+  const data = s.development
+  return (
+    <main className="direction-page development-page">
+      <DirectionHero direction="development" data={data}><DevelopmentVisual labels={data.visual} /></DirectionHero>
+      <DevelopmentCatalogue data={data} /><LandingFeature data={data.landing} lang={lang} navigate={navigate} /><BuildSequence data={data.build} />
+      <DirectionFooter s={s} lang={lang} current="development" navigate={navigate} />
+    </main>
+  )
+}
+
+function PerformancePage({ s, lang, navigate }) {
+  const data = s.performance
+  return (
+    <main className="direction-page performance-page">
+      <DirectionHero direction="performance" data={data}><PerformanceHeroVisual axis={data.axis} /></DirectionHero>
+      <ChannelExperience data={data} /><AnalyticsSystem data={data.analytics} />
+      <DirectionFooter s={s} lang={lang} current="performance" navigate={navigate} />
+    </main>
+  )
+}
+
+function PageTransition({ state }) {
+  return (
+    <div className={`page-transition transition-${state.world} ${state.phase ? `is-${state.phase}` : ''}`} aria-hidden="true">
+      <div className="transition-lines" /><span>OSNOVA / {state.world?.toUpperCase()}</span><i /><i /><i />
+    </div>
+  )
+}
+
 export default function App() {
-  const [lang, setLang] = useState(getInitialLanguage)
+  const [lang, setLangState] = useState(getInitialLanguage)
+  const [location, setLocation] = useState(parseLocation)
+  const [transition, setTransition] = useState({ phase: '', world: 'neutral' })
   const t = useMemo(() => content[lang], [lang])
+  const s = useMemo(() => serviceContent[lang], [lang])
+
+  const navigate = (href, world = 'neutral', replace = false) => {
+    const target = new URL(href, window.location.origin)
+    if (target.pathname === window.location.pathname && target.hash === window.location.hash) {
+      document.querySelector(target.hash || '#top')?.scrollIntoView({ block: 'start' })
+      return
+    }
+    setTransition({ phase: 'cover', world })
+    window.setTimeout(() => {
+      window.history[replace ? 'replaceState' : 'pushState']({}, '', `${target.pathname}${target.hash}`)
+      setLocation(parseLocation())
+      window.scrollTo(0, 0)
+      window.setTimeout(() => {
+        if (target.hash) document.querySelector(target.hash)?.scrollIntoView({ block: 'start' })
+        setTransition({ phase: 'reveal', world })
+        window.setTimeout(() => setTransition({ phase: '', world }), 720)
+      }, 40)
+    }, 520)
+  }
+
+  const setLang = (nextLang) => {
+    const currentRoute = location.route ? `/${location.route}` : '/'
+    setLangState(nextLang)
+    localStorage.setItem('osnova-language', nextLang)
+    navigate(`/${nextLang}${currentRoute}${location.hash}`, 'neutral', true)
+  }
 
   useEffect(() => {
-    document.documentElement.lang = lang
-    document.title = t.meta.title
-    document.querySelector('meta[name="description"]')?.setAttribute('content', t.meta.description)
-    document.querySelector('meta[property="og:title"]')?.setAttribute('content', t.meta.title)
-    document.querySelector('meta[property="og:description"]')?.setAttribute('content', t.meta.description)
-    localStorage.setItem('osnova-language', lang)
-    const nextPath = `/${lang}/${window.location.hash || ''}`
-    window.history.replaceState({}, '', nextPath)
-  }, [lang, t])
-
-  useEffect(() => {
-    if (!window.location.hash) return
-    const timer = window.setTimeout(() => {
-      document.querySelector(window.location.hash)?.scrollIntoView({ block: 'start' })
-    }, 80)
-    return () => window.clearTimeout(timer)
+    const onPopState = () => {
+      const next = parseLocation()
+      if (next.lang) setLangState(next.lang)
+      setLocation(next)
+      window.scrollTo(0, 0)
+    }
+    window.addEventListener('popstate', onPopState)
+    return () => window.removeEventListener('popstate', onPopState)
   }, [])
+
+  useEffect(() => {
+    const canonicalRoute = location.route
+    if (!location.lang) {
+      window.history.replaceState({}, '', `/${lang}/${canonicalRoute}${location.hash}`)
+      setLocation(parseLocation())
+      return
+    }
+    document.documentElement.lang = lang
+    localStorage.setItem('osnova-language', lang)
+    const pageKey = location.route === 'services' ? 'services' : location.route.split('/')[1]
+    const meta = s.meta[pageKey] || [t.meta.title, t.meta.description]
+    document.title = meta[0]
+    document.querySelector('meta[name="description"]')?.setAttribute('content', meta[1])
+    document.querySelector('meta[property="og:title"]')?.setAttribute('content', meta[0])
+    document.querySelector('meta[property="og:description"]')?.setAttribute('content', meta[1])
+  }, [lang, location, s, t])
+
+  let page
+  if (location.route === 'services') page = <ServicesPage s={s} lang={lang} navigate={navigate} />
+  else if (location.route === 'services/automation') page = <AutomationPage s={s} lang={lang} navigate={navigate} />
+  else if (location.route === 'services/development') page = <DevelopmentPage s={s} lang={lang} navigate={navigate} />
+  else if (location.route === 'services/performance') page = <PerformancePage s={s} lang={lang} navigate={navigate} />
+  else page = <HomePage t={t} s={s} lang={lang} navigate={navigate} />
 
   return (
     <>
-      <Header t={t} lang={lang} setLang={setLang} />
-      <Hero t={t} />
-      <Statement t={t} />
-      <ServiceExplorer t={t} />
-      <AutomationIntro t={t} />
-      <VoiceSection t={t} />
-      <Assistants t={t} />
-      <CrmSection t={t} />
-      <Process t={t} />
-      <Development t={t} />
-      <Marketing t={t} />
-      <Cases t={t} />
-      <About t={t} />
-      <Pricing t={t} />
-      <Contact t={t} />
-      <Footer t={t} />
+      <Header t={t} s={s} lang={lang} route={location.route} setLang={setLang} navigate={navigate} />
+      {page}
+      <Footer t={t} s={s} lang={lang} navigate={navigate} />
+      <PageTransition state={transition} />
     </>
   )
 }

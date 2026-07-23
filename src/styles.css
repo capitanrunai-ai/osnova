@@ -864,7 +864,7 @@ h2 {
   transform: rotate(45deg);
 }
 
-.stage-growth .stage-visual span:nth-child(3) {
+.stage-performance .stage-visual span:nth-child(3) {
   background: radial-gradient(circle, rgba(255, 158, 43, .72), transparent 66%);
   border-color: rgba(255, 178, 78, .75);
 }
