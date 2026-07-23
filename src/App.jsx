@@ -1,11 +1,14 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import {
   ArrowDown,
+  ArrowLeft,
   ArrowRight,
   ArrowUpRight,
   Asterisk,
   Check,
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
   Menu,
   Pause,
   Play,
@@ -13,8 +16,10 @@ import {
   X,
 } from 'lucide-react'
 import { content, languages } from './data/content'
+import { caseCategories, caseUi, getLocalizedCases } from './data/cases'
 import { serviceContent } from './data/serviceContent'
 import './services.css'
+import './cases.css'
 
 const languageCodes = Object.keys(languages)
 const serviceRoutes = ['automation', 'development', 'performance']
@@ -94,7 +99,8 @@ function RouteLink({ href, navigate, world = 'neutral', className = '', children
       className={className}
       {...props}
       onClick={(event) => {
-        onClick?.()
+        onClick?.(event)
+        if (event.defaultPrevented) return
         if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return
         event.preventDefault()
         navigate(href, world)
@@ -126,7 +132,7 @@ function Header({ t, s, lang, route, setLang, navigate }) {
       </RouteLink>
       <nav className={`main-nav ${open ? 'is-open' : ''}`} aria-label={s.common.menu}>
         <RouteLink href={`/${lang}/services`} navigate={navigate} onClick={close}>{s.common.services}</RouteLink>
-        <RouteLink href={`${home}#cases`} navigate={navigate} onClick={close}>{s.common.cases}</RouteLink>
+        <RouteLink href={`/${lang}/cases`} navigate={navigate} onClick={close}>{s.common.cases}</RouteLink>
         <RouteLink href={`${home}#about`} navigate={navigate} onClick={close}>{s.common.about}</RouteLink>
         <RouteLink href={`${home}#pricing`} navigate={navigate} onClick={close}>{s.common.pricing}</RouteLink>
         <RouteLink className="nav-cta" href={`${home}#contact`} navigate={navigate} onClick={close}>
@@ -156,7 +162,7 @@ function Header({ t, s, lang, route, setLang, navigate }) {
           {open ? <X /> : <Menu />}
         </button>
       </div>
-      {route.startsWith('services/') && <span className="header-route-code">{route.split('/')[1]?.toUpperCase()}</span>}
+      {(route.startsWith('services/') || route.startsWith('cases')) && <span className="header-route-code">{route.split('/')[0]?.toUpperCase()}</span>}
     </header>
   )
 }
@@ -262,26 +268,439 @@ function HomeStatement({ t }) {
   )
 }
 
-function Cases({ t }) {
+function CaseVisual({ item, detail = false }) {
   return (
-    <section className="cases section-pad" id="cases">
+    <div className={`portfolio-visual visual-${item.visual} ${detail ? 'is-detail' : ''}`} aria-hidden="true">
+      <div className="portfolio-grid" />
+      {item.visual === 'voice' && (
+        <>
+          <div className="voice-orbit"><i /><i /><i /></div>
+          <div className="voice-wave">{Array.from({ length: 23 }, (_, index) => <i key={index} style={{ '--bar': index }} />)}</div>
+          <div className="voice-call"><span>AI / VOICE</span><b>00:42</b><small>CALL → CRM</small></div>
+        </>
+      )}
+      {item.visual === 'flow' && (
+        <div className="flow-preview">
+          {item.system.slice(0, 5).map((node, index) => <span key={node} style={{ '--node': index }}><i>0{index + 1}</i>{node}</span>)}
+          <svg viewBox="0 0 720 420"><path d="M78 95C210 95 190 210 360 210S510 95 645 95" /><path d="M78 330C215 330 205 210 360 210S520 330 645 330" /></svg>
+          <b className="flow-core">CRM</b>
+        </div>
+      )}
+      {item.visual === 'dashboard' && (
+        <div className="dashboard-preview">
+          <div className="dash-top"><i /><i /><i /><span>OPERATIONS / LIVE</span></div>
+          <div className="dash-side">{[1, 2, 3, 4, 5].map((value) => <i key={value} />)}</div>
+          <div className="dash-chart"><span /><span /><span /><span /><span /><svg viewBox="0 0 400 150"><path d="M0 125C50 125 65 92 110 96S175 35 220 58 290 20 400 16" /></svg></div>
+          <div className="dash-table">{[1, 2, 3, 4].map((value) => <i key={value} />)}</div>
+        </div>
+      )}
+      {item.visual === 'website' && (
+        <div className="website-preview-case">
+          <div className="browser-back"><i /><i /><i /></div>
+          <div className="browser-front">
+            <span className="browser-ui"><i /><i /><i /></span>
+            <div className="browser-hero"><small>DIGITAL / SYSTEM</small><b>Built around<br />the decision.</b><i /></div>
+            <div className="browser-columns"><span /><span /><span /></div>
+          </div>
+        </div>
+      )}
+      {item.visual === 'performance' && (
+        <div className="performance-preview">
+          <div className="performance-ring"><i /><i /><b>DATA</b></div>
+          <div className="performance-path"><span>ADS</span><i /><span>LANDING</span><i /><span>CRM</span></div>
+          <svg viewBox="0 0 700 420"><path d="M40 335C145 335 155 260 245 275S360 155 440 190 555 75 670 75" /></svg>
+          <small>METRICS / PENDING VERIFICATION</small>
+        </div>
+      )}
+      {item.visual === 'creative' && (
+        <div className="creative-preview">
+          {[1, 2, 3].map((value) => <span key={value} className={`creative-frame frame-${value}`}><i>0{value}</i><b>HOOK<br />TEST</b><small>9:16</small></span>)}
+          <div className="creative-axis"><i /><i /><i /><i /><i /></div>
+        </div>
+      )}
+    </div>
+  )
+}
+
+function CaseFilters({ ui, group, subfilter, onGroup, onSubfilter, compact = false }) {
+  const groups = ['all', 'automation', 'development', 'performance']
+  const subfilters = group === 'all' ? [] : caseCategories[group] || []
+  return (
+    <div className={`case-filter-shell ${compact ? 'is-compact' : ''}`}>
+      <div className="case-filter-main" role="tablist" aria-label={ui.allCases}>
+        {groups.map((id) => (
+          <button
+            key={id}
+            className={group === id ? 'active' : ''}
+            onClick={() => onGroup(id)}
+            role="tab"
+            aria-selected={group === id}
+          >
+            {ui.filters[id]}<i />
+          </button>
+        ))}
+      </div>
+      <div className={`case-subfilters ${subfilters.length ? 'is-visible' : ''}`}>
+        {subfilters.length > 0 && (
+          <>
+            <button className={subfilter === 'all' ? 'active' : ''} onClick={() => onSubfilter('all')}>{ui.filters.all}</button>
+            {subfilters.map((id) => <button className={subfilter === id ? 'active' : ''} onClick={() => onSubfilter(id)} key={id}>{ui.filters[id]}</button>)}
+          </>
+        )}
+      </div>
+    </div>
+  )
+}
+
+function filterCases(items, group, subfilter) {
+  return items.filter((item) => {
+    if (group !== 'all' && item.category !== group) return false
+    return subfilter === 'all' || item.subcategories.includes(subfilter)
+  })
+}
+
+function SpatialCaseGallery({ items, lang, navigate, ui }) {
+  const stageRef = useRef(null)
+  const gestureRef = useRef({ active: false, startX: 0, lastX: 0, lastTime: 0, velocity: 0, drag: 0, moved: false })
+  const [active, setActive] = useState(0)
+  const [drag, setDrag] = useState(0)
+  const [dragging, setDragging] = useState(false)
+  const [stageWidth, setStageWidth] = useState(1200)
+  const itemKey = items.map((item) => item.slug).join('|')
+
+  useEffect(() => {
+    setActive(0)
+    setDrag(0)
+  }, [itemKey])
+
+  useEffect(() => {
+    const node = stageRef.current
+    if (!node) return undefined
+    const observer = new ResizeObserver(([entry]) => setStageWidth(entry.contentRect.width))
+    observer.observe(node)
+    return () => observer.disconnect()
+  }, [])
+
+  const spacing = stageWidth < 680 ? stageWidth * .84 : Math.min(stageWidth * .6, 690)
+  const go = (next) => setActive(Math.max(0, Math.min(items.length - 1, next)))
+
+  const onPointerDown = (event) => {
+    if (event.button !== 0) return
+    gestureRef.current = { active: true, startX: event.clientX, lastX: event.clientX, lastTime: performance.now(), velocity: 0, drag: 0, moved: false }
+    setDragging(true)
+    event.currentTarget.setPointerCapture(event.pointerId)
+  }
+
+  const onPointerMove = (event) => {
+    if (!gestureRef.current.active) return
+    const now = performance.now()
+    const gesture = gestureRef.current
+    const delta = event.clientX - gesture.startX
+    const elapsed = Math.max(8, now - gesture.lastTime)
+    gesture.velocity = (event.clientX - gesture.lastX) / elapsed
+    gesture.lastX = event.clientX
+    gesture.lastTime = now
+    gesture.moved = gesture.moved || Math.abs(delta) > 6
+    const atStart = active === 0 && delta > 0
+    const atEnd = active === items.length - 1 && delta < 0
+    gesture.drag = (atStart || atEnd) ? delta * .28 : delta
+    setDrag(gesture.drag)
+  }
+
+  const finishGesture = () => {
+    if (!gestureRef.current.active) return
+    const gesture = gestureRef.current
+    gesture.active = false
+    const projected = gesture.drag + gesture.velocity * 150
+    let shift = Math.round(-projected / spacing)
+    if (!shift && Math.abs(gesture.drag) > Math.min(90, spacing * .16)) shift = gesture.drag < 0 ? 1 : -1
+    setDragging(false)
+    setDrag(0)
+    go(active + shift)
+  }
+
+  const onWheel = (event) => {
+    const horizontalIntent = Math.abs(event.deltaX) > 8 || event.shiftKey
+    if (!horizontalIntent) return
+    event.preventDefault()
+    go(active + (event.deltaX + event.deltaY > 0 ? 1 : -1))
+  }
+
+  if (!items.length) return <div className="case-empty">{ui.empty}</div>
+
+  return (
+    <div className="spatial-gallery">
+      <div
+        className={`spatial-stage ${dragging ? 'is-dragging' : ''}`}
+        ref={stageRef}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={finishGesture}
+        onPointerCancel={finishGesture}
+        onWheel={onWheel}
+        onKeyDown={(event) => {
+          if (event.key === 'ArrowLeft') go(active - 1)
+          if (event.key === 'ArrowRight') go(active + 1)
+        }}
+        tabIndex="0"
+        role="region"
+        aria-roledescription="carousel"
+        aria-label={ui.featuredLabel}
+      >
+        {items.map((item, index) => {
+          const offset = index - active + drag / spacing
+          const distance = Math.abs(offset)
+          const x = offset * spacing
+          const z = -Math.min(distance, 3) * 150
+          const scale = 1 - Math.min(distance * .115, .28)
+          const rotate = offset * -6
+          return (
+            <article
+              key={item.id}
+              className={`spatial-card ${index === active ? 'is-active' : ''}`}
+              style={{
+                '--case-x': `${x}px`,
+                '--case-z': `${z}px`,
+                '--case-scale': scale,
+                '--case-rotate': `${rotate}deg`,
+                '--case-opacity': Math.max(.18, 1 - distance * .28),
+                zIndex: 20 - Math.round(distance),
+              }}
+              aria-hidden={distance > 1.6}
+            >
+              <RouteLink
+                href={`/${lang}/cases/${item.slug}`}
+                navigate={navigate}
+                world={item.category}
+                draggable="false"
+                onDragStart={(event) => event.preventDefault()}
+                onClick={(event) => {
+                  if (gestureRef.current.moved && event.detail !== 0) event.preventDefault()
+                }}
+                tabIndex={distance > 1.6 ? -1 : 0}
+              >
+                <div className="spatial-card-visual">
+                  <CaseVisual item={item} />
+                  <span className="case-draft-badge">{ui.draft}</span>
+                  <span className="case-card-index">{String(index + 1).padStart(2, '0')} / {String(items.length).padStart(2, '0')}</span>
+                </div>
+                <div className="spatial-card-copy">
+                  <div>
+                    <small>{ui.filters[item.category]} / {ui.filters[item.subcategories[0]]}</small>
+                    <h3>{item.title}</h3>
+                  </div>
+                  <div className="case-preview-fact">
+                    <span>{ui.draftFact}</span>
+                    <p>{item.summary}</p>
+                  </div>
+                  <span className="case-open-icon"><ArrowUpRight /></span>
+                </div>
+              </RouteLink>
+            </article>
+          )
+        })}
+      </div>
+      <div className="spatial-controls">
+        <span>{ui.dragHint}<i />{ui.wheelHint}</span>
+        <div className="spatial-progress">{items.map((item, index) => <button key={item.id} className={index === active ? 'active' : ''} onClick={() => go(index)} aria-label={`${ui.index} ${index + 1}`}><i /></button>)}</div>
+        <div className="spatial-arrows">
+          <button onClick={() => go(active - 1)} disabled={active === 0} aria-label="Previous"><ChevronLeft /></button>
+          <button onClick={() => go(active + 1)} disabled={active === items.length - 1} aria-label="Next"><ChevronRight /></button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function FeaturedCases({ lang, navigate }) {
+  const ui = caseUi[lang]
+  const allItems = useMemo(() => getLocalizedCases(lang).filter((item) => item.featured), [lang])
+  const [group, setGroup] = useState('all')
+  const [subfilter, setSubfilter] = useState('all')
+  const items = useMemo(() => filterCases(allItems, group, subfilter), [allItems, group, subfilter])
+
+  return (
+    <section className="cases-showcase" id="cases">
       <div className="container">
-        <Reveal className="cases-head"><div><div className="eyebrow light">{t.cases.label}</div><h2>{t.cases.title}</h2></div><p>{t.cases.intro}</p></Reveal>
-        <div className="case-grid">
-          {t.cases.cards.map((item, index) => (
-            <Reveal className={`case-card case-${index + 1}`} key={item.tag} delay={index * 70}>
-              <div className="case-visual">
-                {index === 0 && <img src="/assets/system-convergence.jpg" alt="" loading="lazy" />}
-                {index === 1 && <div className="case-dashboard"><span /><span /><span /><span /></div>}
-                {index === 2 && <div className="case-next"><Asterisk size={52} /></div>}
-                <span className="case-tag">{item.tag}</span>
-              </div>
-              <div className="case-body"><small>{item.type}</small><h3>{item.title}</h3><p>{item.note}</p><span className="case-link">{t.cases.view}<ArrowUpRight size={16} /></span></div>
+        <Reveal className="cases-showcase-head">
+          <div><div className="eyebrow light">{ui.featuredLabel}</div><h2>{ui.featuredTitle}</h2></div>
+          <p>{ui.featuredIntro}</p>
+        </Reveal>
+        <Reveal delay={80}>
+          <CaseFilters
+            ui={ui}
+            group={group}
+            subfilter={subfilter}
+            compact
+            onGroup={(value) => { setGroup(value); setSubfilter('all') }}
+            onSubfilter={setSubfilter}
+          />
+        </Reveal>
+      </div>
+      <SpatialCaseGallery items={items} lang={lang} navigate={navigate} ui={ui} />
+      <div className="container cases-showcase-foot">
+        <RouteLink className="cases-view-all" href={`/${lang}/cases`} navigate={navigate}>
+          <span>{ui.viewAll}</span><ArrowRight />
+        </RouteLink>
+      </div>
+    </section>
+  )
+}
+
+function CasesArchive({ lang, navigate }) {
+  const ui = caseUi[lang]
+  const allItems = useMemo(() => getLocalizedCases(lang), [lang])
+  const [group, setGroup] = useState('all')
+  const [subfilter, setSubfilter] = useState('all')
+  const items = useMemo(() => filterCases(allItems, group, subfilter), [allItems, group, subfilter])
+  const filterKey = `${group}-${subfilter}`
+
+  return (
+    <main className="cases-archive-page" id="top">
+      <section className="cases-archive-hero">
+        <div className="cases-archive-grid" aria-hidden="true" />
+        <div className="container">
+          <Reveal><span className="eyebrow light">{ui.pageLabel}</span><h1>{ui.pageTitle}</h1></Reveal>
+          <Reveal delay={90}><p>{ui.pageIntro}</p><span className="archive-count">{String(allItems.length).padStart(2, '0')} / DRAFT RECORDS</span></Reveal>
+        </div>
+      </section>
+      <section className="cases-archive-list section-pad">
+        <div className="container">
+          <CaseFilters
+            ui={ui}
+            group={group}
+            subfilter={subfilter}
+            onGroup={(value) => { setGroup(value); setSubfilter('all') }}
+            onSubfilter={setSubfilter}
+          />
+          <div className="archive-result-meta"><span>{ui.allCases}</span><b>{String(items.length).padStart(2, '0')}</b></div>
+          {items.length ? (
+            <div className="archive-grid" key={filterKey}>
+              {items.map((item, index) => (
+                <article className={`archive-card archive-${item.visual}`} key={item.id} style={{ '--archive-delay': `${index * 45}ms` }}>
+                  <RouteLink href={`/${lang}/cases/${item.slug}`} navigate={navigate} world={item.category}>
+                    <div className="archive-card-visual">
+                      <CaseVisual item={item} />
+                      <span className="case-draft-badge">{ui.draft}</span>
+                      <span className="case-card-index">{String(index + 1).padStart(2, '0')}</span>
+                    </div>
+                    <div className="archive-card-copy">
+                      <small>{ui.filters[item.category]} / {ui.filters[item.subcategories[0]]}</small>
+                      <h2>{item.title}</h2>
+                      <p>{item.summary}</p>
+                      <span>{ui.openCase}<ArrowUpRight /></span>
+                    </div>
+                  </RouteLink>
+                </article>
+              ))}
+            </div>
+          ) : <div className="case-empty">{ui.empty}</div>}
+        </div>
+      </section>
+    </main>
+  )
+}
+
+function CaseSystem({ nodes }) {
+  return (
+    <div className="case-system-map">
+      <svg viewBox="0 0 1000 420" aria-hidden="true">
+        <path d="M80 210C190 210 205 110 330 110S420 210 500 210 575 310 680 310 790 210 920 210" />
+        <path className="case-system-signal" d="M80 210C190 210 205 110 330 110S420 210 500 210 575 310 680 310 790 210 920 210" />
+      </svg>
+      {nodes.map((node, index) => <span key={node} style={{ '--system-index': index }}><i>0{index + 1}</i>{node}</span>)}
+    </div>
+  )
+}
+
+function CaseDetail({ item, lang, navigate }) {
+  const ui = caseUi[lang]
+  const allItems = useMemo(() => getLocalizedCases(lang), [lang])
+  const index = allItems.findIndex((candidate) => candidate.slug === item.slug)
+  const next = allItems[(index + 1) % allItems.length]
+  const facts = [
+    [ui.client, item.client || ui.pending],
+    [ui.country, item.country || ui.pending],
+    [ui.industry, item.industry || ui.pending],
+    [ui.year, item.year || ui.pending],
+  ]
+
+  return (
+    <main className={`case-detail-page detail-${item.visual}`} id="top">
+      <section className="case-detail-hero">
+        <div className="case-detail-backdrop" aria-hidden="true" />
+        <div className="container case-detail-hero-grid">
+          <Reveal className="case-detail-breadcrumb">
+            <RouteLink href={`/${lang}/cases`} navigate={navigate}><ArrowLeft />{ui.backToCases}</RouteLink>
+            <span>{String(index + 1).padStart(2, '0')} / {String(allItems.length).padStart(2, '0')}</span>
+          </Reveal>
+          <Reveal className="case-detail-title" delay={50}>
+            <span>{ui.filters[item.category]} / {ui.filters[item.subcategories[0]]}</span>
+            <h1>{item.title}</h1>
+            <p>{item.summary}</p>
+          </Reveal>
+          <Reveal className="case-detail-visual" delay={120}>
+            <CaseVisual item={item} detail />
+            <span className="case-draft-badge">{ui.draft}</span>
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="case-draft-notice">
+        <div className="container"><span>{ui.draft}</span><p>{ui.draftNotice}</p></div>
+      </section>
+
+      <section className="case-facts">
+        <div className="container case-facts-grid">
+          {facts.map(([label, value]) => <div key={label}><span>{label}</span><strong>{value}</strong></div>)}
+          <div className="case-fact-services"><span>{ui.services}</span><strong>{item.services.join(' · ')}</strong></div>
+        </div>
+      </section>
+
+      <section className="case-story section-pad">
+        <div className="container">
+          {[
+            ['01', ui.challenge, item.challenge],
+            ['02', ui.approach, item.approach],
+            ['03', ui.solution, item.solution],
+          ].map(([number, label, textValue], storyIndex) => (
+            <Reveal className="case-story-row" key={number} delay={storyIndex * 45}>
+              <span>{number}</span><h2>{label}</h2><p>{textValue}</p>
             </Reveal>
           ))}
         </div>
-      </div>
-    </section>
+      </section>
+
+      <section className="case-system-section section-pad">
+        <div className="container">
+          <Reveal className="case-section-heading"><span>04 / {ui.system}</span><h2>{item.project}</h2></Reveal>
+          <Reveal delay={80}><CaseSystem nodes={item.system} /></Reveal>
+        </div>
+      </section>
+
+      <section className="case-result-section section-pad">
+        <div className="container">
+          <Reveal className="case-result-heading"><span>05 / {ui.result}</span><p>{ui.draftNotice}</p></Reveal>
+          <Reveal className="case-pending-metric" delay={80}>
+            <span>—</span><strong>{ui.metricPending}</strong><small>NO UNVERIFIED NUMBERS</small>
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="case-visuals-section section-pad">
+        <div className="container">
+          <Reveal className="case-section-heading"><span>06 / {ui.visuals}</span><h2>{ui.visualPending}</h2></Reveal>
+          <Reveal className="case-large-visual" delay={80}><CaseVisual item={item} detail /></Reveal>
+        </div>
+      </section>
+
+      <section className="next-case">
+        <RouteLink href={`/${lang}/cases/${next.slug}`} navigate={navigate} world={next.category}>
+          <div><span>{ui.nextCase} / {String((index + 1) % allItems.length + 1).padStart(2, '0')}</span><h2>{next.title}</h2><p>{next.summary}</p></div>
+          <div className="next-case-visual"><CaseVisual item={next} /><ArrowUpRight /></div>
+        </RouteLink>
+      </section>
+    </main>
   )
 }
 
@@ -589,7 +1008,7 @@ function Footer({ t, s, lang, navigate }) {
 }
 
 function HomePage({ t, s, lang, navigate }) {
-  return <><HomeHero t={t} s={s} lang={lang} navigate={navigate} /><SystemContinuum s={s} /><HomeStatement t={t} /><ServiceWorlds s={s} lang={lang} navigate={navigate} compact /><Cases t={t} /><About t={t} /><Pricing t={t} /><Contact t={t} /></>
+  return <><HomeHero t={t} s={s} lang={lang} navigate={navigate} /><SystemContinuum s={s} /><HomeStatement t={t} /><ServiceWorlds s={s} lang={lang} navigate={navigate} compact /><FeaturedCases lang={lang} navigate={navigate} /><About t={t} /><Pricing t={t} /><Contact t={t} /></>
 }
 
 function ServicesPage({ s, lang, navigate }) {
@@ -691,12 +1110,30 @@ export default function App() {
     }
     document.documentElement.lang = lang
     localStorage.setItem('osnova-language', lang)
+    const caseSlug = location.route.startsWith('cases/') ? location.route.split('/')[1] : null
+    const caseItem = caseSlug ? getLocalizedCases(lang).find((item) => item.slug === caseSlug) : null
     const pageKey = location.route === 'services' ? 'services' : location.route.split('/')[1]
-    const meta = s.meta[pageKey] || [t.meta.title, t.meta.description]
+    const meta = location.route === 'cases'
+      ? [`${caseUi[lang].pageTitle} — OSNOVA`, caseUi[lang].pageIntro]
+      : caseItem
+        ? [`${caseItem.title} — OSNOVA`, caseItem.summary]
+        : s.meta[pageKey] || [t.meta.title, t.meta.description]
     document.title = meta[0]
     document.querySelector('meta[name="description"]')?.setAttribute('content', meta[1])
     document.querySelector('meta[property="og:title"]')?.setAttribute('content', meta[0])
     document.querySelector('meta[property="og:description"]')?.setAttribute('content', meta[1])
+    document.querySelector('meta[property="og:type"]')?.setAttribute('content', caseItem ? 'article' : 'website')
+    const localizedPath = `/${lang}/${location.route}${location.route ? '' : ''}`
+    const absoluteUrl = new URL(localizedPath, window.location.origin).href
+    document.querySelector('meta[property="og:url"]')?.setAttribute('content', absoluteUrl)
+    document.querySelector('link[rel="canonical"]')?.setAttribute('href', absoluteUrl)
+    document.querySelector('meta[name="robots"]')?.setAttribute('content', caseItem?.status === 'draft' ? 'noindex, follow' : 'index, follow')
+    for (const code of languageCodes) {
+      const alternate = document.querySelector(`link[rel="alternate"][hreflang="${code}"]`)
+      alternate?.setAttribute('href', new URL(`/${code}/${location.route}`, window.location.origin).href)
+    }
+    document.querySelector('link[rel="alternate"][hreflang="x-default"]')
+      ?.setAttribute('href', new URL(`/en/${location.route}`, window.location.origin).href)
   }, [lang, location, s, t])
 
   let page
@@ -704,6 +1141,12 @@ export default function App() {
   else if (location.route === 'services/automation') page = <AutomationPage s={s} lang={lang} navigate={navigate} />
   else if (location.route === 'services/development') page = <DevelopmentPage s={s} lang={lang} navigate={navigate} />
   else if (location.route === 'services/performance') page = <PerformancePage s={s} lang={lang} navigate={navigate} />
+  else if (location.route === 'cases') page = <CasesArchive lang={lang} navigate={navigate} />
+  else if (location.route.startsWith('cases/')) {
+    const slug = location.route.split('/')[1]
+    const item = getLocalizedCases(lang).find((candidate) => candidate.slug === slug)
+    page = item ? <CaseDetail item={item} lang={lang} navigate={navigate} /> : <CasesArchive lang={lang} navigate={navigate} />
+  }
   else page = <HomePage t={t} s={s} lang={lang} navigate={navigate} />
 
   return (

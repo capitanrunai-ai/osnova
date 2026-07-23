@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build && node scripts/prepare-sites.mjs",
+    "audit:cases": "node scripts/cases-audit.mjs",
     "preview": "vite preview"
   },
   "keywords": [],
