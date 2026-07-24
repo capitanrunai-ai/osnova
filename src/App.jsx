@@ -7,8 +7,6 @@ import {
   Asterisk,
   Check,
   ChevronDown,
-  ChevronLeft,
-  ChevronRight,
   Menu,
   Pause,
   Play,
@@ -374,28 +372,41 @@ function SpatialCaseGallery({ items, lang, navigate, ui }) {
 
   const spacing = stageWidth < 680 ? stageWidth * .84 : Math.min(stageWidth * .6, 690)
   const go = (next) => setActive(Math.max(0, Math.min(items.length - 1, next)))
+  const activeNumber = String(active + 1).padStart(2, '0')
+  const totalNumber = String(items.length).padStart(2, '0')
+  const atStart = active === 0
+  const atEnd = active === items.length - 1
+
+  const beginGesture = (clientX) => {
+    gestureRef.current = { active: true, startX: clientX, lastX: clientX, lastTime: performance.now(), velocity: 0, drag: 0, moved: false }
+    setDragging(true)
+  }
+
+  const moveGesture = (clientX) => {
+    if (!gestureRef.current.active) return
+    const now = performance.now()
+    const gesture = gestureRef.current
+    const delta = clientX - gesture.startX
+    const elapsed = Math.max(8, now - gesture.lastTime)
+    gesture.velocity = (clientX - gesture.lastX) / elapsed
+    gesture.lastX = clientX
+    gesture.lastTime = now
+    gesture.moved = gesture.moved || Math.abs(delta) > 6
+    const pullingStart = active === 0 && delta > 0
+    const pullingEnd = active === items.length - 1 && delta < 0
+    gesture.drag = (pullingStart || pullingEnd) ? delta * .28 : delta
+    setDrag(gesture.drag)
+  }
 
   const onPointerDown = (event) => {
-    if (event.button !== 0) return
-    gestureRef.current = { active: true, startX: event.clientX, lastX: event.clientX, lastTime: performance.now(), velocity: 0, drag: 0, moved: false }
-    setDragging(true)
+    if (event.pointerType === 'touch' || event.button !== 0) return
+    beginGesture(event.clientX)
     event.currentTarget.setPointerCapture(event.pointerId)
   }
 
   const onPointerMove = (event) => {
-    if (!gestureRef.current.active) return
-    const now = performance.now()
-    const gesture = gestureRef.current
-    const delta = event.clientX - gesture.startX
-    const elapsed = Math.max(8, now - gesture.lastTime)
-    gesture.velocity = (event.clientX - gesture.lastX) / elapsed
-    gesture.lastX = event.clientX
-    gesture.lastTime = now
-    gesture.moved = gesture.moved || Math.abs(delta) > 6
-    const atStart = active === 0 && delta > 0
-    const atEnd = active === items.length - 1 && delta < 0
-    gesture.drag = (atStart || atEnd) ? delta * .28 : delta
-    setDrag(gesture.drag)
+    if (event.pointerType === 'touch') return
+    moveGesture(event.clientX)
   }
 
   const finishGesture = () => {
@@ -428,6 +439,14 @@ function SpatialCaseGallery({ items, lang, navigate, ui }) {
         onPointerMove={onPointerMove}
         onPointerUp={finishGesture}
         onPointerCancel={finishGesture}
+        onTouchStart={(event) => {
+          if (event.touches.length === 1) beginGesture(event.touches[0].clientX)
+        }}
+        onTouchMove={(event) => {
+          if (event.touches.length === 1) moveGesture(event.touches[0].clientX)
+        }}
+        onTouchEnd={finishGesture}
+        onTouchCancel={finishGesture}
         onWheel={onWheel}
         onKeyDown={(event) => {
           if (event.key === 'ArrowLeft') go(active - 1)
@@ -484,20 +503,38 @@ function SpatialCaseGallery({ items, lang, navigate, ui }) {
                     <span>{ui.draftFact}</span>
                     <p>{item.summary}</p>
                   </div>
-                  <span className="case-open-icon"><ArrowUpRight /></span>
+                  <span className="case-open-action">
+                    <span>{ui.openCase}</span>
+                    <i className="case-open-icon"><ArrowUpRight /></i>
+                  </span>
                 </div>
               </RouteLink>
             </article>
           )
         })}
       </div>
+      <nav className="spatial-navigation" aria-label={ui.navigationLabel}>
+        <button className="spatial-nav-button is-previous" onClick={() => go(active - 1)} disabled={atStart}>
+          <span className="spatial-nav-icon"><ArrowLeft /></span>
+          <span className="spatial-nav-copy">
+            <small>{atStart ? ui.start : ui.previous}</small>
+            <b>{atStart ? activeNumber : String(active).padStart(2, '0')}</b>
+          </span>
+        </button>
+        <button className="spatial-nav-button is-next" onClick={() => go(active + 1)} disabled={atEnd}>
+          <span className="spatial-nav-copy">
+            <small>{atEnd ? ui.end : ui.next}</small>
+            <b>{atEnd ? activeNumber : String(active + 2).padStart(2, '0')}</b>
+          </span>
+          <span className="spatial-nav-icon"><ArrowRight /></span>
+        </button>
+      </nav>
       <div className="spatial-controls">
-        <span>{ui.dragHint}<i />{ui.wheelHint}</span>
-        <div className="spatial-progress">{items.map((item, index) => <button key={item.id} className={index === active ? 'active' : ''} onClick={() => go(index)} aria-label={`${ui.index} ${index + 1}`}><i /></button>)}</div>
-        <div className="spatial-arrows">
-          <button onClick={() => go(active - 1)} disabled={active === 0} aria-label="Previous"><ChevronLeft /></button>
-          <button onClick={() => go(active + 1)} disabled={active === items.length - 1} aria-label="Next"><ChevronRight /></button>
+        <span className="spatial-guidance">{ui.dragHint}<i /><span>{ui.wheelHint}</span></span>
+        <div className="spatial-status" aria-live="polite" aria-atomic="true">
+          <small>{ui.index}</small><strong>{activeNumber}</strong><i>/</i><b>{totalNumber}</b>
         </div>
+        <div className="spatial-progress">{items.map((item, index) => <button key={item.id} className={index === active ? 'active' : ''} onClick={() => go(index)} aria-label={`${ui.index} ${index + 1} / ${items.length}`} aria-current={index === active ? 'true' : undefined}><i /></button>)}</div>
       </div>
     </div>
   )
