@@ -8,6 +8,7 @@
     "build": "vite build && node scripts/prepare-sites.mjs",
     "audit:cases": "node scripts/cases-audit.mjs",
     "audit:cases-navigation": "node scripts/cases-navigation-audit.mjs",
+    "audit:mobile": "node scripts/mobile-audit.mjs",
     "preview": "vite preview"
   },
   "keywords": [],

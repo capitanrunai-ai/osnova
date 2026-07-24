@@ -159,13 +159,20 @@ function Header({ t, s, lang, route, setLang, navigate }) {
 function SystemMap({ nodes, signal }) {
   return (
     <div className="system-map" aria-label={signal}>
-      <svg className="map-lines" viewBox="0 0 660 440" aria-hidden="true">
+      <svg className="map-lines map-lines-desktop" viewBox="0 0 660 440" aria-hidden="true">
         <path d="M65 92 C190 80 195 210 330 220 S500 155 602 92" />
         <path d="M65 350 C180 350 195 238 330 220 S505 302 605 350" />
         <path d="M140 40 C170 145 270 133 330 220 S383 347 458 402" />
         <path d="M330 220 C400 205 453 72 553 62" className="signal-line" />
         <circle cx="330" cy="220" r="4" className="map-pulse pulse-one" />
         <circle cx="330" cy="220" r="4" className="map-pulse pulse-two" />
+      </svg>
+      <svg className="map-lines map-lines-mobile" viewBox="0 0 320 250" aria-hidden="true">
+        <path d="M58 38C104 38 112 125 160 125" />
+        <path d="M262 38C216 38 208 125 160 125" />
+        <path d="M58 212C104 212 112 125 160 125" />
+        <path d="M262 212C216 212 208 125 160 125" />
+        <circle cx="160" cy="125" r="3" />
       </svg>
       <div className="system-core"><span className="core-orbit" /><span className="core-dot" /><small>{signal}</small></div>
       {nodes.map((label, index) => <div className={`map-node node-${String.fromCharCode(97 + index)}`} key={label}><span>0{index + 1}</span>{label}</div>)}
@@ -241,17 +248,6 @@ function ServiceWorlds({ s, lang, navigate, compact = false }) {
             <span className="world-enter">{s.common.explore}<ArrowUpRight /></span>
           </RouteLink>
         ))}
-      </div>
-    </section>
-  )
-}
-
-function HomeStatement({ t }) {
-  return (
-    <section className="statement section-pad">
-      <div className="container statement-grid">
-        <Reveal className="section-label"><Asterisk size={16} />{t.statement.label}</Reveal>
-        <Reveal className="statement-copy" delay={80}><h2>{t.statement.text}</h2><p>{t.statement.sub}</p></Reveal>
       </div>
     </section>
   )
@@ -751,7 +747,10 @@ function Pricing({ t }) {
     <section className="pricing section-pad" id="pricing">
       <div className="container pricing-layout">
         <Reveal className="pricing-intro"><div className="eyebrow light">{t.pricing.label}</div><h2>{t.pricing.title}</h2><p>{t.pricing.text}</p><span className="pricing-big">{t.pricing.from}</span></Reveal>
-        <div className="pricing-list">{t.pricing.items.map(([service, price], index) => <Reveal className="price-row" key={service} delay={index * 35}><span>0{index + 1}</span><strong>{service}</strong><em>{price}</em><ArrowUpRight size={18} /></Reveal>)}</div>
+        <div className="pricing-list">
+          {t.pricing.items.map(([service, price], index) => <Reveal className="price-row" key={service} delay={index * 35}><span>0{index + 1}</span><strong>{service}</strong><em>{price}</em><ArrowUpRight size={18} /></Reveal>)}
+          <Reveal className="pricing-budget-note"><i />{t.pricing.budgetNote}</Reveal>
+        </div>
       </div>
     </section>
   )
@@ -813,12 +812,13 @@ function AutomationHeroVisual({ label, flow }) {
 
 function VoiceOperator({ data }) {
   const [step, setStep] = useState(-1)
-  const running = step >= 0 && step < data.steps.length
+  const sequenceLength = Math.max(data.steps.length, data.mobileFlow?.length || 0)
+  const running = step >= 0 && step < sequenceLength
   useEffect(() => {
     if (!running) return undefined
     const timer = window.setTimeout(() => setStep((value) => value + 1), 1100)
     return () => window.clearTimeout(timer)
-  }, [running, step, data.steps.length])
+  }, [running, step, sequenceLength])
   return (
     <section className="voice-product section-pad">
       <div className="container voice-product-grid">
@@ -836,7 +836,18 @@ function VoiceOperator({ data }) {
           <div className="call-pipeline">
             {data.steps.map((item, index) => <div className={step === index ? 'active' : step > index ? 'passed' : ''} key={item}><span>0{index + 1}</span><strong>{item}</strong><i /></div>)}
           </div>
-          <button onClick={() => setStep(0)} disabled={running}>{running ? <Pause /> : <Play fill="currentColor" />}{step >= data.steps.length ? data.replay : data.start}</button>
+          <button onClick={() => setStep(0)} disabled={running}>{running ? <Pause /> : <Play fill="currentColor" />}{step >= sequenceLength ? data.replay : data.start}</button>
+        </Reveal>
+        <Reveal className="voice-mobile-story" delay={100}>
+          <div className="voice-mobile-head"><span><i className={running ? 'live' : ''} />{data.incoming}</span><b>AI / LIVE SYSTEM</b></div>
+          <div className="voice-mobile-flow">
+            {(data.mobileFlow || data.steps).map((item, index) => (
+              <div className={step === index ? 'active' : step > index ? 'passed' : ''} key={item}>
+                <span>{String(index + 1).padStart(2, '0')}</span><strong>{item}</strong><i />
+              </div>
+            ))}
+          </div>
+          <button onClick={() => setStep(0)} disabled={running}>{running ? <Pause /> : <Play fill="currentColor" />}{step >= sequenceLength ? data.replay : data.start}</button>
         </Reveal>
       </div>
     </section>
@@ -880,9 +891,18 @@ function CrmIntegrations({ crm, integrations }) {
         <div className="container integration-grid">
           <Reveal className="integration-copy"><span className="eyebrow">{integrations.label}</span><h2>{integrations.title}</h2></Reveal>
           <Reveal className="integration-field" delay={100}>
-            <svg viewBox="0 0 760 520" aria-hidden="true">
+            <svg className="integration-lines-desktop" viewBox="0 0 760 520" aria-hidden="true">
               <path d="M90 90C250 90 220 260 380 260S520 95 675 95" /><path d="M85 425C220 425 240 260 380 260S540 425 680 425" />
               <path d="M180 25C200 160 310 145 380 260S470 390 560 500" /><circle cx="380" cy="260" r="7" />
+            </svg>
+            <svg className="integration-lines-mobile" viewBox="0 0 320 360" aria-hidden="true">
+              <path d="M48 36C90 64 118 125 160 180" />
+              <path d="M272 36C230 64 202 125 160 180" />
+              <path d="M160 66V180" />
+              <path d="M48 324C90 296 118 235 160 180" />
+              <path d="M272 324C230 296 202 235 160 180" />
+              <path d="M160 294V180" />
+              <circle cx="160" cy="180" r="5" />
             </svg>
             <div className="integration-core">OS<span>CONTEXT</span></div>
             {integrations.nodes.map((node, index) => <span className={`integration-node in-${index + 1}`} key={node}><i />{node}</span>)}
@@ -1067,7 +1087,7 @@ function Footer({ t, s, lang, navigate }) {
 }
 
 function HomePage({ t, s, lang, navigate }) {
-  return <><HomeHero t={t} s={s} lang={lang} navigate={navigate} /><SystemContinuum s={s} /><HomeStatement t={t} /><ServiceWorlds s={s} lang={lang} navigate={navigate} compact /><FeaturedCases lang={lang} navigate={navigate} /><About t={t} /><Pricing t={t} /><Contact t={t} /></>
+  return <><HomeHero t={t} s={s} lang={lang} navigate={navigate} /><SystemContinuum s={s} /><ServiceWorlds s={s} lang={lang} navigate={navigate} compact /><FeaturedCases lang={lang} navigate={navigate} /><About t={t} /><Pricing t={t} /><Contact t={t} /></>
 }
 
 function ServicesPage({ s, lang, navigate }) {

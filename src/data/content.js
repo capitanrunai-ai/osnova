@@ -27,11 +27,6 @@ export const content = {
       signal: 'Система в работе',
       nodes: ['Сайт', 'AI', 'CRM', 'Команда', 'Данные', 'Клиент'],
     },
-    statement: {
-      label: 'Наша позиция',
-      text: 'Мы не продаём автоматизацию ради автоматизации.',
-      sub: 'Сначала разбираемся, как работает бизнес. Затем меняем только то, что действительно сокращает путь от запроса до результата.',
-    },
     explorer: {
       label: 'Направления',
       title: 'Один партнёр. Вся digital-система.',
@@ -132,7 +127,7 @@ export const content = {
         label: 'WEBSITES',
         title: 'Сайт — самый публичный продукт компании.',
         text: 'Создаём landing pages, корпоративные и мультиязычные сайты, CMS-проекты и индивидуальные digital experiences.',
-        price: 'от €250',
+        price: 'от €120',
         priceNote: 'Базовый одностраничный проект. Сложные задачи рассчитываются индивидуально.',
         cta: 'Обсудить сайт',
       },
@@ -172,16 +167,17 @@ export const content = {
       label: 'ЦЕНЫ',
       title: 'Понятная точка входа. Честная оценка сложности.',
       text: 'Финальная стоимость зависит от объёма, интеграций, бизнес-логики, дизайна, разработки и сопровождения.',
-      from: 'от €250',
+      from: 'от €120',
       custom: 'Индивидуально',
+      budgetNote: 'Для рекламы медиабюджет оплачивается отдельно.',
       items: [
-        ['Landing Page', 'от €250'],
-        ['Корпоративный сайт', 'Индивидуально'],
+        ['Landing Page', 'от €120'],
+        ['Корпоративный сайт', 'от €250'],
         ['AI-автоматизация', 'Индивидуально'],
         ['AI-оператор', 'Индивидуально'],
         ['CRM-автоматизация', 'Индивидуально'],
         ['Индивидуальная разработка', 'Индивидуально'],
-        ['Реклама и продвижение', 'Индивидуально'],
+        ['Реклама и продвижение', 'от €300'],
       ],
     },
     contact: {
@@ -213,11 +209,6 @@ export const content = {
       secondary: 'Explore services',
       signal: 'System online',
       nodes: ['Website', 'AI', 'CRM', 'Team', 'Data', 'Customer'],
-    },
-    statement: {
-      label: 'Our position',
-      text: 'We do not sell automation for automation’s sake.',
-      sub: 'First, we understand how the business works. Then we change only what genuinely shortens the path from request to result.',
     },
     explorer: {
       label: 'Capabilities',
@@ -267,7 +258,7 @@ export const content = {
     development: {
       label: '03 / DEVELOPMENT', title: 'Software with a reason to exist.', text: 'We design interfaces and systems around real work: decide faster, see the data, serve a customer or launch a new product.',
       products: ['Internal panels', 'Dashboards', 'Customer portals', 'Admin systems', 'APIs & microservices', 'MVPs & web apps'],
-      websites: { label: 'WEBSITES', title: 'Your website is your most public product.', text: 'Landing pages, corporate and multilingual sites, CMS builds and bespoke digital experiences.', price: 'from €250', priceNote: 'Entry price for a basic one-page project. Complex work is estimated individually.', cta: 'Discuss a website' },
+      websites: { label: 'WEBSITES', title: 'Your website is your most public product.', text: 'Landing pages, corporate and multilingual sites, CMS builds and bespoke digital experiences.', price: 'from €120', priceNote: 'Entry price for a basic one-page project. Complex work is estimated individually.', cta: 'Discuss a website' },
     },
     marketing: {
       label: '04 / PERFORMANCE', title: 'The task chooses the channel. Not agency habit.', intro: 'We do not prescribe Google + Meta + TikTok by default. We assess demand, margins, decision cycles and how well the product can be demonstrated.',
@@ -292,8 +283,9 @@ export const content = {
       testimonials: 'Testimonials will appear here after approval from real clients.', demo: 'PLACEHOLDER / NOT A REVIEW',
     },
     pricing: {
-      label: 'PRICING', title: 'A clear entry point. An honest estimate of complexity.', text: 'Final cost depends on scope, integrations, business logic, design, engineering and support.', from: 'from €250', custom: 'Custom quote',
-      items: [['Landing Page', 'from €250'], ['Business Website', 'Custom quote'], ['AI Automation', 'Custom quote'], ['AI Voice Operator', 'Custom quote'], ['CRM Automation', 'Custom quote'], ['Custom Development', 'Custom quote'], ['Performance Ads', 'Custom quote']],
+      label: 'PRICING', title: 'A clear entry point. An honest estimate of complexity.', text: 'Final cost depends on scope, integrations, business logic, design, engineering and support.', from: 'from €120', custom: 'Custom quote',
+      budgetNote: 'Media spend for advertising is paid separately.',
+      items: [['Landing Page', 'from €120'], ['Business Website', 'from €250'], ['AI Automation', 'Custom quote'], ['AI Voice Operator', 'Custom quote'], ['CRM Automation', 'Custom quote'], ['Custom Development', 'Custom quote'], ['Performance Ads', 'from €300']],
     },
     contact: {
       label: 'START WITH THE BOTTLENECK', title: 'Which process consumes too much of your team’s time?', text: 'Tell us how it works today. It may be a process a person should no longer handle end to end.',
@@ -308,7 +300,6 @@ export const content = {
     meta: { title: 'OSNOVA — AI, Automatisierung & digitale Systeme', description: 'Weniger Routine. Mehr Business. AI, CRM, Entwicklung und Performance als ein funktionierendes System.' },
     nav: { services: 'Leistungen', approach: 'Vorgehen', cases: 'Projekte', pricing: 'Preise', contact: 'Projekt besprechen', menu: 'Menü' },
     hero: { eyebrow: 'AI × AUTOMATION × ENTWICKLUNG × PERFORMANCE', titleA: 'Weniger Routine.', titleB: 'Mehr Business.', text: 'Wir finden Prozesse, die Ihr Team bremsen, und verbinden AI, CRM, Entwicklung und Online-Marketing zu einem funktionierenden System.', primary: 'Projekt besprechen', secondary: 'Leistungen ansehen', signal: 'System online', nodes: ['Website', 'AI', 'CRM', 'Team', 'Daten', 'Kunde'] },
-    statement: { label: 'Unser Standpunkt', text: 'Wir verkaufen keine Automatisierung um ihrer selbst willen.', sub: 'Zuerst verstehen wir das Geschäft. Dann ändern wir nur, was den Weg von der Anfrage zum Ergebnis wirklich verkürzt.' },
     explorer: {
       label: 'Kompetenzen', title: 'Ein Partner. Das ganze digitale System.', intro: 'Wählen Sie eine Ebene und sehen Sie, wo wir ansetzen.',
       categories: [
@@ -327,7 +318,7 @@ export const content = {
     assistants: { label: 'AI ASSISTANTS', title: 'Kein Chatbot. Ein Werkzeug im Prozess.', text: 'Ein Assistent erhält nur das nötige Wissen und die nötigen Aktionen: Informationen finden, Antworten vorbereiten, Leads klassifizieren, Dokumente bearbeiten oder Schritte per API auslösen.', roles: [['Vertrieb', 'Erstellt Lead-Kontext, qualifiziert und empfiehlt den nächsten Schritt.'], ['Support', 'Findet Antworten und eskaliert Sonderfälle.'], ['Operations', 'Bearbeitet Anfragen, Dokumente, Reports und interne Aufgaben.'], ['Knowledge', 'Findet präzise Informationen in Unternehmensdaten.']], flow: ['Anfrage', 'Business-Kontext', 'AI-Entscheidung', 'Systemaktion'] },
     crm: { label: '02 / CRM & INTEGRATIONS', title: 'Die Tools sind schon da. Lassen wir sie zusammenarbeiten.', text: 'Wir arbeiten mit Ihrem CRM und verbinden Website, Telefonie, Messenger, E-Mail, Werbung und interne Systeme zu einem steuerbaren Ablauf.', flow: ['Neuer Lead', 'Qualifizierung', 'Verantwortlich', 'Follow-up', 'Abschluss', 'Report'], automations: ['Lead-Erstellung & Routing', 'Aufgaben & Meldungen', 'Lead Scoring', 'E-Mail-Automation', 'Dokumente & Reports', 'Dashboards & Analytics'], status: 'Automatisierung aktiv' },
     process: { label: 'SO ARBEITEN WIR', title: 'Erst der Prozess. Dann die Technologie.', steps: [['01', 'Gespräch', 'Sie zeigen uns den heutigen Ablauf — ohne technisches Briefing.'], ['02', 'Analyse', 'Wir finden Engpässe, Wiederholungen, Risiken und manuelle Übergaben.'], ['03', 'Architektur', 'Wir schlagen konkrete Logik, Grenzen und erwartete Wirkung vor.'], ['04', 'Umsetzung', 'Wir bauen, integrieren und testen mit realen Szenarien.'], ['05', 'Optimierung', 'Nach dem Start verbessern wir anhand echter Daten.']] },
-    development: { label: '03 / DEVELOPMENT', title: 'Software mit einem Grund zu existieren.', text: 'Wir entwickeln Interfaces und Systeme für echte Arbeit: schneller entscheiden, Daten sehen, Kunden bedienen oder Produkte starten.', products: ['Interne Panels', 'Dashboards', 'Kundenportale', 'Admin-Systeme', 'APIs & Microservices', 'MVPs & Web-Apps'], websites: { label: 'WEBSITES', title: 'Ihre Website ist Ihr öffentlichstes Produkt.', text: 'Landing Pages, Corporate- und mehrsprachige Websites, CMS-Projekte und individuelle Digital Experiences.', price: 'ab €250', priceNote: 'Einstieg für ein einfaches One-Page-Projekt. Komplexe Projekte werden individuell kalkuliert.', cta: 'Website besprechen' } },
+    development: { label: '03 / DEVELOPMENT', title: 'Software mit einem Grund zu existieren.', text: 'Wir entwickeln Interfaces und Systeme für echte Arbeit: schneller entscheiden, Daten sehen, Kunden bedienen oder Produkte starten.', products: ['Interne Panels', 'Dashboards', 'Kundenportale', 'Admin-Systeme', 'APIs & Microservices', 'MVPs & Web-Apps'], websites: { label: 'WEBSITES', title: 'Ihre Website ist Ihr öffentlichstes Produkt.', text: 'Landing Pages, Corporate- und mehrsprachige Websites, CMS-Projekte und individuelle Digital Experiences.', price: 'ab €120', priceNote: 'Einstieg für ein einfaches One-Page-Projekt. Komplexe Projekte werden individuell kalkuliert.', cta: 'Website besprechen' } },
     marketing: {
       label: '04 / PERFORMANCE', title: 'Die Aufgabe wählt den Kanal. Nicht die Gewohnheit.', intro: 'Wir verschreiben nicht pauschal Google + Meta + TikTok. Entscheidend sind Nachfrage, Marge, Entscheidungszyklus und visuelle Stärke.',
       channels: [
@@ -338,7 +329,7 @@ export const content = {
     },
     cases: { label: 'AUSGEWÄHLTE SYSTEME', title: 'Projekte sollten mit Fakten sprechen.', intro: 'Bereit für reale Geschichten: Kontext → Aufgabe → Lösung → messbares Ergebnis. Bis dahin nur klar markierte Konzepte.', cards: [{ tag: 'DEMO / KONZEPT 01', title: 'Patientenweg vom Anruf bis zum CRM', type: 'AI-Telefonie · CRM · Automatisierung', note: 'Klinik-Szenario: Anruf, Buchung, Bestätigung und CRM.' }, { tag: 'DEMO / KONZEPT 02', title: 'Operativer Kontrollraum', type: 'Internes Tool · Analytics', note: 'Ein Ort für Status, Ausnahmen und Team-Entscheidungen.' }, { tag: 'IHR PROJEKT / NÄCHSTES', title: 'Ihr System könnte hier stehen', type: 'Für Ihren Prozess gebaut', note: 'Wir starten mit dem teuersten wiederkehrenden Prozess.' }], view: 'Projektstruktur ansehen' },
     about: { label: 'DAS UNTERNEHMEN', title: 'Ein kompaktes Team. Systemisches Denken.', text: 'OSNOVA verbindet Produktdesign, Entwicklung, AI, Automatisierung und Online-Marketing. Historie, Gründungsdatum und echte Profile folgen nach Bestätigung.', team: ['Name / Rolle', 'Name / Rolle', 'Name / Rolle'], placeholders: ['Projekte — Daten folgen', 'Integrationen — Daten folgen', 'Länder — Daten folgen'], testimonials: 'Kundenstimmen erscheinen nach Freigabe realer Kunden.', demo: 'PLATZHALTER / KEINE BEWERTUNG' },
-    pricing: { label: 'PREISE', title: 'Klarer Einstieg. Ehrliche Komplexität.', text: 'Der finale Preis hängt von Umfang, Integrationen, Geschäftslogik, Design, Entwicklung und Betreuung ab.', from: 'ab €250', custom: 'Individuell', items: [['Landingpage', 'ab €250'], ['Unternehmenswebsite', 'Individuell'], ['AI-Automatisierung', 'Individuell'], ['AI-Telefonassistent', 'Individuell'], ['CRM-Automatisierung', 'Individuell'], ['Individuelle Entwicklung', 'Individuell'], ['Online-Marketing', 'Individuell']] },
+    pricing: { label: 'PREISE', title: 'Klarer Einstieg. Ehrliche Komplexität.', text: 'Der finale Preis hängt von Umfang, Integrationen, Geschäftslogik, Design, Entwicklung und Betreuung ab.', from: 'ab €120', custom: 'Individuell', budgetNote: 'Das Werbebudget wird separat bezahlt.', items: [['Landingpage', 'ab €120'], ['Unternehmenswebsite', 'ab €250'], ['AI-Automatisierung', 'Individuell'], ['AI-Telefonassistent', 'Individuell'], ['CRM-Automatisierung', 'Individuell'], ['Individuelle Entwicklung', 'Individuell'], ['Online-Marketing', 'ab €300']] },
     contact: { label: 'BEGINNEN WIR MIT DEM ENGPASS', title: 'Welcher Prozess kostet Ihr Team zu viel Zeit?', text: 'Erzählen Sie uns, wie er heute läuft. Vielleicht sollte ein Mensch ihn nicht mehr vollständig ausführen.', fields: { name: 'Ihr Name', contact: 'E-Mail oder Telegram', company: 'Unternehmen', help: 'Bereich', message: 'Was passiert heute?' }, options: ['AI und Automatisierung', 'CRM und Integrationen', 'Entwicklung', 'Website', 'Online-Marketing', 'Noch unsicher'], submit: 'Anfrage senden', sent: 'Danke. Das Formular läuft im Demo-Modus — vor dem Launch den Endpoint verbinden.', or: 'oder direkt schreiben', ...shared },
     footer: { line: 'AI. Automation. Entwicklung. Online-Marketing.', rights: '© 2026 OSNOVA. Alle Rechte vorbehalten.', top: 'Nach oben' },
   },
@@ -347,7 +338,6 @@ export const content = {
     meta: { title: 'OSNOVA — AI, автоматизація та digital-системи', description: 'Менше рутини. Більше бізнесу. AI, CRM, розробка та performance як єдина робоча система.' },
     nav: { services: 'Послуги', approach: 'Підхід', cases: 'Кейси', pricing: 'Ціни', contact: 'Обговорити проєкт', menu: 'Меню' },
     hero: { eyebrow: 'AI × АВТОМАТИЗАЦІЯ × РОЗРОБКА × PERFORMANCE', titleA: 'Менше рутини.', titleB: 'Більше бізнесу.', text: 'Знаходимо процеси, що гальмують команду, і перетворюємо AI, CRM, розробку та рекламу на одну робочу систему.', primary: 'Обговорити проєкт', secondary: 'Переглянути послуги', signal: 'Система працює', nodes: ['Сайт', 'AI', 'CRM', 'Команда', 'Дані', 'Клієнт'] },
-    statement: { label: 'Наша позиція', text: 'Ми не продаємо автоматизацію заради автоматизації.', sub: 'Спочатку розуміємо, як працює бізнес. Потім змінюємо лише те, що справді скорочує шлях від запиту до результату.' },
     explorer: {
       label: 'Напрями', title: 'Один партнер. Уся digital-система.', intro: 'Оберіть шар системи — покажемо, де саме можемо підключитися.',
       categories: [
@@ -366,7 +356,7 @@ export const content = {
     assistants: { label: 'AI ASSISTANTS', title: 'Не чат-бот. Робочий інструмент усередині процесу.', text: 'Асистент отримує лише потрібні знання та дії: знаходить інформацію, готує відповідь, класифікує лід, обробляє документ або запускає крок через API.', roles: [['Продажі', 'Готує контекст ліда, кваліфікує і пропонує наступний крок.'], ['Підтримка', 'Шукає відповідь у базі знань і передає складні звернення.'], ['Операції', 'Обробляє заявки, документи, звіти та внутрішні запити.'], ['Knowledge', 'Знаходить точну інформацію в корпоративних даних.']], flow: ['Вхідний запит', 'Контекст бізнесу', 'AI-рішення', 'Дія в системі'] },
     crm: { label: '02 / CRM & INTEGRATIONS', title: 'Інструменти вже є. Змусимо їх працювати разом.', text: 'Працюємо з вашою CRM і поєднуємо сайт, телефонію, месенджери, email, рекламу та внутрішні сервіси в один керований потік.', flow: ['Новий лід', 'Кваліфікація', 'Відповідальний', 'Follow-up', 'Угода', 'Звіт'], automations: ['Створення і розподіл лідів', 'Завдання та сповіщення', 'Lead scoring', 'Email automation', 'Документи та звітність', 'Дашборди й аналітика'], status: 'Автоматизація активна' },
     process: { label: 'ЯК МИ ПРАЦЮЄМО', title: 'Спочатку процес. Потім технологія.', steps: [['01', 'Розмова', 'Показуєте, як усе працює зараз — технічне завдання не потрібне.'], ['02', 'Аналіз', 'Знаходимо вузькі місця, повтори, ризики та зайві ручні переходи.'], ['03', 'Архітектура', 'Пропонуємо конкретну логіку, обмеження та очікуваний ефект.'], ['04', 'Реалізація', 'Створюємо, інтегруємо й тестуємо на реальних сценаріях.'], ['05', 'Оптимізація', 'Після запуску аналізуємо дані й покращуємо систему.']] },
-    development: { label: '03 / DEVELOPMENT', title: 'Софт, який має причину існувати.', text: 'Проєктуємо інтерфейси та системи навколо конкретної роботи: швидше вирішити, побачити дані, обслужити клієнта або запустити продукт.', products: ['Внутрішні панелі', 'Dashboards', 'Клієнтські портали', 'Адміністративні системи', 'API та мікросервіси', 'MVP і web-застосунки'], websites: { label: 'WEBSITES', title: 'Сайт — найпублічніший продукт компанії.', text: 'Створюємо landing pages, корпоративні та мультимовні сайти, CMS-проєкти й індивідуальні digital experiences.', price: 'від €250', priceNote: 'Базовий односторінковий проєкт. Складні завдання оцінюються індивідуально.', cta: 'Обговорити сайт' } },
+    development: { label: '03 / DEVELOPMENT', title: 'Софт, який має причину існувати.', text: 'Проєктуємо інтерфейси та системи навколо конкретної роботи: швидше вирішити, побачити дані, обслужити клієнта або запустити продукт.', products: ['Внутрішні панелі', 'Dashboards', 'Клієнтські портали', 'Адміністративні системи', 'API та мікросервіси', 'MVP і web-застосунки'], websites: { label: 'WEBSITES', title: 'Сайт — найпублічніший продукт компанії.', text: 'Створюємо landing pages, корпоративні та мультимовні сайти, CMS-проєкти й індивідуальні digital experiences.', price: 'від €120', priceNote: 'Базовий односторінковий проєкт. Складні завдання оцінюються індивідуально.', cta: 'Обговорити сайт' } },
     marketing: {
       label: '04 / PERFORMANCE', title: 'Канал обирає завдання. Не звичка агенції.', intro: 'Ми не призначаємо Google + Meta + TikTok за замовчуванням. Дивимося на попит, маржу, цикл рішення та здатність продукту бути показаним.',
       channels: [
@@ -377,7 +367,7 @@ export const content = {
     },
     cases: { label: 'ВИБРАНІ СИСТЕМИ', title: 'Кейси мають говорити фактами.', intro: 'Структура готова для реальних історій: контекст → завдання → рішення → вимірюваний результат. Поки — лише чітко позначені концепти.', cards: [{ tag: 'ДЕМО / КОНЦЕПТ 01', title: 'Шлях пацієнта від дзвінка до CRM', type: 'AI-оператор · CRM · Автоматизація', note: 'Сценарій для клініки: дзвінок, запис, підтвердження, CRM.' }, { tag: 'ДЕМО / КОНЦЕПТ 02', title: 'Операційний центр керування', type: 'Внутрішній інструмент · Аналітика', note: 'Єдина панель статусів, винятків і рішень команди.' }, { tag: 'ВАШ ПРОЄКТ / ДАЛІ', title: 'Тут може бути ваша система', type: 'Створено навколо вашого процесу', note: 'Почнемо з найдорожчого повторюваного процесу.' }], view: 'Відкрити структуру кейсу' },
     about: { label: 'ПРО КОМПАНІЮ', title: 'Компактна команда. Системне мислення.', text: 'OSNOVA поєднує продуктовий дизайн, розробку, AI, автоматизацію та рекламу. Історія компанії, дата заснування і справжні профілі будуть додані після підтвердження.', team: ['Ім’я / роль', 'Ім’я / роль', 'Ім’я / роль'], placeholders: ['Проєкти — дані готуються', 'Інтеграції — дані готуються', 'Країни — дані готуються'], testimonials: 'Відгуки з’являться після погодження з реальними клієнтами.', demo: 'ЗАПОВНЮВАЧ / НЕ ВІДГУК' },
-    pricing: { label: 'ЦІНИ', title: 'Зрозуміла точка входу. Чесна оцінка складності.', text: 'Фінальна вартість залежить від обсягу, інтеграцій, бізнес-логіки, дизайну, розробки та супроводу.', from: 'від €250', custom: 'Індивідуально', items: [['Landing Page', 'від €250'], ['Корпоративний сайт', 'Індивідуально'], ['AI-автоматизація', 'Індивідуально'], ['AI-оператор', 'Індивідуально'], ['CRM-автоматизація', 'Індивідуально'], ['Індивідуальна розробка', 'Індивідуально'], ['Реклама та просування', 'Індивідуально']] },
+    pricing: { label: 'ЦІНИ', title: 'Зрозуміла точка входу. Чесна оцінка складності.', text: 'Фінальна вартість залежить від обсягу, інтеграцій, бізнес-логіки, дизайну, розробки та супроводу.', from: 'від €120', custom: 'Індивідуально', budgetNote: 'Рекламний бюджет оплачується окремо.', items: [['Landing Page', 'від €120'], ['Корпоративний сайт', 'від €250'], ['AI-автоматизація', 'Індивідуально'], ['AI-оператор', 'Індивідуально'], ['CRM-автоматизація', 'Індивідуально'], ['Індивідуальна розробка', 'Індивідуально'], ['Реклама та просування', 'від €300']] },
     contact: { label: 'ПОЧНЕМО З ВУЗЬКОГО МІСЦЯ', title: 'Який процес забирає у вашої команди забагато часу?', text: 'Розкажіть, як він працює зараз. Можливо, людина вже не повинна виконувати його повністю.', fields: { name: 'Ваше ім’я', contact: 'Email або Telegram', company: 'Компанія', help: 'Напрям', message: 'Що відбувається зараз?' }, options: ['AI та автоматизація', 'CRM та інтеграції', 'Розробка', 'Сайт', 'Реклама та просування', 'Поки не знаю'], submit: 'Надіслати запит', sent: 'Дякуємо. Форма працює в демо-режимі — підключіть endpoint перед публікацією.', or: 'або напишіть напряму', ...shared },
     footer: { line: 'AI. Automation. Розробка. Performance.', rights: '© 2026 OSNOVA. Усі права захищені.', top: 'Нагору' },
   },

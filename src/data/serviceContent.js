@@ -78,6 +78,7 @@ export const serviceContent = {
           'Записываю на 18:30. Подтверждение отправлено.',
         ],
         steps: ['Понимает намерение', 'Проверяет расписание', 'Отвечает клиенту', 'Создаёт запись', 'Обновляет CRM'],
+        mobileFlow: ['Входящий звонок', 'Язык клиента', 'AI отвечает', 'Knowledge', 'Запись / консультация / услуга', 'Telegram control', 'CRM'],
         capabilities: ['Входящие и исходящие звонки', 'Цены и типовые вопросы', 'Запись, перенос и отмена', 'Квалификация лида', 'Работа с CRM', 'Передача сотруднику'],
         useCases: 'Клиники · стоматологии · автосервисы · рестораны · салоны · сервисный бизнес · call-центры',
         intentLabel: 'НАМЕРЕНИЕ / ЗАПИСЬ',
@@ -121,8 +122,8 @@ export const serviceContent = {
       visual: ['ИНТЕРФЕЙС', 'ЛОГИКА', 'ДАННЫЕ'],
       principle: 'От публичного сайта до внутренней операционной системы — одна дисциплина: ясная задача, сильный интерфейс, надёжная логика.',
       products: [
-        ['01', 'Landing Pages', 'Одностраничные сайты с ясной аргументацией и точным conversion path.', 'от €250'],
-        ['02', 'Корпоративные сайты', 'Полноценные сайты компаний, брендов, сервисов и продуктов.', 'Индивидуально'],
+        ['01', 'Landing Pages', 'Одностраничные сайты с ясной аргументацией и точным conversion path.', 'от €120'],
+        ['02', 'Корпоративные сайты', 'Полноценные сайты компаний, брендов, сервисов и продуктов.', 'от €250'],
         ['03', 'Web Applications', 'Web-приложения с индивидуальной бизнес-логикой.', 'Индивидуально'],
         ['04', 'Internal Tools', 'Dashboards, admin panels, management systems и reporting interfaces.', 'Индивидуально'],
         ['05', 'MVP Development', 'Первая полноценная рабочая версия продукта для проверки реального сценария.', 'Индивидуально'],
@@ -131,8 +132,8 @@ export const serviceContent = {
       landing: {
         label: 'ТОЧКА ВХОДА / LANDING PAGE',
         title: 'Малый формат. Полная дизайнерская дисциплина.',
-        text: '€250 — минимальная точка входа для простого landing page, а не обещание шаблонного сайта. Сложность, контент, motion и интеграции оцениваются отдельно.',
-        price: 'от €250',
+        text: '€120 — минимальная точка входа для простого landing page, а не обещание шаблонного сайта. Сложность, контент, motion и интеграции оцениваются отдельно.',
+        price: 'от €120',
         cta: 'Обсудить сайт',
         art: ['СЛОЖНОЕ', 'СТАНОВИТСЯ', 'НЕИЗБЕЖНЫМ.'],
       },
@@ -218,6 +219,7 @@ const en = {
       start: 'Run scenario', replay: 'Replay call', incoming: 'Incoming call', client: 'Customer', operator: 'AI operator',
       transcript: ['I would like Friday after six.', 'Found open times: 18:30 and 19:15.', 'Booked for 18:30. Confirmation sent.'],
       steps: ['Understands intent', 'Checks schedule', 'Answers customer', 'Creates booking', 'Updates CRM'],
+      mobileFlow: ['Incoming call', 'Customer language', 'AI answers', 'Knowledge', 'Booking / consultation / service', 'Telegram control', 'CRM'],
       capabilities: ['Inbound & outbound calls', 'Pricing and common questions', 'Book, move and cancel', 'Lead qualification', 'CRM actions', 'Human handoff'],
       useCases: 'Clinics · dentists · garages · restaurants · salons · service businesses · call centers',
       intentLabel: 'INTENT / BOOKING',
@@ -247,8 +249,8 @@ const en = {
     visual: ['INTERFACE', 'LOGIC', 'DATA'],
     principle: 'From a public website to an internal operating system, the discipline is the same: a clear job, strong interface and reliable logic.',
     products: [
-      ['01', 'Landing Pages', 'Single-page websites with a clear argument and precise conversion path.', 'from €250'],
-      ['02', 'Corporate Websites', 'Complete websites for companies, brands, services and products.', 'Custom'],
+      ['01', 'Landing Pages', 'Single-page websites with a clear argument and precise conversion path.', 'from €120'],
+      ['02', 'Corporate Websites', 'Complete websites for companies, brands, services and products.', 'from €250'],
       ['03', 'Web Applications', 'Web products with bespoke business logic.', 'Custom'],
       ['04', 'Internal Tools', 'Dashboards, admin panels, management systems and reporting interfaces.', 'Custom'],
       ['05', 'MVP Development', 'The first complete working version of a product for a real-world test.', 'Custom'],
@@ -256,8 +258,8 @@ const en = {
     ],
     landing: {
       label: 'ENTRY POINT / LANDING PAGE', title: 'Small format. Full design discipline.',
-      text: '€250 is the minimum entry point for a simple landing page, not a promise of a template site. Complexity, content, motion and integrations are scoped separately.',
-      price: 'from €250', cta: 'Discuss a website',
+      text: '€120 is the minimum entry point for a simple landing page, not a promise of a template site. Complexity, content, motion and integrations are scoped separately.',
+      price: 'from €120', cta: 'Discuss a website',
       art: ['MAKE THE', 'COMPLEX', 'INEVITABLE.'],
     },
     build: { label: 'HOW A PRODUCT IS BUILT', steps: ['Problem', 'Scenario', 'Architecture', 'Interface', 'Development', 'Launch'] },
@@ -294,8 +296,8 @@ const replaceDeep = (value, pairs) => {
 serviceContent.de = replaceDeep(en, [
   ['Home', 'Startseite'], ['Services', 'Leistungen'], ['Cases', 'Projekte'], ['About', 'Über uns'], ['Pricing', 'Preise'], ['Contact', 'Kontakt'],
   ['Discuss a project', 'Projekt besprechen'], ['Enter capability', 'Bereich öffnen'], ['All services', 'Alle Leistungen'], ['Next capability', 'Nächster Bereich'],
-  ['Three worlds.', 'Drei Welten.'], ['One system.', 'Ein System.'], ['Business Automation', 'Geschäftsautomatisierung'],
-  ['Development', 'Entwicklung'], ['Performance Marketing', 'Online-Marketing'], ['BUSINESS AUTOMATION', 'GESCHÄFTSAUTOMATISIERUNG'],
+  ['Three worlds.', 'Drei Welten.'], ['One system.', 'Ein System.'], ['Business Automation', 'Geschäfts­automatisierung'],
+  ['Development', 'Entwicklung'], ['Performance Marketing', 'Online-Marketing'], ['BUSINESS AUTOMATION', 'GESCHÄFTS­AUTOMATISIERUNG'],
   ['Software with a clear', 'Software mit einem klaren'], ['reason to exist.', 'Grund zu existieren.'],
   ['Demand becomes', 'Nachfrage wird'], ['a manageable system.', 'zu einem steuerbaren System.'],
   ['from €250', 'ab €250'], ['Custom', 'Individuell'], ['Customer', 'Kunde'], ['Request', 'Anfrage'],
@@ -307,8 +309,8 @@ serviceContent.de.common.menu = 'Menü'
 serviceContent.de.common.close = 'Schließen'
 serviceContent.de.common.system = ['Gewinnen', 'Erfassen', 'Verarbeiten', 'Automatisieren', 'Steuern', 'Analysieren', 'Optimieren']
 serviceContent.de.directions = [
-  { id: 'automation', number: '01', name: 'Geschäftsautomatisierung', short: 'Prozesse, Signale, Daten und Intelligenz.', statement: 'Wir reduzieren wiederkehrende Arbeit und entwickeln eine verbundene operative Ebene.', items: ['AI-Telefonassistent', 'AI-Assistenten', 'CRM-Automatisierung', 'Integrationen', 'Individuelle Automatisierung'] },
-  { id: 'development', number: '02', name: 'Entwicklung', short: 'Struktur, Interfaces, Logik und Produkt.', statement: 'Wir entwickeln Werkzeuge für eine konkrete geschäftliche Aufgabe.', items: ['Landingpages', 'Unternehmenswebsites', 'Web-Applikationen', 'Interne Tools', 'MVP-Entwicklung', 'Individuelle Software'] },
+  { id: 'automation', number: '01', name: 'Geschäfts­automatisierung', short: 'Prozesse, Signale, Daten und Intelligenz.', statement: 'Wir reduzieren wiederkehrende Arbeit und entwickeln eine verbundene operative Ebene.', items: ['AI-Telefonassistent', 'AI-Assistenten', 'CRM-Automatisierung', 'Integrationen', 'Individuelle Automatisierung'] },
+  { id: 'development', number: '02', name: 'Entwicklung', short: 'Struktur, Interfaces, Logik und Produkt.', statement: 'Wir entwickeln Werkzeuge für eine konkrete geschäftliche Aufgabe.', items: ['Landingpages', 'Unternehmens­websites', 'Web-Applikationen', 'Interne Tools', 'MVP-Entwicklung', 'Individuelle Software'] },
   { id: 'performance', number: '03', name: 'Online-Marketing', short: 'Aufmerksamkeit, Nachfrage, Conversion und Messung.', statement: 'Wir gewinnen Nachfrage und entwickeln Messbarkeit, bevor Kampagnen skalieren.', items: ['Google Ads', 'Meta Ads', 'TikTok Ads', 'Analytics & Tracking'] },
 ]
 serviceContent.de.automation.intro = 'Wir analysieren die bestehende Arbeit, finden wiederkehrende Schritte und Engpässe und bauen daraus ein System für das konkrete Unternehmen.'
@@ -336,6 +338,7 @@ Object.assign(serviceContent.de.automation, {
     start: 'Szenario starten', replay: 'Anruf wiederholen', incoming: 'Eingehender Anruf', client: 'Kunde', operator: 'AI-Assistent',
     transcript: ['Ich möchte am Freitag nach sechs einen Termin.', 'Freie Zeiten gefunden: 18:30 und 19:15.', 'Für 18:30 gebucht. Bestätigung wurde gesendet.'],
     steps: ['Versteht die Absicht', 'Prüft den Terminplan', 'Antwortet dem Kunden', 'Erstellt den Termin', 'Aktualisiert das CRM'],
+    mobileFlow: ['Eingehender Anruf', 'Sprache des Kunden', 'AI antwortet', 'Wissensbasis', 'Termin / Beratung / Leistung', 'Telegram-Steuerung', 'CRM'],
     capabilities: ['Ein- und ausgehende Anrufe', 'Preise und häufige Fragen', 'Buchen, verschieben, stornieren', 'Lead-Qualifizierung', 'CRM-Aktionen', 'Übergabe an Mitarbeitende'],
     useCases: 'Kliniken · Zahnärzte · Werkstätten · Restaurants · Salons · Dienstleister · Callcenter',
     intentLabel: 'ABSICHT / TERMIN',
@@ -367,8 +370,8 @@ Object.assign(serviceContent.de.development, {
   visual: ['INTERFACE', 'LOGIK', 'DATEN'],
   principle: 'Von der öffentlichen Website bis zum internen Betriebssystem gilt dieselbe Disziplin: klare Aufgabe, starkes Interface und zuverlässige Logik.',
   products: [
-    ['01', 'Landingpages', 'Einseitige Websites mit klarer Argumentation und präzisem Conversion-Pfad.', 'ab €250'],
-    ['02', 'Unternehmenswebsites', 'Vollständige Websites für Unternehmen, Marken, Services und Produkte.', 'Individuell'],
+    ['01', 'Landingpages', 'Einseitige Websites mit klarer Argumentation und präzisem Conversion-Pfad.', 'ab €120'],
+    ['02', 'Unternehmens­websites', 'Vollständige Websites für Unternehmen, Marken, Services und Produkte.', 'ab €250'],
     ['03', 'Web-Applikationen', 'Web-Produkte mit individueller Geschäftslogik.', 'Individuell'],
     ['04', 'Interne Tools', 'Dashboards, Admin-Panels, Managementsysteme und Reporting-Interfaces.', 'Individuell'],
     ['05', 'MVP-Entwicklung', 'Die erste vollständige Arbeitsversion eines Produkts für den realen Test.', 'Individuell'],
@@ -376,8 +379,8 @@ Object.assign(serviceContent.de.development, {
   ],
   landing: {
     label: 'EINSTIEG / LANDINGPAGE', title: 'Kleines Format. Volle Designdisziplin.',
-    text: '€250 ist der Mindesteinstieg für eine einfache Landingpage, kein Versprechen für eine Template-Website. Komplexität, Inhalt, Motion und Integrationen werden separat bewertet.',
-    price: 'ab €250', cta: 'Website besprechen', art: ['KOMPLEXES', 'WIRD', 'KLAR.'],
+    text: '€120 ist der Mindesteinstieg für eine einfache Landingpage, kein Versprechen für eine Template-Website. Komplexität, Inhalt, Motion und Integrationen werden separat bewertet.',
+    price: 'ab €120', cta: 'Website besprechen', art: ['KOMPLEXES', 'WIRD', 'KLAR.'],
   },
   build: { label: 'SO ENTSTEHT EIN PRODUKT', steps: ['Aufgabe', 'Szenario', 'Architektur', 'Interface', 'Entwicklung', 'Launch'] },
 })
@@ -444,6 +447,7 @@ Object.assign(serviceContent.uk.automation, {
     start: 'Запустити сценарій', replay: 'Повторити дзвінок', incoming: 'Вхідний дзвінок', client: 'Клієнт', operator: 'AI-оператор',
     transcript: ['Хочу записатися в п’ятницю після шостої.', 'Знайдено вільні слоти: 18:30 та 19:15.', 'Записую на 18:30. Підтвердження надіслано.'],
     steps: ['Розуміє намір', 'Перевіряє розклад', 'Відповідає клієнту', 'Створює запис', 'Оновлює CRM'],
+    mobileFlow: ['Вхідний дзвінок', 'Мова клієнта', 'AI відповідає', 'Knowledge', 'Запис / консультація / послуга', 'Telegram control', 'CRM'],
     capabilities: ['Вхідні та вихідні дзвінки', 'Ціни й типові питання', 'Запис, перенесення та скасування', 'Кваліфікація ліда', 'Робота з CRM', 'Передача співробітнику'],
     useCases: 'Клініки · стоматології · автосервіси · ресторани · салони · сервісний бізнес · call-центри',
     intentLabel: 'НАМІР / ЗАПИС',
@@ -475,8 +479,8 @@ Object.assign(serviceContent.uk.development, {
   visual: ['ІНТЕРФЕЙС', 'ЛОГІКА', 'ДАНІ'],
   principle: 'Від публічного сайту до внутрішньої операційної системи — одна дисципліна: чітке завдання, сильний інтерфейс і надійна логіка.',
   products: [
-    ['01', 'Landing Pages', 'Односторінкові сайти з чіткою аргументацією та точним conversion path.', 'від €250'],
-    ['02', 'Корпоративні сайти', 'Повноцінні сайти компаній, брендів, сервісів і продуктів.', 'Індивідуально'],
+    ['01', 'Landing Pages', 'Односторінкові сайти з чіткою аргументацією та точним conversion path.', 'від €120'],
+    ['02', 'Корпоративні сайти', 'Повноцінні сайти компаній, брендів, сервісів і продуктів.', 'від €250'],
     ['03', 'Web Applications', 'Web-застосунки з індивідуальною бізнес-логікою.', 'Індивідуально'],
     ['04', 'Внутрішні інструменти', 'Dashboards, admin panels, management systems і reporting interfaces.', 'Індивідуально'],
     ['05', 'MVP Development', 'Перша повноцінна робоча версія продукту для перевірки реального сценарію.', 'Індивідуально'],
@@ -484,8 +488,8 @@ Object.assign(serviceContent.uk.development, {
   ],
   landing: {
     label: 'ТОЧКА ВХОДУ / LANDING PAGE', title: 'Малий формат. Повна дизайнерська дисципліна.',
-    text: '€250 — мінімальна точка входу для простого landing page, а не обіцянка шаблонного сайту. Складність, контент, motion та інтеграції оцінюються окремо.',
-    price: 'від €250', cta: 'Обговорити сайт', art: ['СКЛАДНЕ', 'СТАЄ', 'НЕМИНУЧИМ.'],
+    text: '€120 — мінімальна точка входу для простого landing page, а не обіцянка шаблонного сайту. Складність, контент, motion та інтеграції оцінюються окремо.',
+    price: 'від €120', cta: 'Обговорити сайт', art: ['СКЛАДНЕ', 'СТАЄ', 'НЕМИНУЧИМ.'],
   },
   build: { label: 'ЯК СТВОРЮЄТЬСЯ ПРОДУКТ', steps: ['Завдання', 'Сценарій', 'Архітектура', 'Інтерфейс', 'Розробка', 'Запуск'] },
 })

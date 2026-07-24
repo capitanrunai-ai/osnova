@@ -1169,7 +1169,7 @@
 }
 
 .case-filter-main button:first-child { min-width: 44px; }
-.case-detail-breadcrumb a { min-height: 44px; }
+.case-detail-breadcrumb a { min-height: 46px; }
 
 .spatial-progress button {
   min-width: 44px;
@@ -1238,6 +1238,23 @@
   .case-detail-breadcrumb { font-size: 12px; }
   .case-facts-grid strong { font-size: 15px; }
   .case-system-map > span { min-width: 118px; padding: 12px; }
+  .case-pending-metric {
+    min-height: 320px;
+    padding-top: 42px;
+    grid-template-columns: 76px minmax(0, 1fr);
+    gap: 14px;
+  }
+  .case-pending-metric > span {
+    padding-bottom: 23px;
+    font-size: 96px;
+  }
+  .case-pending-metric strong {
+    min-width: 0;
+    padding-bottom: 30px;
+    font-size: clamp(27px, 8.4vw, 34px);
+    line-height: .94;
+    overflow-wrap: anywhere;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
