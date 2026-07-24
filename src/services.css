@@ -971,16 +971,16 @@
 @keyframes brand-in { from { opacity: .45; transform: translateY(8px); } }
 .brand-composition { min-height: 780px; position: relative; overflow: hidden; border-right: 1px solid rgba(255,255,255,.13); }
 .brand-grid { opacity: .75; mask-image: radial-gradient(circle at center, black, transparent 70%); }
-.brand-orbits { width: 530px; height: 530px; position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); }
-.brand-orbits span { position: absolute; inset: 0; border: 1px solid rgba(255,255,255,.14); border-radius: 50%; }
-.brand-orbits span:nth-child(2) { inset: 72px; border-style: dashed; animation: ws-spin 20s linear infinite; }
-.brand-orbits span:nth-child(3) { inset: 150px; border-color: rgba(255,255,255,.25); }
-.brand-orbits > i { width: 7px; height: 7px; position: absolute; left: 50%; top: 0; background: #fff; border-radius: 50%; box-shadow: 0 0 18px #fff; animation: orbit-dot 7s linear infinite; transform-origin: 0 265px; }
-.brand-orbits > i:nth-of-type(2) { top: 72px; background: var(--lime); animation-duration: 5s; animation-direction: reverse; transform-origin: 0 193px; }
+.brand-orbits { width: 560px; height: 560px; position: absolute; z-index: 1; left: 50%; top: 50%; transform: translate(-50%,-50%); }
+.brand-orbits span { position: absolute; inset: 0; border: 1px solid rgba(255,255,255,.11); border-radius: 50%; }
+.brand-orbits span:nth-child(2) { inset: 74px; border-color: rgba(255,255,255,.14); border-style: dashed; animation: ws-spin 24s linear infinite; }
+.brand-orbits span:nth-child(3) { inset: 150px; border-color: rgba(255,255,255,.22); box-shadow: inset 0 0 42px rgba(255,255,255,.018); }
+.brand-orbits > i { width: 6px; height: 6px; position: absolute; left: 50%; top: 0; background: rgba(255,255,255,.85); border-radius: 50%; box-shadow: 0 0 18px rgba(255,255,255,.7); animation: orbit-dot 9s linear infinite; transform-origin: 0 280px; }
+.brand-orbits > i:nth-of-type(2) { top: 74px; background: var(--lime); animation-duration: 6.5s; animation-direction: reverse; transform-origin: 0 206px; }
 @keyframes orbit-dot { to { transform: rotate(360deg); } }
-.brand-object { width: 220px; height: 220px; display: grid; place-items: center; position: absolute; left: 50%; top: 50%; background: #101014; border: 1px solid rgba(255,255,255,.18); box-shadow: 0 35px 80px rgba(0,0,0,.45); transform: translate(-50%,-50%) rotate(45deg); }
-.brand-object .brand-svg { width: 115px; height: 115px; transform: rotate(-45deg); filter: drop-shadow(0 16px 24px rgba(0,0,0,.3)); }
-.brand-object small { position: absolute; bottom: 25px; color: rgba(255,255,255,.38); font: 6px var(--mono); letter-spacing: .11em; transform: rotate(-45deg); text-transform: uppercase; }
+.brand-object { width: 162px; height: 162px; display: grid; place-items: center; position: absolute; z-index: 4; left: 50%; top: 50%; overflow: hidden; background: rgba(16,16,20,.94); border: 1px solid rgba(255,255,255,.22); box-shadow: 0 28px 80px rgba(0,0,0,.5), 0 0 0 12px rgba(255,255,255,.018); transform: translate(-50%,-50%) rotate(45deg); backdrop-filter: blur(10px); }
+.brand-object::after { content: ''; position: absolute; inset: 12px; border: 1px solid rgba(255,255,255,.055); pointer-events: none; }
+.brand-object .brand-svg { width: 88px; height: 88px; position: relative; z-index: 2; object-fit: contain; transform: rotate(-45deg); filter: drop-shadow(0 14px 22px rgba(0,0,0,.28)); }
 .brand-copy { padding: 80px 65px; display: flex; flex-direction: column; justify-content: center; position: relative; z-index: 2; }
 .brand-copy > span { color: rgba(255,255,255,.35); font: 8px var(--mono); letter-spacing: .12em; }
 .brand-copy h2 { max-width: 580px; margin: 24px 0 28px; font: 500 clamp(55px, 5.3vw, 84px)/.92 var(--display); letter-spacing: -.065em; }
@@ -993,27 +993,48 @@
 .channel-logic svg { width: 13px; position: absolute; right: 9px; top: 35px; color: rgba(255,255,255,.25); }
 
 .google-mark { overflow: visible; }
-.meta-mark { overflow: visible; }
+.meta-mark { display: block; }
 .tiktok-mark { overflow: visible; }
 .tik-main { fill: #f8f8f5; }
 .tik-shadow-cyan { fill: #25f4ee; transform: translate(-.5px, .35px); }
 .tik-shadow-pink { fill: #fe2c55; transform: translate(.55px, -.2px); }
 
-.brand-world-google .brand-object { background: #f5f5f1; border-color: white; box-shadow: 0 35px 90px rgba(65,102,190,.2); }
-.brand-world-google .brand-orbits span:nth-child(3) { border-color: rgba(66,133,244,.55); }
+.brand-world-google .brand-object { background: #f5f5f1; border-color: white; box-shadow: 0 30px 90px rgba(65,102,190,.18), 0 0 0 12px rgba(255,255,255,.025); }
+.brand-world-google .brand-object::after { border-color: rgba(10,10,12,.06); }
+.brand-world-google .brand-object .brand-svg { width: 78px; height: 78px; }
+.brand-world-google .brand-orbits span:first-child { border-top-color: rgba(66,133,244,.38); border-right-color: rgba(52,168,83,.22); border-bottom-color: rgba(251,188,5,.26); }
+.brand-world-google .brand-orbits span:nth-child(3) { border-color: rgba(66,133,244,.45); }
 .search-intents span { padding: 9px 12px; position: absolute; z-index: 2; color: rgba(255,255,255,.48); background: #0a0a0c; border: 1px solid rgba(255,255,255,.12); font: 7px var(--mono); }
 .search-intents span:nth-child(1) { left: 7%; top: 16%; }.search-intents span:nth-child(2) { right: 6%; top: 27%; }.search-intents span:nth-child(3) { left: 13%; bottom: 14%; }
 
-.brand-world-meta .brand-orbits { transform: translate(-50%,-50%) rotate(-12deg) scaleX(1.18); }
-.brand-world-meta .brand-object { background: #07162f; border-color: rgba(0,129,251,.4); box-shadow: 0 35px 90px rgba(0,100,224,.2); }
-.audience-points i { --angle: calc(var(--i) * 20deg); width: 5px; height: 5px; position: absolute; left: calc(50% + cos(var(--angle)) * 42%); top: calc(50% + sin(var(--angle)) * 38%); z-index: 2; background: #278cff; border-radius: 50%; box-shadow: 0 0 9px #278cff; animation: audience-pulse 2s ease-in-out infinite alternate; animation-delay: calc(var(--i) * -90ms); }
-@keyframes audience-pulse { to { opacity: .18; transform: scale(.5); } }
+.brand-world-meta .brand-composition { background: radial-gradient(circle at 50% 50%, rgba(0,129,251,.075), transparent 42%); }
+.brand-world-meta .brand-orbits span:first-child { border-color: rgba(0,129,251,.18); }
+.brand-world-meta .brand-orbits span:nth-child(2) { border-color: rgba(72,148,255,.2); }
+.brand-world-meta .brand-orbits span:nth-child(3) { border-color: rgba(0,129,251,.42); }
+.brand-world-meta .brand-object { background: rgba(5,17,37,.95); border-color: rgba(0,129,251,.42); box-shadow: 0 32px 90px rgba(0,100,224,.2), 0 0 0 12px rgba(0,129,251,.025); }
+.brand-world-meta .brand-object::after { border-color: rgba(0,129,251,.11); }
+.brand-world-meta .brand-object .brand-svg { width: 94px; height: 94px; }
+.audience-network { width: 520px; height: 520px; position: absolute; z-index: 2; left: 50%; top: 50%; pointer-events: none; transform: translate(-50%,-50%); }
+.audience-network > span { width: 430px; height: 1px; position: absolute; left: 50%; top: 50%; background: linear-gradient(90deg, transparent, rgba(39,140,255,.16) 14%, rgba(39,140,255,.05) 50%, rgba(39,140,255,.16) 86%, transparent); transform-origin: center; }
+.audience-network > span:nth-child(1) { transform: translate(-50%,-50%) rotate(0deg); }
+.audience-network > span:nth-child(2) { transform: translate(-50%,-50%) rotate(60deg); }
+.audience-network > span:nth-child(3) { transform: translate(-50%,-50%) rotate(120deg); }
+.audience-network i { --angle: calc(var(--i) * 20deg); width: 4px; height: 4px; position: absolute; left: calc(50% + cos(var(--angle)) * 46%); top: calc(50% + sin(var(--angle)) * 46%); background: #278cff; border-radius: 50%; box-shadow: 0 0 10px rgba(39,140,255,.8); animation: audience-pulse 2.4s ease-in-out infinite alternate; animation-delay: calc(var(--i) * -110ms); }
+.audience-network i:nth-of-type(3n) { width: 7px; height: 7px; box-shadow: 0 0 0 5px rgba(39,140,255,.04), 0 0 18px rgba(39,140,255,.75); }
+@keyframes audience-pulse { to { opacity: .22; transform: scale(.55); } }
 
-.brand-world-tiktok .brand-composition { background: linear-gradient(120deg, rgba(37,244,238,.05), transparent 35%, rgba(254,44,85,.06)); }
-.brand-world-tiktok .brand-object { border-color: rgba(254,44,85,.35); box-shadow: -20px 30px 90px rgba(37,244,238,.1), 20px -20px 90px rgba(254,44,85,.12); }
-.brand-world-tiktok .brand-orbits { transform: translate(-50%,-50%) rotate(15deg); }
-.vertical-frames span { width: 150px; height: 245px; padding: 10px; position: absolute; z-index: 1; color: rgba(255,255,255,.24); border: 1px solid rgba(255,255,255,.12); font: 6px var(--mono); }
-.vertical-frames span:nth-child(1) { left: 5%; top: 12%; transform: rotate(-8deg); }.vertical-frames span:nth-child(2) { right: 7%; top: 8%; transform: rotate(7deg); }.vertical-frames span:nth-child(3) { right: 10%; bottom: 4%; transform: rotate(-3deg); }
+.brand-world-tiktok .brand-composition { background: radial-gradient(circle at 50% 50%, rgba(255,255,255,.025), transparent 33%), linear-gradient(120deg, rgba(37,244,238,.04), transparent 38%, rgba(254,44,85,.045)); }
+.brand-world-tiktok .brand-orbits span:first-child { border-top-color: rgba(37,244,238,.2); border-bottom-color: rgba(254,44,85,.19); }
+.brand-world-tiktok .brand-orbits span:nth-child(2) { border-color: rgba(255,255,255,.16); animation-duration: 17s; }
+.brand-world-tiktok .brand-orbits span:nth-child(3) { border-top-color: rgba(37,244,238,.4); border-right-color: rgba(255,255,255,.12); border-bottom-color: rgba(254,44,85,.4); border-left-color: rgba(255,255,255,.12); }
+.brand-world-tiktok .brand-object { border-color: rgba(255,255,255,.24); box-shadow: -18px 26px 80px rgba(37,244,238,.08), 18px -18px 80px rgba(254,44,85,.09), 0 0 0 12px rgba(255,255,255,.018); }
+.brand-world-tiktok .brand-object .brand-svg { width: 76px; height: 76px; }
+.rhythm-field { position: absolute; z-index: 2; inset: 14% 9%; display: flex; align-items: center; justify-content: space-between; pointer-events: none; transform: rotate(-9deg); -webkit-mask-image: linear-gradient(90deg, transparent, black 12%, black 88%, transparent); mask-image: linear-gradient(90deg, transparent, black 12%, black 88%, transparent); }
+.rhythm-field::before { content: ''; height: 1px; position: absolute; right: 0; left: 0; top: 50%; background: linear-gradient(90deg, transparent, rgba(37,244,238,.34), rgba(255,255,255,.15), rgba(254,44,85,.34), transparent); }
+.rhythm-field i { width: 1px; height: var(--rhythm-height); background: rgba(255,255,255,.16); box-shadow: 0 0 12px rgba(255,255,255,.05); animation: rhythm-shift 2.8s var(--ease) infinite alternate; animation-delay: calc(var(--rhythm) * -120ms); }
+.rhythm-field i:nth-child(3n+1) { background: rgba(37,244,238,.35); }
+.rhythm-field i:nth-child(3n+2) { background: rgba(254,44,85,.35); }
+@keyframes rhythm-shift { to { transform: translateY(var(--rhythm-y)) scaleY(.45); opacity: .32; } }
 
 .analytics-system { color: white; background: #101116; }
 .analytics-grid { display: grid; grid-template-columns: .82fr 1.18fr; align-items: center; gap: 90px; }
@@ -1193,12 +1214,17 @@
   .channel-navigation button > i { display: none; }
   .brand-composition { min-height: 500px; }
   .brand-orbits { width: 340px; height: 340px; }
-  .brand-orbits span:nth-child(2) { inset: 48px; }.brand-orbits span:nth-child(3) { inset: 100px; }
+  .brand-orbits span:nth-child(2) { inset: 48px; }.brand-orbits span:nth-child(3) { inset: 85px; }
   .brand-orbits > i { transform-origin: 0 170px; }.brand-orbits > i:nth-of-type(2) { top: 48px; transform-origin: 0 122px; }
-  .brand-object { width: 145px; height: 145px; }
-  .brand-object .brand-svg { width: 78px; height: 78px; }
-  .brand-object small { bottom: 15px; font-size: 5px; }
-  .vertical-frames span { width: 90px; height: 165px; }
+  .brand-object { width: 110px; height: 110px; box-shadow: 0 20px 55px rgba(0,0,0,.46), 0 0 0 8px rgba(255,255,255,.016); }
+  .brand-object::after { inset: 8px; }
+  .brand-object .brand-svg { width: 58px; height: 58px; }
+  .brand-world-google .brand-object .brand-svg { width: 50px; height: 50px; }
+  .brand-world-meta .brand-object .brand-svg { width: 64px; height: 64px; }
+  .brand-world-tiktok .brand-object .brand-svg { width: 52px; height: 52px; }
+  .audience-network { width: 320px; height: 320px; }
+  .audience-network > span { width: 270px; }
+  .rhythm-field { inset: 14% 7%; }
   .search-intents span { font-size: 5px; padding: 6px; }
   .brand-copy { min-height: 620px; padding: 52px 22px; }
   .brand-copy h2 { font-size: 49px; }

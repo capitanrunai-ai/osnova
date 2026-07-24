@@ -72,16 +72,7 @@ function BrandMark({ brand }) {
     )
   }
   if (brand === 'meta') {
-    return (
-      <svg className="brand-svg meta-mark" viewBox="0 0 96 54" role="img" aria-label="Meta">
-        <defs>
-          <linearGradient id="meta-gradient" x1="4" y1="27" x2="92" y2="27" gradientUnits="userSpaceOnUse">
-            <stop stopColor="#0081fb" /><stop offset=".48" stopColor="#0064e0" /><stop offset="1" stopColor="#0081fb" />
-          </linearGradient>
-        </defs>
-        <path d="M8 38.5C12.4 22.3 20.5 9 29.3 9c11.8 0 19 27 28.7 27 6.1 0 10.3-7.9 14.5-17.1C76 11.2 79.5 9 83 9c7 0 10.7 9.2 5 27" fill="none" stroke="url(#meta-gradient)" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    )
+    return <img className="brand-svg meta-mark" src="/assets/meta-symbol.svg" alt="Meta" />
   }
   return (
     <svg className="brand-svg tiktok-mark" viewBox="0 0 24 24" role="img" aria-label="TikTok">
@@ -950,10 +941,23 @@ function ChannelExperience({ data }) {
           <div className="brand-composition">
             <div className="brand-grid" />
             <div className="brand-orbits"><span /><span /><span /><i /><i /></div>
-            {channel.id === 'tiktok' && <div className="vertical-frames">{[1, 2, 3].map((item) => <span key={item}>FRAME / 0{item}</span>)}</div>}
+            {channel.id === 'tiktok' && (
+              <div className="rhythm-field">
+                {Array.from({ length: 11 }, (_, index) => (
+                  <i
+                    key={index}
+                    style={{
+                      '--rhythm': index,
+                      '--rhythm-height': `${38 + (index % 5) * 21}px`,
+                      '--rhythm-y': `${(index % 3 - 1) * 20}px`,
+                    }}
+                  />
+                ))}
+              </div>
+            )}
             {channel.id === 'google' && <div className="search-intents">{channel.examples.map((item) => <span key={item}>{item}</span>)}</div>}
-            {channel.id === 'meta' && <div className="audience-points">{Array.from({ length: 18 }, (_, i) => <i key={i} style={{ '--i': i }} />)}</div>}
-            <div className="brand-object"><BrandMark brand={channel.id} /><small>{channel.label}</small></div>
+            {channel.id === 'meta' && <div className="audience-network"><span /><span /><span />{Array.from({ length: 18 }, (_, i) => <i key={i} style={{ '--i': i }} />)}</div>}
+            <div className="brand-object"><BrandMark brand={channel.id} /></div>
           </div>
           <div className="brand-copy">
             <span>{channel.label}</span><h2>{channel.verb}</h2><p>{channel.text}</p>

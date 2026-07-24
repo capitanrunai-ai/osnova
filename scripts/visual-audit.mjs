@@ -205,14 +205,30 @@ try {
   await page.setViewport({ width: 1440, height: 1000, deviceScaleFactor: 1 })
   await page.goto('http://127.0.0.1:5173/ru/services/performance', { waitUntil: 'networkidle0' })
   for (let index = 0; index < 3; index += 1) {
-    await page.click(`.channel-navigation button:nth-child(${index + 1})`)
-    await new Promise((resolve) => setTimeout(resolve, 180))
+    await page.evaluate((activeIndex) => document.querySelectorAll('.channel-navigation button')[activeIndex]?.click(), index)
+    await new Promise((resolve) => setTimeout(resolve, 420))
+    await page.$eval('.brand-composition', (node) => node.scrollIntoView({ block: 'center' }))
+    const activeName = await page.$eval('.channel-navigation button.active strong', (node) => node.textContent.trim().toLowerCase())
+    await (await page.$('.brand-composition')).screenshot({ path: `${output}/brand-${activeName}-desktop.png` })
     audit.push(await page.evaluate(() => ({
       name: 'channel-switch',
       active: document.querySelector('.channel-navigation button.active strong')?.textContent,
       world: document.querySelector('.brand-world')?.className,
-      mark: document.querySelector('.brand-object .brand-svg')?.getAttribute('aria-label'),
+      mark: document.querySelector('.brand-object .brand-svg')?.getAttribute('aria-label') || document.querySelector('.brand-object .brand-svg')?.getAttribute('alt'),
+      core: Math.round(document.querySelector('.brand-object')?.getBoundingClientRect().width || 0),
+      orbit: Math.round(document.querySelector('.brand-orbits')?.getBoundingClientRect().width || 0),
+      microLabels: document.querySelectorAll('.brand-object small, .vertical-frames').length,
     })))
+  }
+
+  await page.setViewport({ width: 390, height: 844, deviceScaleFactor: 1 })
+  for (let index = 0; index < 3; index += 1) {
+    await page.goto('http://127.0.0.1:5173/ru/services/performance', { waitUntil: 'networkidle0' })
+    await page.evaluate((activeIndex) => document.querySelectorAll('.channel-navigation button')[activeIndex]?.click(), index)
+    await new Promise((resolve) => setTimeout(resolve, 420))
+    await page.$eval('.brand-composition', (node) => node.scrollIntoView({ block: 'center' }))
+    const activeName = await page.$eval('.channel-navigation button.active strong', (node) => node.textContent.trim().toLowerCase())
+    await (await page.$('.brand-composition')).screenshot({ path: `${output}/brand-${activeName}-mobile.png` })
   }
 } finally {
   await browser?.close()
