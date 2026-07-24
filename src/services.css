@@ -999,11 +999,62 @@
 .tik-shadow-cyan { fill: #25f4ee; transform: translate(-.5px, .35px); }
 .tik-shadow-pink { fill: #fe2c55; transform: translate(.55px, -.2px); }
 
-.brand-world-google .brand-object { background: #f5f5f1; border-color: white; box-shadow: 0 30px 90px rgba(65,102,190,.18), 0 0 0 12px rgba(255,255,255,.025); }
-.brand-world-google .brand-object::after { border-color: rgba(10,10,12,.06); }
-.brand-world-google .brand-object .brand-svg { width: 78px; height: 78px; }
-.brand-world-google .brand-orbits span:first-child { border-top-color: rgba(66,133,244,.38); border-right-color: rgba(52,168,83,.22); border-bottom-color: rgba(251,188,5,.26); }
-.brand-world-google .brand-orbits span:nth-child(3) { border-color: rgba(66,133,244,.45); }
+@property --google-edge-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 18deg;
+}
+.brand-world-google .brand-composition { background: radial-gradient(circle at 50% 50%, rgba(66,133,244,.045), transparent 39%); }
+.brand-world-google .brand-object {
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.07), transparent 29%, rgba(66,133,244,.025) 63%, rgba(0,0,0,.16)),
+    rgba(8,9,13,.96);
+  border-color: rgba(255,255,255,.2);
+  box-shadow:
+    0 26px 74px rgba(0,0,0,.52),
+    0 0 0 10px rgba(255,255,255,.012),
+    0 0 0 11px rgba(255,255,255,.032),
+    inset 0 1px 0 rgba(255,255,255,.08),
+    inset 0 -22px 40px rgba(0,0,0,.24);
+}
+.brand-world-google .brand-object::before {
+  content: '';
+  width: 108px;
+  height: 108px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,.16), rgba(255,255,255,.07) 28%, rgba(66,133,244,.025) 49%, transparent 70%);
+  filter: blur(4px);
+  transform: translate(-50%,-50%);
+}
+.brand-world-google .brand-object::after {
+  inset: 12px;
+  padding: 1px;
+  border: 0;
+  background: conic-gradient(
+    from var(--google-edge-angle),
+    rgba(66,133,244,.6),
+    transparent 12% 31%,
+    rgba(234,67,53,.28) 37%,
+    transparent 44% 61%,
+    rgba(251,188,5,.32) 67%,
+    transparent 73% 88%,
+    rgba(52,168,83,.34)
+  );
+  opacity: .58;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: google-edge-travel 14s linear infinite;
+}
+@keyframes google-edge-travel { to { --google-edge-angle: 378deg; } }
+.brand-world-google .brand-object .brand-svg { width: 86px; height: 86px; filter: drop-shadow(0 10px 18px rgba(0,0,0,.48)) drop-shadow(0 0 11px rgba(255,255,255,.12)); }
+.brand-world-google .brand-orbits span:first-child { border-top-color: rgba(66,133,244,.34); border-right-color: rgba(52,168,83,.19); border-bottom-color: rgba(251,188,5,.21); border-left-color: rgba(234,67,53,.17); }
+.brand-world-google .brand-orbits span:nth-child(2) { border-color: rgba(255,255,255,.13); }
+.brand-world-google .brand-orbits span:nth-child(3) { border-top-color: rgba(66,133,244,.38); border-right-color: rgba(234,67,53,.14); border-bottom-color: rgba(251,188,5,.17); border-left-color: rgba(52,168,83,.17); }
 .search-intents span { padding: 9px 12px; position: absolute; z-index: 2; color: rgba(255,255,255,.48); background: #0a0a0c; border: 1px solid rgba(255,255,255,.12); font: 7px var(--mono); }
 .search-intents span:nth-child(1) { left: 7%; top: 16%; }.search-intents span:nth-child(2) { right: 6%; top: 27%; }.search-intents span:nth-child(3) { left: 13%; bottom: 14%; }
 
@@ -1219,7 +1270,9 @@
   .brand-object { width: 110px; height: 110px; box-shadow: 0 20px 55px rgba(0,0,0,.46), 0 0 0 8px rgba(255,255,255,.016); }
   .brand-object::after { inset: 8px; }
   .brand-object .brand-svg { width: 58px; height: 58px; }
-  .brand-world-google .brand-object .brand-svg { width: 50px; height: 50px; }
+  .brand-world-google .brand-object::before { width: 74px; height: 74px; }
+  .brand-world-google .brand-object::after { inset: 8px; }
+  .brand-world-google .brand-object .brand-svg { width: 58px; height: 58px; }
   .brand-world-meta .brand-object .brand-svg { width: 64px; height: 64px; }
   .brand-world-tiktok .brand-object .brand-svg { width: 52px; height: 52px; }
   .audience-network { width: 320px; height: 320px; }
@@ -1253,4 +1306,5 @@
   .page-transition.is-reveal { animation-duration: .01ms !important; }
   .world-entry,
   .brand-world { transition: none; animation: none; }
+  .brand-world-google .brand-object::after { animation: none; }
 }
