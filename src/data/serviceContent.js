@@ -147,6 +147,7 @@ export const serviceContent = {
       titleAccent: 'управляемой системой.',
       intro: 'Канал выбирает задача, зрелость спроса и экономика продукта. Корректное измерение проектируется до масштабирования.',
       selector: 'ВЫБЕРИТЕ СИГНАЛ',
+      capabilitiesLabel: 'ЧТО МАСШТАБИРУЕМ',
       axis: ['ВНИМАНИЕ', 'НАМЕРЕНИЕ', 'КОНВЕРСИЯ'],
       channels: [
         {
@@ -165,8 +166,9 @@ export const serviceContent = {
         {
           id: 'tiktok', name: 'TikTok', label: 'SHORT-FORM / НОВЫЙ СПРОС', verb: 'Превращаем показ в движение.',
           text: 'TikTok силён для продуктов и услуг, которые можно убедительно показать через short-form content. Он подходит не каждому бизнесу.',
-          items: ['Acquisition', 'Creative Testing', 'E-commerce', 'Consumer Services', 'Awareness', 'Demand Generation'],
+          items: ['Привлечение', 'Тестирование креативов', 'E-commerce', 'Потребительские услуги', 'Узнаваемость', 'Формирование спроса'],
           formula: ['Хук', 'Ритм', 'Доказательство', 'Действие'],
+          formulaDescriptions: ['Останавливаем скролл.', 'Удерживаем внимание.', 'Создаём доверие.', 'Переводим внимание в следующий шаг.'],
         },
       ],
       analytics: {
@@ -264,11 +266,12 @@ const en = {
     label: '03 / PERFORMANCE MARKETING', title: 'Demand becomes', titleAccent: 'a manageable system.',
     intro: 'The channel follows the problem, demand maturity and product economics. Accurate measurement is designed before scale.',
     selector: 'SELECT A SIGNAL',
+    capabilitiesLabel: 'WHAT WE SCALE',
     axis: ['ATTENTION', 'INTENT', 'CONVERSION'],
     channels: [
       { id: 'google', name: 'Google', label: 'EXISTING DEMAND', verb: 'Capture active intent.', text: 'Google is particularly useful when someone is already looking for a solution — a nearby service, a specific product or a provider.', items: ['Search Ads', 'Performance Max', 'Shopping', 'Remarketing', 'Lead Generation', 'Conversion Tracking'], formula: ['Search', 'Intent', 'Click', 'Conversion'], examples: ['dentist near me', 'repair service', 'buy product'] },
       { id: 'meta', name: 'Meta', label: 'POTENTIAL AUDIENCE', verb: 'Find them before the search.', text: 'Facebook and Instagram create interest through precise audiences, a strong offer, creative and analytics.', items: ['Lead Generation', 'E-commerce', 'Retargeting', 'Prospecting', 'Local Business', 'Conversion Campaigns'], formula: ['Audience', 'Offer', 'Creative', 'Analytics'] },
-      { id: 'tiktok', name: 'TikTok', label: 'SHORT-FORM / NEW DEMAND', verb: 'Turn attention into motion.', text: 'TikTok is powerful for products and services that short-form content can demonstrate convincingly. It is not for every business.', items: ['Acquisition', 'Creative Testing', 'E-commerce', 'Consumer Services', 'Awareness', 'Demand Generation'], formula: ['Hook', 'Rhythm', 'Proof', 'Action'] },
+      { id: 'tiktok', name: 'TikTok', label: 'SHORT-FORM / NEW DEMAND', verb: 'Turn attention into motion.', text: 'TikTok is powerful for products and services that short-form content can demonstrate convincingly. It is not for every business.', items: ['Acquisition', 'Creative Testing', 'E-commerce', 'Consumer Services', 'Awareness', 'Demand Generation'], formula: ['Hook', 'Rhythm', 'Proof', 'Action'], formulaDescriptions: ['Stop the scroll.', 'Hold attention.', 'Build trust.', 'Turn attention into the next step.'] },
     ],
     analytics: {
       label: 'ANALYTICS & TRACKING', title: 'Advertising without measurement is only spend.',
@@ -384,11 +387,12 @@ Object.assign(serviceContent.de.performance, {
   titleAccent: 'zu einem steuerbaren System.',
   intro: 'Der Kanal folgt der Aufgabe, dem Reifegrad der Nachfrage und der Produktökonomie. Messbarkeit wird vor der Skalierung entwickelt.',
   selector: 'SIGNAL AUSWÄHLEN',
+  capabilitiesLabel: 'WAS WIR SKALIEREN',
   axis: ['AUFMERKSAMKEIT', 'ABSICHT', 'CONVERSION'],
   channels: [
     { id: 'google', name: 'Google', label: 'BESTEHENDE NACHFRAGE', verb: 'Aktive Absicht erfassen.', text: 'Google ist besonders nützlich, wenn jemand bereits nach einer Lösung sucht — nach einem Dienstleister in der Nähe, einem konkreten Produkt oder einem Anbieter.', items: ['Search Ads', 'Performance Max', 'Shopping', 'Remarketing', 'Lead Generation', 'Conversion Tracking'], formula: ['Suche', 'Absicht', 'Klick', 'Conversion'], examples: ['Zahnarzt in der Nähe', 'Autoreparatur', 'Produkt kaufen'] },
     { id: 'meta', name: 'Meta', label: 'POTENZIELLE ZIELGRUPPE', verb: 'Finden, bevor die Suche beginnt.', text: 'Facebook und Instagram erzeugen Interesse durch präzise Zielgruppen, ein starkes Angebot, Creative und Analytics.', items: ['Lead Generation', 'E-Commerce', 'Retargeting', 'Prospecting', 'Lokales Geschäft', 'Conversion-Kampagnen'], formula: ['Zielgruppe', 'Angebot', 'Creative', 'Analytics'] },
-    { id: 'tiktok', name: 'TikTok', label: 'SHORT-FORM / NEUE NACHFRAGE', verb: 'Aufmerksamkeit in Bewegung verwandeln.', text: 'TikTok ist stark für Produkte und Services, die Short-Form-Content überzeugend zeigen kann. Der Kanal passt nicht zu jedem Unternehmen.', items: ['Akquisition', 'Creative Testing', 'E-Commerce', 'Consumer Services', 'Awareness', 'Demand Generation'], formula: ['Hook', 'Rhythmus', 'Beweis', 'Aktion'] },
+    { id: 'tiktok', name: 'TikTok', label: 'SHORT-FORM / NEUE NACHFRAGE', verb: 'Aufmerksamkeit in Bewegung verwandeln.', text: 'TikTok ist stark für Produkte und Services, die Short-Form-Content überzeugend zeigen kann. Der Kanal passt nicht zu jedem Unternehmen.', items: ['Akquisition', 'Creative Testing', 'E-Commerce', 'Consumer Services', 'Awareness', 'Demand Generation'], formula: ['Hook', 'Rhythmus', 'Beweis', 'Aktion'], formulaDescriptions: ['Stoppt den Scroll.', 'Hält Aufmerksamkeit.', 'Schafft Vertrauen.', 'Führt zum nächsten Schritt.'] },
   ],
   analytics: {
     label: 'ANALYTICS & TRACKING', title: 'Werbung ohne Messung ist nur Ausgabe.',
@@ -491,11 +495,12 @@ Object.assign(serviceContent.uk.performance, {
   titleAccent: 'керованою системою.',
   intro: 'Канал визначають завдання, зрілість попиту та економіка продукту. Коректне вимірювання проєктується до масштабування.',
   selector: 'ОБЕРІТЬ СИГНАЛ',
+  capabilitiesLabel: 'ЩО МАСШТАБУЄМО',
   axis: ['УВАГА', 'НАМІР', 'КОНВЕРСІЯ'],
   channels: [
     { id: 'google', name: 'Google', label: 'СФОРМОВАНИЙ ПОПИТ', verb: 'Перехоплюємо намір.', text: 'Google особливо корисний, коли людина вже шукає рішення — послугу поруч, конкретний продукт або виконавця.', items: ['Search Ads', 'Performance Max', 'Shopping', 'Remarketing', 'Lead Generation', 'Conversion Tracking'], formula: ['Пошук', 'Намір', 'Клік', 'Конверсія'], examples: ['стоматологія поруч', 'ремонт автомобіля', 'купити продукт'] },
     { id: 'meta', name: 'Meta', label: 'ПОТЕНЦІЙНА АУДИТОРІЯ', verb: 'Знаходимо до активного пошуку.', text: 'Facebook та Instagram допомагають сформувати інтерес через точну аудиторію, сильну пропозицію, креатив і аналітику.', items: ['Lead Generation', 'E-commerce', 'Retargeting', 'Prospecting', 'Локальний бізнес', 'Conversion Campaigns'], formula: ['Аудиторія', 'Пропозиція', 'Креатив', 'Аналітика'] },
-    { id: 'tiktok', name: 'TikTok', label: 'SHORT-FORM / НОВИЙ ПОПИТ', verb: 'Перетворюємо увагу на рух.', text: 'TikTok сильний для продуктів і послуг, які можна переконливо показати через short-form content. Він підходить не кожному бізнесу.', items: ['Залучення', 'Creative Testing', 'E-commerce', 'Consumer Services', 'Впізнаваність', 'Формування попиту'], formula: ['Хук', 'Ритм', 'Доказ', 'Дія'] },
+    { id: 'tiktok', name: 'TikTok', label: 'SHORT-FORM / НОВИЙ ПОПИТ', verb: 'Перетворюємо увагу на рух.', text: 'TikTok сильний для продуктів і послуг, які можна переконливо показати через short-form content. Він підходить не кожному бізнесу.', items: ['Залучення', 'Тестування креативів', 'E-commerce', 'Споживчі послуги', 'Впізнаваність', 'Формування попиту'], formula: ['Хук', 'Ритм', 'Доказ', 'Дія'], formulaDescriptions: ['Зупиняємо скрол.', 'Утримуємо увагу.', 'Створюємо довіру.', 'Переводимо увагу в наступний крок.'] },
   ],
   analytics: {
     label: 'АНАЛІТИКА & TRACKING', title: 'Реклама без вимірювання — лише витрати.',

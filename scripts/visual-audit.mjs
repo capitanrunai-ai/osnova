@@ -77,6 +77,28 @@ try {
     await page.screenshot({ path: `${output}/${name}-desktop.png`, fullPage: true })
   }
 
+  for (const [name, route] of routes) {
+    await page.setViewport({ width: 1280, height: 800, deviceScaleFactor: 1 })
+    await page.goto(`http://127.0.0.1:5173${route}`, { waitUntil: 'networkidle0' })
+    await page.evaluate(async () => {
+      for (let y = 0; y < document.documentElement.scrollHeight; y += 650) {
+        window.scrollTo(0, y)
+        await new Promise((resolve) => setTimeout(resolve, 30))
+      }
+      document.querySelectorAll('.reveal').forEach((node) => node.classList.add('is-visible'))
+      window.scrollTo(0, 0)
+      await new Promise((resolve) => setTimeout(resolve, 700))
+    })
+    const metrics = await page.evaluate(() => ({
+      title: document.title,
+      width: document.documentElement.clientWidth,
+      scrollWidth: document.documentElement.scrollWidth,
+      height: document.documentElement.scrollHeight,
+    }))
+    audit.push({ name, viewport: 'laptop', ...metrics })
+    await page.screenshot({ path: `${output}/${name}-laptop.png`, fullPage: true })
+  }
+
   for (const [name, route] of routes.filter(([name]) => ['services', 'automation', 'development', 'performance', 'cases', 'case-detail', 'home'].includes(name))) {
     await page.setViewport({ width: 390, height: 844, deviceScaleFactor: 1 })
     await page.goto(`http://127.0.0.1:5173${route}`, { waitUntil: 'networkidle0' })
@@ -116,6 +138,24 @@ try {
       title: document.title,
       directions: [...document.querySelectorAll('.world-copy h3')].map((node) => node.textContent.trim()),
       nav: [...document.querySelectorAll('.main-nav > a')].map((node) => node.textContent.trim()),
+    }), code))
+  }
+
+  for (const code of ['ru', 'en', 'de', 'uk']) {
+    await page.setViewport({ width: 390, height: 844, deviceScaleFactor: 1 })
+    await page.goto(`http://127.0.0.1:5173/${code}/services/performance`, { waitUntil: 'networkidle0' })
+    await page.evaluate(() => document.querySelectorAll('.channel-navigation button')[2]?.click())
+    await new Promise((resolve) => setTimeout(resolve, 120))
+    audit.push(await page.evaluate((language) => ({
+      name: `tiktok-locale-${language}`,
+      width: document.documentElement.clientWidth,
+      scrollWidth: document.documentElement.scrollWidth,
+      capabilitiesLabel: document.querySelector('.channel-capabilities > span')?.textContent.trim(),
+      capabilities: [...document.querySelectorAll('.channel-capability strong')].map((node) => node.textContent.trim()),
+      story: [...document.querySelectorAll('.channel-logic > span')].map((node) => ({
+        title: node.querySelector('strong')?.textContent.trim(),
+        text: node.querySelector('small')?.textContent.trim(),
+      })),
     }), code))
   }
 
@@ -210,6 +250,7 @@ try {
     await page.$eval('.brand-composition', (node) => node.scrollIntoView({ block: 'center' }))
     const activeName = await page.$eval('.channel-navigation button.active strong', (node) => node.textContent.trim().toLowerCase())
     await (await page.$('.brand-composition')).screenshot({ path: `${output}/brand-${activeName}-desktop.png` })
+    await (await page.$('.brand-world')).screenshot({ path: `${output}/brand-${activeName}-experience-desktop.png` })
     audit.push(await page.evaluate(() => ({
       name: 'channel-switch',
       active: document.querySelector('.channel-navigation button.active strong')?.textContent,
@@ -229,6 +270,7 @@ try {
     await page.$eval('.brand-composition', (node) => node.scrollIntoView({ block: 'center' }))
     const activeName = await page.$eval('.channel-navigation button.active strong', (node) => node.textContent.trim().toLowerCase())
     await (await page.$('.brand-composition')).screenshot({ path: `${output}/brand-${activeName}-mobile.png` })
+    await (await page.$('.brand-world')).screenshot({ path: `${output}/brand-${activeName}-experience-mobile.png` })
   }
 } finally {
   await browser?.close()

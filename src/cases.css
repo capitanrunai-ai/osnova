@@ -961,6 +961,139 @@
   .next-case-visual { height: 390px; }
 }
 
+/* Semantic typography scale for portfolio previews, archive and case stories. */
+.spatial-card-copy small,
+.archive-card-copy small,
+.case-card-index,
+.spatial-controls > span,
+.archive-count,
+.case-detail-title > span,
+.case-story-row > span,
+.case-pending-metric small,
+.next-case > a > div:first-child > span {
+  font-size: var(--text-micro);
+}
+
+.spatial-card-copy small,
+.archive-card-copy small,
+.case-draft-badge {
+  font-size: var(--text-label);
+}
+
+.case-preview-fact span,
+.archive-result-meta,
+.case-detail-breadcrumb,
+.case-draft-notice span,
+.case-facts-grid span,
+.case-section-heading > span,
+.case-result-heading > span,
+.case-system-map > span {
+  font-size: var(--text-label);
+}
+
+.case-filter-main button,
+.case-subfilters button,
+.archive-card-copy > span {
+  font-size: var(--text-ui);
+  line-height: var(--leading-ui);
+}
+
+.cases-showcase-head > p,
+.case-preview-fact p,
+.cases-archive-hero p,
+.archive-card-copy p,
+.case-empty,
+.case-draft-notice p,
+.case-facts-grid strong,
+.next-case p {
+  font-size: var(--text-body-small);
+  line-height: var(--leading-body);
+}
+
+.case-detail-title p,
+.case-result-heading p {
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+}
+
+.case-filter-main button,
+.case-subfilters button {
+  min-height: 44px;
+}
+
+.case-filter-main button:first-child { min-width: 44px; }
+.case-detail-breadcrumb a { min-height: 44px; }
+
+.spatial-progress button,
+.spatial-arrows button {
+  min-width: 44px;
+  height: 44px;
+}
+
+.case-filter-main button,
+.case-subfilters button,
+.spatial-card-copy small,
+.archive-card-copy small,
+.case-card-index,
+.spatial-controls > span,
+.archive-result-meta,
+.case-detail-breadcrumb,
+.case-facts-grid span,
+.case-section-heading > span,
+.case-result-heading > span,
+.next-case > a > div:first-child > span {
+  color: rgba(255,255,255,.6);
+}
+
+.case-preview-fact p,
+.cases-showcase-head > p,
+.cases-archive-hero p,
+.archive-card-copy p,
+.case-detail-title p,
+.next-case p {
+  color: rgba(255,255,255,.66);
+}
+
+.case-draft-badge {
+  padding: 9px 11px;
+  color: rgba(255,255,255,.9);
+}
+
+.case-facts-grid span,
+.case-story-row > span,
+.case-visuals-section .case-section-heading > span {
+  color: #686864;
+}
+
+@media (max-width: 700px) {
+  .cases-showcase-head > p,
+  .cases-archive-hero p,
+  .archive-card-copy p,
+  .case-detail-title p,
+  .case-draft-notice p,
+  .case-facts-grid strong,
+  .case-result-heading p,
+  .next-case p {
+    font-size: 16px;
+  }
+
+  .spatial-card { height: 558px; }
+  .spatial-card-copy { min-height: 220px; }
+  .case-preview-fact p {
+    display: -webkit-box;
+    margin-top: 9px;
+    overflow: hidden;
+    font-size: 15px;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+  .case-filter-main button { height: 52px; }
+  .case-subfilters.is-visible { min-height: 54px; }
+  .case-detail-breadcrumb { font-size: 12px; }
+  .case-facts-grid strong { font-size: 15px; }
+  .case-system-map > span { min-width: 118px; padding: 12px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .spatial-card,
   .archive-card,

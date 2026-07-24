@@ -961,8 +961,26 @@ function ChannelExperience({ data }) {
           </div>
           <div className="brand-copy">
             <span>{channel.label}</span><h2>{channel.verb}</h2><p>{channel.text}</p>
-            <div className="channel-capabilities">{channel.items.map((item) => <span key={item}>{item}</span>)}</div>
-            <div className="channel-logic">{channel.formula.map((item, index) => <span key={item}><i>0{index + 1}</i>{item}{index < channel.formula.length - 1 && <ArrowRight />}</span>)}</div>
+            <div className="channel-capabilities">
+              <span>{data.capabilitiesLabel}</span>
+              <div>
+                {channel.items.map((item, index) => (
+                  <span className="channel-capability" key={item}>
+                    <i>{String(index + 1).padStart(2, '0')}</i><strong>{item}</strong><ArrowRight />
+                  </span>
+                ))}
+              </div>
+            </div>
+            <div className={`channel-logic ${channel.formulaDescriptions ? 'is-story' : ''}`}>
+              {channel.formula.map((item, index) => (
+                <span key={item}>
+                  <i>{String(index + 1).padStart(2, '0')}</i>
+                  <strong>{item}</strong>
+                  {channel.formulaDescriptions && <small>{channel.formulaDescriptions[index]}</small>}
+                  {index < channel.formula.length - 1 && <ArrowRight />}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
       </div>

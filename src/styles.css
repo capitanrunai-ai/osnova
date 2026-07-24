@@ -13,6 +13,14 @@
   --sans: 'Helvetica Neue', Arial, sans-serif;
   --display: Georgia, 'Times New Roman', serif;
   --mono: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+  --text-micro: 11px;
+  --text-label: 12px;
+  --text-ui: 14px;
+  --text-body-small: 15px;
+  --text-body: 17px;
+  --text-lead: 20px;
+  --leading-ui: 1.35;
+  --leading-body: 1.65;
   --container: min(1440px, calc(100vw - 64px));
   --ease: cubic-bezier(.22, 1, .36, 1);
 }
@@ -93,7 +101,7 @@ h2 {
 .eyebrow,
 .section-label,
 .section-number {
-  font: 500 11px/1.2 var(--mono);
+  font: 500 var(--text-label)/1.25 var(--mono);
   letter-spacing: .12em;
   text-transform: uppercase;
 }
@@ -182,7 +190,7 @@ h2 {
   align-items: center;
   gap: 27px;
   transform: translateX(-50%);
-  font: 400 12px/1 var(--mono);
+  font: 400 var(--text-ui)/1 var(--mono);
 }
 
 .main-nav > a {
@@ -242,7 +250,7 @@ h2 {
   display: flex;
   align-items: center;
   gap: 7px;
-  font: 500 11px/1 var(--mono);
+  font: 500 13px/1 var(--mono);
 }
 
 .language-menu {
@@ -267,7 +275,7 @@ h2 {
   background: none;
   border: 0;
   cursor: pointer;
-  font-size: 12px;
+  font-size: var(--text-ui);
 }
 
 .language-menu button:hover,
@@ -277,7 +285,7 @@ h2 {
 }
 
 .language-menu button span {
-  font: 500 10px var(--mono);
+  font: 500 var(--text-label) var(--mono);
 }
 
 .menu-button {
@@ -404,7 +412,7 @@ h2 {
   justify-content: center;
   gap: 20px;
   border: 1px solid transparent;
-  font: 500 12px/1 var(--mono);
+  font: 500 var(--text-ui)/1 var(--mono);
   text-transform: uppercase;
   transition: transform .25s var(--ease), background .25s ease, color .25s ease;
 }
@@ -2581,7 +2589,7 @@ footer {
     display: flex;
     flex-direction: column;
   }
-  .hero-copy .eyebrow { margin-bottom: 22px; font-size: 8px; }
+  .hero-copy .eyebrow { margin-bottom: 22px; font-size: var(--text-label); }
   .hero h1 {
     max-width: 100%;
     margin-bottom: 24px;
@@ -2589,16 +2597,16 @@ footer {
     line-height: .93;
     letter-spacing: -.075em;
   }
-  .hero-copy > p { margin-bottom: 28px; font-size: 14px; line-height: 1.55; }
+  .hero-copy > p { margin-bottom: 28px; font-size: 17px; line-height: 1.6; }
   .hero-actions { flex-direction: column; align-items: stretch; }
   .button { min-height: 49px; justify-content: space-between; }
   .hero-map-wrap { width: 100%; margin-top: auto; }
   .system-map { width: 118%; margin: 0 -16% -15% 0; transform: scale(.92); transform-origin: bottom right; }
-  .map-node { font-size: 8px; }
+  .map-node { font-size: var(--text-micro); }
   .system-core { width: 85px; height: 85px; }
   .system-core::before { inset: -18px; }
   .system-core::after { inset: -35px; }
-  .system-core small { bottom: -58px; font-size: 7px; }
+  .system-core small { bottom: -58px; font-size: var(--text-micro); }
   .hero-index { left: 15px; right: 15px; bottom: 14px; }
   .hero-index span:nth-child(2) { display: none; }
   .statement-grid,
@@ -2629,7 +2637,7 @@ footer {
   }
   .statement p { width: 100%; margin-left: 0; font-size: 16px; }
   .section-heading .section-number { margin-bottom: 14px; }
-  .section-heading p { font-size: 14px; }
+  .section-heading p { font-size: var(--text-body); }
   .service-explorer { margin-top: 50px; }
   .service-tabs button { min-height: 64px; padding: 12px 9px; font-size: 10px; }
   .service-tabs button svg { width: 14px; }
@@ -2648,7 +2656,7 @@ footer {
   .contact-layout { gap: 45px; }
   .voice-console { min-height: 585px; padding: 16px; margin-inline: -5px; }
   .message { max-width: 92%; }
-  .feature-chips span { font-size: 8px; }
+  .feature-chips span { font-size: var(--text-label); }
   .assistant-flow { grid-template-columns: 1fr; }
   .assistant-flow > div { min-height: 100px; border-right: 0; border-bottom: 1px solid rgba(255,255,255,.14); }
   .assistant-flow svg { top: auto; right: 18px; bottom: -11px; transform: rotate(90deg); }
@@ -2702,13 +2710,163 @@ footer {
   .testimonial-placeholder { margin-top: 60px; padding: 45px 18px; }
   .testimonial-placeholder blockquote { font-size: 23px; }
   .price-row { grid-template-columns: 29px 1fr auto 16px; gap: 8px; }
-  .price-row strong { font-size: 13px; }
-  .price-row em { max-width: 90px; text-align: right; font-size: 8px; }
+  .price-row strong { font-size: 15px; }
+  .price-row em { max-width: 105px; text-align: right; font-size: var(--text-label); }
   .contact { min-height: auto; }
   .contact-form-wrap { padding: 25px 20px; }
   .form-row { grid-template-columns: 1fr; gap: 24px; }
   .footer-bottom { min-height: 160px; grid-template-columns: 1fr 1fr; }
   .footer-bottom p { grid-row: 2; grid-column: 1 / -1; text-align: left; }
+}
+
+/* Readability system — semantic text stays legible while visual-only labels remain restrained. */
+.system-core small,
+.hero-index,
+.service-tabs button span,
+.stage-list li span,
+.value-index,
+.voice-topbar small,
+.voice-topbar > span,
+.message small,
+.assistant-flow span,
+.role-card > span,
+.board-header,
+.crm-flow button span,
+.board-log,
+.process-step > span,
+.product-marquee i,
+.preview-copy span,
+.channel-tabs button span,
+.channel-copy > small,
+.case-body small,
+.case-link,
+.portrait-placeholder span,
+.team-card > small,
+.numbers-panel small,
+.testimonial-placeholder > span,
+.testimonial-placeholder > div,
+.price-row > span,
+.direct-contact small,
+.contact-form-wrap label span,
+.footer-bottom p,
+.footer-bottom > a:last-child {
+  font-size: var(--text-micro);
+}
+
+.map-node,
+.feature-chips span,
+.voice-note,
+.transcript-idle,
+.channel-copy > div span,
+.channel-formula span,
+.case-tag,
+.contact-form-wrap label span,
+.price-row em,
+.footer-bottom p {
+  font-size: var(--text-label);
+}
+
+.stage-copy a,
+.call-button,
+.form-submit,
+.direct-contact a,
+.footer-bottom > a:last-child {
+  font-size: var(--text-ui);
+}
+
+.direct-contact a { min-height: 44px; }
+
+.stage-copy p,
+.split-heading > p,
+.value-item p,
+.voice-copy > p,
+.message p,
+.assistants-heading > p,
+.role-card p,
+.crm-copy li,
+.crm-copy > p,
+.process-step p,
+.development-head > p,
+.website-copy > p,
+.channel-copy > p,
+.cases-head > p,
+.case-body p,
+.about-intro > p,
+.numbers-panel p,
+.pricing-intro > p {
+  font-size: var(--text-body-small);
+  line-height: var(--leading-body);
+}
+
+.statement p,
+.section-heading p,
+.contact-copy > p {
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+}
+
+.service-tabs button strong,
+.assistant-flow strong,
+.crm-flow button strong {
+  font-size: var(--text-body-small);
+}
+
+.main-nav > a,
+.brand,
+.language-current,
+.menu-button,
+.button,
+.call-button,
+.form-submit,
+.footer-bottom > a:last-child {
+  min-height: 44px;
+}
+
+.menu-button { min-width: 44px; }
+.contact-form-wrap input,
+.contact-form-wrap select { min-height: 48px; }
+
+.hero-index,
+.system-core small,
+.stage-meta,
+.voice-topbar small,
+.voice-topbar > span,
+.assistant-flow span,
+.role-card > span,
+.board-header,
+.board-log > span,
+.board-log small,
+.channel-copy > small,
+.case-body small,
+.direct-contact small,
+.footer-bottom p {
+  color: rgba(255, 255, 255, .58);
+}
+
+.role-card > span,
+.process-step > span,
+.product-marquee i,
+.portrait-placeholder span,
+.team-card > small,
+.numbers-panel small,
+.contact-form-wrap label span {
+  color: #6f6f6a;
+}
+
+.role-card:hover > span { color: rgba(255,255,255,.62); }
+.footer-bottom p { color: rgba(255,255,255,.52); }
+.footer-bottom > a:last-child { color: rgba(255,255,255,.7); }
+
+@media (max-width: 900px) {
+  .main-nav > a { font-size: var(--text-ui); }
+}
+
+@media (max-width: 640px) {
+  .site-header { height: 60px; }
+  .header-actions { top: 5px; }
+  .language-current,
+  .menu-button { height: 44px; }
+  .menu-button { width: 44px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

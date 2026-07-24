@@ -968,6 +968,10 @@
   background: #0a0a0c;
   animation: brand-in .55s var(--ease);
 }
+@media (min-width: 1101px) {
+  .brand-world-tiktok { grid-template-columns: .98fr 1.02fr; }
+  .brand-world-tiktok .brand-copy { padding-inline: 58px; }
+}
 @keyframes brand-in { from { opacity: .45; transform: translateY(8px); } }
 .brand-composition { min-height: 780px; position: relative; overflow: hidden; border-right: 1px solid rgba(255,255,255,.13); }
 .brand-grid { opacity: .75; mask-image: radial-gradient(circle at center, black, transparent 70%); }
@@ -982,15 +986,33 @@
 .brand-object::after { content: ''; position: absolute; inset: 12px; border: 1px solid rgba(255,255,255,.055); pointer-events: none; }
 .brand-object .brand-svg { width: 88px; height: 88px; position: relative; z-index: 2; object-fit: contain; transform: rotate(-45deg); filter: drop-shadow(0 14px 22px rgba(0,0,0,.28)); }
 .brand-copy { padding: 80px 65px; display: flex; flex-direction: column; justify-content: center; position: relative; z-index: 2; }
-.brand-copy > span { color: rgba(255,255,255,.35); font: 8px var(--mono); letter-spacing: .12em; }
+.brand-copy > span { color: rgba(255,255,255,.62); font: 500 var(--text-label)/1.3 var(--mono); letter-spacing: .1em; }
 .brand-copy h2 { max-width: 580px; margin: 24px 0 28px; font: 500 clamp(55px, 5.3vw, 84px)/.92 var(--display); letter-spacing: -.065em; }
-.brand-copy > p { max-width: 570px; color: rgba(255,255,255,.52); font-size: 15px; line-height: 1.65; }
-.channel-capabilities { margin-top: 32px; display: flex; flex-wrap: wrap; gap: 7px; }
-.channel-capabilities span { padding: 8px 10px; color: rgba(255,255,255,.55); border: 1px solid rgba(255,255,255,.14); font: 7px var(--mono); text-transform: uppercase; }
-.channel-logic { margin-top: 50px; padding-top: 25px; display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid rgba(255,255,255,.14); }
-.channel-logic > span { min-height: 85px; display: flex; flex-direction: column; gap: 9px; position: relative; color: rgba(255,255,255,.72); font-size: 9px; }
-.channel-logic i { color: rgba(255,255,255,.25); font: normal 7px var(--mono); }
-.channel-logic svg { width: 13px; position: absolute; right: 9px; top: 35px; color: rgba(255,255,255,.25); }
+.brand-copy > p { max-width: 570px; color: rgba(255,255,255,.68); font-family: var(--sans); font-size: var(--text-body); line-height: var(--leading-body); }
+.channel-capabilities { margin-top: 42px; }
+.channel-capabilities > span { display: block; color: rgba(255,255,255,.48); font: 500 var(--text-micro)/1.3 var(--mono); letter-spacing: .12em; text-transform: uppercase; }
+.channel-capabilities > div { margin-top: 14px; display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid rgba(255,255,255,.16); }
+.channel-capability { min-height: 62px; padding: 15px 0; display: grid; grid-template-columns: 32px 1fr 18px; align-items: center; gap: 8px; border-bottom: 1px solid rgba(255,255,255,.13); transition: color .28s ease, background .28s ease, padding .35s var(--ease); }
+.channel-capability:nth-child(odd) { padding-right: 18px; }
+.channel-capability:nth-child(even) { padding-left: 18px; border-left: 1px solid rgba(255,255,255,.13); }
+.channel-capability i { color: rgba(255,255,255,.34); font: normal var(--text-micro)/1 var(--mono); }
+.channel-capability strong { color: rgba(255,255,255,.78); font-family: var(--sans); font-size: var(--text-body-small); font-weight: 500; line-height: var(--leading-ui); }
+.channel-capability svg { width: 14px; color: rgba(255,255,255,.25); opacity: 0; transform: translateX(-6px); transition: opacity .28s, transform .35s var(--ease); }
+.channel-capability:hover { padding-inline: 12px; color: white; background: rgba(255,255,255,.045); }
+.channel-capability:hover svg { opacity: 1; transform: translateX(0); }
+.brand-world-tiktok .channel-capability:hover { background: linear-gradient(90deg, rgba(37,244,238,.055), rgba(254,44,85,.055)); }
+
+.channel-logic { margin-top: 50px; display: grid; grid-template-columns: repeat(4, 1fr); position: relative; border-top: 1px solid rgba(255,255,255,.18); overflow: hidden; }
+.channel-logic::after { content: ''; width: 25%; height: 1px; position: absolute; left: 0; top: 0; background: linear-gradient(90deg, transparent, var(--lime), transparent); transform: translateX(-100%); animation: channel-signal-track 7s var(--ease) infinite; }
+@keyframes channel-signal-track { 55%, 100% { transform: translateX(400%); } }
+.channel-logic > span { min-height: 118px; padding: 20px 16px 18px 0; display: flex; flex-direction: column; gap: 8px; position: relative; border-right: 1px solid rgba(255,255,255,.11); transition: background .3s ease, padding .35s var(--ease); }
+.channel-logic > span:last-child { border-right: 0; }
+.channel-logic > span:hover { padding-left: 12px; background: rgba(255,255,255,.04); }
+.channel-logic i { color: rgba(255,255,255,.45); font: normal var(--text-micro)/1 var(--mono); }
+.channel-logic strong { margin-top: auto; color: rgba(255,255,255,.9); font-family: var(--sans); font-size: 18px; font-weight: 500; line-height: 1.15; }
+.channel-logic small { max-width: 145px; color: rgba(255,255,255,.64); font-family: var(--sans); font-size: var(--text-body-small); line-height: 1.45; }
+.channel-logic svg { width: 14px; position: absolute; right: 13px; top: 20px; color: rgba(255,255,255,.3); }
+.channel-logic.is-story > span { min-height: 154px; }
 
 .google-mark { overflow: visible; }
 .meta-mark { display: block; }
@@ -1261,7 +1283,7 @@
   .channel-navigation button { min-height: 95px; padding: 14px 8px; display: flex; flex-direction: column; justify-content: center; gap: 5px; text-align: center; }
   .channel-navigation button > span { display: none; }
   .channel-navigation .brand-svg { width: 30px; height: 30px; }
-  .channel-navigation strong { font-size: 11px; }
+  .channel-navigation strong { font-size: 14px; }
   .channel-navigation button > i { display: none; }
   .brand-composition { min-height: 500px; }
   .brand-orbits { width: 340px; height: 340px; }
@@ -1278,22 +1300,194 @@
   .audience-network { width: 320px; height: 320px; }
   .audience-network > span { width: 270px; }
   .rhythm-field { inset: 14% 7%; }
-  .search-intents span { font-size: 5px; padding: 6px; }
-  .brand-copy { min-height: 620px; padding: 52px 22px; }
+  .search-intents span { font-size: var(--text-micro); padding: 7px 8px; }
+  .brand-copy { min-height: 620px; padding: 52px 22px 62px; }
   .brand-copy h2 { font-size: 49px; }
-  .brand-copy > p { font-size: 13px; }
-  .channel-logic { gap: 4px; }
-  .channel-logic > span { font-size: 7px; }
+  .brand-copy > p { font-size: 16px; }
+  .channel-capabilities > div { grid-template-columns: 1fr; }
+  .channel-capability:nth-child(odd),
+  .channel-capability:nth-child(even) { min-height: 58px; padding: 13px 0; border-left: 0; }
+  .channel-capability strong { font-size: 15px; }
+  .channel-logic { grid-template-columns: 1fr 1fr; }
+  .channel-logic > span,
+  .channel-logic.is-story > span { min-height: 145px; padding: 17px 12px; border-bottom: 1px solid rgba(255,255,255,.11); }
+  .channel-logic > span:nth-child(2) { border-right: 0; }
+  .channel-logic strong { font-size: 18px; }
+  .channel-logic small { font-size: 15px; }
   .channel-logic svg { display: none; }
   .analytics-board { aspect-ratio: .9; }
   .analytics-board svg { transform: scale(1.4); }
-  .analytics-flow span { min-width: 100px; font-size: 7px; }
+  .analytics-flow span { min-width: 112px; font-size: var(--text-label); }
   .next-direction > a { min-height: 430px; padding: 65px 15px; grid-template-columns: 1fr 48px; gap: 25px; }
   .next-direction > a > span { grid-column: 1 / -1; }
   .next-direction h2 { font-size: 53px; }
   .next-direction p { grid-column: 1; }
   .next-direction > a > svg { width: 48px; height: 48px; padding: 13px; }
   .page-transition > i:nth-of-type(3) { width: 390px; height: 390px; }
+}
+
+/* Semantic typography scale for service routes. */
+.route-header .header-route-code,
+.continuum-track i,
+.worlds-heading small,
+.world-number,
+.about-system-core span,
+.about-system > span,
+.direction-breadcrumb,
+.direction-scroll,
+.ah-node,
+.ah-core small,
+.direction-proposition span,
+.voice-product-copy > small,
+.call-head,
+.call-intent::before,
+.call-intent span,
+.call-pipeline span,
+.assistant-context-flow span,
+.assistant-role-list span,
+.crm-sequence-head,
+.crm-sequence button > span,
+.integration-core span,
+.integration-node,
+.custom-path span,
+.build-window b,
+.build-layer,
+.product-index button > span,
+.product-index small,
+.landing-art > span,
+.build-sequence i,
+.conversion-axis,
+.channel-navigation button > span,
+.search-intents span,
+.analytics-flow i,
+.next-direction > a > span,
+.page-transition > span {
+  font-size: var(--text-micro);
+}
+
+.world-items span,
+.analytics-copy > div span,
+.analytics-flow span {
+  font-size: var(--text-label);
+}
+
+.world-enter,
+.capability-list span,
+.call-system > button,
+.crm-items span,
+.crm-sequence button strong,
+.channel-navigation strong {
+  font-size: var(--text-ui);
+  line-height: var(--leading-ui);
+}
+
+.continuum-track > span,
+.world-copy p,
+.voice-product-copy > p,
+.wide-heading > p,
+.crm-system p,
+.assistant-role-list p,
+.custom-head p,
+.product-index p,
+.landing-new-copy p,
+.analytics-copy > p,
+.next-direction p {
+  font-size: var(--text-body-small);
+  line-height: var(--leading-body);
+}
+
+.direction-title p,
+.brand-copy > p {
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+}
+
+.call-pipeline strong {
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.call-pipeline span { color: rgba(255,255,255,.5); }
+.call-pipeline strong { color: rgba(255,255,255,.64); }
+.call-head b { color: rgba(255,255,255,.52); }
+.assistant-context-flow span { color: rgba(255,255,255,.52); }
+.assistant-context-flow > div:nth-child(3) span { color: rgba(10,10,12,.62); }
+.crm-sequence button { color: rgba(255,255,255,.62); }
+.custom-path span { color: rgba(255,255,255,.52); }
+
+.worlds-heading small,
+.world-number,
+.direction-breadcrumb,
+.direction-scroll,
+.call-head,
+.call-intent span,
+.assistant-context-flow span,
+.crm-sequence-head,
+.custom-path span,
+.brand-copy > span,
+.analytics-copy > div span,
+.analytics-flow i,
+.next-direction > a > span {
+  color: rgba(255,255,255,.56);
+}
+
+.world-copy p,
+.world-items span,
+.crm-system p,
+.custom-head p,
+.landing-new-copy p,
+.analytics-copy > p,
+.next-direction p {
+  color: rgba(255,255,255,.66);
+}
+
+.voice-product-copy > small,
+.assistant-role-list span,
+.product-index button > span,
+.product-index small {
+  color: #686864;
+}
+
+.product-index button:hover > span,
+.product-index button.active > span,
+.product-index button:hover small,
+.product-index button.active small {
+  color: rgba(255,255,255,.62);
+}
+
+.world-enter,
+.channel-navigation button,
+.call-system > button,
+.crm-sequence button {
+  min-height: 44px;
+}
+
+@media (max-width: 720px) {
+  .worlds-heading p,
+  .world-copy p,
+  .direction-title p,
+  .voice-product-copy > p,
+  .wide-heading > p,
+  .crm-system p,
+  .assistant-role-list p,
+  .custom-head p,
+  .product-index p,
+  .landing-new-copy p,
+  .analytics-copy > p,
+  .next-direction p {
+    font-size: 16px;
+  }
+
+  .world-items span { padding: 7px 8px; }
+  .ah-node,
+  .integration-node { font-size: var(--text-micro); }
+  .capability-list span,
+  .crm-items span { font-size: 13px; }
+  .call-pipeline { grid-template-columns: 1fr; padding: 10px 14px; }
+  .call-pipeline > div { min-height: 58px; padding: 10px 8px; border-right: 0; border-bottom: 1px solid rgba(255,255,255,.1); }
+  .call-pipeline > div:last-child { border-bottom: 0; }
+  .call-pipeline strong { margin-top: 8px; font-size: 14px; }
+  .product-index button { min-height: 220px; }
 }
 
 @media (hover: none) {
@@ -1307,4 +1501,5 @@
   .world-entry,
   .brand-world { transition: none; animation: none; }
   .brand-world-google .brand-object::after { animation: none; }
+  .channel-logic::after { animation: none; }
 }
