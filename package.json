@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build && node scripts/prerender.mjs && node scripts/generate-sitemap.mjs",
-    "build:vercel": "npm run build",
+    "build:netlify": "npm run build && node scripts/generate-netlify-redirects.mjs",
     "audit:cases": "node scripts/cases-audit.mjs",
     "audit:cases-navigation": "node scripts/cases-navigation-audit.mjs",
     "audit:mobile": "node scripts/mobile-audit.mjs",
