@@ -48,7 +48,7 @@ try {
   report.trackpad = true
   await page.click('.spatial-card.is-active .case-open-icon')
   await wait(1400)
-  assert.ok(page.url().endsWith('/cases/dds-service'), 'Real pointer click must open selected case')
+  assert.ok(page.url().endsWith('/cases/bala-group'), 'Real pointer click must open selected case')
   await page.goBack({ waitUntil: 'networkidle0' })
   assert.equal(await active(), '02')
   report.pointerClickAndBrowserBack = true

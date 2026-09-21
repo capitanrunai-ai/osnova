@@ -572,7 +572,7 @@ function SpatialCaseGallery({ items, lang, navigate, ui, memoryKey = 'featured',
 
 function FeaturedCases({ lang, navigate }) {
   const ui = caseUi[lang]
-  const allItems = useMemo(() => getLocalizedCases(lang).filter((item) => item.featured), [lang])
+  const allItems = useMemo(() => getLocalizedCases(lang), [lang])
   const [group, setGroup] = useState('all')
   const [subfilter, setSubfilter] = useState('all')
   const items = useMemo(() => filterCases(allItems, group, subfilter), [allItems, group, subfilter])

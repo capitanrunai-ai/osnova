@@ -46,10 +46,9 @@ try {
   }
   await open('/en/cases')
   assert.equal(await page.$$eval('.spatial-card', nodes => nodes.length), 7)
-  await page.screenshot({ path: resolve(output, 'portfolio-desktop.png'), fullPage: true })
-  await page.click('.spatial-nav-button.is-next')
-  await wait(800)
+  // DDS SERVICE must be the first card shown, with no interaction needed.
   assert.equal(await page.$eval('.spatial-card.is-active h3', node => node.textContent), 'DDS SERVICE')
+  await page.screenshot({ path: resolve(output, 'portfolio-desktop.png'), fullPage: true })
   await page.$eval('.spatial-card.is-active > a', node => node.click())
   await wait(1400)
   assert.ok(page.url().endsWith('/cases/dds-service'))
@@ -64,9 +63,9 @@ try {
   await page.click('.case-filter-main button:first-child')
   await page.focus('.spatial-stage')
   await page.keyboard.press('End')
-  assert.equal(await page.$eval('.spatial-card.is-active h3', node => node.textContent), 'RETATRUTIDELANDING PREVIEW')
+  assert.equal(await page.$eval('.spatial-card.is-active h3', node => node.textContent), 'RETATRUTIDELANDING PAGE')
   await page.keyboard.press('Home')
-  assert.equal(await page.$eval('.spatial-card.is-active h3', node => node.textContent), 'BALA GROUP')
+  assert.equal(await page.$eval('.spatial-card.is-active h3', node => node.textContent), 'DDS SERVICE')
   report.navigation.filtersAndKeyboard = true
   for (const lang of ['ru', 'en', 'de', 'uk']) {
     await open(`/${lang}/cases`, 390, 844)
@@ -78,7 +77,7 @@ try {
       if (item.url) assert.equal(await page.$eval('.portfolio-visit', node => node.href), item.url)
     }
   }
-  await open('/en/cases/bala-group')
+  await open('/en/cases/dds-service')
   await page.screenshot({ path: resolve(output, 'portfolio-detail-desktop.png'), fullPage: true })
   await page.click('.portfolio-preview-toolbar button:nth-child(2)')
   assert.ok(await page.$('.portfolio-screen.mode-mobile img'))
@@ -111,7 +110,8 @@ try {
     await checkLayout(`/de/cases/ai-voice-operator@${width}`)
   }
   await open('/ru/', 1440, 1000)
-  assert.equal(await page.$$eval('.spatial-card', nodes => nodes.length), 4)
+  assert.equal(await page.$$eval('.spatial-card', nodes => nodes.length), 7)
+  assert.equal(await page.$eval('.spatial-card.is-active h3', node => node.textContent), 'DDS SERVICE')
   await page.$eval('#cases', node => node.scrollIntoView())
   await wait(700)
   await (await page.$('#cases')).screenshot({ path: resolve(output, 'portfolio-home-desktop.png') })

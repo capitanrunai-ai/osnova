@@ -89,15 +89,6 @@ const website = (slug, title, url, options = {}) => ({
 })
 
 export const cases = [
-  website('bala-group', 'BALA GROUP', 'https://www.bala-group.com.ua/', {
-    featured: true, accent: '#e4b887',
-    copy: localized(
-      { summary: 'Сайт строительных и ремонтных услуг. Дизайн и разработка полностью с нуля.' },
-      { summary: 'A website for construction and renovation services. Designed and developed from scratch.' },
-      { summary: 'Website für Bau- und Renovierungsleistungen. Von Grund auf gestaltet und entwickelt.' },
-      { summary: 'Сайт будівельних і ремонтних послуг. Дизайн та розробка повністю з нуля.' },
-    ),
-  }),
   website('dds-service', 'DDS SERVICE', 'https://ddsservice.com.ua/', {
     featured: true, accent: '#f25b40',
     copy: localized(
@@ -105,6 +96,15 @@ export const cases = [
       { summary: 'An auto service website with services, customer information and contacts. Built entirely from scratch.' },
       { summary: 'Website einer Autowerkstatt mit Leistungen, Kundeninformationen und Kontakt. Komplett neu entwickelt.' },
       { summary: 'Сайт автосервісу: послуги, інформація для клієнтів і контакти. Повністю розроблений з нуля.' },
+    ),
+  }),
+  website('bala-group', 'BALA GROUP', 'https://www.bala-group.com.ua/', {
+    featured: true, accent: '#e4b887',
+    copy: localized(
+      { summary: 'Сайт строительных и ремонтных услуг. Дизайн и разработка полностью с нуля.' },
+      { summary: 'A website for construction and renovation services. Designed and developed from scratch.' },
+      { summary: 'Website für Bau- und Renovierungsleistungen. Von Grund auf gestaltet und entwickelt.' },
+      { summary: 'Сайт будівельних і ремонтних послуг. Дизайн та розробка повністю з нуля.' },
     ),
   }),
   website('retatrutide-silver-signal', 'RETATRUTIDE — SILVER SIGNAL', 'https://shalomesp11-creator.github.io/retatrutide-silver-signal/', {
