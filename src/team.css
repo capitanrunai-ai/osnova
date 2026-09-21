@@ -1,0 +1,83 @@
+﻿.about-team {
+  margin-top: 58px;
+  color: var(--ink);
+  font-family: var(--sans);
+}
+.about-team-header {
+  padding-bottom: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  border-bottom: 1px solid var(--ink);
+}
+.about-team-header span { font: 11px/1.5 var(--mono); letter-spacing: .08em; color: #62625e; }
+.about-team-header i { width: 8px; height: 8px; border-radius: 50%; background: var(--violet); }
+.about-team-roles {
+  display: grid;
+  grid-template-columns: minmax(0, .7fr) minmax(0, 1.3fr);
+  column-gap: clamp(48px, 7vw, 112px);
+}
+.about-team-role {
+  display: grid;
+  grid-column: 2;
+  grid-template-columns: 38px minmax(0, 1fr);
+  align-items: start;
+  gap: 16px 24px;
+  padding: 32px 0;
+  min-width: 0;
+  border-bottom: 1px solid var(--line);
+}
+.about-team-role-top { display: flex; flex-direction: column; align-items: center; gap: 12px; padding-top: 3px; color: var(--violet); }
+.about-team-role-top span { font: 11px/1.5 var(--mono); color: #62625e; }
+.about-team-role-top svg { flex-shrink: 0; }
+.about-team-role h3 {
+  margin: 0;
+  max-width: 580px;
+  font: 500 clamp(21px, 1.8vw, 27px)/1.2 var(--sans);
+  letter-spacing: -.035em;
+  overflow-wrap: break-word;
+}
+.about-team-role-description { grid-column: 2; min-width: 0; }
+.about-team-role h4 { margin: 0 0 10px; font: 500 17px/1.45 var(--sans); letter-spacing: -.015em; }
+.about-team-role p { margin: 0; max-width: 590px; color: #62625e; font: 400 15px/1.65 var(--sans); }
+.about-team-role.is-lead {
+  grid-column: 1;
+  grid-row: 1 / span 5;
+  align-self: start;
+  position: sticky;
+  top: 112px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 36px 0 40px;
+  border-bottom: 0;
+}
+.about-team-role.is-lead .about-team-role-top { flex-direction: row; gap: 20px; margin-bottom: 38px; }
+.about-team-role.is-lead .about-team-role-top svg { width: 28px; height: 28px; }
+.about-team-role.is-lead h3 { margin-bottom: 34px; font: 500 clamp(72px, 8vw, 112px)/.9 var(--sans); letter-spacing: .015em; }
+.about-team-role.is-lead h4 { margin-bottom: 16px; font-size: clamp(21px, 2vw, 28px); line-height: 1.25; }
+.about-team-role.is-lead p { max-width: 32ch; font-size: 16px; line-height: 1.75; }
+@media (max-width: 900px) {
+  .about-team-roles { display: flex; flex-direction: column; }
+  .about-team-role { grid-template-columns: 38px minmax(0, .9fr) minmax(0, 1.1fr); column-gap: 24px; }
+  .about-team-role-description { grid-column: 3; }
+  .about-team-role.is-lead { position: static; display: grid; align-self: stretch; gap: 16px 24px; border-bottom: 1px solid var(--ink); }
+  .about-team-role.is-lead .about-team-role-top { flex-direction: column; gap: 12px; margin: 0; }
+  .about-team-role.is-lead h3 { margin: 0; font-size: 72px; }
+  .about-team-role.is-lead h4 { font-size: 21px; }
+}
+@media (max-width: 640px) {
+  .about-team { margin-top: 35px; }
+  .about-team-header { padding-bottom: 18px; }
+  .about-team-header span { font-size: 10px; }
+  .about-team-role { grid-template-columns: 28px minmax(0, 1fr); gap: 18px 16px; padding: 26px 0; }
+  .about-team-role-top { flex-direction: column; gap: 12px; }
+  .about-team-role-top svg { width: 20px; height: 20px; }
+  .about-team-role h3 { font-size: 23px; align-self: center; }
+  .about-team-role-description { grid-column: 2; }
+  .about-team-role h4 { font-size: 16px; }
+  .about-team-role.is-lead { gap: 24px 16px; padding: 30px 0; }
+  .about-team-role.is-lead h3 { font-size: 68px; }
+  .about-team-role.is-lead p { max-width: none; font-size: 15px; }
+}

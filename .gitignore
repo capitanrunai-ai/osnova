@@ -5,3 +5,26 @@ dist/
 .chrome-*/
 .visual-audit/
 audit-*.png
+
+# Local configuration and credentials. Keep only the documented template.
+.env*
+!.env.example
+
+# Local audit, browser, audio-generation and scratch output.
+.agents/
+__pycache__/
+*.pyc
+*.wav
+*.mp3
+13.txt
+AUDIO_TASK_CHECKPOINT.md
+team_state.json
+fish_*.json
+voice_*.json
+fish_jobs/
+fish_segments*/
+fish_tests/
+heygen_tests/
+voice_samples/
+infidel-*.mjs
+tools_*

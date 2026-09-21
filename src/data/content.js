@@ -6,8 +6,8 @@ export const languages = {
 }
 
 const shared = {
-  email: 'hello@your-agency.com',
-  telegram: '@your_agency',
+  email: 'capitanrunai@gmail.com',
+  telegram: '@capitanrun',
 }
 
 export const content = {
@@ -17,6 +17,12 @@ export const content = {
       description: 'Убираем рутину из бизнеса. Проектируем AI, CRM, разработку и performance-маркетинг как единую рабочую систему.',
     },
     nav: { services: 'Услуги', approach: 'Подход', cases: 'Кейсы', pricing: 'Цены', contact: 'Обсудить проект', menu: 'Меню' },
+    notFound: {
+      meta: ['Страница не найдена — OSNOVA', 'Такой страницы нет. Вернитесь на главную или посмотрите направления OSNOVA.'],
+      label: '404 / СТРАНИЦА НЕ НАЙДЕНА', title: 'Такой страницы', accent: 'здесь нет.',
+      text: 'Возможно, адрес изменился или в ссылке опечатка. Вернитесь на главную или откройте список направлений.',
+      primary: 'На главную', secondary: 'Все направления',
+    },
     hero: {
       eyebrow: 'AI × АВТОМАТИЗАЦИЯ × РАЗРАБОТКА × PERFORMANCE',
       titleA: 'Меньше рутины.',
@@ -167,17 +173,15 @@ export const content = {
       label: 'ЦЕНЫ',
       title: 'Понятная точка входа. Честная оценка сложности.',
       text: 'Финальная стоимость зависит от объёма, интеграций, бизнес-логики, дизайна, разработки и сопровождения.',
-      from: 'от €120',
-      custom: 'Индивидуально',
+      action: 'Узнать цену',
       budgetNote: 'Для рекламы медиабюджет оплачивается отдельно.',
       items: [
-        ['Landing Page', 'от €120'],
-        ['Корпоративный сайт', 'от €250'],
-        ['AI-автоматизация', 'Индивидуально'],
-        ['AI-оператор', 'Индивидуально'],
-        ['CRM-автоматизация', 'Индивидуально'],
-        ['Индивидуальная разработка', 'Индивидуально'],
-        ['Реклама и продвижение', 'от €300'],
+        'Автоматизация бизнеса',
+        'Разработка',
+        'Реклама и продвижение',
+        'SEO',
+        'Продвижение в AI',
+        'Email Deliverability',
       ],
     },
     contact: {
@@ -185,9 +189,8 @@ export const content = {
       title: 'Какой процесс забирает у вашей команды слишком много времени?',
       text: 'Расскажите, как он устроен сейчас. Возможно, его уже не должен полностью выполнять человек.',
       fields: { name: 'Ваше имя', contact: 'Email или Telegram', company: 'Компания', help: 'Направление', message: 'Что происходит сейчас?' },
-      options: ['AI и автоматизация', 'CRM и интеграции', 'Разработка', 'Сайт', 'Реклама и продвижение', 'Пока не знаю'],
+      options: ['Автоматизация бизнеса', 'Разработка', 'Реклама и продвижение', 'SEO', 'Продвижение в AI', 'Email Deliverability', 'CRM и интеграции', 'Сайт', 'Пока не знаю'],
       submit: 'Отправить запрос',
-      sent: 'Спасибо. Форма работает в demo-режиме — подключите endpoint перед публикацией.',
       or: 'или напишите напрямую',
       ...shared,
     },
@@ -200,6 +203,12 @@ export const content = {
       description: 'Less busywork. More business. AI, CRM, development and performance built as one working system.',
     },
     nav: { services: 'Services', approach: 'Approach', cases: 'Cases', pricing: 'Pricing', contact: 'Discuss a project', menu: 'Menu' },
+    notFound: {
+      meta: ['Page not found — OSNOVA', 'This page does not exist. Return to the homepage or explore what OSNOVA does.'],
+      label: '404 / PAGE NOT FOUND', title: 'This page', accent: 'does not exist.',
+      text: 'The address may have changed, or the link contains a typo. Return to the homepage or open the list of capabilities.',
+      primary: 'Back to homepage', secondary: 'All capabilities',
+    },
     hero: {
       eyebrow: 'AI × AUTOMATION × DEVELOPMENT × PERFORMANCE',
       titleA: 'Less busywork.',
@@ -283,15 +292,15 @@ export const content = {
       testimonials: 'Testimonials will appear here after approval from real clients.', demo: 'PLACEHOLDER / NOT A REVIEW',
     },
     pricing: {
-      label: 'PRICING', title: 'A clear entry point. An honest estimate of complexity.', text: 'Final cost depends on scope, integrations, business logic, design, engineering and support.', from: 'from €120', custom: 'Custom quote',
+      label: 'PRICING', title: 'A clear entry point. An honest estimate of complexity.', text: 'Final cost depends on scope, integrations, business logic, design, engineering and support.', action: 'Get a price',
       budgetNote: 'Media spend for advertising is paid separately.',
-      items: [['Landing Page', 'from €120'], ['Business Website', 'from €250'], ['AI Automation', 'Custom quote'], ['AI Voice Operator', 'Custom quote'], ['CRM Automation', 'Custom quote'], ['Custom Development', 'Custom quote'], ['Performance Ads', 'from €300']],
+      items: ['Business Automation', 'Development', 'Performance Marketing', 'SEO', 'AI Visibility', 'Email Deliverability'],
     },
     contact: {
       label: 'START WITH THE BOTTLENECK', title: 'Which process consumes too much of your team’s time?', text: 'Tell us how it works today. It may be a process a person should no longer handle end to end.',
       fields: { name: 'Your name', contact: 'Email or Telegram', company: 'Company', help: 'Area', message: 'What happens today?' },
-      options: ['AI & Automation', 'CRM & Integrations', 'Development', 'Website', 'Performance Marketing', 'Not sure yet'], submit: 'Send request',
-      sent: 'Thank you. This form is in demo mode — connect an endpoint before launch.', or: 'or write directly', ...shared,
+      options: ['Business Automation', 'Development', 'Performance Marketing', 'SEO', 'AI Visibility', 'Email Deliverability', 'CRM & Integrations', 'Website', 'Not sure yet'], submit: 'Send request',
+      or: 'or write directly', ...shared,
     },
     footer: { line: 'AI. Automation. Development. Performance.', rights: '© 2026 OSNOVA. All rights reserved.', top: 'Back to top' },
   },
@@ -299,6 +308,12 @@ export const content = {
   de: {
     meta: { title: 'OSNOVA — AI, Automatisierung & digitale Systeme', description: 'Weniger Routine. Mehr Business. AI, CRM, Entwicklung und Performance als ein funktionierendes System.' },
     nav: { services: 'Leistungen', approach: 'Vorgehen', cases: 'Projekte', pricing: 'Preise', contact: 'Projekt besprechen', menu: 'Menü' },
+    notFound: {
+      meta: ['Seite nicht gefunden — OSNOVA', 'Diese Seite existiert nicht. Zurück zur Startseite oder zu den Leistungen von OSNOVA.'],
+      label: '404 / SEITE NICHT GEFUNDEN', title: 'Diese Seite', accent: 'gibt es nicht.',
+      text: 'Möglicherweise hat sich die Adresse geändert oder der Link enthält einen Tippfehler. Zurück zur Startseite oder zur Übersicht der Leistungen.',
+      primary: 'Zur Startseite', secondary: 'Alle Leistungen',
+    },
     hero: { eyebrow: 'AI × AUTOMATION × ENTWICKLUNG × PERFORMANCE', titleA: 'Weniger Routine.', titleB: 'Mehr Business.', text: 'Wir finden Prozesse, die Ihr Team bremsen, und verbinden AI, CRM, Entwicklung und Online-Marketing zu einem funktionierenden System.', primary: 'Projekt besprechen', secondary: 'Leistungen ansehen', signal: 'System online', nodes: ['Website', 'AI', 'CRM', 'Team', 'Daten', 'Kunde'] },
     explorer: {
       label: 'Kompetenzen', title: 'Ein Partner. Das ganze digitale System.', intro: 'Wählen Sie eine Ebene und sehen Sie, wo wir ansetzen.',
@@ -329,14 +344,20 @@ export const content = {
     },
     cases: { label: 'AUSGEWÄHLTE SYSTEME', title: 'Projekte sollten mit Fakten sprechen.', intro: 'Bereit für reale Geschichten: Kontext → Aufgabe → Lösung → messbares Ergebnis. Bis dahin nur klar markierte Konzepte.', cards: [{ tag: 'DEMO / KONZEPT 01', title: 'Patientenweg vom Anruf bis zum CRM', type: 'AI-Telefonie · CRM · Automatisierung', note: 'Klinik-Szenario: Anruf, Buchung, Bestätigung und CRM.' }, { tag: 'DEMO / KONZEPT 02', title: 'Operativer Kontrollraum', type: 'Internes Tool · Analytics', note: 'Ein Ort für Status, Ausnahmen und Team-Entscheidungen.' }, { tag: 'IHR PROJEKT / NÄCHSTES', title: 'Ihr System könnte hier stehen', type: 'Für Ihren Prozess gebaut', note: 'Wir starten mit dem teuersten wiederkehrenden Prozess.' }], view: 'Projektstruktur ansehen' },
     about: { label: 'DAS UNTERNEHMEN', title: 'Ein kompaktes Team. Systemisches Denken.', text: 'OSNOVA verbindet Produktdesign, Entwicklung, AI, Automatisierung und Online-Marketing. Historie, Gründungsdatum und echte Profile folgen nach Bestätigung.', team: ['Name / Rolle', 'Name / Rolle', 'Name / Rolle'], placeholders: ['Projekte — Daten folgen', 'Integrationen — Daten folgen', 'Länder — Daten folgen'], testimonials: 'Kundenstimmen erscheinen nach Freigabe realer Kunden.', demo: 'PLATZHALTER / KEINE BEWERTUNG' },
-    pricing: { label: 'PREISE', title: 'Klarer Einstieg. Ehrliche Komplexität.', text: 'Der finale Preis hängt von Umfang, Integrationen, Geschäftslogik, Design, Entwicklung und Betreuung ab.', from: 'ab €120', custom: 'Individuell', budgetNote: 'Das Werbebudget wird separat bezahlt.', items: [['Landingpage', 'ab €120'], ['Unternehmenswebsite', 'ab €250'], ['AI-Automatisierung', 'Individuell'], ['AI-Telefonassistent', 'Individuell'], ['CRM-Automatisierung', 'Individuell'], ['Individuelle Entwicklung', 'Individuell'], ['Online-Marketing', 'ab €300']] },
-    contact: { label: 'BEGINNEN WIR MIT DEM ENGPASS', title: 'Welcher Prozess kostet Ihr Team zu viel Zeit?', text: 'Erzählen Sie uns, wie er heute läuft. Vielleicht sollte ein Mensch ihn nicht mehr vollständig ausführen.', fields: { name: 'Ihr Name', contact: 'E-Mail oder Telegram', company: 'Unternehmen', help: 'Bereich', message: 'Was passiert heute?' }, options: ['AI und Automatisierung', 'CRM und Integrationen', 'Entwicklung', 'Website', 'Online-Marketing', 'Noch unsicher'], submit: 'Anfrage senden', sent: 'Danke. Das Formular läuft im Demo-Modus — vor dem Launch den Endpoint verbinden.', or: 'oder direkt schreiben', ...shared },
+    pricing: { label: 'PREISE', title: 'Klarer Einstieg. Ehrliche Komplexität.', text: 'Der finale Preis hängt von Umfang, Integrationen, Geschäftslogik, Design, Entwicklung und Betreuung ab.', action: 'Preis anfragen', budgetNote: 'Das Werbebudget wird separat bezahlt.', items: ['Geschäftsautomatisierung', 'Entwicklung', 'Online-Marketing', 'SEO', 'AI Visibility', 'Email Deliverability'] },
+    contact: { label: 'BEGINNEN WIR MIT DEM ENGPASS', title: 'Welcher Prozess kostet Ihr Team zu viel Zeit?', text: 'Erzählen Sie uns, wie er heute läuft. Vielleicht sollte ein Mensch ihn nicht mehr vollständig ausführen.', fields: { name: 'Ihr Name', contact: 'E-Mail oder Telegram', company: 'Unternehmen', help: 'Bereich', message: 'Was passiert heute?' }, options: ['Geschäftsautomatisierung', 'Entwicklung', 'Online-Marketing', 'SEO', 'AI Visibility', 'Email Deliverability', 'CRM und Integrationen', 'Website', 'Noch unsicher'], submit: 'Anfrage senden', or: 'oder direkt schreiben', ...shared },
     footer: { line: 'AI. Automation. Entwicklung. Online-Marketing.', rights: '© 2026 OSNOVA. Alle Rechte vorbehalten.', top: 'Nach oben' },
   },
 
   uk: {
     meta: { title: 'OSNOVA — AI, автоматизація та digital-системи', description: 'Менше рутини. Більше бізнесу. AI, CRM, розробка та performance як єдина робоча система.' },
     nav: { services: 'Послуги', approach: 'Підхід', cases: 'Кейси', pricing: 'Ціни', contact: 'Обговорити проєкт', menu: 'Меню' },
+    notFound: {
+      meta: ['Сторінку не знайдено — OSNOVA', 'Такої сторінки немає. Поверніться на головну або перегляньте напрями OSNOVA.'],
+      label: '404 / СТОРІНКУ НЕ ЗНАЙДЕНО', title: 'Такої сторінки', accent: 'тут немає.',
+      text: 'Можливо, адреса змінилася або в посиланні є помилка. Поверніться на головну або відкрийте перелік напрямів.',
+      primary: 'На головну', secondary: 'Усі напрями',
+    },
     hero: { eyebrow: 'AI × АВТОМАТИЗАЦІЯ × РОЗРОБКА × PERFORMANCE', titleA: 'Менше рутини.', titleB: 'Більше бізнесу.', text: 'Знаходимо процеси, що гальмують команду, і перетворюємо AI, CRM, розробку та рекламу на одну робочу систему.', primary: 'Обговорити проєкт', secondary: 'Переглянути послуги', signal: 'Система працює', nodes: ['Сайт', 'AI', 'CRM', 'Команда', 'Дані', 'Клієнт'] },
     explorer: {
       label: 'Напрями', title: 'Один партнер. Уся digital-система.', intro: 'Оберіть шар системи — покажемо, де саме можемо підключитися.',
@@ -367,8 +388,8 @@ export const content = {
     },
     cases: { label: 'ВИБРАНІ СИСТЕМИ', title: 'Кейси мають говорити фактами.', intro: 'Структура готова для реальних історій: контекст → завдання → рішення → вимірюваний результат. Поки — лише чітко позначені концепти.', cards: [{ tag: 'ДЕМО / КОНЦЕПТ 01', title: 'Шлях пацієнта від дзвінка до CRM', type: 'AI-оператор · CRM · Автоматизація', note: 'Сценарій для клініки: дзвінок, запис, підтвердження, CRM.' }, { tag: 'ДЕМО / КОНЦЕПТ 02', title: 'Операційний центр керування', type: 'Внутрішній інструмент · Аналітика', note: 'Єдина панель статусів, винятків і рішень команди.' }, { tag: 'ВАШ ПРОЄКТ / ДАЛІ', title: 'Тут може бути ваша система', type: 'Створено навколо вашого процесу', note: 'Почнемо з найдорожчого повторюваного процесу.' }], view: 'Відкрити структуру кейсу' },
     about: { label: 'ПРО КОМПАНІЮ', title: 'Компактна команда. Системне мислення.', text: 'OSNOVA поєднує продуктовий дизайн, розробку, AI, автоматизацію та рекламу. Історія компанії, дата заснування і справжні профілі будуть додані після підтвердження.', team: ['Ім’я / роль', 'Ім’я / роль', 'Ім’я / роль'], placeholders: ['Проєкти — дані готуються', 'Інтеграції — дані готуються', 'Країни — дані готуються'], testimonials: 'Відгуки з’являться після погодження з реальними клієнтами.', demo: 'ЗАПОВНЮВАЧ / НЕ ВІДГУК' },
-    pricing: { label: 'ЦІНИ', title: 'Зрозуміла точка входу. Чесна оцінка складності.', text: 'Фінальна вартість залежить від обсягу, інтеграцій, бізнес-логіки, дизайну, розробки та супроводу.', from: 'від €120', custom: 'Індивідуально', budgetNote: 'Рекламний бюджет оплачується окремо.', items: [['Landing Page', 'від €120'], ['Корпоративний сайт', 'від €250'], ['AI-автоматизація', 'Індивідуально'], ['AI-оператор', 'Індивідуально'], ['CRM-автоматизація', 'Індивідуально'], ['Індивідуальна розробка', 'Індивідуально'], ['Реклама та просування', 'від €300']] },
-    contact: { label: 'ПОЧНЕМО З ВУЗЬКОГО МІСЦЯ', title: 'Який процес забирає у вашої команди забагато часу?', text: 'Розкажіть, як він працює зараз. Можливо, людина вже не повинна виконувати його повністю.', fields: { name: 'Ваше ім’я', contact: 'Email або Telegram', company: 'Компанія', help: 'Напрям', message: 'Що відбувається зараз?' }, options: ['AI та автоматизація', 'CRM та інтеграції', 'Розробка', 'Сайт', 'Реклама та просування', 'Поки не знаю'], submit: 'Надіслати запит', sent: 'Дякуємо. Форма працює в демо-режимі — підключіть endpoint перед публікацією.', or: 'або напишіть напряму', ...shared },
+    pricing: { label: 'ЦІНИ', title: 'Зрозуміла точка входу. Чесна оцінка складності.', text: 'Фінальна вартість залежить від обсягу, інтеграцій, бізнес-логіки, дизайну, розробки та супроводу.', action: 'Дізнатися ціну', budgetNote: 'Рекламний бюджет оплачується окремо.', items: ['Автоматизація бізнесу', 'Розробка', 'Реклама та просування', 'SEO', 'Просування в AI', 'Email Deliverability'] },
+    contact: { label: 'ПОЧНЕМО З ВУЗЬКОГО МІСЦЯ', title: 'Який процес забирає у вашої команди забагато часу?', text: 'Розкажіть, як він працює зараз. Можливо, людина вже не повинна виконувати його повністю.', fields: { name: 'Ваше ім’я', contact: 'Email або Telegram', company: 'Компанія', help: 'Напрям', message: 'Що відбувається зараз?' }, options: ['Автоматизація бізнесу', 'Розробка', 'Реклама та просування', 'SEO', 'Просування в AI', 'Email Deliverability', 'CRM та інтеграції', 'Сайт', 'Поки не знаю'], submit: 'Надіслати запит', or: 'або напишіть напряму', ...shared },
     footer: { line: 'AI. Automation. Розробка. Performance.', rights: '© 2026 OSNOVA. Усі права захищені.', top: 'Нагору' },
   },
 }

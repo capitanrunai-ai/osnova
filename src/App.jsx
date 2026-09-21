@@ -8,25 +8,83 @@ import {
   Check,
   ChevronDown,
   Menu,
+  MailCheck,
+  BriefcaseBusiness,
+  PenTool,
+  Code2,
+  Bot,
+  Megaphone,
   Pause,
   Play,
-  Send,
   X,
 } from 'lucide-react'
 import { content, languages } from './data/content'
+import { paymentContent } from './data/paymentContent'
 import { caseCategories, caseUi, getLocalizedCases } from './data/cases'
 import { serviceContent } from './data/serviceContent'
+import { extendServiceContent } from './data/visibilityContent'
+import { closingContent } from './data/closingContent'
+import { defaultLanguage, serviceRoutes } from './data/routes'
 import './services.css'
 import './cases.css'
+import { CaseVisual, PortfolioDetail } from './PortfolioMedia'
+import { getTeam } from './data/team'
+import './team.css'
+import './email.css'
+import './payment.css'
+
+const portfolioMemory = { featured: {}, archive: {} }
 
 const languageCodes = Object.keys(languages)
-const serviceRoutes = ['automation', 'development', 'performance']
 
 function parseLocation() {
   const parts = window.location.pathname.split('/').filter(Boolean)
   const lang = languageCodes.includes(parts[0]) ? parts[0] : null
   const route = parts.slice(lang ? 1 : 0).join('/')
   return { lang, route, hash: window.location.hash }
+}
+
+// Single resolver for "what is this URL?", used both to pick the page component
+// and to build the head metadata, so the two can never disagree.
+function resolveRoute(route, lang) {
+  if (!route) return { kind: 'home' }
+  if (route === 'services') return { kind: 'services' }
+  if (route === 'cases') return { kind: 'cases' }
+  if (route === 'payment') return { kind: 'payment' }
+  if (route.startsWith('services/')) {
+    const id = route.slice('services/'.length)
+    return serviceRoutes.includes(id) ? { kind: 'service', id } : { kind: 'notFound' }
+  }
+  if (route.startsWith('cases/')) {
+    const slug = route.slice('cases/'.length)
+    const item = getLocalizedCases(lang).find((candidate) => candidate.slug === slug)
+    return item ? { kind: 'case', item } : { kind: 'notFound' }
+  }
+  return { kind: 'notFound' }
+}
+
+function headTag(selector, create) {
+  let node = document.head.querySelector(selector)
+  if (!node) { node = create(); document.head.appendChild(node) }
+  return node
+}
+
+function setMetaTag(attribute, key, value) {
+  headTag(`meta[${attribute}="${key}"]`, () => {
+    const node = document.createElement('meta')
+    node.setAttribute(attribute, key)
+    return node
+  }).setAttribute('content', value)
+}
+
+function setLinkTag(rel, hreflang, href) {
+  const selector = hreflang ? `link[rel="${rel}"][hreflang="${hreflang}"]` : `link[rel="${rel}"]`
+  headTag(selector, () => {
+    const node = document.createElement('link')
+    node.setAttribute('rel', rel)
+    if (hreflang) node.setAttribute('hreflang', hreflang)
+    return node
+  }).setAttribute('href', href)
 }
 
 function getInitialLanguage() {
@@ -205,9 +263,15 @@ function HomeHero({ t, s, lang, navigate }) {
 
 function SystemContinuum({ s }) {
   return (
-    <section className="continuum">
+    <section className="continuum" aria-label={s.common.system.join(' — ')}>
       <div className="continuum-track">
-        {s.common.system.map((item, index) => <span key={item}><i>0{index + 1}</i>{item}{index < s.common.system.length - 1 && <ArrowRight />}</span>)}
+        {[0, 1].map((group) => (
+          <div className="continuum-group" key={group} aria-hidden={group === 1 ? 'true' : undefined}>
+            {s.common.system.map((item, index) => (
+              <span key={`${group}-${item}`}><i>0{index + 1}</i><b>{item}</b><ArrowRight /></span>
+            ))}
+          </div>
+        ))}
       </div>
     </section>
   )
@@ -215,6 +279,7 @@ function SystemContinuum({ s }) {
 
 function ServiceWorlds({ s, lang, navigate, compact = false }) {
   const [active, setActive] = useState(-1)
+  const Heading = compact ? 'h2' : 'h1'
   const move = (event) => {
     const bounds = event.currentTarget.getBoundingClientRect()
     event.currentTarget.style.setProperty('--px', `${((event.clientX - bounds.left) / bounds.width) * 100}%`)
@@ -226,7 +291,7 @@ function ServiceWorlds({ s, lang, navigate, compact = false }) {
       <div className="container worlds-heading">
         <Reveal>
           <span className="eyebrow light">{s.servicesPage.label}</span>
-          <h2>{s.servicesPage.title}<em>{s.servicesPage.titleAccent}</em></h2>
+          <Heading>{s.servicesPage.title}<em>{s.servicesPage.titleAccent}</em></Heading>
         </Reveal>
         <Reveal delay={80}><p>{s.servicesPage.intro}</p><small>{s.servicesPage.hint}</small></Reveal>
       </div>
@@ -234,18 +299,20 @@ function ServiceWorlds({ s, lang, navigate, compact = false }) {
         {s.directions.map((direction, index) => (
           <RouteLink
             key={direction.id}
-            href={`/${lang}/services/${direction.id}`}
+            href={direction.href || `/${lang}/services/${direction.id}`}
             navigate={navigate}
             world={direction.id}
             className={`world-entry world-${direction.id} ${active === index ? 'is-active' : ''} ${active >= 0 && active !== index ? 'is-muted' : ''}`}
             onMouseEnter={() => setActive(index)}
             onMouseMove={move}
+            onFocus={() => setActive(index)}
+            onBlur={() => setActive(-1)}
           >
             <span className="world-number">{direction.number}</span>
             <div className="world-copy"><h3>{direction.name}</h3><p>{direction.short}</p></div>
             <div className="world-signal" aria-hidden="true"><i /><i /><i /><b /></div>
-            <div className="world-items">{direction.items.slice(0, compact ? 4 : 6).map((item) => <span key={item}>{item}</span>)}</div>
-            <span className="world-enter">{s.common.explore}<ArrowUpRight /></span>
+            <div className="world-items">{direction.items.map((item) => <span key={item}>{item}</span>)}</div>
+            <span className="world-enter">{direction.action || s.common.explore}<ArrowUpRight /></span>
           </RouteLink>
         ))}
       </div>
@@ -253,73 +320,18 @@ function ServiceWorlds({ s, lang, navigate, compact = false }) {
   )
 }
 
-function CaseVisual({ item, detail = false }) {
-  return (
-    <div className={`portfolio-visual visual-${item.visual} ${detail ? 'is-detail' : ''}`} aria-hidden="true">
-      <div className="portfolio-grid" />
-      {item.visual === 'voice' && (
-        <>
-          <div className="voice-orbit"><i /><i /><i /></div>
-          <div className="voice-wave">{Array.from({ length: 23 }, (_, index) => <i key={index} style={{ '--bar': index }} />)}</div>
-          <div className="voice-call"><span>AI / VOICE</span><b>00:42</b><small>CALL → CRM</small></div>
-        </>
-      )}
-      {item.visual === 'flow' && (
-        <div className="flow-preview">
-          {item.system.slice(0, 5).map((node, index) => <span key={node} style={{ '--node': index }}><i>0{index + 1}</i>{node}</span>)}
-          <svg viewBox="0 0 720 420"><path d="M78 95C210 95 190 210 360 210S510 95 645 95" /><path d="M78 330C215 330 205 210 360 210S520 330 645 330" /></svg>
-          <b className="flow-core">CRM</b>
-        </div>
-      )}
-      {item.visual === 'dashboard' && (
-        <div className="dashboard-preview">
-          <div className="dash-top"><i /><i /><i /><span>OPERATIONS / LIVE</span></div>
-          <div className="dash-side">{[1, 2, 3, 4, 5].map((value) => <i key={value} />)}</div>
-          <div className="dash-chart"><span /><span /><span /><span /><span /><svg viewBox="0 0 400 150"><path d="M0 125C50 125 65 92 110 96S175 35 220 58 290 20 400 16" /></svg></div>
-          <div className="dash-table">{[1, 2, 3, 4].map((value) => <i key={value} />)}</div>
-        </div>
-      )}
-      {item.visual === 'website' && (
-        <div className="website-preview-case">
-          <div className="browser-back"><i /><i /><i /></div>
-          <div className="browser-front">
-            <span className="browser-ui"><i /><i /><i /></span>
-            <div className="browser-hero"><small>DIGITAL / SYSTEM</small><b>Built around<br />the decision.</b><i /></div>
-            <div className="browser-columns"><span /><span /><span /></div>
-          </div>
-        </div>
-      )}
-      {item.visual === 'performance' && (
-        <div className="performance-preview">
-          <div className="performance-ring"><i /><i /><b>DATA</b></div>
-          <div className="performance-path"><span>ADS</span><i /><span>LANDING</span><i /><span>CRM</span></div>
-          <svg viewBox="0 0 700 420"><path d="M40 335C145 335 155 260 245 275S360 155 440 190 555 75 670 75" /></svg>
-          <small>METRICS / PENDING VERIFICATION</small>
-        </div>
-      )}
-      {item.visual === 'creative' && (
-        <div className="creative-preview">
-          {[1, 2, 3].map((value) => <span key={value} className={`creative-frame frame-${value}`}><i>0{value}</i><b>HOOK<br />TEST</b><small>9:16</small></span>)}
-          <div className="creative-axis"><i /><i /><i /><i /><i /></div>
-        </div>
-      )}
-    </div>
-  )
-}
-
 function CaseFilters({ ui, group, subfilter, onGroup, onSubfilter, compact = false }) {
-  const groups = ['all', 'automation', 'development', 'performance']
+  const groups = ['all', 'development', 'automation']
   const subfilters = group === 'all' ? [] : caseCategories[group] || []
   return (
     <div className={`case-filter-shell ${compact ? 'is-compact' : ''}`}>
-      <div className="case-filter-main" role="tablist" aria-label={ui.allCases}>
+      <div className="case-filter-main" role="group" aria-label={ui.allCases}>
         {groups.map((id) => (
           <button
             key={id}
             className={group === id ? 'active' : ''}
             onClick={() => onGroup(id)}
-            role="tab"
-            aria-selected={group === id}
+            aria-pressed={group === id}
           >
             {ui.filters[id]}<i />
           </button>
@@ -344,17 +356,18 @@ function filterCases(items, group, subfilter) {
   })
 }
 
-function SpatialCaseGallery({ items, lang, navigate, ui }) {
+function SpatialCaseGallery({ items, lang, navigate, ui, memoryKey = 'featured', showIndex = false }) {
   const stageRef = useRef(null)
+  const wheelTimeRef = useRef(0)
   const gestureRef = useRef({ active: false, startX: 0, lastX: 0, lastTime: 0, velocity: 0, drag: 0, moved: false })
-  const [active, setActive] = useState(0)
+  const [active, setActive] = useState(() => Math.max(0, items.findIndex(item => item.slug === portfolioMemory[memoryKey].slug)))
   const [drag, setDrag] = useState(0)
   const [dragging, setDragging] = useState(false)
   const [stageWidth, setStageWidth] = useState(1200)
   const itemKey = items.map((item) => item.slug).join('|')
 
   useEffect(() => {
-    setActive(0)
+    setActive(Math.max(0, items.findIndex(item => item.slug === portfolioMemory[memoryKey].slug)))
     setDrag(0)
   }, [itemKey])
 
@@ -367,7 +380,11 @@ function SpatialCaseGallery({ items, lang, navigate, ui }) {
   }, [])
 
   const spacing = stageWidth < 680 ? stageWidth * .84 : Math.min(stageWidth * .6, 690)
-  const go = (next) => setActive(Math.max(0, Math.min(items.length - 1, next)))
+  const go = (next) => {
+    const index = Math.max(0, Math.min(items.length - 1, next))
+    setActive(index)
+    portfolioMemory[memoryKey].slug = items[index]?.slug
+  }
   const activeNumber = String(active + 1).padStart(2, '0')
   const totalNumber = String(items.length).padStart(2, '0')
   const atStart = active === 0
@@ -397,12 +414,12 @@ function SpatialCaseGallery({ items, lang, navigate, ui }) {
   const onPointerDown = (event) => {
     if (event.pointerType === 'touch' || event.button !== 0) return
     beginGesture(event.clientX)
-    event.currentTarget.setPointerCapture(event.pointerId)
   }
 
   const onPointerMove = (event) => {
     if (event.pointerType === 'touch') return
     moveGesture(event.clientX)
+    if (gestureRef.current.active && gestureRef.current.moved) event.currentTarget.setPointerCapture(event.pointerId)
   }
 
   const finishGesture = () => {
@@ -417,12 +434,21 @@ function SpatialCaseGallery({ items, lang, navigate, ui }) {
     go(active + shift)
   }
 
-  const onWheel = (event) => {
-    const horizontalIntent = Math.abs(event.deltaX) > 8 || event.shiftKey
-    if (!horizontalIntent) return
-    event.preventDefault()
-    go(active + (event.deltaX + event.deltaY > 0 ? 1 : -1))
-  }
+  useEffect(() => {
+    const stage = stageRef.current
+    if (!stage) return undefined
+    const onWheel = event => {
+      if (!(Math.abs(event.deltaX) > 8 || event.shiftKey)) return
+      event.preventDefault()
+      const now = performance.now()
+      if (now - wheelTimeRef.current < 500) return
+      wheelTimeRef.current = now
+      const delta = Math.abs(event.deltaX) > 8 ? event.deltaX : event.deltaY
+      go(active + (delta > 0 ? 1 : -1))
+    }
+    stage.addEventListener('wheel', onWheel, { passive: false })
+    return () => stage.removeEventListener('wheel', onWheel)
+  }, [active, itemKey])
 
   if (!items.length) return <div className="case-empty">{ui.empty}</div>
 
@@ -443,10 +469,12 @@ function SpatialCaseGallery({ items, lang, navigate, ui }) {
         }}
         onTouchEnd={finishGesture}
         onTouchCancel={finishGesture}
-        onWheel={onWheel}
         onKeyDown={(event) => {
+          if (['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) event.preventDefault()
           if (event.key === 'ArrowLeft') go(active - 1)
           if (event.key === 'ArrowRight') go(active + 1)
+          if (event.key === 'Home') go(0)
+          if (event.key === 'End') go(items.length - 1)
         }}
         tabIndex="0"
         role="region"
@@ -472,7 +500,7 @@ function SpatialCaseGallery({ items, lang, navigate, ui }) {
                 '--case-opacity': Math.max(.18, 1 - distance * .28),
                 zIndex: 20 - Math.round(distance),
               }}
-              aria-hidden={distance > 1.6}
+              aria-hidden={index !== active}
             >
               <RouteLink
                 href={`/${lang}/cases/${item.slug}`}
@@ -481,22 +509,22 @@ function SpatialCaseGallery({ items, lang, navigate, ui }) {
                 draggable="false"
                 onDragStart={(event) => event.preventDefault()}
                 onClick={(event) => {
-                  if (gestureRef.current.moved && event.detail !== 0) event.preventDefault()
+                  if (gestureRef.current.moved && event.detail !== 0) { event.preventDefault(); return }
+                  if (index !== active) { event.preventDefault(); go(index) }
                 }}
-                tabIndex={distance > 1.6 ? -1 : 0}
+                tabIndex={index === active ? 0 : -1}
               >
                 <div className="spatial-card-visual">
-                  <CaseVisual item={item} />
-                  <span className="case-draft-badge">{ui.draft}</span>
+                  <CaseVisual item={item} priority={index === active} />
                   <span className="case-card-index">{String(index + 1).padStart(2, '0')} / {String(items.length).padStart(2, '0')}</span>
                 </div>
                 <div className="spatial-card-copy">
                   <div>
-                    <small>{ui.filters[item.category]} / {ui.filters[item.subcategories[0]]}</small>
-                    <h3>{item.title}</h3>
+                    <small>{item.recovery ? ui.restored : item.categoryLabel}</small>
+                    <h3>{item.title.split(' — ').map((part, i) => <span className={i ? 'card-subtitle' : ''} key={part}>{part}</span>)}</h3>
                   </div>
                   <div className="case-preview-fact">
-                    <span>{ui.draftFact}</span>
+                    <span>{item.audio ? ui.listen : item.recovery ? ui.restored : 'DESIGN / DEVELOPMENT'}</span>
                     <p>{item.summary}</p>
                   </div>
                   <span className="case-open-action">
@@ -532,6 +560,12 @@ function SpatialCaseGallery({ items, lang, navigate, ui }) {
         </div>
         <div className="spatial-progress">{items.map((item, index) => <button key={item.id} className={index === active ? 'active' : ''} onClick={() => go(index)} aria-label={`${ui.index} ${index + 1} / ${items.length}`} aria-current={index === active ? 'true' : undefined}><i /></button>)}</div>
       </div>
+      {showIndex && <div className="container portfolio-index" aria-label={ui.allCases}>
+        {items.map((item, index) => <button key={item.id} className={index === active ? 'active' : ''} aria-current={index === active ? 'true' : undefined} onClick={() => {
+          go(index)
+          stageRef.current?.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'center' })
+        }}><span>{String(index + 1).padStart(2, '0')}</span><b>{item.title}</b><ArrowUpRight size={15} /></button>)}
+      </div>}
     </div>
   )
 }
@@ -574,181 +608,76 @@ function FeaturedCases({ lang, navigate }) {
 function CasesArchive({ lang, navigate }) {
   const ui = caseUi[lang]
   const allItems = useMemo(() => getLocalizedCases(lang), [lang])
-  const [group, setGroup] = useState('all')
-  const [subfilter, setSubfilter] = useState('all')
-  const items = useMemo(() => filterCases(allItems, group, subfilter), [allItems, group, subfilter])
-  const filterKey = `${group}-${subfilter}`
-
+  const [group, setGroup] = useState(portfolioMemory.archive.group || 'all')
+  const items = useMemo(() => filterCases(allItems, group, 'all'), [allItems, group])
   return (
-    <main className="cases-archive-page" id="top">
+    <main className="cases-archive-page real-archive" id="top">
       <section className="cases-archive-hero">
         <div className="cases-archive-grid" aria-hidden="true" />
         <div className="container">
           <Reveal><span className="eyebrow light">{ui.pageLabel}</span><h1>{ui.pageTitle}</h1></Reveal>
-          <Reveal delay={90}><p>{ui.pageIntro}</p><span className="archive-count">{String(allItems.length).padStart(2, '0')} / DRAFT RECORDS</span></Reveal>
+          <Reveal delay={90}><p>{ui.pageIntro}</p><span className="archive-count">{String(allItems.length).padStart(2, '0')} / {ui.projects}</span></Reveal>
         </div>
       </section>
-      <section className="cases-archive-list section-pad">
-        <div className="container">
-          <CaseFilters
-            ui={ui}
-            group={group}
-            subfilter={subfilter}
-            onGroup={(value) => { setGroup(value); setSubfilter('all') }}
-            onSubfilter={setSubfilter}
-          />
-          <div className="archive-result-meta"><span>{ui.allCases}</span><b>{String(items.length).padStart(2, '0')}</b></div>
-          {items.length ? (
-            <div className="archive-grid" key={filterKey}>
-              {items.map((item, index) => (
-                <article className={`archive-card archive-${item.visual}`} key={item.id} style={{ '--archive-delay': `${index * 45}ms` }}>
-                  <RouteLink href={`/${lang}/cases/${item.slug}`} navigate={navigate} world={item.category}>
-                    <div className="archive-card-visual">
-                      <CaseVisual item={item} />
-                      <span className="case-draft-badge">{ui.draft}</span>
-                      <span className="case-card-index">{String(index + 1).padStart(2, '0')}</span>
-                    </div>
-                    <div className="archive-card-copy">
-                      <small>{ui.filters[item.category]} / {ui.filters[item.subcategories[0]]}</small>
-                      <h2>{item.title}</h2>
-                      <p>{item.summary}</p>
-                      <span>{ui.openCase}<ArrowUpRight /></span>
-                    </div>
-                  </RouteLink>
-                </article>
-              ))}
-            </div>
-          ) : <div className="case-empty">{ui.empty}</div>}
-        </div>
+      <section className="portfolio-archive-gallery">
+        <div className="container"><CaseFilters ui={ui} group={group} subfilter="all" onGroup={value => { setGroup(value); portfolioMemory.archive.group = value }} /></div>
+        <SpatialCaseGallery items={items} lang={lang} navigate={navigate} ui={ui} memoryKey="archive" showIndex />
       </section>
     </main>
   )
 }
 
-function CaseSystem({ nodes }) {
-  return (
-    <div className="case-system-map">
-      <svg viewBox="0 0 1000 420" aria-hidden="true">
-        <path d="M80 210C190 210 205 110 330 110S420 210 500 210 575 310 680 310 790 210 920 210" />
-        <path className="case-system-signal" d="M80 210C190 210 205 110 330 110S420 210 500 210 575 310 680 310 790 210 920 210" />
-      </svg>
-      {nodes.map((node, index) => <span key={node} style={{ '--system-index': index }}><i>0{index + 1}</i>{node}</span>)}
-    </div>
-  )
-}
-
-function CaseDetail({ item, lang, navigate }) {
-  const ui = caseUi[lang]
-  const allItems = useMemo(() => getLocalizedCases(lang), [lang])
-  const index = allItems.findIndex((candidate) => candidate.slug === item.slug)
-  const next = allItems[(index + 1) % allItems.length]
-  const facts = [
-    [ui.client, item.client || ui.pending],
-    [ui.country, item.country || ui.pending],
-    [ui.industry, item.industry || ui.pending],
-    [ui.year, item.year || ui.pending],
-  ]
-
-  return (
-    <main className={`case-detail-page detail-${item.visual}`} id="top">
-      <section className="case-detail-hero">
-        <div className="case-detail-backdrop" aria-hidden="true" />
-        <div className="container case-detail-hero-grid">
-          <Reveal className="case-detail-breadcrumb">
-            <RouteLink href={`/${lang}/cases`} navigate={navigate}><ArrowLeft />{ui.backToCases}</RouteLink>
-            <span>{String(index + 1).padStart(2, '0')} / {String(allItems.length).padStart(2, '0')}</span>
-          </Reveal>
-          <Reveal className="case-detail-title" delay={50}>
-            <span>{ui.filters[item.category]} / {ui.filters[item.subcategories[0]]}</span>
-            <h1>{item.title}</h1>
-            <p>{item.summary}</p>
-          </Reveal>
-          <Reveal className="case-detail-visual" delay={120}>
-            <CaseVisual item={item} detail />
-            <span className="case-draft-badge">{ui.draft}</span>
-          </Reveal>
-        </div>
-      </section>
-
-      <section className="case-draft-notice">
-        <div className="container"><span>{ui.draft}</span><p>{ui.draftNotice}</p></div>
-      </section>
-
-      <section className="case-facts">
-        <div className="container case-facts-grid">
-          {facts.map(([label, value]) => <div key={label}><span>{label}</span><strong>{value}</strong></div>)}
-          <div className="case-fact-services"><span>{ui.services}</span><strong>{item.services.join(' · ')}</strong></div>
-        </div>
-      </section>
-
-      <section className="case-story section-pad">
-        <div className="container">
-          {[
-            ['01', ui.challenge, item.challenge],
-            ['02', ui.approach, item.approach],
-            ['03', ui.solution, item.solution],
-          ].map(([number, label, textValue], storyIndex) => (
-            <Reveal className="case-story-row" key={number} delay={storyIndex * 45}>
-              <span>{number}</span><h2>{label}</h2><p>{textValue}</p>
-            </Reveal>
-          ))}
-        </div>
-      </section>
-
-      <section className="case-system-section section-pad">
-        <div className="container">
-          <Reveal className="case-section-heading"><span>04 / {ui.system}</span><h2>{item.project}</h2></Reveal>
-          <Reveal delay={80}><CaseSystem nodes={item.system} /></Reveal>
-        </div>
-      </section>
-
-      <section className="case-result-section section-pad">
-        <div className="container">
-          <Reveal className="case-result-heading"><span>05 / {ui.result}</span><p>{ui.draftNotice}</p></Reveal>
-          <Reveal className="case-pending-metric" delay={80}>
-            <span>—</span><strong>{ui.metricPending}</strong><small>NO UNVERIFIED NUMBERS</small>
-          </Reveal>
-        </div>
-      </section>
-
-      <section className="case-visuals-section section-pad">
-        <div className="container">
-          <Reveal className="case-section-heading"><span>06 / {ui.visuals}</span><h2>{ui.visualPending}</h2></Reveal>
-          <Reveal className="case-large-visual" delay={80}><CaseVisual item={item} detail /></Reveal>
-        </div>
-      </section>
-
-      <section className="next-case">
-        <RouteLink href={`/${lang}/cases/${next.slug}`} navigate={navigate} world={next.category}>
-          <div><span>{ui.nextCase} / {String((index + 1) % allItems.length + 1).padStart(2, '0')}</span><h2>{next.title}</h2><p>{next.summary}</p></div>
-          <div className="next-case-visual"><CaseVisual item={next} /><ArrowUpRight /></div>
-        </RouteLink>
-      </section>
-    </main>
-  )
-}
-
-function About({ t }) {
+function About({ t, lang }) {
+  const team = getTeam(lang)
+  const icons = { leadership: BriefcaseBusiness, design: PenTool, development: Code2, ai: Bot, marketing: Megaphone, email: MailCheck }
   return (
     <section className="about section-pad" id="about">
       <div className="container">
-        <Reveal className="about-intro"><div className="eyebrow">{t.about.label}</div><h2>{t.about.title}</h2><p>{t.about.text}</p></Reveal>
-        <Reveal className="about-system">
-          <div className="about-system-core">OSNOVA<span>WHOLE SYSTEM VIEW</span></div>
-          {['DESIGN', 'AI', 'CODE', 'DATA', 'MEDIA'].map((item, index) => <span key={item} style={{ '--i': index }}>{item}</span>)}
-        </Reveal>
+        <Reveal className="about-intro"><div className="eyebrow">{t.about.label}</div><h2>{t.about.title}</h2><p>{team.intro}</p></Reveal>
+        <div className="about-team" role="group" aria-label={team.label}>
+          <div className="about-team-header"><span>{team.label}</span><i aria-hidden="true" /></div>
+          <div className="about-team-roles">
+            {team.roles.map((role, index) => {
+              const Icon = icons[role.id]
+              return <Reveal as="article" className={`about-team-role${role.id === 'leadership' ? ' is-lead' : ''}`} key={role.id}>
+                <div className="about-team-role-top" aria-hidden="true"><span>{String(index + 1).padStart(2, '0')}</span><Icon size={23} strokeWidth={1.4} /></div>
+                <h3>{role.title}</h3>
+                <div className="about-team-role-description"><h4>{role.focus}</h4><p>{role.description}</p></div>
+              </Reveal>
+            })}
+          </div>
+        </div>
       </div>
     </section>
   )
 }
 
-function Pricing({ t }) {
+function selectContactService(service) {
+  sessionStorage.setItem('osnova:contact-service', service)
+  window.dispatchEvent(new CustomEvent('osnova:contact-service', { detail: service }))
+}
+
+function Pricing({ t, lang, navigate }) {
   return (
     <section className="pricing section-pad" id="pricing">
       <div className="container pricing-layout">
-        <Reveal className="pricing-intro"><div className="eyebrow light">{t.pricing.label}</div><h2>{t.pricing.title}</h2><p>{t.pricing.text}</p><span className="pricing-big">{t.pricing.from}</span></Reveal>
+        <Reveal className="pricing-intro"><div className="eyebrow light">{t.pricing.label}</div><h2>{t.pricing.title}</h2><p>{t.pricing.text}</p><span className="pricing-signal" aria-hidden="true"><i /><i /><i /></span></Reveal>
         <div className="pricing-list">
-          {t.pricing.items.map(([service, price], index) => <Reveal className="price-row" key={service} delay={index * 35}><span>0{index + 1}</span><strong>{service}</strong><em>{price}</em><ArrowUpRight size={18} /></Reveal>)}
+          {t.pricing.items.map((service, index) => (
+            <Reveal className="price-row" key={service} delay={index * 35}>
+              <span>0{index + 1}</span>
+              <strong>{service}</strong>
+              <RouteLink
+                className="price-action"
+                href={`/${lang}/#contact-form`}
+                navigate={navigate}
+                onClick={() => selectContactService(service)}
+                aria-label={`${t.pricing.action}: ${service}`}
+              >
+                {t.pricing.action}<ArrowUpRight size={16} />
+              </RouteLink>
+            </Reveal>
+          ))}
           <Reveal className="pricing-budget-note"><i />{t.pricing.budgetNote}</Reveal>
         </div>
       </div>
@@ -756,27 +685,76 @@ function Pricing({ t }) {
   )
 }
 
-function Contact({ t }) {
-  const [sent, setSent] = useState(false)
+function Contact({ t, p, lang, navigate }) {
+  const [status, setStatus] = useState('idle')
+  const [service, setService] = useState(() => sessionStorage.getItem('osnova:contact-service') || '')
+  const startedAtRef = useRef(Date.now())
+  const c = closingContent[lang]
+  useEffect(() => {
+    sessionStorage.removeItem('osnova:contact-service')
+    const selectService = (event) => {
+      setService(event.detail)
+      setStatus('idle')
+      sessionStorage.removeItem('osnova:contact-service')
+    }
+    window.addEventListener('osnova:contact-service', selectService)
+    return () => window.removeEventListener('osnova:contact-service', selectService)
+  }, [])
+  const serviceOptions = t.contact.options
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+    if (status === 'sending') return
+    const data = new FormData(event.currentTarget)
+    setStatus('sending')
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          name: data.get('name'),
+          contact: data.get('contact'),
+          company: data.get('company'),
+          service: serviceOptions.includes(service) ? service : '',
+          message: data.get('message'),
+          hp: data.get('hp'),
+          startedAt: startedAtRef.current,
+          lang,
+          page: `${window.location.pathname}${window.location.hash}`,
+        }),
+      })
+      const payload = await response.json().catch(() => null)
+      if (!response.ok || !payload?.ok) throw new Error('failed')
+      setStatus('success')
+    } catch (error) {
+      setStatus('error')
+    }
+  }
   return (
-    <section className="contact section-pad" id="contact">
-      <div className="contact-orb" aria-hidden="true" />
+    <section className="contact contact-finale section-pad" id="contact" aria-labelledby="contact-title">
+      <div className="container contact-topline"><span className="eyebrow light"><i />{c.label}</span><span aria-hidden="true">OS / NEXT</span></div>
       <div className="container contact-layout">
         <Reveal className="contact-copy">
-          <div className="eyebrow light">{t.contact.label}</div><h2>{t.contact.title}</h2><p>{t.contact.text}</p>
-          <div className="direct-contact"><small>{t.contact.or}</small><a href={`mailto:${t.contact.email}`}>{t.contact.email}<ArrowUpRight size={15} /></a><a href="https://t.me/your_agency" target="_blank" rel="noreferrer">{t.contact.telegram}<ArrowUpRight size={15} /></a></div>
+          <h2 id="contact-title">{c.title}<em>{c.accent}</em></h2><p>{c.text}</p>
+          <ol className="contact-steps">{c.steps.map((step, index) => <li key={step}><span>0{index + 1}</span>{step}</li>)}</ol>
+          <div className="direct-contact"><small>{t.contact.or}</small><a href={`mailto:${t.contact.email}`}><span><small>Email</small>{t.contact.email}</span><ArrowUpRight size={20} /></a><a href="https://t.me/capitanrun" target="_blank" rel="noreferrer"><span><small>Telegram</small>{t.contact.telegram}</span><ArrowUpRight size={20} /></a><RouteLink className="contact-payment-link" href={`/${lang}/payment`} navigate={navigate}><span><small>{p.navLabel}</small>{p.contactLink}</span><ArrowUpRight size={20} /></RouteLink></div>
         </Reveal>
         <Reveal className="contact-form-wrap" delay={120}>
-          {sent ? <div className="form-success"><Check size={30} /><p>{t.contact.sent}</p><button onClick={() => setSent(false)}>OK</button></div> : (
-            <form onSubmit={(event) => { event.preventDefault(); setSent(true) }}>
+          <span className="contact-form-anchor" id="contact-form" aria-hidden="true" />
+          <div className="contact-form-heading"><span aria-hidden="true">↗</span><div><h3>{c.formTitle}</h3><p>{c.formNote}</p></div></div>
+          {status === 'success' ? <div className="form-success" role="status"><Check size={24} /><p>{c.sent}</p><button type="button" onClick={() => setStatus('idle')}>{c.back}</button></div> : (
+            <form onSubmit={handleSubmit}>
               <div className="form-row">
                 <label><span>{t.contact.fields.name}</span><input name="name" required autoComplete="name" /></label>
                 <label><span>{t.contact.fields.contact}</span><input name="contact" required autoComplete="email" /></label>
               </div>
-              <label><span>{t.contact.fields.company}</span><input name="company" autoComplete="organization" /></label>
-              <label><span>{t.contact.fields.help}</span><select name="service" defaultValue=""><option value="" disabled>—</option>{t.contact.options.map((option) => <option key={option}>{option}</option>)}</select></label>
-              <label><span>{t.contact.fields.message}</span><textarea name="message" rows="3" required /></label>
-              <button className="form-submit" type="submit">{t.contact.submit}<Send size={17} /></button>
+              <div className="form-row">
+                <label><span>{t.contact.fields.company} <i>({c.optional})</i></span><input name="company" autoComplete="organization" /></label>
+                <label><span>{t.contact.fields.help}</span><select name="service" value={serviceOptions.includes(service) ? service : ''} onChange={(event) => setService(event.target.value)}><option value="">{t.contact.options.at(-1)}</option>{serviceOptions.slice(0, -1).map((option) => <option key={option}>{option}</option>)}</select></label>
+              </div>
+              <label><span>{t.contact.fields.message}</span><textarea name="message" rows="4" placeholder={c.messageHint} required /></label>
+              <input type="text" name="hp" className="hp-field" tabIndex={-1} autoComplete="off" aria-hidden="true" />
+              {status === 'error' && <p className="form-error" role="alert">{c.error}</p>}
+              <button className="form-submit" type="submit" disabled={status === 'sending'}>{status === 'sending' ? c.sending : c.submit}<ArrowUpRight size={20} /></button>
             </form>
           )}
         </Reveal>
@@ -1060,6 +1038,156 @@ function AnalyticsSystem({ data }) {
   )
 }
 
+function SearchJourneyVisual({ data }) {
+  return (
+    <div className="search-journey-visual" aria-label={`${data.heroLabel}: ${data.heroSteps.join(' — ')}`}>
+      <div className="search-query-line"><span>⌕</span><b>{data.heroSteps[0]}</b><i /></div>
+      <div className="search-result-stack" aria-hidden="true"><span /><span className="is-relevant"><i>01</i><b>{data.heroSteps[2]}</b></span><span /></div>
+      <div className="search-route-line" aria-hidden="true">
+        {data.heroSteps.map((item, index) => <span key={item}><i>{String(index + 1).padStart(2, '0')}</i><b>{item}</b></span>)}
+      </div>
+      <small>{data.heroLabel} / LIVE PATH</small>
+    </div>
+  )
+}
+
+function AiVisibilityVisual({ data }) {
+  return (
+    <div className="ai-visibility-visual" aria-label={`${data.heroLabel}: ${data.heroSteps.join(' — ')}`}>
+      <div className="ai-question"><span>Q / 01</span><p>{data.question}</p><i /></div>
+      <div className="ai-source-field" aria-hidden="true">
+        <span className="source source-a">01</span><span className="source source-b">02</span><span className="source source-c">03</span>
+        <div className="ai-core">AI<small>CONTEXT</small></div>
+        <svg viewBox="0 0 620 280"><path d="M64 55C150 55 195 140 310 140S465 55 555 55" /><path d="M64 226C155 226 195 140 310 140S465 226 555 226" /><circle cx="310" cy="140" r="5" /></svg>
+      </div>
+      <div className="ai-answer-line"><i /><span>{data.heroSteps[3]}</span><b>{data.heroSteps[4]}</b></div>
+    </div>
+  )
+}
+
+function VisibilityDefinition({ data, tone = 'light' }) {
+  return (
+    <section className={`visibility-definition visibility-${tone} section-pad`}>
+      <div className="container visibility-definition-grid">
+        <Reveal><span className={`eyebrow ${tone === 'dark' ? 'light' : ''}`}>{data.label}</span><h2>{data.title}</h2></Reveal>
+        <Reveal delay={90}><p>{data.text}</p><small><Asterisk />{data.note}</small></Reveal>
+      </div>
+    </section>
+  )
+}
+
+function JourneySequence({ data, variant = 'seo' }) {
+  return (
+    <section className={`journey-sequence journey-${variant} section-pad`}>
+      <div className="container">
+        <Reveal className="journey-heading"><span className="eyebrow light">{data.label}</span><h2>{data.title}</h2></Reveal>
+        <div className="journey-track">
+          {data.steps.map(([number, title, text], index) => (
+            <Reveal className="journey-step" key={title} delay={index * 55}>
+              <span>{number}</span><i /><h3>{title}</h3><p>{text}</p>{index < data.steps.length - 1 && <ArrowRight />}
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function VisibilityCapabilities({ data, variant = 'seo' }) {
+  return (
+    <section className={`visibility-capabilities capabilities-${variant} section-pad`}>
+      <div className="container">
+        <Reveal className="visibility-capabilities-head"><span className="eyebrow">{data.label}</span><h2>{data.title}</h2><p>{data.intro}</p></Reveal>
+        <div className="visibility-capability-list">
+          {data.items.map(([number, title, text], index) => (
+            <Reveal key={title} delay={(index % 5) * 35}>
+              <article><span>{number}</span><h3>{title}</h3><p>{text}</p><ArrowUpRight /></article>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function VisibilityUseCases({ data, variant = 'seo' }) {
+  return (
+    <section className={`visibility-useful useful-${variant} section-pad`}>
+      <div className="container visibility-useful-grid">
+        <Reveal><span className="eyebrow light">{data.label}</span><h2>{data.title}</h2></Reveal>
+        <div className="visibility-useful-list">
+          {data.items.map((item, index) => <Reveal key={item} delay={index * 45}><span>{String(index + 1).padStart(2, '0')}</span><p>{item}</p><Check /></Reveal>)}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function SearchShift({ data }) {
+  return (
+    <section className="search-shift section-pad">
+      <div className="container">
+        <Reveal className="search-shift-head"><span className="eyebrow">{data.label}</span><h2>{data.title}</h2><p>{data.text}</p></Reveal>
+        <div className="search-shift-stage">
+          {[data.before, data.now].map((item, index) => (
+            <Reveal className={`search-era era-${index + 1}`} key={item.tag} delay={index * 90}>
+              <span>{item.tag}</span><h3>{item.title}</h3><blockquote>{item.example}</blockquote><p>{item.result}</p>
+              <div aria-hidden="true">{index === 0 ? <><i /><i /><i /></> : <><i /><i /><i /><i /><i /></>}</div>
+            </Reveal>
+          ))}
+          <ArrowRight className="shift-arrow" />
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function VisibilityComparison({ data, variant = 'seo' }) {
+  const columns = [data.left, data.right]
+  return (
+    <section className={`visibility-comparison comparison-${variant} section-pad`}>
+      <div className="container">
+        <Reveal className="comparison-head"><span className="eyebrow">{data.label}</span><h2>{data.title}</h2><p>{data.intro}</p></Reveal>
+        <div className="comparison-grid">
+          {columns.map((column, index) => (
+            <Reveal className={`comparison-column comparison-column-${index + 1}`} key={column.code} delay={index * 85}>
+              <span>{column.code}</span><h3>{column.title}</h3><p>{column.text}</p>
+              <div>{column.points.map((point, pointIndex) => <strong key={point}><i>0{pointIndex + 1}</i>{point}</strong>)}</div>
+            </Reveal>
+          ))}
+        </div>
+        <Reveal className="comparison-together"><Asterisk /><p>{data.together}</p></Reveal>
+      </div>
+    </section>
+  )
+}
+
+function VisibilityProcess({ data, variant = 'seo' }) {
+  return (
+    <section className={`visibility-process process-${variant} section-pad`}>
+      <div className="container">
+        <Reveal className="visibility-process-head"><span className="eyebrow light">{data.label}</span><h2>{data.title}</h2></Reveal>
+        <div className="visibility-process-grid">
+          {data.steps.map(([number, title, text], index) => <Reveal key={title} delay={index * 55}><span>{number}</span><i /><h3>{title}</h3><p>{text}</p></Reveal>)}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function VisibilityCta({ data, lang, navigate, variant = 'seo', service }) {
+  return (
+    <section className={`visibility-cta cta-${variant}`}>
+      <div className="container visibility-cta-grid">
+        <Reveal><span className="eyebrow light">{data.label}</span><h2>{data.title}</h2></Reveal>
+        <Reveal delay={90}><p>{data.text}</p><RouteLink className="button button-primary" href={`/${lang}/#contact`} navigate={navigate} onClick={() => {
+          if (service) sessionStorage.setItem('osnova:contact-service', service)
+        }}>{data.button}<ArrowUpRight /></RouteLink></Reveal>
+      </div>
+    </section>
+  )
+}
+
 function DirectionFooter({ s, lang, current, navigate }) {
   const index = serviceRoutes.indexOf(current)
   const next = serviceRoutes[(index + 1) % serviceRoutes.length]
@@ -1073,21 +1201,24 @@ function DirectionFooter({ s, lang, current, navigate }) {
   )
 }
 
-function Footer({ t, s, lang, navigate }) {
+function Footer({ t, s, p, lang, navigate }) {
   return (
     <footer>
       <div className="footer-marquee"><span>{s.common.system.join(' · ')} <Asterisk /> {s.common.system.join(' · ')}</span></div>
       <div className="container footer-bottom">
         <RouteLink className="brand footer-brand" href={`/${lang}/`} navigate={navigate}><span className="brand-mark">O</span><span>OSNOVA</span></RouteLink>
         <p>{t.footer.rights}</p>
-        <RouteLink href={`/${lang}/services`} navigate={navigate}>{s.common.services}<ArrowUpRight size={14} /></RouteLink>
+        <div className="footer-links">
+          <RouteLink href={`/${lang}/services`} navigate={navigate}>{s.common.services}<ArrowUpRight size={14} /></RouteLink>
+          <RouteLink href={`/${lang}/payment`} navigate={navigate}>{p.navLabel}<ArrowUpRight size={14} /></RouteLink>
+        </div>
       </div>
     </footer>
   )
 }
 
-function HomePage({ t, s, lang, navigate }) {
-  return <><HomeHero t={t} s={s} lang={lang} navigate={navigate} /><SystemContinuum s={s} /><ServiceWorlds s={s} lang={lang} navigate={navigate} compact /><FeaturedCases lang={lang} navigate={navigate} /><About t={t} /><Pricing t={t} /><Contact t={t} /></>
+function HomePage({ t, s, p, lang, navigate }) {
+  return <><HomeHero t={t} s={s} lang={lang} navigate={navigate} /><SystemContinuum s={s} /><ServiceWorlds s={s} lang={lang} navigate={navigate} compact /><FeaturedCases lang={lang} navigate={navigate} /><About t={t} lang={lang} /><Pricing t={t} lang={lang} navigate={navigate} /><Contact t={t} p={p} lang={lang} navigate={navigate} /></>
 }
 
 function ServicesPage({ s, lang, navigate }) {
@@ -1099,9 +1230,89 @@ function AutomationPage({ s, lang, navigate }) {
   return (
     <main className="direction-page automation-page">
       <DirectionHero direction="automation" data={data}><AutomationHeroVisual label={data.signal} flow={data.heroFlow} /></DirectionHero>
-      <section className="direction-proposition"><div className="container"><Reveal><span>{data.propositionLabel}</span><h2>{data.proposition}</h2></Reveal></div></section>
+      <section className="direction-proposition automation-principle">
+        <div className="container">
+          <Reveal className="automation-principle-panel">
+            <div className="automation-principle-label"><span>{data.propositionLabel}</span><i aria-hidden="true"><b /></i></div>
+            <h2>{data.proposition}</h2>
+            <ol className="automation-principle-flow" aria-label={data.propositionLabel}>
+              {data.heroFlow.map((step, index) => (
+                <li key={step}><span>0{index + 1}</span><strong>{step}</strong>{index < data.heroFlow.length - 1 && <ArrowRight aria-hidden="true" />}</li>
+              ))}
+            </ol>
+          </Reveal>
+        </div>
+      </section>
       <VoiceOperator data={data.voice} /><AssistantsSection data={data.assistants} /><CrmIntegrations crm={data.crm} integrations={data.integrations} /><CustomAutomation data={data.custom} />
       <DirectionFooter s={s} lang={lang} current="automation" navigate={navigate} />
+    </main>
+  )
+}
+
+function CryptoMark({ currency }) {
+  if (currency === 'USDT') {
+    return (
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <circle cx="32" cy="32" r="32" fill="#26A17B" />
+        <path fill="#fff" d="M35.7 34.8v-.1c-.2 0-1.5.1-4.5.1-2.4 0-4.1-.1-4.7-.1v.1c-9.2-.4-16-2-16-3.9s6.8-3.5 16-3.9v6.1c.6 0 2.4.1 4.7.1 2.8 0 4.2-.1 4.5-.1V27c9.2.4 16 2 16 3.9s-6.8 3.5-16 3.9Zm0-8.4V21h12.8v-8.2H13.8V21h12.8v5.4c-10.4.5-18.2 2.6-18.2 5.1s7.8 4.6 18.2 5.1V53h9.1V36.6c10.4-.5 18.2-2.6 18.2-5.1s-7.8-4.6-18.2-5.1Z" />
+      </svg>
+    )
+  }
+  if (currency === 'BTC') {
+    return (
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <circle cx="32" cy="32" r="32" fill="#F7931A" />
+        <path fill="#fff" d="M46.1 27.6c1-6.8-4.1-10.4-11.1-12.8l2.3-8.9-5.5-1.4-2.2 8.7-4.4-1.1 2.2-8.7L22 2.1l-2.3 9c-1.2-.3-2.3-.6-3.4-.8l-7.5-1.9-1.5 5.9s4 .9 4 1c2.2.6 2.6 2 2.5 3.3l-2.6 10.2.6.2-.6-.2-3.6 14.3c-.3.7-1 1.7-2.5 1.4l-4-1-2.7 6.2 7.1 1.8 4 1-2.3 9.1 5.5 1.4 2.2-9c1.5.4 3 .8 4.4 1.1l-2.3 8.9 5.5 1.4 2.3-9.1c9.3 1.8 16.2 1.1 19.1-7.3 2.4-6.7-.1-10.6-5-13.1 3.6-.8 6.3-3.2 7.1-8.2ZM33.4 44.5c-1.7 6.7-13.1 3.1-16.8 2.2l3-12c3.7.9 15.5 2.8 13.8 9.8Zm1.7-17.6c-1.5 6.1-11 3-14.1 2.2l2.7-10.8c3.1.8 12.9 2.3 11.4 8.6Z" transform="scale(.8) translate(9 6)" />
+      </svg>
+    )
+  }
+  return (
+    <svg viewBox="0 0 64 64" aria-hidden="true">
+      <circle cx="32" cy="32" r="32" fill="#F4F4F7" />
+      <path fill="#627EEA" d="m32 5-1.7 5.8v29.7L32 42l13.8-8.1L32 5Z" />
+      <path fill="#8998F6" d="m32 5-13.8 28.9L32 42V5Z" />
+      <path fill="#454A75" d="m32 44.6-1 1.2v10.6L32 59l13.8-19.4L32 47.8v-3.2Z" />
+      <path fill="#8A92B2" d="M32 59V47.8l-13.8-8.2L32 59Z" />
+      <path fill="#454A75" d="M32 42V28.9l13.8 5L32 42Z" />
+      <path fill="#C1CCF7" d="m18.2 33.9 13.8-5V42l-13.8-8.1Z" />
+    </svg>
+  )
+}
+
+function PaymentPage({ p }) {
+  const currencies = [['USDT', 'Tether'], ['BTC', 'Bitcoin'], ['ETH', 'Ethereum']]
+  return (
+    <main className="payment-page" id="top">
+      <section className="payment-hero">
+        <div className="container payment-hero-grid">
+          <Reveal className="payment-heading">
+            <span className="eyebrow light"><i />{p.eyebrow}</span>
+            <h1>{p.title}<em>{p.accent}</em></h1>
+          </Reveal>
+          <Reveal className="payment-intro" delay={90}>
+            <p>{p.intro}</p>
+            <div className="payment-rail" aria-label={p.accepted}>
+              <span>Bank</span><i /><span>IBAN</span><i /><span>USDT · BTC · ETH</span>
+            </div>
+          </Reveal>
+        </div>
+        <div className="payment-orbit" aria-hidden="true"><i /><i /><b>03</b></div>
+      </section>
+
+      <section className="payment-methods" aria-label={p.accepted}>
+        <div className="container">
+          {p.methods.map((method, index) => (
+            <Reveal as="article" className={`payment-method${index === 2 ? ' is-crypto' : ''}`} key={method.number}>
+              <div className="payment-method-index"><span>{method.number}</span><i /></div>
+              <div className="payment-method-copy"><small>{method.label}</small><h2>{method.title}</h2><p>{method.text}</p></div>
+              <div className="payment-method-detail">
+                {index === 2 && <div className="crypto-assets">{currencies.map(([code, name]) => <div className="crypto-asset" key={code}><CryptoMark currency={code} /><span><strong>{code}</strong><small>{name}</small></span></div>)}</div>}
+                <div className="payment-detail-slot"><span>{method.detailLabel}</span><strong>{method.detail}</strong></div>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </section>
     </main>
   )
 }
@@ -1128,6 +1339,97 @@ function PerformancePage({ s, lang, navigate }) {
   )
 }
 
+function SeoPage({ s, lang, navigate }) {
+  const data = s.seo
+  return (
+    <main className="direction-page seo-page">
+      <DirectionHero direction="seo" data={data}><SearchJourneyVisual data={data} /></DirectionHero>
+      <JourneySequence data={data.journey} />
+      <VisibilityCapabilities data={data.deliverables} />
+      <VisibilityComparison data={data.comparison} />
+      <VisibilityProcess data={data.process} />
+      <VisibilityCta data={data.cta} lang={lang} navigate={navigate} />
+      <DirectionFooter s={s} lang={lang} current="seo" navigate={navigate} />
+    </main>
+  )
+}
+
+function AiVisibilityPage({ s, lang, navigate }) {
+  const data = s.aiVisibility
+  return (
+    <main className="direction-page ai-visibility-page">
+      <DirectionHero direction="ai-visibility" data={data}><AiVisibilityVisual data={data} /></DirectionHero>
+      <SearchShift data={data.shift} />
+      <VisibilityCapabilities data={data.deliverables} variant="ai" />
+      <VisibilityComparison data={data.comparison} variant="ai" />
+      <VisibilityProcess data={data.process} variant="ai" />
+      <VisibilityCta data={data.cta} lang={lang} navigate={navigate} variant="ai" />
+      <DirectionFooter s={s} lang={lang} current="ai-visibility" navigate={navigate} />
+    </main>
+  )
+}
+
+function EmailDeliverabilityPage({ s, lang, navigate }) {
+  const data = s.email
+  const direction = s.directions.find(item => item.id === 'email-deliverability')
+  return (
+    <main className="direction-page email-page">
+      <DirectionHero direction="email-deliverability" data={data}>
+        <div className="email-journey">
+          <div className="email-journey-label"><MailCheck size={24} aria-hidden="true" /><span>{data.visual.label}</span></div>
+          <ol>{data.visual.steps.map((step, index) => <li key={step}><span aria-hidden="true">0{index + 1}</span><strong>{step}</strong>{index === 3 && <MailCheck size={23} aria-hidden="true" />}</li>)}</ol>
+          <p>{data.visual.note}</p>
+        </div>
+      </DirectionHero>
+      <section className="email-situations section-pad">
+        <div className="container">
+          <Reveal className="email-section-heading"><span className="eyebrow">{data.situations.label}</span><h2>{data.situations.title}</h2><p>{data.situations.intro}</p></Reveal>
+          <div className="email-situation-list">{data.situations.items.map(([title, text], index) => <Reveal as="article" key={title}><span aria-hidden="true">0{index + 1}</span><h3>{title}</h3><p>{text}</p></Reveal>)}</div>
+          <Reveal className="email-scope"><h3>{data.scopeTitle}</h3><ul>{direction.items.map(item => <li key={item}><Check size={17} aria-hidden="true" /><span>{item}</span></li>)}</ul></Reveal>
+        </div>
+      </section>
+      <VisibilityCapabilities data={data.deliverables} variant="email" />
+      <VisibilityProcess data={data.process} variant="email" />
+      <section className="email-outcome section-pad">
+        <div className="container email-outcome-layout">
+          <Reveal className="email-section-heading"><span className="eyebrow">{data.outcome.label}</span><h2>{data.outcome.title}</h2></Reveal>
+          <Reveal><ul>{data.outcome.items.map(item => <li key={item}><Check size={20} aria-hidden="true" /><span>{item}</span></li>)}</ul><p className="email-outcome-note">{data.outcome.note}</p></Reveal>
+        </div>
+      </section>
+      <VisibilityCta data={data.cta} lang={lang} navigate={navigate} variant="email" service="Email Deliverability" />
+      <DirectionFooter s={s} lang={lang} current="email-deliverability" navigate={navigate} />
+    </main>
+  )
+}
+
+function NotFoundPage({ t, lang, navigate }) {
+  const data = t.notFound
+  return (
+    <main className="not-found-page" id="top">
+      <div className="container not-found-layout">
+        <Reveal className="not-found-copy">
+          <span className="eyebrow">{data.label}</span>
+          <h1>{data.title}<em>{data.accent}</em></h1>
+          <p>{data.text}</p>
+          <div className="not-found-actions">
+            <RouteLink className="button button-primary" href={`/${lang}/`} navigate={navigate}>{data.primary}<ArrowUpRight size={18} /></RouteLink>
+            <RouteLink className="button button-ghost" href={`/${lang}/services`} navigate={navigate}>{data.secondary}<ArrowRight size={18} /></RouteLink>
+          </div>
+        </Reveal>
+      </div>
+    </main>
+  )
+}
+
+const servicePages = {
+  automation: AutomationPage,
+  development: DevelopmentPage,
+  performance: PerformancePage,
+  seo: SeoPage,
+  'ai-visibility': AiVisibilityPage,
+  'email-deliverability': EmailDeliverabilityPage,
+}
+
 function PageTransition({ state }) {
   return (
     <div className={`page-transition transition-${state.world} ${state.phase ? `is-${state.phase}` : ''}`} aria-hidden="true">
@@ -1141,10 +1443,13 @@ export default function App() {
   const [location, setLocation] = useState(parseLocation)
   const [transition, setTransition] = useState({ phase: '', world: 'neutral' })
   const t = useMemo(() => content[lang], [lang])
-  const s = useMemo(() => serviceContent[lang], [lang])
+  const s = useMemo(() => extendServiceContent(serviceContent[lang], lang), [lang])
+  const p = useMemo(() => paymentContent[lang], [lang])
+  const resolved = useMemo(() => resolveRoute(location.route, lang), [location.route, lang])
 
   const navigate = (href, world = 'neutral', replace = false) => {
     const target = new URL(href, window.location.origin)
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (target.pathname === window.location.pathname && target.hash === window.location.hash) {
       document.querySelector(target.hash || '#top')?.scrollIntoView({ block: 'start' })
       return
@@ -1157,9 +1462,9 @@ export default function App() {
       window.setTimeout(() => {
         if (target.hash) document.querySelector(target.hash)?.scrollIntoView({ block: 'start' })
         setTransition({ phase: 'reveal', world })
-        window.setTimeout(() => setTransition({ phase: '', world }), 720)
+        window.setTimeout(() => setTransition({ phase: '', world }), reducedMotion ? 0 : 720)
       }, 40)
-    }, 520)
+    }, reducedMotion ? 0 : 520)
   }
 
   const setLang = (nextLang) => {
@@ -1168,6 +1473,23 @@ export default function App() {
     localStorage.setItem('osnova-language', nextLang)
     navigate(`/${nextLang}${currentRoute}${location.hash}`, 'neutral', true)
   }
+
+  // A prerendered document paints its real content immediately, thanks to an
+  // inline style override. Before dropping that override, mark everything
+  // currently on screen as revealed, so visible content stays visible while
+  // anything further down keeps its normal entrance animation.
+  useEffect(() => {
+    const override = document.getElementById('prerender-reveal')
+    if (!override) return
+    const frame = requestAnimationFrame(() => {
+      for (const node of document.querySelectorAll('.reveal')) {
+        const box = node.getBoundingClientRect()
+        if (box.top < window.innerHeight && box.bottom > 0) node.classList.add('is-visible')
+      }
+      override.remove()
+    })
+    return () => cancelAnimationFrame(frame)
+  }, [])
 
   useEffect(() => {
     const onPopState = () => {
@@ -1181,58 +1503,73 @@ export default function App() {
   }, [])
 
   useEffect(() => {
-    const canonicalRoute = location.route
     if (!location.lang) {
-      window.history.replaceState({}, '', `/${lang}/${canonicalRoute}${location.hash}`)
+      window.history.replaceState({}, '', `/${lang}/${location.route}${location.hash}`)
       setLocation(parseLocation())
       return
     }
     document.documentElement.lang = lang
     localStorage.setItem('osnova-language', lang)
-    const caseSlug = location.route.startsWith('cases/') ? location.route.split('/')[1] : null
-    const caseItem = caseSlug ? getLocalizedCases(lang).find((item) => item.slug === caseSlug) : null
-    const pageKey = location.route === 'services' ? 'services' : location.route.split('/')[1]
-    const meta = location.route === 'cases'
+
+    const isNotFound = resolved.kind === 'notFound'
+    const caseItem = resolved.kind === 'case' ? resolved.item : null
+    const isDraft = caseItem?.status === 'draft'
+    const meta = isNotFound
+      ? t.notFound.meta
+      : resolved.kind === 'payment'
+      ? [p.metaTitle, p.metaDescription]
+      : resolved.kind === 'cases'
       ? [`${caseUi[lang].pageTitle} — OSNOVA`, caseUi[lang].pageIntro]
       : caseItem
         ? [`${caseItem.title} — OSNOVA`, caseItem.summary]
-        : s.meta[pageKey] || [t.meta.title, t.meta.description]
+        : resolved.kind === 'services'
+          ? s.meta.services
+          : resolved.kind === 'service'
+            ? s.meta[resolved.id]
+            : [t.meta.title, t.meta.description]
+
+    const origin = window.location.origin
+    const pathFor = (code) => (location.route ? `/${code}/${location.route}` : `/${code}/`)
+    const absoluteUrl = new URL(isNotFound ? `/${lang}/` : pathFor(lang), origin).href
+
     document.title = meta[0]
-    document.querySelector('meta[name="description"]')?.setAttribute('content', meta[1])
-    document.querySelector('meta[property="og:title"]')?.setAttribute('content', meta[0])
-    document.querySelector('meta[property="og:description"]')?.setAttribute('content', meta[1])
-    document.querySelector('meta[property="og:type"]')?.setAttribute('content', caseItem ? 'article' : 'website')
-    const localizedPath = `/${lang}/${location.route}${location.route ? '' : ''}`
-    const absoluteUrl = new URL(localizedPath, window.location.origin).href
-    document.querySelector('meta[property="og:url"]')?.setAttribute('content', absoluteUrl)
-    document.querySelector('link[rel="canonical"]')?.setAttribute('href', absoluteUrl)
-    document.querySelector('meta[name="robots"]')?.setAttribute('content', caseItem?.status === 'draft' ? 'noindex, follow' : 'index, follow')
-    for (const code of languageCodes) {
-      const alternate = document.querySelector(`link[rel="alternate"][hreflang="${code}"]`)
-      alternate?.setAttribute('href', new URL(`/${code}/${location.route}`, window.location.origin).href)
+    setMetaTag('name', 'description', meta[1])
+    setMetaTag('name', 'robots', isNotFound || isDraft ? 'noindex, follow' : 'index, follow')
+    setMetaTag('property', 'og:title', meta[0])
+    setMetaTag('property', 'og:description', meta[1])
+    setMetaTag('property', 'og:type', caseItem ? 'article' : 'website')
+    setMetaTag('property', 'og:url', absoluteUrl)
+    setMetaTag('property', 'og:locale', languages[lang].locale.replace('-', '_'))
+    setMetaTag('property', 'og:image', new URL('/assets/system-convergence.jpg', origin).href)
+
+    // A 404 is a variant of no real page: it carries neither a canonical nor
+    // language alternates.
+    if (isNotFound) {
+      for (const node of document.head.querySelectorAll('link[rel="canonical"], link[rel="alternate"][hreflang]')) node.remove()
+    } else {
+      setLinkTag('canonical', null, absoluteUrl)
+      for (const code of languageCodes) setLinkTag('alternate', code, new URL(pathFor(code), origin).href)
+      setLinkTag('alternate', 'x-default', new URL(pathFor(defaultLanguage), origin).href)
     }
-    document.querySelector('link[rel="alternate"][hreflang="x-default"]')
-      ?.setAttribute('href', new URL(`/en/${location.route}`, window.location.origin).href)
-  }, [lang, location, s, t])
+  }, [lang, location, p, resolved, s, t])
 
   let page
-  if (location.route === 'services') page = <ServicesPage s={s} lang={lang} navigate={navigate} />
-  else if (location.route === 'services/automation') page = <AutomationPage s={s} lang={lang} navigate={navigate} />
-  else if (location.route === 'services/development') page = <DevelopmentPage s={s} lang={lang} navigate={navigate} />
-  else if (location.route === 'services/performance') page = <PerformancePage s={s} lang={lang} navigate={navigate} />
-  else if (location.route === 'cases') page = <CasesArchive lang={lang} navigate={navigate} />
-  else if (location.route.startsWith('cases/')) {
-    const slug = location.route.split('/')[1]
-    const item = getLocalizedCases(lang).find((candidate) => candidate.slug === slug)
-    page = item ? <CaseDetail item={item} lang={lang} navigate={navigate} /> : <CasesArchive lang={lang} navigate={navigate} />
+  if (resolved.kind === 'services') page = <ServicesPage s={s} lang={lang} navigate={navigate} />
+  else if (resolved.kind === 'service') {
+    const ServicePage = servicePages[resolved.id]
+    page = <ServicePage s={s} lang={lang} navigate={navigate} />
   }
-  else page = <HomePage t={t} s={s} lang={lang} navigate={navigate} />
+  else if (resolved.kind === 'payment') page = <PaymentPage p={p} />
+  else if (resolved.kind === 'cases') page = <CasesArchive lang={lang} navigate={navigate} />
+  else if (resolved.kind === 'case') page = <PortfolioDetail key={resolved.item.slug} item={resolved.item} lang={lang} navigate={navigate} Link={RouteLink} />
+  else if (resolved.kind === 'notFound') page = <NotFoundPage t={t} lang={lang} navigate={navigate} />
+  else page = <HomePage t={t} s={s} p={p} lang={lang} navigate={navigate} />
 
   return (
     <>
       <Header t={t} s={s} lang={lang} route={location.route} setLang={setLang} navigate={navigate} />
       {page}
-      <Footer t={t} s={s} lang={lang} navigate={navigate} />
+      <Footer t={t} s={s} p={p} lang={lang} navigate={navigate} />
       <PageTransition state={transition} />
     </>
   )

@@ -5,11 +5,17 @@
   "private": true,
   "scripts": {
     "dev": "vite",
-    "build": "vite build && node scripts/prepare-sites.mjs",
+    "build": "vite build && node scripts/prerender.mjs && node scripts/generate-sitemap.mjs",
+    "build:vercel": "npm run build",
     "audit:cases": "node scripts/cases-audit.mjs",
     "audit:cases-navigation": "node scripts/cases-navigation-audit.mjs",
     "audit:mobile": "node scripts/mobile-audit.mjs",
-    "preview": "vite preview"
+    "audit:typography": "node scripts/typography-audit.mjs",
+    "audit:visibility": "node scripts/visibility-visual-audit.mjs",
+    "audit:payment": "node scripts/payment-audit.mjs",
+    "preview": "vite preview",
+    "build:nossr": "vite build && node scripts/generate-sitemap.mjs",
+    "verify:seo": "node scripts/seo-verify.mjs"
   },
   "keywords": [],
   "author": "",

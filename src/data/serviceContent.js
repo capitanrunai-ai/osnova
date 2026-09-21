@@ -61,7 +61,7 @@ export const serviceContent = {
       intro: 'Изучаем существующую работу компании, находим повторяющиеся действия и узкие места, затем создаём систему под конкретный бизнес.',
       signal: 'Процесс активен',
       heroFlow: ['Вход', 'Контекст', 'Решение', 'Действие'],
-      propositionLabel: 'OS / ПРИНЦИП СИСТЕМЫ',
+      propositionLabel: '02 / ПРИНЦИП СИСТЕМЫ',
       proposition: 'Если внутри компании есть повторяющийся процесс, его можно разобрать, измерить и определить, где автоматизация даст реальный эффект.',
       voice: {
         label: 'AI-ОПЕРАТОР / LIVE SYSTEM',
@@ -211,7 +211,7 @@ const en = {
     intro: 'We study how the company works today, find repetitive actions and bottlenecks, then build a system around that specific business.',
     signal: 'Process online',
     heroFlow: ['Input', 'Context', 'Decision', 'Action'],
-    propositionLabel: 'OS / SYSTEM PRINCIPLE',
+    propositionLabel: '02 / SYSTEM PRINCIPLE',
     proposition: 'If a process repeats inside the company, it can be mapped, measured and assessed for meaningful automation.',
     voice: {
       label: 'AI VOICE OPERATOR / LIVE SYSTEM', title: 'A conversation that ends in action.',
@@ -329,7 +329,7 @@ Object.assign(serviceContent.de.automation, {
   intro: 'Wir analysieren die bestehende Arbeit, finden wiederkehrende Schritte und Engpässe und bauen daraus ein System für das konkrete Unternehmen.',
   signal: 'Prozess aktiv',
   heroFlow: ['Eingang', 'Kontext', 'Entscheidung', 'Aktion'],
-  propositionLabel: 'OS / SYSTEMPRINZIP',
+  propositionLabel: '02 / SYSTEMPRINZIP',
   proposition: 'Wenn sich ein Prozess im Unternehmen wiederholt, kann er abgebildet, gemessen und auf sinnvolle Automatisierung geprüft werden.',
   voice: {
     label: 'AI-TELEFONASSISTENT / LIVE-SYSTEM',
@@ -439,7 +439,7 @@ Object.assign(serviceContent.uk.automation, {
   intro: 'Вивчаємо роботу компанії, знаходимо повторювані дії та вузькі місця, а потім створюємо систему під конкретний бізнес.',
   signal: 'Процес активний',
   heroFlow: ['Вхід', 'Контекст', 'Рішення', 'Дія'],
-  propositionLabel: 'OS / ПРИНЦИП СИСТЕМИ',
+  propositionLabel: '02 / ПРИНЦИП СИСТЕМИ',
   proposition: 'Якщо всередині компанії є повторюваний процес, його можна розібрати, виміряти й визначити, де автоматизація дасть реальний ефект.',
   voice: {
     label: 'AI-ОПЕРАТОР / LIVE SYSTEM', title: 'Розмова, що завершується дією.',

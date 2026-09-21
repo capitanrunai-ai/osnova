@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://osnova-ai-systems.roma-shulga2404.chatgpt.site/sitemap.xml

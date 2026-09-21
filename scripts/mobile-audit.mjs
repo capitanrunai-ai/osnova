@@ -14,7 +14,7 @@ const server = spawn(
 )
 
 const locales = ['ru', 'en', 'de', 'uk']
-const routes = ['', 'services', 'services/automation', 'services/development', 'services/performance', 'cases', 'cases/voice-to-crm']
+const routes = ['', 'services', 'services/automation', 'services/development', 'services/performance', 'services/seo', 'services/ai-visibility', 'payment', 'cases', 'cases/ai-voice-operator', 'cases/bala-group']
 const viewports = [
   [320, 568],
   [360, 740],
@@ -174,8 +174,14 @@ try {
     ['development-320-de', 320, 568, 'de', 'services/development'],
     ['development-390', 390, 844, 'ru', 'services/development'],
     ['performance-390', 390, 844, 'ru', 'services/performance'],
+    ['seo-320-de', 320, 568, 'de', 'services/seo'],
+    ['seo-390', 390, 844, 'ru', 'services/seo'],
+    ['ai-visibility-320-de', 320, 568, 'de', 'services/ai-visibility'],
+    ['ai-visibility-390', 390, 844, 'ru', 'services/ai-visibility'],
+    ['payment-320-de', 320, 568, 'de', 'payment'],
+    ['payment-390', 390, 844, 'ru', 'payment'],
     ['cases-320', 320, 568, 'ru', 'cases'],
-    ['case-detail-390', 390, 844, 'ru', 'cases/voice-to-crm'],
+    ['case-detail-390', 390, 844, 'ru', 'cases/ai-voice-operator'],
   ]
 
   for (const [name, width, height, locale, route] of screenshots) {
@@ -217,10 +223,13 @@ try {
   }
 
   await page.goto(`${origin}/ru/`, { waitUntil: 'networkidle0' })
-  const pricing = await page.$$eval('.price-row', (nodes) => nodes.map((node) => node.textContent.replace(/\s+/g, ' ').trim()))
-  if (!pricing.some((row) => row.includes('Landing Page') && row.includes('€120'))
-    || !pricing.some((row) => row.includes('Корпоративный сайт') && row.includes('€250'))
-    || !pricing.some((row) => row.includes('Реклама и продвижение') && row.includes('€300'))) {
+  const pricing = await page.$$eval('.price-row', (nodes) => nodes.map((node) => ({
+    text: node.textContent.replace(/\s+/g, ' ').trim(),
+    action: node.querySelector('.price-action')?.textContent.replace(/\s+/g, ' ').trim(),
+  })))
+  if (pricing.length !== 6
+    || pricing.some((row) => /€|\b(?:от|Индивидуально)\b/i.test(row.text))
+    || pricing.some((row) => row.action !== 'Узнать цену')) {
     failures.push(`pricing ${JSON.stringify(pricing)}`)
   }
 

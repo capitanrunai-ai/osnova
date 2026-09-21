@@ -47,8 +47,9 @@ try {
     ['automation', '/ru/services/automation'],
     ['development', '/ru/services/development'],
     ['performance', '/ru/services/performance'],
+    ['payment', '/ru/payment'],
     ['cases', '/ru/cases'],
-    ['case-detail', '/ru/cases/voice-to-crm'],
+    ['case-detail', '/ru/cases/ai-voice-operator'],
     ['home', '/ru/'],
   ]
 
@@ -99,7 +100,7 @@ try {
     await page.screenshot({ path: `${output}/${name}-laptop.png`, fullPage: true })
   }
 
-  for (const [name, route] of routes.filter(([name]) => ['services', 'automation', 'development', 'performance', 'cases', 'case-detail', 'home'].includes(name))) {
+  for (const [name, route] of routes.filter(([name]) => ['services', 'automation', 'development', 'performance', 'payment', 'cases', 'case-detail', 'home'].includes(name))) {
     await page.setViewport({ width: 390, height: 844, deviceScaleFactor: 1 })
     await page.goto(`http://127.0.0.1:5173${route}`, { waitUntil: 'networkidle0' })
     await page.evaluate(async () => {
@@ -167,19 +168,19 @@ try {
       htmlLang: document.documentElement.lang,
       title: document.title,
       h1: document.querySelector('.cases-archive-hero h1')?.textContent,
-      cards: document.querySelectorAll('.archive-card').length,
-      draftBadges: document.querySelectorAll('.case-draft-badge').length,
+      cards: document.querySelectorAll('.spatial-card').length,
+      audioPlayers: document.querySelectorAll('.voice-player').length,
     }), code))
   }
 
   for (const code of ['ru', 'en', 'de', 'uk']) {
     await page.setViewport({ width: 390, height: 844, deviceScaleFactor: 1 })
-    await page.goto(`http://127.0.0.1:5173/${code}/cases/voice-to-crm`, { waitUntil: 'networkidle0' })
+    await page.goto(`http://127.0.0.1:5173/${code}/cases/ai-voice-operator`, { waitUntil: 'networkidle0' })
     audit.push(await page.evaluate((language) => ({
       name: `case-detail-locale-${language}`,
       width: document.documentElement.clientWidth,
       scrollWidth: document.documentElement.scrollWidth,
-      h1: document.querySelector('.case-detail-title h1')?.textContent,
+      h1: document.querySelector('.portfolio-detail-heading h1')?.textContent,
       robots: document.querySelector('meta[name="robots"]')?.content,
       canonical: document.querySelector('link[rel="canonical"]')?.href,
     }), code))
@@ -192,7 +193,7 @@ try {
   audit.push(await page.evaluate(() => ({
     name: 'cases-filter',
     activeGroup: document.querySelector('.case-filter-main button.active')?.textContent.trim(),
-    cards: document.querySelectorAll('.archive-card').length,
+    cards: document.querySelectorAll('.spatial-card').length,
     subfiltersVisible: document.querySelector('.case-subfilters')?.classList.contains('is-visible'),
   })))
 

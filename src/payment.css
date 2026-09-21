@@ -1,0 +1,357 @@
+.payment-page {
+  color: var(--ink);
+  background: var(--paper);
+}
+
+.payment-hero {
+  min-height: 730px;
+  padding: 152px 0 84px;
+  position: relative;
+  overflow: hidden;
+  color: white;
+  background:
+    linear-gradient(115deg, rgba(92, 69, 255, .13), transparent 42%),
+    #09090b;
+}
+
+.payment-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: .2;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, .18) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, .18) 1px, transparent 1px);
+  background-size: 76px 76px;
+  mask-image: linear-gradient(90deg, black, transparent 72%);
+}
+
+.payment-hero-grid {
+  min-height: 490px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(320px, .75fr);
+  align-items: end;
+  gap: clamp(50px, 7vw, 120px);
+  position: relative;
+  z-index: 2;
+}
+
+.payment-heading {
+  align-self: start;
+}
+
+.payment-heading .eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.payment-heading .eyebrow i {
+  width: 7px;
+  height: 7px;
+  background: var(--lime);
+  border-radius: 50%;
+  box-shadow: 0 0 0 5px rgba(200, 255, 91, .08);
+}
+
+.payment-heading h1 {
+  max-width: 980px;
+  margin: 54px 0 0;
+  font-size: clamp(70px, 8.2vw, 126px);
+  font-weight: 500;
+  line-height: .86 !important;
+  letter-spacing: -.065em !important;
+}
+
+.payment-heading h1 em {
+  display: block;
+  color: #a99cff;
+  font-weight: 400;
+}
+
+.payment-intro {
+  max-width: 500px;
+  padding-bottom: 18px;
+}
+
+.payment-intro > p {
+  margin-bottom: 38px;
+  color: rgba(255, 255, 255, .7);
+  font-size: 18px;
+  line-height: 1.65;
+}
+
+.payment-rail {
+  min-height: 56px;
+  padding: 0 17px;
+  display: grid;
+  grid-template-columns: auto 1fr auto 1fr auto;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid rgba(255, 255, 255, .16);
+  background: rgba(255, 255, 255, .035);
+  font: 500 10px/1.25 var(--mono);
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+
+.payment-rail i {
+  height: 1px;
+  background: rgba(255, 255, 255, .2);
+}
+
+.payment-orbit {
+  width: 520px;
+  height: 520px;
+  position: absolute;
+  top: -225px;
+  right: -190px;
+  border: 1px solid rgba(169, 156, 255, .25);
+  border-radius: 50%;
+}
+
+.payment-orbit::before,
+.payment-orbit::after,
+.payment-orbit i {
+  content: '';
+  position: absolute;
+  border: 1px solid rgba(255, 255, 255, .08);
+  border-radius: 50%;
+}
+
+.payment-orbit::before { inset: 64px; }
+.payment-orbit::after { inset: 130px; }
+.payment-orbit i:first-child { inset: 196px; background: var(--violet); border: 0; }
+.payment-orbit i:nth-child(2) { inset: -34px; border-style: dashed; }
+.payment-orbit b {
+  position: absolute;
+  left: 50%;
+  bottom: 53px;
+  color: rgba(255, 255, 255, .42);
+  font: 500 10px var(--mono);
+  transform: translateX(-50%);
+}
+
+.payment-methods {
+  padding: 28px 0 48px;
+}
+
+.payment-method {
+  min-height: 315px;
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1.15fr) minmax(300px, .85fr);
+  gap: clamp(34px, 5vw, 82px);
+  align-items: center;
+  border-bottom: 1px solid var(--line);
+}
+
+.payment-method:first-child {
+  border-top: 1px solid var(--line);
+}
+
+.payment-method-index {
+  height: 100%;
+  padding-top: 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  color: #686864;
+  font: 500 12px var(--mono);
+}
+
+.payment-method-index i {
+  width: 9px;
+  height: 9px;
+  margin-bottom: 48px;
+  background: var(--violet);
+  border-radius: 50%;
+  box-shadow: 0 0 0 7px rgba(92, 69, 255, .08);
+}
+
+.payment-method-copy {
+  max-width: 680px;
+  padding: 48px 0;
+}
+
+.payment-method-copy > small,
+.payment-detail-slot > span {
+  display: block;
+  color: #73736f;
+  font: 500 11px/1.35 var(--mono);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.payment-method-copy h2 {
+  margin: 20px 0 18px;
+  font-size: clamp(38px, 4vw, 62px);
+  font-weight: 500;
+  letter-spacing: -.052em;
+}
+
+.payment-method-copy p {
+  max-width: 640px;
+  margin: 0;
+  color: #555551;
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+.payment-method-detail {
+  padding: 48px 0;
+}
+
+.payment-detail-slot {
+  min-height: 92px;
+  padding: 18px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 13px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.payment-detail-slot strong {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.crypto-assets {
+  margin-bottom: 28px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 9px;
+}
+
+.crypto-asset {
+  min-width: 0;
+  padding: 14px 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, .36);
+}
+
+.crypto-asset svg {
+  width: 38px;
+  height: 38px;
+  flex: 0 0 auto;
+}
+
+.crypto-asset span {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.crypto-asset strong {
+  font: 600 12px var(--mono);
+}
+
+.crypto-asset small {
+  overflow: hidden;
+  color: #777773;
+  font-size: 10px;
+  text-overflow: ellipsis;
+}
+
+.contact-payment-link {
+  margin-top: 8px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, .2);
+}
+
+@media (max-width: 1080px) {
+  .payment-hero { min-height: 680px; }
+  .payment-hero-grid { min-height: 440px; grid-template-columns: 1.15fr .85fr; gap: 50px; }
+  .payment-method { grid-template-columns: 70px minmax(0, 1fr) minmax(280px, .75fr); gap: 34px; }
+  .crypto-assets { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 800px) {
+  .payment-hero { min-height: 700px; padding-top: 130px; }
+  .payment-hero-grid { min-height: 500px; grid-template-columns: 1fr; align-content: space-between; }
+  .payment-heading h1 { max-width: 700px; }
+  .payment-intro { max-width: 620px; }
+  .payment-orbit { opacity: .65; }
+  .payment-method {
+    min-height: 0;
+    padding: 48px 0;
+    grid-template-columns: 52px 1fr;
+    gap: 22px 30px;
+    align-items: start;
+  }
+  .payment-method-index { grid-row: 1 / 3; padding: 0; }
+  .payment-method-index i { margin-bottom: 0; }
+  .payment-method-copy,
+  .payment-method-detail { padding: 0; }
+  .payment-method-detail { grid-column: 2; }
+  .payment-method-index { min-height: 220px; }
+  .crypto-assets { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 640px) {
+  .payment-hero {
+    min-height: 620px;
+    padding: 114px 0 54px;
+  }
+
+  .payment-hero::before { background-size: 54px 54px; }
+  .payment-hero-grid { min-height: 452px; gap: 42px; }
+  .payment-heading h1 {
+    margin-top: 34px;
+    font-size: clamp(47px, 14.5vw, 64px);
+    line-height: .9 !important;
+  }
+  .payment-intro { padding-bottom: 0; }
+  .payment-intro > p { margin-bottom: 25px; font-size: 16px; line-height: 1.58; }
+  .payment-rail {
+    min-height: 52px;
+    padding: 0 12px;
+    gap: 8px;
+    font-size: 8px;
+  }
+  .payment-orbit { width: 300px; height: 300px; top: -160px; right: -170px; }
+  .payment-orbit::before { inset: 42px; }
+  .payment-orbit::after { inset: 84px; }
+  .payment-orbit i:first-child { inset: 120px; }
+  .payment-orbit b { bottom: 27px; }
+
+  .payment-methods { padding: 14px 0 36px; }
+  .payment-method {
+    padding: 38px 0;
+    grid-template-columns: 30px minmax(0, 1fr);
+    gap: 20px 12px;
+  }
+  .payment-method-index { min-height: 188px; font-size: 10px; }
+  .payment-method-index i { width: 7px; height: 7px; }
+  .payment-method-copy { min-width: 0; }
+  .payment-method-copy > small,
+  .payment-detail-slot > span { font-size: 10px; }
+  .payment-method-copy h2 { margin: 15px 0; font-size: 36px; line-height: .96 !important; }
+  .payment-method-copy p { font-size: 15px; line-height: 1.58; }
+  .payment-method-detail { min-width: 0; }
+  .payment-detail-slot strong { font-size: 13px; line-height: 1.4; }
+  .crypto-assets { grid-template-columns: 1fr; gap: 7px; }
+  .crypto-asset { min-height: 62px; padding: 10px 12px; }
+  .crypto-asset svg { width: 40px; height: 40px; }
+  .crypto-asset small { font-size: 11px; }
+
+  .footer-bottom {
+    min-height: 210px;
+    padding: 28px 0;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .footer-links { justify-content: flex-start; gap: 20px; }
+  .footer-bottom p { grid-row: auto; grid-column: auto; }
+}
+
+@media (max-width: 350px) {
+  .payment-heading h1 { font-size: 43px; }
+  .payment-method-copy h2 { font-size: 32px; }
+}
