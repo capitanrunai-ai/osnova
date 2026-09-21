@@ -6,7 +6,12 @@ import { buildRoutes, languageCodes } from './site-routes.mjs'
 const root = resolve(import.meta.dirname, '..')
 const lines = [
   '# Generated from the same route source as prerender and sitemap.',
-  '/ /en/ 302',
+  // Forced (!): dist/index.html (the Vite SPA shell, never prerendered since
+  // buildRoutes() only emits language-prefixed paths) exists as a static file
+  // at "/", and Netlify serves a matching static asset before consulting this
+  // file unless the rule is forced — so without "!" this redirect never fires
+  // and crawlers get the empty JS-only shell directly with a 200.
+  '/ /en/ 302!',
 ]
 
 // No per-route trailing-slash / index.html canonicalization rules here:
