@@ -9,19 +9,12 @@ const lines = [
   '/ /en/ 302',
 ]
 
-for (const lang of languageCodes) {
-  lines.push(`/${lang} /${lang}/ 301!`)
-  lines.push(`/${lang}/index.html /${lang}/ 301!`)
-}
-
-for (const { path, route } of buildRoutes()) {
-  if (!route) continue
-  // Note: no "${path}/index.html -> ${path}" rule here — it would point
-  // straight back at the "${path} -> ${path}/index.html" rewrite below and
-  // form a redirect loop.
-  lines.push(`${path}/ ${path} 301!`)
-  lines.push(`${path} ${path}/index.html 200`)
-}
+// No per-route trailing-slash / index.html canonicalization rules here:
+// every route is prerendered as {path}/index.html, and Netlify's static
+// file server already serves that directly for both "/path" and "/path/"
+// with no redirect needed. Explicit "strip the slash" 301 rules turned out
+// to match their own target under Netlify's edge matching and 301 a route
+// back to itself (redirect loop) — simpler is safer here.
 
 for (const lang of languageCodes) {
   lines.push(`/${lang}/* /${lang}/404/index.html 404`)
