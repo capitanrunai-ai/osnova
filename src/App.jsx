@@ -740,7 +740,7 @@ function Contact({ t, p, lang, navigate }) {
         </Reveal>
         <Reveal className="contact-form-wrap" delay={120}>
           <span className="contact-form-anchor" id="contact-form" aria-hidden="true" />
-          <div className="contact-form-heading"><span aria-hidden="true">↗</span><div><h3>{c.formTitle}</h3><p>{c.formNote}</p></div></div>
+          <div className="contact-form-heading"><span aria-hidden="true"><ArrowUpRight size={20} strokeWidth={1.75} /></span><div><h3>{c.formTitle}</h3><p>{c.formNote}</p></div></div>
           {status === 'success' ? <div className="form-success" role="status"><Check size={24} /><p>{c.sent}</p><button type="button" onClick={() => setStatus('idle')}>{c.back}</button></div> : (
             <form onSubmit={handleSubmit}>
               <div className="form-row">

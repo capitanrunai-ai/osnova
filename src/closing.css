@@ -30,7 +30,7 @@
   font-size: clamp(32px, 3vw, 47px);
   line-height: 1.03;
   letter-spacing: -.045em;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
   hyphens: manual;
 }
 .service-worlds .world-copy p { max-width: 34ch; min-height: 3.1em; color: #aaa9a5; font-size: 15px; line-height: 1.55; }
