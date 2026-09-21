@@ -16,8 +16,10 @@ for (const lang of languageCodes) {
 
 for (const { path, route } of buildRoutes()) {
   if (!route) continue
+  // Note: no "${path}/index.html -> ${path}" rule here — it would point
+  // straight back at the "${path} -> ${path}/index.html" rewrite below and
+  // form a redirect loop.
   lines.push(`${path}/ ${path} 301!`)
-  lines.push(`${path}/index.html ${path} 301!`)
   lines.push(`${path} ${path}/index.html 200`)
 }
 
