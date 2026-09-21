@@ -1,13 +1,12 @@
 import { isSpam, sendTelegramLead, validateLead } from '../../server/telegram.mjs'
 
-const json = (statusCode, body, extraHeaders = {}) => ({
-  statusCode,
+const json = (statusCode, body, extraHeaders = {}) => new Response(JSON.stringify(body), {
+  status: statusCode,
   headers: {
     'content-type': 'application/json; charset=utf-8',
     'cache-control': 'no-store',
     ...extraHeaders,
   },
-  body: JSON.stringify(body),
 })
 
 export default async function contact(request) {
