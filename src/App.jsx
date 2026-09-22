@@ -28,6 +28,8 @@ import { defaultLanguage, serviceRoutes } from './data/routes'
 import './services.css'
 import './cases.css'
 import { CaseVisual, PortfolioDetail } from './PortfolioMedia'
+import { initAnalytics, serviceSlug, track, trackLead, trackPageView } from './analytics'
+import ConsentBanner from './ConsentBanner'
 import { getTeam } from './data/team'
 import './team.css'
 import './email.css'
@@ -671,7 +673,10 @@ function Pricing({ t, lang, navigate }) {
                 className="price-action"
                 href={`/${lang}/#contact-form`}
                 navigate={navigate}
-                onClick={() => selectContactService(service)}
+                onClick={() => {
+                  selectContactService(service)
+                  track('pricing_cta_click', { site_language: lang, service: serviceSlug(service, t.contact.options) })
+                }}
                 aria-label={`${t.pricing.action}: ${service}`}
               >
                 {t.pricing.action}<ArrowUpRight size={16} />
@@ -705,6 +710,7 @@ function Contact({ t, p, lang, navigate }) {
     event.preventDefault()
     if (status === 'sending') return
     const data = new FormData(event.currentTarget)
+    const selectedService = serviceOptions.includes(service) ? service : ''
     setStatus('sending')
     try {
       const response = await fetch('/api/contact', {
@@ -714,7 +720,7 @@ function Contact({ t, p, lang, navigate }) {
           name: data.get('name'),
           contact: data.get('contact'),
           company: data.get('company'),
-          service: serviceOptions.includes(service) ? service : '',
+          service: selectedService,
           message: data.get('message'),
           hp: data.get('hp'),
           startedAt: startedAtRef.current,
@@ -725,8 +731,15 @@ function Contact({ t, p, lang, navigate }) {
       const payload = await response.json().catch(() => null)
       if (!response.ok || !payload?.ok) throw new Error('failed')
       setStatus('success')
+      // Counted only once the backend confirms it actually delivered the lead.
+      // A submission the honeypot swallowed answers ok:true to the sender but
+      // reports delivered:false, and must not show up as a conversion.
+      if (payload.delivered) {
+        trackLead({ language: lang, service: serviceSlug(selectedService, serviceOptions) })
+      }
     } catch (error) {
       setStatus('error')
+      track('contact_submit_failed', { site_language: lang, page_path: window.location.pathname })
     }
   }
   return (
@@ -736,7 +749,7 @@ function Contact({ t, p, lang, navigate }) {
         <Reveal className="contact-copy">
           <h2 id="contact-title">{c.title}<em>{c.accent}</em></h2><p>{c.text}</p>
           <ol className="contact-steps">{c.steps.map((step, index) => <li key={step}><span>0{index + 1}</span>{step}</li>)}</ol>
-          <div className="direct-contact"><small>{t.contact.or}</small><a href={`mailto:${t.contact.email}`}><span><small>Email</small>{t.contact.email}</span><ArrowUpRight size={20} /></a><a href="https://t.me/capitanrun" target="_blank" rel="noreferrer"><span><small>Telegram</small>{t.contact.telegram}</span><ArrowUpRight size={20} /></a><RouteLink className="contact-payment-link" href={`/${lang}/payment`} navigate={navigate}><span><small>{p.navLabel}</small>{p.contactLink}</span><ArrowUpRight size={20} /></RouteLink></div>
+          <div className="direct-contact"><small>{t.contact.or}</small><a href={`mailto:${t.contact.email}`} onClick={() => track('email_click', { site_language: lang, page_path: window.location.pathname, link_location: 'contact' })}><span><small>Email</small>{t.contact.email}</span><ArrowUpRight size={20} /></a><a href="https://t.me/capitanrun" target="_blank" rel="noreferrer" onClick={() => track('telegram_click', { site_language: lang, page_path: window.location.pathname, link_location: 'contact' })}><span><small>Telegram</small>{t.contact.telegram}</span><ArrowUpRight size={20} /></a><RouteLink className="contact-payment-link" href={`/${lang}/payment`} navigate={navigate}><span><small>{p.navLabel}</small>{p.contactLink}</span><ArrowUpRight size={20} /></RouteLink></div>
         </Reveal>
         <Reveal className="contact-form-wrap" delay={120}>
           <span className="contact-form-anchor" id="contact-form" aria-hidden="true" />
@@ -1491,6 +1504,8 @@ export default function App() {
     return () => cancelAnimationFrame(frame)
   }, [])
 
+  useEffect(() => { initAnalytics() }, [])
+
   useEffect(() => {
     const onPopState = () => {
       const next = parseLocation()
@@ -1553,6 +1568,13 @@ export default function App() {
     }
   }, [lang, location, p, resolved, s, t])
 
+  // One page_view per resolved route. Declared after the metadata effect so
+  // document.title is already the new page's title when this runs.
+  useEffect(() => {
+    if (!location.lang) return
+    trackPageView({ language: lang, contentGroup: resolved.kind })
+  }, [lang, location.lang, location.route, resolved.kind])
+
   let page
   if (resolved.kind === 'services') page = <ServicesPage s={s} lang={lang} navigate={navigate} />
   else if (resolved.kind === 'service') {
@@ -1571,6 +1593,7 @@ export default function App() {
       {page}
       <Footer t={t} s={s} p={p} lang={lang} navigate={navigate} />
       <PageTransition state={transition} />
+      <ConsentBanner lang={lang} />
     </>
   )
 }

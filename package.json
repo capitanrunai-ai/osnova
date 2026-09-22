@@ -15,7 +15,8 @@
     "audit:payment": "node scripts/payment-audit.mjs",
     "preview": "vite preview",
     "build:nossr": "vite build && node scripts/generate-sitemap.mjs",
-    "verify:seo": "node scripts/seo-verify.mjs"
+    "verify:seo": "node scripts/seo-verify.mjs",
+    "verify:analytics": "node scripts/analytics-verify.mjs"
   },
   "keywords": [],
   "author": "",

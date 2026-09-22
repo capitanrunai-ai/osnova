@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { ArrowLeft, ArrowRight, ArrowUpRight, Play, Pause, Phone, Check, Volume2 } from 'lucide-react'
 import { caseUi, getLocalizedCases } from './data/cases'
+import { track } from './analytics'
 import waveform from './data/voiceWaveform.json'
 import './portfolio.css'
 
@@ -27,7 +28,7 @@ export function CaseVisual({ item, priority = false }) {
 
 const time = value => `${Math.floor(value / 60).toString().padStart(2, '0')}:${Math.floor(value % 60).toString().padStart(2, '0')}`
 
-export function VoicePlayer({ item, ui }) {
+export function VoicePlayer({ item, ui, lang }) {
   const audioRef = useRef(null)
   const [playing, setPlaying] = useState(false)
   const [position, setPosition] = useState(0)
@@ -36,6 +37,22 @@ export function VoicePlayer({ item, ui }) {
   const [error, setError] = useState(false)
   const [ended, setEnded] = useState(false)
   const progress = duration ? position / duration : 0
+  // Milestones already reported, so seeking back and forth cannot inflate them.
+  const reportedRef = useRef(new Set())
+
+  const reportOnce = (name, params) => {
+    if (reportedRef.current.has(name)) return
+    reportedRef.current.add(name)
+    track(name, { site_language: lang, case_slug: item.slug, ...params })
+  }
+
+  const reportProgress = (audio) => {
+    if (!audio.duration) return
+    const percent = (audio.currentTime / audio.duration) * 100
+    for (const milestone of [25, 50, 75]) {
+      if (percent >= milestone) reportOnce(`voice_demo_${milestone}`, { percent: milestone })
+    }
+  }
 
   useEffect(() => {
     const audio = audioRef.current
@@ -53,9 +70,9 @@ export function VoicePlayer({ item, ui }) {
     <div className={`voice-player ${playing ? 'is-playing' : ''}`}>
       <audio ref={audioRef} src={item.audio} preload="metadata"
         onLoadedMetadata={event => setDuration(event.currentTarget.duration)}
-        onTimeUpdate={event => setPosition(event.currentTarget.currentTime)}
-        onPlay={() => { setPlaying(true); setEnded(false) }} onPause={() => setPlaying(false)}
-        onEnded={() => { setPlaying(false); setEnded(true) }} onError={() => setError(true)} />
+        onTimeUpdate={event => { setPosition(event.currentTarget.currentTime); reportProgress(event.currentTarget) }}
+        onPlay={() => { setPlaying(true); setEnded(false); reportOnce('voice_demo_play') }} onPause={() => setPlaying(false)}
+        onEnded={() => { setPlaying(false); setEnded(true); reportOnce('voice_demo_complete') }} onError={() => setError(true)} />
       <div className="voice-player-heading"><span><i />{ui.audioLabel}</span><Volume2 size={18} /></div>
       <h2>{ui.audioTitle}</h2>
       <div className="audio-waveform" aria-hidden="true">
@@ -107,7 +124,7 @@ export function PortfolioDetail({ item, lang, navigate, Link }) {
         </header>
         {isVoice ? (
           <section className="portfolio-voice-demo">
-            <VoicePlayer item={item} ui={ui} />
+            <VoicePlayer item={item} ui={ui} lang={lang} />
             <ol className="voice-scenario">{ui.steps.map((step, i) => <li key={step}><span>{String(i + 1).padStart(2, '0')}</span><p>{step}</p>{i === 3 ? <Check size={21} /> : <ArrowDownIcon />}</li>)}</ol>
           </section>
         ) : (

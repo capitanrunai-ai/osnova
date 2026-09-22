@@ -22,7 +22,9 @@ export default async function contact(request) {
   }
 
   if (validateLead(body)) return json(400, { ok: false, error: 'invalid' })
-  if (isSpam(body)) return json(200, { ok: true })
+  // Spam is answered as success on purpose, so a bot learns nothing. `delivered`
+  // stays false so the browser does not record it as a lead conversion.
+  if (isSpam(body)) return json(200, { ok: true, delivered: false })
 
   const token = Netlify.env.get('TELEGRAM_BOT_TOKEN')
   const chatId = Netlify.env.get('TELEGRAM_CHAT_ID')
@@ -30,7 +32,7 @@ export default async function contact(request) {
 
   try {
     await sendTelegramLead(body, { token, chatId })
-    return json(200, { ok: true })
+    return json(200, { ok: true, delivered: true })
   } catch {
     return json(502, { ok: false, error: 'server' })
   }

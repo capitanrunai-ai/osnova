@@ -1,0 +1,78 @@
+.consent-bar {
+  position: fixed;
+  z-index: 200;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  margin-inline: auto;
+  max-width: 560px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 14px 16px;
+  border: 1px solid var(--line-light);
+  border-radius: 2px;
+  background: var(--ink);
+  color: var(--white);
+  box-shadow: 0 18px 50px rgba(10, 10, 12, 0.32);
+}
+
+.consent-bar p {
+  margin: 0;
+  font-size: var(--text-micro);
+  line-height: 1.5;
+  color: rgba(251, 251, 247, 0.74);
+}
+
+.consent-actions {
+  display: flex;
+  flex-shrink: 0;
+  gap: 8px;
+}
+
+.consent-bar button {
+  padding: 8px 14px;
+  border: 1px solid var(--line-light);
+  border-radius: 2px;
+  background: transparent;
+  color: var(--white);
+  font-family: var(--mono);
+  font-size: var(--text-micro);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s var(--ease), color 0.2s var(--ease);
+}
+
+.consent-bar button:hover {
+  background: rgba(251, 251, 247, 0.12);
+}
+
+.consent-bar .consent-accept {
+  background: var(--white);
+  border-color: var(--white);
+  color: var(--ink);
+}
+
+.consent-bar .consent-accept:hover {
+  background: var(--lime);
+  border-color: var(--lime);
+}
+
+@media (max-width: 640px) {
+  .consent-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .consent-actions button {
+    flex: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .consent-bar button {
+    transition: none;
+  }
+}

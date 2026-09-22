@@ -26,7 +26,7 @@ function contactMiddleware(env) {
     }
 
     if (validateLead(body)) return sendJson(res, 400, { ok: false, error: 'invalid' })
-    if (isSpam(body)) return sendJson(res, 200, { ok: true })
+    if (isSpam(body)) return sendJson(res, 200, { ok: true, delivered: false })
 
     if (!env.TELEGRAM_BOT_TOKEN || !env.TELEGRAM_CHAT_ID) {
       console.error('[contact] Missing TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID — check .env.local')
@@ -35,7 +35,7 @@ function contactMiddleware(env) {
 
     try {
       await sendTelegramLead(body, { token: env.TELEGRAM_BOT_TOKEN, chatId: env.TELEGRAM_CHAT_ID })
-      return sendJson(res, 200, { ok: true })
+      return sendJson(res, 200, { ok: true, delivered: true })
     } catch (error) {
       console.error('[contact] Failed to deliver lead to Telegram:', error.message)
       return sendJson(res, 502, { ok: false, error: 'server' })
