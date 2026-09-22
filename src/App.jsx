@@ -776,14 +776,14 @@ function Contact({ t, p, lang, navigate }) {
   )
 }
 
-function DirectionHero({ direction, data, children }) {
+function DirectionHero({ direction, data, children, action }) {
   return (
     <section className={`direction-hero direction-${direction}`}>
       <div className="direction-grid" aria-hidden="true" />
       <div className="direction-orbit" aria-hidden="true"><i /><i /><i /></div>
       <div className="container direction-hero-inner">
         <Reveal className="direction-breadcrumb"><span>OSNOVA</span><ArrowRight />{data.label}</Reveal>
-        <Reveal className="direction-title" delay={60}><h1>{data.title}<em>{data.titleAccent}</em></h1><p>{data.intro}</p></Reveal>
+        <Reveal className="direction-title" delay={60}><h1>{data.title}<em>{data.titleAccent}</em></h1><p>{data.intro}</p>{action}</Reveal>
         <Reveal className="direction-visual" delay={140}>{children}</Reveal>
       </div>
       <div className="direction-scroll"><ArrowDown /> SCROLL / DECODE</div>
@@ -930,10 +930,10 @@ function DevelopmentCatalogue({ data }) {
       <div className="container">
         <Reveal className="dev-principle"><span className="eyebrow">{data.label}</span><p>{data.principle}</p></Reveal>
         <div className="product-index">
-          {data.products.map(([number, title, text, price], index) => (
+          {data.products.map(([number, title, text, fit], index) => (
             <Reveal key={title} delay={index * 35}>
               <button className={active === index ? 'active' : ''} onMouseEnter={() => setActive(index)} onFocus={() => setActive(index)} onClick={() => setActive(index)}>
-                <span>{number}</span><h2>{title}</h2><p>{text}</p><small>{price}</small><ArrowUpRight />
+                <span>{number}</span><h2>{title}</h2><p>{text}</p><small>{fit}</small><ArrowUpRight />
               </button>
             </Reveal>
           ))}
@@ -952,7 +952,15 @@ function DevelopmentVisual({ labels }) {
   )
 }
 
-function LandingFeature({ data, lang, navigate }) {
+function DevelopmentQuoteLink({ t, lang, navigate, className = '' }) {
+  const service = t.pricing.items[1]
+  return <RouteLink className={className} href={`/${lang}/#contact-form`} navigate={navigate} onClick={() => {
+    selectContactService(service)
+    track('pricing_cta_click', { site_language: lang, service: serviceSlug(service, t.contact.options) })
+  }} aria-label={`${t.pricing.action}: ${service}`}>{t.pricing.action}<ArrowUpRight size={18} /></RouteLink>
+}
+
+function LandingFeature({ data, t, lang, navigate }) {
   return (
     <section className="landing-feature-new section-pad">
       <div className="container landing-new-grid">
@@ -960,8 +968,9 @@ function LandingFeature({ data, lang, navigate }) {
           <span>OS / WEB</span><h3>{data.art[0]}<br />{data.art[1]}<br /><em>{data.art[2]}</em></h3><div className="landing-cursor" /><div className="landing-grid-lines" />
         </Reveal>
         <Reveal className="landing-new-copy" delay={90}>
-          <span className="eyebrow light">{data.label}</span><h2>{data.title}</h2><p>{data.text}</p><strong>{data.price}</strong>
-          <RouteLink className="button button-primary" href={`/${lang}/#contact`} navigate={navigate}>{data.cta}<ArrowUpRight /></RouteLink>
+          <span className="eyebrow light">{data.label}</span><h2>{data.title}</h2><p>{data.text}</p>
+          <div className="landing-offer-scope"><span>{data.scopeLabel}</span><p>{data.scope}</p><small>{data.team}</small></div>
+          <DevelopmentQuoteLink className="button button-primary" t={t} lang={lang} navigate={navigate} />
         </Reveal>
       </div>
     </section>
@@ -970,7 +979,7 @@ function LandingFeature({ data, lang, navigate }) {
 
 function BuildSequence({ data }) {
   return (
-    <section className="build-sequence section-pad"><div className="container"><span className="eyebrow">{data.label}</span><div>{data.steps.map((item, index) => <Reveal key={item} delay={index * 50}><i>0{index + 1}</i><strong>{item}</strong><span style={{ '--progress': `${(index + 1) * 16.6}%` }} /></Reveal>)}</div></div></section>
+    <section className="build-sequence section-pad"><div className="container"><span className="eyebrow">{data.label}</span><div>{data.steps.map(([title, description], index) => <Reveal key={title} delay={index * 50}><i>0{index + 1}</i><strong>{title}</strong><p>{description}</p><span style={{ '--progress': `${(index + 1) * 25}%` }} /></Reveal>)}</div></div></section>
   )
 }
 
@@ -1359,17 +1368,18 @@ function PaymentPage({ p }) {
   )
 }
 
-function DevelopmentPage({ s, lang, navigate }) {
+function DevelopmentPage({ s, t, lang, navigate }) {
   const data = s.development
   const work = developmentWorkLabels[lang]
   const related = getLocalizedCases(lang).filter(item => item.serviceCase === 'development')
   return (
     <main className="direction-page development-page">
-      <DirectionHero direction="development" data={data}><DevelopmentVisual labels={data.visual} /></DirectionHero>
-      <DevelopmentCatalogue data={data} /><LandingFeature data={data.landing} lang={lang} navigate={navigate} /><BuildSequence data={data.build} />
+      <DirectionHero direction="development" data={data} action={<DevelopmentQuoteLink className="button button-primary development-hero-cta" t={t} lang={lang} navigate={navigate} />}><DevelopmentVisual labels={data.visual} /></DirectionHero>
+      <DevelopmentCatalogue data={data} /><LandingFeature data={data.landing} t={t} lang={lang} navigate={navigate} /><BuildSequence data={data.build} />
       <section className="service-related section-pad" aria-label={work.label}>
         <div className="container"><span className="eyebrow light">{work.label}</span><h2>{work.title}</h2>
-          <div className="service-related-grid">{related.map(item => <RouteLink key={item.slug} href={`/${lang}/cases/${item.slug}`} navigate={navigate} world="development"><small>{item.recovery ? caseUi[lang].restored : item.categoryLabel}</small><h3>{item.title}</h3><p>{item.summary}</p><span>{work.open}<ArrowUpRight size={16} /></span></RouteLink>)}</div>
+          <div className="service-related-grid">{related.map(item => <RouteLink key={item.slug} href={`/${lang}/cases/${item.slug}`} navigate={navigate} world="development"><small>{item.webCase.delivery} · {item.recovery ? caseUi[lang].restored : item.categoryLabel}</small><h3>{item.title}</h3><p>{item.summary}</p><span>{work.open}<ArrowUpRight size={16} /></span></RouteLink>)}</div>
+          <div className="development-proof-cta"><DevelopmentQuoteLink className="button button-primary" t={t} lang={lang} navigate={navigate} /></div>
         </div>
       </section>
       <DirectionFooter s={s} lang={lang} current="development" navigate={navigate} />
@@ -1617,7 +1627,7 @@ export default function App() {
   if (resolved.kind === 'services') page = <ServicesPage s={s} lang={lang} navigate={navigate} />
   else if (resolved.kind === 'service') {
     const ServicePage = servicePages[resolved.id]
-    page = <ServicePage s={s} lang={lang} navigate={navigate} />
+    page = <ServicePage s={s} t={t} lang={lang} navigate={navigate} />
   }
   else if (resolved.kind === 'payment') page = <PaymentPage p={p} />
   else if (resolved.kind === 'cases') page = <CasesArchive lang={lang} navigate={navigate} />
