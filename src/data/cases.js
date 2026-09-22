@@ -105,22 +105,22 @@ export const cases = [
       { summary: 'Сайт автосервиса с понятной структурой услуг, направлений ремонта и путём к контакту.', webCase: {
         challenge: 'Понятно представить бизнес, ремонт и обслуживание, чтобы посетитель быстро находил нужную услугу или контакт.',
         work: 'Выстроили структуру информации и путь пользователя, представили услуги, реализовали адаптивный сайт.',
-        delivery: '≈ 23 дня', result: 'Рабочий сайт опубликован: услуги и контакты доступны посетителям.',
+        delivery: '2–3 дня', result: 'Рабочий сайт опубликован: услуги и контакты доступны посетителям.',
       } },
       { summary: 'An auto service website with clear services, repair areas and a path to contact.', webCase: {
         challenge: 'Present the business, repair and maintenance services clearly so visitors can find the right service or contact.',
         work: 'Structured the information and user flow, presented the services and developed a responsive website.',
-        delivery: '≈ 23 days', result: 'The live website presents the services and contact options.',
+        delivery: '2–3 days', result: 'The live website presents the services and contact options.',
       } },
       { summary: 'Website einer Autowerkstatt mit klaren Leistungen, Reparaturbereichen und Kontaktwegen.', webCase: {
         challenge: 'Betrieb, Reparatur und Wartung verständlich darstellen, damit Besucher Leistungen und Kontakt schnell finden.',
         work: 'Informationsstruktur und Nutzerführung aufgebaut, Leistungen dargestellt und die responsive Website entwickelt.',
-        delivery: 'ca. 23 Tage', result: 'Die veröffentlichte Website zeigt Leistungen und Kontaktmöglichkeiten.',
+        delivery: '2–3 Tage', result: 'Die veröffentlichte Website zeigt Leistungen und Kontaktmöglichkeiten.',
       } },
       { summary: 'Сайт автосервісу зі зрозумілими послугами, напрямами ремонту та шляхом до контакту.', webCase: {
         challenge: 'Зрозуміло представити бізнес, ремонт і обслуговування, щоб відвідувач швидко знаходив потрібну послугу або контакт.',
         work: 'Побудували структуру інформації та шлях користувача, представили послуги й розробили адаптивний сайт.',
-        delivery: '≈ 23 дні', result: 'Робочий сайт опубліковано: послуги й контакти доступні відвідувачам.',
+        delivery: '2–3 дні', result: 'Робочий сайт опубліковано: послуги й контакти доступні відвідувачам.',
       } },
     ),
   }),
