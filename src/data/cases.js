@@ -1,3 +1,5 @@
+import { automationCases } from './automationCases.js'
+
 const localized = (ru, en, de, uk) => ({ ru, en, de, uk })
 
 export const caseCategories = { development: [], automation: [] }
@@ -21,6 +23,7 @@ export const caseUi = {
     audioError: 'Не удалось загрузить запись. Откройте аудиофайл по ссылке ниже.',
     audioDownload: 'Открыть аудио', seek: 'Позиция воспроизведения', speed: 'Скорость воспроизведения',
     steps: ['Входящий звонок', 'Диалог с AI', 'Ответы на вопросы', 'Запись на консультацию'],
+    study: { task: 'Задача', solution: 'Решение', workflow: 'Сценарий', capabilities: 'Что умеет система', ai: 'Роль AI', human: 'Роль человека', channels: 'Каналы и интеграции', evidence: 'Реальные экраны системы', enlarge: 'Увеличить скриншот', close: 'Закрыть', service: 'Об автоматизации' },
   },
   en: {
     pageLabel: 'OSNOVA / SELECTED WORK', pageTitle: 'Built. And live.',
@@ -40,6 +43,7 @@ export const caseUi = {
     audioError: 'The recording could not load. Open the audio file using the link below.',
     audioDownload: 'Open audio', seek: 'Playback position', speed: 'Playback speed',
     steps: ['Incoming call', 'AI conversation', 'Questions answered', 'Consultation booked'],
+    study: { task: 'Task', solution: 'Solution', workflow: 'Workflow', capabilities: 'What the system does', ai: 'AI role', human: 'Human role', channels: 'Channels and integrations', evidence: 'Real system screens', enlarge: 'Enlarge screenshot', close: 'Close', service: 'Explore Automation' },
   },
   de: {
     pageLabel: 'OSNOVA / UNSERE ARBEITEN', pageTitle: 'Entwickelt. Und live.',
@@ -59,6 +63,7 @@ export const caseUi = {
     audioError: 'Die Aufnahme konnte nicht geladen werden. Öffnen Sie die Audiodatei über den Link unten.',
     audioDownload: 'Audio öffnen', seek: 'Wiedergabeposition', speed: 'Wiedergabegeschwindigkeit',
     steps: ['Eingehender Anruf', 'Dialog mit KI', 'Fragen beantwortet', 'Beratungstermin vereinbart'],
+    study: { task: 'Aufgabe', solution: 'Lösung', workflow: 'Ablauf', capabilities: 'Funktionen', ai: 'Rolle der KI', human: 'Rolle des Menschen', channels: 'Kanäle und Integrationen', evidence: 'Echte Systemansichten', enlarge: 'Screenshot vergrößern', close: 'Schließen', service: 'Automatisierung entdecken' },
   },
   uk: {
     pageLabel: 'OSNOVA / НАШІ РОБОТИ', pageTitle: 'Зроблено. Працює.',
@@ -78,6 +83,7 @@ export const caseUi = {
     audioError: 'Не вдалося завантажити запис. Відкрийте аудіофайл за посиланням нижче.',
     audioDownload: 'Відкрити аудіо', seek: 'Позиція відтворення', speed: 'Швидкість відтворення',
     steps: ['Вхідний дзвінок', 'Діалог з AI', 'Відповіді на запитання', 'Запис на консультацію'],
+    study: { task: 'Завдання', solution: 'Рішення', workflow: 'Сценарій', capabilities: 'Що вміє система', ai: 'Роль AI', human: 'Роль людини', channels: 'Канали та інтеграції', evidence: 'Реальні екрани системи', enlarge: 'Збільшити скриншот', close: 'Закрити', service: 'Про автоматизацію' },
   },
 }
 
@@ -128,6 +134,7 @@ export const cases = [
       { summary: 'AI-оператор стоматологічної клініки. Приймає дзвінок, відповідає на запитання та записує на консультацію.' },
     ),
   },
+  ...automationCases,
   website('comfort-lab', 'COMFORT LAB', 'https://comfortlabkiev.com.ua/', {
     accent: '#b8bcce',
     copy: localized(

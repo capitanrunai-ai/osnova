@@ -526,7 +526,7 @@ function SpatialCaseGallery({ items, lang, navigate, ui, memoryKey = 'featured',
                     <h3>{item.title.split(' — ').map((part, i) => <span className={i ? 'card-subtitle' : ''} key={part}>{part}</span>)}</h3>
                   </div>
                   <div className="case-preview-fact">
-                    <span>{item.audio ? ui.listen : item.recovery ? ui.restored : 'DESIGN / DEVELOPMENT'}</span>
+                    <span>{item.audio ? ui.listen : item.recovery ? ui.restored : item.category === 'automation' ? item.categoryLabel : 'DESIGN / DEVELOPMENT'}</span>
                     <p>{item.summary}</p>
                   </div>
                   <span className="case-open-action">
@@ -1246,8 +1246,17 @@ function ServicesPage({ s, lang, navigate }) {
   return <main className="services-page"><ServiceWorlds s={s} lang={lang} navigate={navigate} /></main>
 }
 
+const automationWorkLabels = {
+  ru: { label: 'РЕАЛЬНЫЕ СИСТЕМЫ', title: 'Автоматизация в работе', open: 'Смотреть кейс' },
+  en: { label: 'REAL SYSTEMS', title: 'Automation in practice', open: 'View case' },
+  de: { label: 'REALE SYSTEME', title: 'Automatisierung in der Praxis', open: 'Projekt ansehen' },
+  uk: { label: 'РЕАЛЬНІ СИСТЕМИ', title: 'Автоматизація в роботі', open: 'Дивитися кейс' },
+}
+
 function AutomationPage({ s, lang, navigate }) {
   const data = s.automation
+  const work = automationWorkLabels[lang]
+  const related = getLocalizedCases(lang).filter(item => ['ai-voice-operator', 'ai-news-automation', 'retail-stock-monitor'].includes(item.slug))
   return (
     <main className="direction-page automation-page">
       <DirectionHero direction="automation" data={data}><AutomationHeroVisual label={data.signal} flow={data.heroFlow} /></DirectionHero>
@@ -1265,6 +1274,11 @@ function AutomationPage({ s, lang, navigate }) {
         </div>
       </section>
       <VoiceOperator data={data.voice} /><AssistantsSection data={data.assistants} /><CrmIntegrations crm={data.crm} integrations={data.integrations} /><CustomAutomation data={data.custom} />
+      <section className="automation-related section-pad" aria-label={work.label}>
+        <div className="container"><span className="eyebrow light">{work.label}</span><h2>{work.title}</h2>
+          <div className="automation-related-grid">{related.map(item => <RouteLink key={item.slug} href={`/${lang}/cases/${item.slug}`} navigate={navigate} world="automation"><small>{item.categoryLabel}</small><h3>{item.title}</h3><p>{item.summary}</p><span>{work.open}<ArrowUpRight size={16} /></span></RouteLink>)}</div>
+        </div>
+      </section>
       <DirectionFooter s={s} lang={lang} current="automation" navigate={navigate} />
     </main>
   )

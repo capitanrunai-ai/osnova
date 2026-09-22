@@ -6,6 +6,16 @@ import waveform from './data/voiceWaveform.json'
 import './portfolio.css'
 
 export function CaseVisual({ item, priority = false }) {
+  if (item.visual === 'automation') return (
+    <div className={`portfolio-visual automation-visual automation-visual-${item.slug}`} style={{ '--project-accent': item.accent }} aria-hidden="true">
+      <div className="automation-visual-grid" />
+      <span className="automation-visual-kicker">{item.categoryLabel}</span>
+      <div className="automation-visual-stack">
+        {item.screenshots.map((shot, index) => <img key={shot.src} src={shot.src} width={shot.width} height={shot.height} loading={priority && index === 0 ? 'eager' : 'lazy'} alt="" draggable="false" />)}
+      </div>
+      <span className="automation-visual-footer">{item.slug === 'ai-news-automation' ? 'SOURCES  /  AI  /  HUMAN REVIEW' : 'PRODUCT  /  STOCK  /  TELEGRAM'}</span>
+    </div>
+  )
   if (item.visual === 'voice') return (
     <div className="portfolio-visual visual-voice real-voice" aria-hidden="true">
       <div className="portfolio-grid" />
@@ -99,6 +109,54 @@ export function VoicePlayer({ item, ui, lang }) {
   )
 }
 
+function AutomationCaseDetail({ item, ui, lang, navigate, Link }) {
+  const [selected, setSelected] = useState(null)
+  const dialogRef = useRef(null)
+  useEffect(() => {
+    const dialog = dialogRef.current
+    if (selected === null) { if (dialog?.open) dialog.close(); return }
+    if (dialog && !dialog.open) dialog.showModal()
+  }, [selected])
+  const study = ui.study
+  return (
+    <div className="automation-study">
+      <div className="automation-study-overview">
+        <div className="automation-study-pair"><span>{study.task}</span><p>{item.task}</p></div>
+        <div className="automation-study-pair"><span>{study.solution}</span><p>{item.solution}</p></div>
+      </div>
+      <section className="automation-study-flow" aria-label={study.workflow}>
+        <span className="automation-study-label">{study.workflow}</span>
+        <ol>{item.workflow.map((step, index) => <li key={step}><small>{String(index + 1).padStart(2, '0')}</small><strong>{step}</strong></li>)}</ol>
+      </section>
+      <div className="automation-study-facts">
+        <div className="automation-study-main"><span className="automation-study-label">{study.capabilities}</span><p>{item.capabilities}</p></div>
+        <div><span className="automation-study-label">{study.ai}</span><p>{item.aiRole}</p></div>
+        <div><span className="automation-study-label">{study.human}</span><p>{item.humanRole}</p></div>
+        <div><span className="automation-study-label">{study.channels}</span><p>{item.channels}</p></div>
+      </div>
+      <section className="automation-study-evidence" aria-label={study.evidence}>
+        <div className="automation-study-evidence-head"><span className="automation-study-label">{study.evidence}</span><p>{item.sourceNote}</p></div>
+        <div className={`automation-study-gallery ${item.screenshots.length === 3 ? 'is-news' : 'is-retail'}`}>
+          {item.screenshots.map((shot, index) => <figure key={shot.src}>
+            <button type="button" onClick={() => setSelected(index)} aria-label={`${study.enlarge}: ${item.captions[index]}`}>
+              <img src={shot.src} width={shot.width} height={shot.height} loading="lazy" alt={item.captions[index]} />
+            </button>
+            <figcaption><span>{String(index + 1).padStart(2, '0')}</span>{item.captions[index]}</figcaption>
+          </figure>)}
+        </div>
+      </section>
+      <Link className="automation-study-service" href={`/${lang}/services/automation`} navigate={navigate}>{study.service}<ArrowUpRight size={17} /></Link>
+      <dialog className="automation-lightbox" ref={dialogRef} onClose={() => setSelected(null)} onClick={event => { if (event.target === event.currentTarget) setSelected(null) }} aria-label={study.evidence}>
+        {selected !== null && <div className="automation-lightbox-content">
+          <button type="button" onClick={() => setSelected(null)} aria-label={study.close}>×</button>
+          <img src={item.screenshots[selected].src} width={item.screenshots[selected].width} height={item.screenshots[selected].height} alt={item.captions[selected]} />
+          <p>{item.captions[selected]}</p>
+        </div>}
+      </dialog>
+    </div>
+  )
+}
+
 export function PortfolioDetail({ item, lang, navigate, Link }) {
   const ui = caseUi[lang]
   const allItems = getLocalizedCases(lang)
@@ -107,6 +165,7 @@ export function PortfolioDetail({ item, lang, navigate, Link }) {
   const previous = allItems[(index + allItems.length - 1) % allItems.length]
   const [device, setDevice] = useState(() => window.matchMedia('(max-width: 700px)').matches ? 'mobile' : 'desktop')
   const isVoice = item.visual === 'voice'
+  const isAutomation = item.visual === 'automation'
 
   return (
     <main className={`portfolio-detail ${isVoice ? 'portfolio-detail-voice' : ''}`} id="top" style={{ '--project-accent': item.accent }}>
@@ -119,11 +178,11 @@ export function PortfolioDetail({ item, lang, navigate, Link }) {
           <div><span className="portfolio-category">{item.recovery ? ui.restored : item.categoryLabel}</span><h1>{item.title.split(' — ').map((part, i) => <span key={part} className={i ? 'project-subtitle' : ''}>{part}</span>)}</h1></div>
           <div className="portfolio-detail-intro">
             <p>{item.summary}</p>
-            {!isVoice && <a className="portfolio-visit" href={item.url} target="_blank" rel="noopener noreferrer">{ui.visit}<ArrowUpRight size={19} /></a>}
+            {!isVoice && !isAutomation && <a className="portfolio-visit" href={item.url} target="_blank" rel="noopener noreferrer">{ui.visit}<ArrowUpRight size={19} /></a>}
             {item.originalUrl && <a className="portfolio-original" href={item.originalUrl} target="_blank" rel="noopener noreferrer">{ui.original}<ArrowUpRight size={14} /></a>}
           </div>
         </header>
-        {isVoice ? (
+        {isAutomation ? <AutomationCaseDetail item={item} ui={ui} lang={lang} navigate={navigate} Link={Link} /> : isVoice ? (
           <section className="portfolio-voice-demo">
             <VoicePlayer item={item} ui={ui} lang={lang} />
             <ol className="voice-scenario">{ui.steps.map((step, i) => <li key={step}><span>{String(i + 1).padStart(2, '0')}</span><p>{step}</p>{i === 3 ? <Check size={21} /> : <ArrowDownIcon />}</li>)}</ol>

@@ -2,6 +2,7 @@ import { spawn } from 'node:child_process'
 import { resolve } from 'node:path'
 import assert from 'node:assert/strict'
 import puppeteer from 'puppeteer-core'
+import { cases } from '../src/data/cases.js'
 
 const origin = 'http://127.0.0.1:5179'
 const wait = ms => new Promise(r => setTimeout(r, ms))
@@ -81,7 +82,7 @@ try {
   assert.ok(page.url().endsWith('/cases'))
   report.reducedMotion = true
   await page.click('.case-filter-main button:nth-child(3)')
-  assert.equal(await page.$$eval('.spatial-card', nodes => nodes.length), 1)
+  assert.equal(await page.$$eval('.spatial-card', nodes => nodes.length), cases.filter(item => item.category === 'automation').length)
   await page.tap('.spatial-card.is-active .case-open-icon')
   await wait(200)
   await page.click('.language-current')

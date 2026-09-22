@@ -42,6 +42,36 @@
 .spatial-card.is-active:hover .project-browser { transform: rotate(-1deg) translateY(-5px); }
 .spatial-card.is-active:hover .project-phone { transform: rotate(3deg) translateY(-9px); }
 .real-voice { height: 100%; background: radial-gradient(ellipse at 50% 60%, #5c45ff44, transparent 65%), #101018; }
+.automation-visual { height: 100%; position: relative; overflow: hidden; background: radial-gradient(ellipse at 50% 75%, color-mix(in srgb, var(--project-accent) 24%, transparent), transparent 70%), #15171b; }
+.automation-visual-grid { position: absolute; inset: 0; background: linear-gradient(#ffffff09 1px, transparent 1px), linear-gradient(90deg, #ffffff09 1px, transparent 1px); background-size: 44px 44px; mask-image: linear-gradient(#0009, transparent); }
+.automation-visual-kicker, .automation-visual-footer { position: absolute; z-index: 2; left: 30px; color: #e1e6e5; font: 10px var(--mono); letter-spacing: .1em; }
+.automation-visual-kicker { top: 28px; }.automation-visual-footer { bottom: 25px; color: var(--project-accent); }
+.automation-visual-stack { position: absolute; inset: 15% 7% 7%; display: flex; align-items: center; justify-content: center; gap: 3%; }
+.automation-visual-stack img { display: block; width: auto; max-width: 30%; height: 85%; object-fit: contain; object-position: center; border: 4px solid #22282c; border-radius: 12px; box-shadow: 0 24px 55px #0009; }
+.automation-visual-stack img:nth-child(2) { transform: translateY(6%); }.automation-visual-stack img:nth-child(3) { transform: translateY(-3%); }
+.automation-visual-retail-stock-monitor .automation-visual-stack { gap: 5%; }
+.automation-visual-retail-stock-monitor .automation-visual-stack img { max-width: 44%; height: auto; max-height: 80%; border-radius: 8px; }
+.automation-study { padding-bottom: 8px; }
+.automation-study-label, .automation-study-pair > span { display: block; color: var(--project-accent); font: 10px/1.4 var(--mono); letter-spacing: .11em; text-transform: uppercase; }
+.automation-study-overview { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid #ffffff2c; border-bottom: 1px solid #ffffff2c; }
+.automation-study-pair { padding: 31px 34px 34px 0; }.automation-study-pair + .automation-study-pair { padding-left: 34px; border-left: 1px solid #ffffff20; }
+.automation-study-pair p { max-width: 510px; margin: 15px 0 0; font: 400 clamp(19px, 2vw, 28px)/1.34 var(--sans); letter-spacing: -.03em; }
+.automation-study-flow { padding: 42px 0; border-bottom: 1px solid #ffffff25; }
+.automation-study-flow ol { display: grid; grid-template-columns: repeat(5, 1fr); gap: 9px; list-style: none; margin: 24px 0 0; padding: 0; }
+.automation-study-flow li { min-height: 92px; display: flex; flex-direction: column; justify-content: space-between; gap: 14px; padding: 14px; border: 1px solid #ffffff26; background: #ffffff06; }
+.automation-study-flow li small { color: var(--project-accent); font: 10px var(--mono); }.automation-study-flow li strong { font: 400 13px/1.3 var(--sans); }
+.automation-study-facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 32px; padding: 12px 0 36px; border-bottom: 1px solid #ffffff25; }
+.automation-study-facts > div { padding: 25px 0 0; }.automation-study-facts .automation-study-main { grid-column: 1 / -1; padding-bottom: 22px; border-bottom: 1px solid #ffffff1a; }
+.automation-study-facts p { margin: 12px 0 0; color: #c1c1c8; font-size: 14px; line-height: 1.58; }.automation-study-main p { max-width: 950px; font-size: 17px; color: #f1f1f0; }
+.automation-study-evidence { padding: 45px 0 32px; border-bottom: 1px solid #ffffff25; }
+.automation-study-evidence-head { display: flex; justify-content: space-between; align-items: start; gap: 35px; margin-bottom: 25px; }.automation-study-evidence-head p { max-width: 480px; margin: 0; color: #aaaab3; font-size: 12px; line-height: 1.55; }
+.automation-study-gallery { display: grid; gap: 16px; }.automation-study-gallery.is-news { grid-template-columns: repeat(3, minmax(0, 1fr)); }.automation-study-gallery.is-retail { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.automation-study-gallery figure { min-width: 0; margin: 0; }.automation-study-gallery button { display: grid; place-items: center; width: 100%; height: 550px; padding: 18px; border: 1px solid #ffffff24; background: radial-gradient(ellipse at center, color-mix(in srgb, var(--project-accent) 10%, transparent), transparent 75%), #16191e; cursor: zoom-in; }
+.automation-study-gallery img { display: block; width: auto; max-width: 100%; height: auto; max-height: 510px; object-fit: contain; box-shadow: 0 13px 32px #0006; }.automation-study-gallery.is-retail img { max-height: 500px; }
+.automation-study-gallery figcaption { display: flex; gap: 15px; padding: 12px 2px; color: #b8b8c0; font: 11px/1.4 var(--mono); }.automation-study-gallery figcaption span { color: var(--project-accent); }
+.automation-study-service { display: inline-flex; align-items: center; gap: 16px; min-height: 54px; margin: 25px 0 8px; color: var(--lime); font: 12px var(--mono); border-bottom: 1px solid #c8ff5b66; }.automation-study-service:hover { color: white; }
+.automation-related { background: #101015; color: #f3f3f0; }.automation-related h2 { margin: 15px 0 30px; font: 500 clamp(36px, 5vw, 68px)/1 var(--sans); letter-spacing: -.055em; }.automation-related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }.automation-related-grid a { display: flex; flex-direction: column; min-height: 255px; padding: 25px; border: 1px solid #ffffff24; background: #ffffff04; transition: border-color .2s, background .2s; }.automation-related-grid a:hover { border-color: #c8ff5b88; background: #c8ff5b08; }.automation-related-grid small { color: var(--lime); font: 10px var(--mono); }.automation-related-grid h3 { margin: 19px 0 10px; font: 500 clamp(20px, 2.2vw, 30px)/1.05 var(--sans); letter-spacing: -.04em; }.automation-related-grid p { margin: 0 0 20px; color: #b8b8c0; font-size: 13px; line-height: 1.5; }.automation-related-grid a > span { display: flex; align-items: center; gap: 9px; margin-top: auto; color: var(--lime); font: 11px var(--mono); }
+.automation-lightbox { max-width: min(94vw, 1100px); max-height: 94vh; padding: 0; border: 1px solid #ffffff55; background: #111318; color: white; }.automation-lightbox::backdrop { background: #050507dd; }.automation-lightbox-content { position: relative; display: grid; justify-items: center; gap: 12px; padding: 45px 20px 16px; }.automation-lightbox-content > button { position: absolute; top: 3px; right: 8px; width: 40px; height: 40px; color: white; background: none; border: 0; cursor: pointer; font: 30px var(--sans); }.automation-lightbox-content img { display: block; width: auto; height: auto; max-width: calc(94vw - 40px); max-height: calc(94vh - 100px); object-fit: contain; }.automation-lightbox-content p { margin: 0; font: 11px var(--mono); color: #bcbcc5; }
 .real-voice .voice-wave { gap: 5px; }
 .real-voice .voice-wave i { width: 4px; animation: none; background: #b6a6ff; box-shadow: 0 0 14px #a48aff55; }
 .voice-visual-label { position: absolute; top: 30px; left: 30px; font: 10px var(--mono); letter-spacing: .12em; color: #b9accf; }
@@ -140,6 +170,13 @@
   .portfolio-original { margin-left: 0; margin-right: 20px; }
 }
 @media (max-width: 700px) {
+  .automation-related-grid { grid-template-columns: 1fr; }.automation-related-grid a { min-height: 205px; }.automation-related h2 { font-size: 40px; }
+  .automation-visual-kicker { top: 20px; left: 20px; font-size: 9px; }.automation-visual-footer { bottom: 18px; left: 20px; font-size: 8px; }
+  .automation-visual-stack { inset: 14% 5% 8%; }.automation-visual-stack img { border-width: 2px; border-radius: 7px; }
+  .automation-study-overview { grid-template-columns: 1fr; }.automation-study-pair { padding: 23px 0; }.automation-study-pair + .automation-study-pair { padding-left: 0; border-left: 0; border-top: 1px solid #ffffff20; }.automation-study-pair p { font-size: 21px; }
+  .automation-study-flow { padding: 28px 0; }.automation-study-flow ol { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 8px; }.automation-study-flow li { min-width: 145px; flex: 0 0 145px; scroll-snap-align: start; }
+  .automation-study-facts { grid-template-columns: 1fr; gap: 0; }.automation-study-facts > div { padding: 19px 0; border-bottom: 1px solid #ffffff1a; }.automation-study-facts > div:last-child { border: 0; }.automation-study-facts p { font-size: 14px; }.automation-study-main p { font-size: 16px; }
+  .automation-study-evidence { padding-top: 30px; }.automation-study-evidence-head { display: block; }.automation-study-evidence-head p { margin-top: 12px; }.automation-study-gallery { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 10px; }.automation-study-gallery figure { flex: 0 0 min(86vw, 340px); scroll-snap-align: start; }.automation-study-gallery button { height: 520px; }.automation-study-gallery.is-news img { max-height: 480px; }.automation-study-gallery.is-retail button { height: 410px; }.automation-study-gallery.is-retail img { max-height: 380px; }
   .real-archive .cases-archive-hero { padding: 118px 0 34px; }
   .real-archive .cases-archive-hero .container { grid-template-columns: 1fr; gap: 22px; }
   .real-archive .cases-archive-hero h1 { font-size: clamp(53px, 14vw, 85px); margin-top: 22px; line-height: .95; }

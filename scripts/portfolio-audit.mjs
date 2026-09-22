@@ -45,7 +45,7 @@ try {
     report.routes.push({ path, ...layout })
   }
   await open('/en/cases')
-  assert.equal(await page.$$eval('.spatial-card', nodes => nodes.length), 7)
+  assert.equal(await page.$$eval('.spatial-card', nodes => nodes.length), cases.length)
   // DDS SERVICE must be the first card shown, with no interaction needed.
   assert.equal(await page.$eval('.spatial-card.is-active h3', node => node.textContent), 'DDS SERVICE')
   await page.screenshot({ path: resolve(output, 'portfolio-desktop.png'), fullPage: true })
@@ -57,9 +57,9 @@ try {
   assert.equal(await page.$eval('.spatial-card.is-active h3', node => node.textContent), 'DDS SERVICE')
   report.navigation.returnRestoresProject = true
   await page.click('.case-filter-main button:nth-child(2)')
-  assert.equal(await page.$$eval('.spatial-card', nodes => nodes.length), 6)
+  assert.equal(await page.$$eval('.spatial-card', nodes => nodes.length), cases.filter(item => item.category === 'development').length)
   await page.click('.case-filter-main button:nth-child(3)')
-  assert.equal(await page.$$eval('.spatial-card', nodes => nodes.length), 1)
+  assert.equal(await page.$$eval('.spatial-card', nodes => nodes.length), cases.filter(item => item.category === 'automation').length)
   await page.click('.case-filter-main button:first-child')
   await page.focus('.spatial-stage')
   await page.keyboard.press('End')
@@ -110,7 +110,7 @@ try {
     await checkLayout(`/de/cases/ai-voice-operator@${width}`)
   }
   await open('/ru/', 1440, 1000)
-  assert.equal(await page.$$eval('.spatial-card', nodes => nodes.length), 7)
+  assert.equal(await page.$$eval('.spatial-card', nodes => nodes.length), cases.length)
   assert.equal(await page.$eval('.spatial-card.is-active h3', node => node.textContent), 'DDS SERVICE')
   await page.$eval('#cases', node => node.scrollIntoView())
   await wait(700)
