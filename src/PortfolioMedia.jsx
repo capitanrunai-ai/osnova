@@ -157,6 +157,19 @@ function AutomationCaseDetail({ item, ui, lang, navigate, Link }) {
   )
 }
 
+function WebCaseFacts({ item, ui, lang, navigate, Link }) {
+  const labels = ui.webStudy
+  return (
+    <section className="web-case-facts" aria-label={labels.challenge}>
+      <div className="web-case-facts-top"><span>{item.categoryLabel}</span><strong><small>{labels.delivery}</small>{item.webCase.delivery}</strong></div>
+      <div className="web-case-facts-grid">
+        {['challenge', 'work', 'result'].map(field => <div key={field}><span>{labels[field]}</span><p>{item.webCase[field]}</p></div>)}
+      </div>
+      <Link className="web-case-service" href={`/${lang}/services/development`} navigate={navigate}>{labels.service}<ArrowUpRight size={17} /></Link>
+    </section>
+  )
+}
+
 export function PortfolioDetail({ item, lang, navigate, Link }) {
   const ui = caseUi[lang]
   const allItems = getLocalizedCases(lang)
@@ -187,7 +200,8 @@ export function PortfolioDetail({ item, lang, navigate, Link }) {
             <VoicePlayer item={item} ui={ui} lang={lang} />
             <ol className="voice-scenario">{ui.steps.map((step, i) => <li key={step}><span>{String(i + 1).padStart(2, '0')}</span><p>{step}</p>{i === 3 ? <Check size={21} /> : <ArrowDownIcon />}</li>)}</ol>
           </section>
-        ) : (
+        ) : (<>
+          {item.webCase && <WebCaseFacts item={item} ui={ui} lang={lang} navigate={navigate} Link={Link} />}
           <section className="portfolio-site-demo" aria-label={ui.preview}>
             <div className="portfolio-preview-toolbar"><span>{new URL(item.url).hostname.replace('www.', '')}</span>
               <div role="group" aria-label={ui.preview}>{['desktop', 'mobile'].map(mode => <button key={mode} aria-pressed={device === mode} onClick={() => setDevice(mode)}>{ui[mode]}</button>)}</div>
@@ -197,7 +211,7 @@ export function PortfolioDetail({ item, lang, navigate, Link }) {
             </div>
             <div className="portfolio-secondary"><span>{ui.preview}<ArrowDownIcon /></span><img src={item.detail} alt={`${item.title} — ${ui.preview}`} width="1440" height="960" loading="lazy" /></div>
           </section>
-        )}
+        </>)}
         <nav className="portfolio-detail-nav" aria-label={ui.navigationLabel}>
           <Link className="portfolio-prev" href={`/${lang}/cases/${previous.slug}`} navigate={navigate} world={previous.category}><ArrowLeft size={18} /><span>{ui.previous}</span></Link>
           <Link className="portfolio-next" href={`/${lang}/cases/${next.slug}`} navigate={navigate} world={next.category}>

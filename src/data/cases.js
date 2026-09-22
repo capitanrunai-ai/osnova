@@ -24,6 +24,7 @@ export const caseUi = {
     audioDownload: 'Открыть аудио', seek: 'Позиция воспроизведения', speed: 'Скорость воспроизведения',
     steps: ['Входящий звонок', 'Диалог с AI', 'Ответы на вопросы', 'Запись на консультацию'],
     study: { task: 'Задача', solution: 'Решение', workflow: 'Сценарий', capabilities: 'Что умеет система', ai: 'Роль AI', human: 'Роль человека', channels: 'Каналы и интеграции', evidence: 'Реальные экраны системы', enlarge: 'Увеличить скриншот', close: 'Закрыть', service: 'Об автоматизации' },
+    webStudy: { challenge: 'Задача', work: 'Что сделали', delivery: 'Срок', result: 'Результат', service: 'О разработке' },
   },
   en: {
     pageLabel: 'OSNOVA / SELECTED WORK', pageTitle: 'Built. And live.',
@@ -44,6 +45,7 @@ export const caseUi = {
     audioDownload: 'Open audio', seek: 'Playback position', speed: 'Playback speed',
     steps: ['Incoming call', 'AI conversation', 'Questions answered', 'Consultation booked'],
     study: { task: 'Task', solution: 'Solution', workflow: 'Workflow', capabilities: 'What the system does', ai: 'AI role', human: 'Human role', channels: 'Channels and integrations', evidence: 'Real system screens', enlarge: 'Enlarge screenshot', close: 'Close', service: 'Explore Automation' },
+    webStudy: { challenge: 'Challenge', work: 'What we built', delivery: 'Delivery', result: 'Result', service: 'Explore Development' },
   },
   de: {
     pageLabel: 'OSNOVA / UNSERE ARBEITEN', pageTitle: 'Entwickelt. Und live.',
@@ -64,6 +66,7 @@ export const caseUi = {
     audioDownload: 'Audio öffnen', seek: 'Wiedergabeposition', speed: 'Wiedergabegeschwindigkeit',
     steps: ['Eingehender Anruf', 'Dialog mit KI', 'Fragen beantwortet', 'Beratungstermin vereinbart'],
     study: { task: 'Aufgabe', solution: 'Lösung', workflow: 'Ablauf', capabilities: 'Funktionen', ai: 'Rolle der KI', human: 'Rolle des Menschen', channels: 'Kanäle und Integrationen', evidence: 'Echte Systemansichten', enlarge: 'Screenshot vergrößern', close: 'Schließen', service: 'Automatisierung entdecken' },
+    webStudy: { challenge: 'Aufgabe', work: 'Umsetzung', delivery: 'Projektdauer', result: 'Ergebnis', service: 'Entwicklung entdecken' },
   },
   uk: {
     pageLabel: 'OSNOVA / НАШІ РОБОТИ', pageTitle: 'Зроблено. Працює.',
@@ -84,6 +87,7 @@ export const caseUi = {
     audioDownload: 'Відкрити аудіо', seek: 'Позиція відтворення', speed: 'Швидкість відтворення',
     steps: ['Вхідний дзвінок', 'Діалог з AI', 'Відповіді на запитання', 'Запис на консультацію'],
     study: { task: 'Завдання', solution: 'Рішення', workflow: 'Сценарій', capabilities: 'Що вміє система', ai: 'Роль AI', human: 'Роль людини', channels: 'Канали та інтеграції', evidence: 'Реальні екрани системи', enlarge: 'Збільшити скриншот', close: 'Закрити', service: 'Про автоматизацію' },
+    webStudy: { challenge: 'Завдання', work: 'Що зробили', delivery: 'Термін', result: 'Результат', service: 'Про розробку' },
   },
 }
 
@@ -96,21 +100,53 @@ const website = (slug, title, url, options = {}) => ({
 
 export const cases = [
   website('dds-service', 'DDS SERVICE', 'https://ddsservice.com.ua/', {
-    featured: true, accent: '#f25b40',
+    featured: true, serviceCase: 'development', accent: '#f25b40',
     copy: localized(
-      { summary: 'Сайт автосервиса: услуги, информация для клиентов и контакты. Полностью разработан с нуля.' },
-      { summary: 'An auto service website with services, customer information and contacts. Built entirely from scratch.' },
-      { summary: 'Website einer Autowerkstatt mit Leistungen, Kundeninformationen und Kontakt. Komplett neu entwickelt.' },
-      { summary: 'Сайт автосервісу: послуги, інформація для клієнтів і контакти. Повністю розроблений з нуля.' },
+      { summary: 'Сайт автосервиса с понятной структурой услуг, направлений ремонта и путём к контакту.', webCase: {
+        challenge: 'Понятно представить бизнес, ремонт и обслуживание, чтобы посетитель быстро находил нужную услугу или контакт.',
+        work: 'Выстроили структуру информации и путь пользователя, представили услуги, реализовали адаптивный сайт.',
+        delivery: '≈ 23 дня', result: 'Рабочий сайт опубликован: услуги и контакты доступны посетителям.',
+      } },
+      { summary: 'An auto service website with clear services, repair areas and a path to contact.', webCase: {
+        challenge: 'Present the business, repair and maintenance services clearly so visitors can find the right service or contact.',
+        work: 'Structured the information and user flow, presented the services and developed a responsive website.',
+        delivery: '≈ 23 days', result: 'The live website presents the services and contact options.',
+      } },
+      { summary: 'Website einer Autowerkstatt mit klaren Leistungen, Reparaturbereichen und Kontaktwegen.', webCase: {
+        challenge: 'Betrieb, Reparatur und Wartung verständlich darstellen, damit Besucher Leistungen und Kontakt schnell finden.',
+        work: 'Informationsstruktur und Nutzerführung aufgebaut, Leistungen dargestellt und die responsive Website entwickelt.',
+        delivery: 'ca. 23 Tage', result: 'Die veröffentlichte Website zeigt Leistungen und Kontaktmöglichkeiten.',
+      } },
+      { summary: 'Сайт автосервісу зі зрозумілими послугами, напрямами ремонту та шляхом до контакту.', webCase: {
+        challenge: 'Зрозуміло представити бізнес, ремонт і обслуговування, щоб відвідувач швидко знаходив потрібну послугу або контакт.',
+        work: 'Побудували структуру інформації та шлях користувача, представили послуги й розробили адаптивний сайт.',
+        delivery: '≈ 23 дні', result: 'Робочий сайт опубліковано: послуги й контакти доступні відвідувачам.',
+      } },
     ),
   }),
   website('bala-group', 'BALA GROUP', 'https://www.bala-group.com.ua/', {
-    featured: true, accent: '#e4b887',
+    featured: true, serviceCase: 'development', accent: '#e4b887',
     copy: localized(
-      { summary: 'Сайт строительных и ремонтных услуг. Дизайн и разработка полностью с нуля.' },
-      { summary: 'A website for construction and renovation services. Designed and developed from scratch.' },
-      { summary: 'Website für Bau- und Renovierungsleistungen. Von Grund auf gestaltet und entwickelt.' },
-      { summary: 'Сайт будівельних і ремонтних послуг. Дизайн та розробка повністю з нуля.' },
+      { summary: 'Коммерческий сайт строительных и ремонтных услуг, созданный под рекламный трафик Google Ads и запущенный под ключ.', webCase: {
+        challenge: 'Клиент пришёл по рекомендации: нужен коммерческий сайт специально для трафика Google Ads.',
+        work: 'Разработали структуру страницы и адаптивный сайт, подготовили проект и настроили домен с хостингом.',
+        delivery: '≈ 1 день', result: 'Готовый сайт запущен и доступен по действующей ссылке.',
+      } },
+      { summary: 'A commercial construction and renovation website built for Google Ads traffic and delivered end to end.', webCase: {
+        challenge: 'The client came by referral and needed a commercial website specifically for Google Ads traffic.',
+        work: 'Built the page structure and responsive website, prepared the project and set up its domain and hosting.',
+        delivery: '≈ 1 day', result: 'The completed website was launched and is live at its existing URL.',
+      } },
+      { summary: 'Kommerzielle Website für Bau- und Renovierungsleistungen, für Google-Ads-Traffic entwickelt und vollständig umgesetzt.', webCase: {
+        challenge: 'Der Kunde kam auf Empfehlung und benötigte eine kommerzielle Website speziell für Google-Ads-Traffic.',
+        work: 'Seitenstruktur und responsive Website entwickelt, das Projekt vorbereitet sowie Domain und Hosting eingerichtet.',
+        delivery: 'ca. 1 Tag', result: 'Die fertige Website wurde veröffentlicht und ist unter der bestehenden Adresse erreichbar.',
+      } },
+      { summary: 'Комерційний сайт будівельних і ремонтних послуг, створений для трафіку Google Ads та запущений під ключ.', webCase: {
+        challenge: 'Клієнт звернувся за рекомендацією: потрібен комерційний сайт спеціально для трафіку Google Ads.',
+        work: 'Розробили структуру сторінки й адаптивний сайт, підготували проєкт і налаштували домен та хостинг.',
+        delivery: '≈ 1 день', result: 'Готовий сайт запущено; він доступний за чинним посиланням.',
+      } },
     ),
   }),
   website('retatrutide-silver-signal', 'RETATRUTIDE — SILVER SIGNAL', 'https://shalomesp11-creator.github.io/retatrutide-silver-signal/', {
@@ -145,12 +181,28 @@ export const cases = [
     ),
   }),
   website('comfort-home', 'COMFORT HOME', 'https://comforthomekiev.com.ua/', {
-    recovery: true, originalUrl: 'https://www.comforthome.kyiv.ua/', categoryLabel: 'Website / Recovery', accent: '#aa927a',
+    recovery: true, serviceCase: 'development', originalUrl: 'https://www.comforthome.kyiv.ua/', categoryLabel: 'Website / Recovery', accent: '#aa927a',
     copy: localized(
-      { summary: 'После потери доступа к прежнему сайту восстановили рабочую версию на его основе. Клиент снова получил собственный функционирующий ресурс.' },
-      { summary: 'After the client lost access to the previous website, we rebuilt a working version based on it, giving the client their own functioning website again.' },
-      { summary: 'Nach dem Verlust des Zugangs zur bisherigen Website haben wir auf deren Grundlage eine funktionsfähige Version wiederhergestellt.' },
-      { summary: 'Після втрати доступу до попереднього сайту відновили робочу версію на його основі. Клієнт знову отримав власний функціональний ресурс.' },
+      { summary: 'Восстановили сайт после потери доступа к исходному проекту, используя его публичную версию как единственный референс.', webCase: {
+        challenge: 'Владелец потерял доступ к исходному сайту; осталась только публичная live-ссылка.',
+        work: 'Воссоздали доступные элементы по публичной версии, недостающие восстановили и доработали самостоятельно.',
+        delivery: '≈ 1 день', result: 'Рабочая версия восстановлена, подготовлена к публикации и доступна по действующей ссылке.',
+      } },
+      { summary: 'Rebuilt a website after access to the original project was lost, using its public version as the sole reference.', webCase: {
+        challenge: 'The owner lost access to the original website; only its public live URL remained.',
+        work: 'Recreated the available elements from the public version and rebuilt or completed the missing parts.',
+        delivery: '≈ 1 day', result: 'A working version was restored, prepared for publication and is available at its live URL.',
+      } },
+      { summary: 'Website nach Verlust des Zugangs zum ursprünglichen Projekt anhand der öffentlichen Version rekonstruiert.', webCase: {
+        challenge: 'Der Eigentümer verlor den Zugang zur ursprünglichen Website; als Referenz blieb nur die öffentliche URL.',
+        work: 'Sichtbare Elemente anhand der öffentlichen Version rekonstruiert und fehlende Teile eigenständig ergänzt.',
+        delivery: 'ca. 1 Tag', result: 'Eine funktionsfähige Version wurde wiederhergestellt, zur Veröffentlichung vorbereitet und ist online erreichbar.',
+      } },
+      { summary: 'Відновили сайт після втрати доступу до вихідного проєкту, використавши публічну версію як єдиний референс.', webCase: {
+        challenge: 'Власник утратив доступ до вихідного сайту; залишилося лише публічне live-посилання.',
+        work: 'Відтворили доступні елементи за публічною версією, а відсутні частини самостійно відновили й доробили.',
+        delivery: '≈ 1 день', result: 'Робочу версію відновлено, підготовлено до публікації; вона доступна за чинним посиланням.',
+      } },
     ),
   }),
   website('retatrutide-landing', 'RETATRUTIDE — LANDING PAGE', 'https://shalomesp11-creator.github.io/retatrutide-landing-preview/', {

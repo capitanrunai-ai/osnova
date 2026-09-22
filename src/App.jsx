@@ -1253,6 +1253,13 @@ const automationWorkLabels = {
   uk: { label: 'РЕАЛЬНІ СИСТЕМИ', title: 'Автоматизація в роботі', open: 'Дивитися кейс' },
 }
 
+const developmentWorkLabels = {
+  ru: { label: 'WEB-КЕЙСЫ', title: 'Разработка в работе', open: 'Смотреть кейс' },
+  en: { label: 'WEB CASES', title: 'Development in practice', open: 'View case' },
+  de: { label: 'WEB-PROJEKTE', title: 'Entwicklung in der Praxis', open: 'Projekt ansehen' },
+  uk: { label: 'WEB-КЕЙСИ', title: 'Розробка в роботі', open: 'Дивитися кейс' },
+}
+
 function AutomationPage({ s, lang, navigate }) {
   const data = s.automation
   const work = automationWorkLabels[lang]
@@ -1274,9 +1281,9 @@ function AutomationPage({ s, lang, navigate }) {
         </div>
       </section>
       <VoiceOperator data={data.voice} /><AssistantsSection data={data.assistants} /><CrmIntegrations crm={data.crm} integrations={data.integrations} /><CustomAutomation data={data.custom} />
-      <section className="automation-related section-pad" aria-label={work.label}>
+      <section className="service-related section-pad" aria-label={work.label}>
         <div className="container"><span className="eyebrow light">{work.label}</span><h2>{work.title}</h2>
-          <div className="automation-related-grid">{related.map(item => <RouteLink key={item.slug} href={`/${lang}/cases/${item.slug}`} navigate={navigate} world="automation"><small>{item.categoryLabel}</small><h3>{item.title}</h3><p>{item.summary}</p><span>{work.open}<ArrowUpRight size={16} /></span></RouteLink>)}</div>
+          <div className="service-related-grid">{related.map(item => <RouteLink key={item.slug} href={`/${lang}/cases/${item.slug}`} navigate={navigate} world="automation"><small>{item.categoryLabel}</small><h3>{item.title}</h3><p>{item.summary}</p><span>{work.open}<ArrowUpRight size={16} /></span></RouteLink>)}</div>
         </div>
       </section>
       <DirectionFooter s={s} lang={lang} current="automation" navigate={navigate} />
@@ -1354,10 +1361,17 @@ function PaymentPage({ p }) {
 
 function DevelopmentPage({ s, lang, navigate }) {
   const data = s.development
+  const work = developmentWorkLabels[lang]
+  const related = getLocalizedCases(lang).filter(item => item.serviceCase === 'development')
   return (
     <main className="direction-page development-page">
       <DirectionHero direction="development" data={data}><DevelopmentVisual labels={data.visual} /></DirectionHero>
       <DevelopmentCatalogue data={data} /><LandingFeature data={data.landing} lang={lang} navigate={navigate} /><BuildSequence data={data.build} />
+      <section className="service-related section-pad" aria-label={work.label}>
+        <div className="container"><span className="eyebrow light">{work.label}</span><h2>{work.title}</h2>
+          <div className="service-related-grid">{related.map(item => <RouteLink key={item.slug} href={`/${lang}/cases/${item.slug}`} navigate={navigate} world="development"><small>{item.recovery ? caseUi[lang].restored : item.categoryLabel}</small><h3>{item.title}</h3><p>{item.summary}</p><span>{work.open}<ArrowUpRight size={16} /></span></RouteLink>)}</div>
+        </div>
+      </section>
       <DirectionFooter s={s} lang={lang} current="development" navigate={navigate} />
     </main>
   )
