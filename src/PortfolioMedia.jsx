@@ -56,6 +56,7 @@ export function VoicePlayer({ item, ui, lang }) {
 
   useEffect(() => {
     const audio = audioRef.current
+    if (audio?.readyState >= 1 && Number.isFinite(audio.duration)) setDuration(audio.duration)
     return () => { audio?.pause() }
   }, [])
 

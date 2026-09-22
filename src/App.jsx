@@ -98,22 +98,22 @@ function getInitialLanguage() {
   return browser === 'uk' ? 'uk' : languageCodes.includes(browser) ? browser : 'en'
 }
 
+let revealObserver
+
 function Reveal({ children, className = '', delay = 0, as: Tag = 'div' }) {
   const ref = useRef(null)
   useEffect(() => {
     const node = ref.current
     if (!node) return
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          node.classList.add('is-visible')
-          observer.unobserve(node)
-        }
-      },
-      { threshold: 0.06 },
-    )
-    observer.observe(node)
-    return () => observer.disconnect()
+    revealObserver ||= new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue
+        entry.target.classList.add('is-visible')
+        revealObserver.unobserve(entry.target)
+      }
+    }, { threshold: 0.06 })
+    revealObserver.observe(node)
+    return () => revealObserver.unobserve(node)
   }, [])
   return <Tag ref={ref} className={`reveal ${className}`} style={{ '--reveal-delay': `${delay}ms` }}>{children}</Tag>
 }
@@ -358,7 +358,7 @@ function filterCases(items, group, subfilter) {
   })
 }
 
-function SpatialCaseGallery({ items, lang, navigate, ui, memoryKey = 'featured', showIndex = false }) {
+function SpatialCaseGallery({ items, lang, navigate, ui, memoryKey = 'featured', showIndex = false, prioritizeActive = true }) {
   const stageRef = useRef(null)
   const wheelTimeRef = useRef(0)
   const gestureRef = useRef({ active: false, startX: 0, lastX: 0, lastTime: 0, velocity: 0, drag: 0, moved: false })
@@ -517,7 +517,7 @@ function SpatialCaseGallery({ items, lang, navigate, ui, memoryKey = 'featured',
                 tabIndex={index === active ? 0 : -1}
               >
                 <div className="spatial-card-visual">
-                  <CaseVisual item={item} priority={index === active} />
+                  <CaseVisual item={item} priority={prioritizeActive && index === active} />
                   <span className="case-card-index">{String(index + 1).padStart(2, '0')} / {String(items.length).padStart(2, '0')}</span>
                 </div>
                 <div className="spatial-card-copy">
@@ -597,7 +597,7 @@ function FeaturedCases({ lang, navigate }) {
           />
         </Reveal>
       </div>
-      <SpatialCaseGallery items={items} lang={lang} navigate={navigate} ui={ui} />
+      <SpatialCaseGallery items={items} lang={lang} navigate={navigate} ui={ui} prioritizeActive={false} />
       <div className="container cases-showcase-foot">
         <RouteLink className="cases-view-all" href={`/${lang}/cases`} navigate={navigate}>
           <span>{ui.viewAll}</span><ArrowRight />
@@ -706,11 +706,11 @@ function Contact({ t, p, lang, navigate }) {
     return () => window.removeEventListener('osnova:contact-service', selectService)
   }, [])
   const serviceOptions = t.contact.options
+  const selectedService = serviceOptions.includes(service) ? service : serviceOptions.at(-1)
   const handleSubmit = async (event) => {
     event.preventDefault()
     if (status === 'sending') return
     const data = new FormData(event.currentTarget)
-    const selectedService = serviceOptions.includes(service) ? service : ''
     setStatus('sending')
     try {
       const response = await fetch('/api/contact', {
@@ -762,7 +762,7 @@ function Contact({ t, p, lang, navigate }) {
               </div>
               <div className="form-row">
                 <label><span>{t.contact.fields.company} <i>({c.optional})</i></span><input name="company" autoComplete="organization" /></label>
-                <label><span>{t.contact.fields.help}</span><select name="service" value={serviceOptions.includes(service) ? service : ''} onChange={(event) => setService(event.target.value)}><option value="">{t.contact.options.at(-1)}</option>{serviceOptions.slice(0, -1).map((option) => <option key={option}>{option}</option>)}</select></label>
+                <label><span>{t.contact.fields.help}</span><select name="service" value={selectedService} onChange={(event) => setService(event.target.value)}><option value={serviceOptions.at(-1)}>{serviceOptions.at(-1)}</option>{serviceOptions.slice(0, -1).map((option) => <option key={option}>{option}</option>)}</select></label>
               </div>
               <label><span>{t.contact.fields.message}</span><textarea name="message" rows="4" placeholder={c.messageHint} required /></label>
               <input type="text" name="hp" className="hp-field" tabIndex={-1} autoComplete="off" aria-hidden="true" />
@@ -863,13 +863,21 @@ function AssistantsSection({ data }) {
 
 function CrmIntegrations({ crm, integrations }) {
   const [active, setActive] = useState(0)
+  const [visible, setVisible] = useState(false)
+  const sectionRef = useRef(null)
   useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => setVisible(entry.isIntersecting))
+    observer.observe(sectionRef.current)
+    return () => observer.disconnect()
+  }, [])
+  useEffect(() => {
+    if (!visible) return undefined
     const timer = window.setInterval(() => setActive((value) => (value + 1) % crm.stages.length), 1500)
     return () => window.clearInterval(timer)
-  }, [crm.stages.length])
+  }, [visible, crm.stages.length])
   return (
     <>
-      <section className="crm-system section-pad">
+      <section ref={sectionRef} className="crm-system section-pad">
         <div className="container crm-system-grid">
           <Reveal><span className="eyebrow light">{crm.label}</span><h2>{crm.title}</h2><p>{crm.text}</p><div className="crm-items">{crm.items.map((item) => <span key={item}><Check />{item}</span>)}</div></Reveal>
           <Reveal className="crm-sequence" delay={100}>
@@ -1495,10 +1503,12 @@ export default function App() {
     const override = document.getElementById('prerender-reveal')
     if (!override) return
     const frame = requestAnimationFrame(() => {
+      const visible = []
       for (const node of document.querySelectorAll('.reveal')) {
         const box = node.getBoundingClientRect()
-        if (box.top < window.innerHeight && box.bottom > 0) node.classList.add('is-visible')
+        if (box.top < window.innerHeight && box.bottom > 0) visible.push(node)
       }
+      for (const node of visible) node.classList.add('is-visible')
       override.remove()
     })
     return () => cancelAnimationFrame(frame)

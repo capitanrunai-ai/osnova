@@ -319,7 +319,7 @@ h2 {
   background-image:
     linear-gradient(90deg, #07080a 0%, rgba(7, 8, 10, .96) 17%, rgba(7, 8, 10, .3) 62%, rgba(7, 8, 10, .08) 100%),
     linear-gradient(180deg, rgba(7, 8, 10, .1), rgba(7, 8, 10, .85)),
-    url('/assets/system-convergence.jpg');
+    url('/assets/system-convergence.webp');
   background-size: cover;
   background-position: center;
   filter: saturate(.88) contrast(1.03);
@@ -2579,7 +2579,7 @@ footer {
   .hero-image {
     background-image:
       linear-gradient(180deg, rgba(7,8,10,.6), rgba(7,8,10,.12) 45%, rgba(7,8,10,.94) 88%),
-      url('/assets/system-convergence.jpg');
+      url('/assets/system-convergence.webp');
     background-position: 58% center;
   }
   .hero-content {
@@ -3029,7 +3029,7 @@ footer {
   .home-hero .hero-image {
     background-image:
       linear-gradient(180deg, rgba(7,8,10,.75), rgba(7,8,10,.34) 42%, rgba(7,8,10,.96) 88%),
-      url('/assets/system-convergence.jpg');
+      url('/assets/system-convergence.webp');
     background-position: 61% center;
     animation: none;
   }

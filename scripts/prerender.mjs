@@ -107,6 +107,29 @@ async function snapshot(page, origin, path) {
     await wait(140)
     html.style.removeProperty('scroll-behavior')
     if (!html.getAttribute('style')) html.removeAttribute('style')
+    // Reveal classes are runtime state. The inline override keeps the saved
+    // document visible; the client observer will reveal visible nodes again.
+    for (const node of document.querySelectorAll('.reveal.is-visible')) node.classList.remove('is-visible')
+    // Audio metadata can arrive during the prerender walk. Save the player's
+    // initial state so hydration matches; the client reads loaded metadata.
+    for (const player of document.querySelectorAll('.voice-player')) {
+      const seek = player.querySelector('.audio-seek')
+      seek?.setAttribute('max', '1')
+      seek?.setAttribute('value', '0')
+      seek?.setAttribute('aria-valuetext', '00:00 / 00:00')
+      seek?.setAttribute('disabled', '')
+      player.querySelector('.audio-time span:last-child')?.replaceChildren('—:—')
+    }
+    // A client-rendered React tree can have adjacent text nodes (for example
+    // the literal "0" followed by a number). HTML serialization merges them;
+    // React's server markup uses a comment to retain the hydration boundary.
+    const walker = document.createTreeWalker(document.getElementById('root'), NodeFilter.SHOW_TEXT)
+    const adjacent = []
+    while (walker.nextNode()) {
+      const node = walker.currentNode
+      if (node.nextSibling?.nodeType === Node.TEXT_NODE) adjacent.push(node)
+    }
+    for (const node of adjacent) node.after(document.createComment(' '))
   })
 
   return `<!doctype html>\n${await page.evaluate(() => document.documentElement.outerHTML)}\n`
@@ -121,10 +144,10 @@ const REVEAL_OVERRIDE = '<style id="prerender-reveal">.reveal{opacity:1;transfor
 function finalize(html, previewOrigin, { isHome }) {
   let out = html.replaceAll(previewOrigin, siteUrl)
   if (isHome) {
-    // The hero background is the LCP element on the homepage only.
+    // The hero background is critical first-screen media on the homepage only.
     out = out.replace(
       '</title>',
-      '</title>\n    <link rel="preload" href="/assets/system-convergence.jpg" as="image" fetchpriority="high" />',
+      '</title>\n    <link rel="preload" href="/assets/system-convergence.webp" as="image" type="image/webp" fetchpriority="high" />',
     )
   }
   if (!out.includes('</head>')) throw new Error('prerendered document has no </head>')
