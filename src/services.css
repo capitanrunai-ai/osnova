@@ -1112,7 +1112,7 @@
 .build-sequence .reveal:last-child { border-right: 1px solid var(--line); }
 .build-sequence i { color: var(--muted); font: normal 8px var(--mono); }
 .build-sequence strong { margin-top: auto; font: 500 19px var(--display); }
-.build-sequence p { min-height: 40px; margin: 12px 0 14px; color: #65656d; font-size: 12px; line-height: 1.45; }
+.build-sequence p { min-height: 40px; margin: 12px 0 14px; color: #65656d; font-size: 15px; line-height: 1.45; }
 .build-sequence .reveal > span { width: var(--progress); height: 3px; position: absolute; left: 0; bottom: 0; background: var(--violet); }
 .development-proof-cta { display: flex; justify-content: flex-end; padding-top: 28px; }
 
