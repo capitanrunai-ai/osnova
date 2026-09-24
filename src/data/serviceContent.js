@@ -147,6 +147,15 @@ export const serviceContent = {
           ['Запустить', 'Проверка и публикация; домен и хостинг — по задаче.'],
         ],
       },
+      handoff: {
+        label: 'ПЕРЕДАЧА И ПОСЛЕ ЗАПУСКА',
+        title: 'Сайт готов к работе — и остаётся вашим.',
+        items: [
+          ['Передача', 'До запуска вы смотрите рабочую публичную версию. Замечания в рамках согласованного проекта исправляем до утверждения. Затем передаём финальный результат: исходные файлы и код для самостоятельного размещения или уже опубликованный сайт с технической настройкой от OSNOVA.'],
+          ['Запуск и доступ', 'Публикация, подключение домена и техническая настройка входят в проект. Сторонний домен и хостинг оплачиваете вы. Инфраструктура и аккаунты остаются под вашим контролем; после передачи у вас полный доступ к сайту и связанным сервисам.'],
+          ['45 дней после запуска', 'Исправляем обнаруженные дефекты, небольшие проблемы и неточности в согласованной реализации. Новый дизайн страниц, крупная переработка структуры, новые функции, существенное расширение, SEO и другие отдельные услуги в этот период не входят. Дальнейшая поддержка и развитие возможны по отдельной договорённости.'],
+        ],
+      },
     },
     performance: {
       label: '03 / РЕКЛАМА И ПРОДВИЖЕНИЕ',
@@ -276,6 +285,15 @@ const en = {
       ['Build', 'Design, development and integrations.'],
       ['Launch', 'Testing and publication; domain and hosting where needed.'],
     ] },
+    handoff: {
+      label: 'HANDOFF & AFTER LAUNCH',
+      title: 'Ready to go live. Yours to control.',
+      items: [
+        ['Handoff', 'Before launch, you review a working public version. We resolve feedback within the agreed project before approval. You then receive the final result: source files and code if you host it yourself, or a published, technically configured site from OSNOVA.'],
+        ['Launch & access', 'Publication, domain connection and technical setup are included in the project. You pay for third-party domain and hosting costs. Infrastructure and accounts stay under your control, with full access to your site and related services after handoff.'],
+        ['45 days after launch', 'We fix discovered defects, small issues and inaccuracies in the agreed implementation. New page designs, major structural changes, new features, substantial expansion, SEO and other separate services are outside this period. Ongoing support and development can be arranged separately.'],
+      ],
+    },
   },
   performance: {
     label: '03 / PERFORMANCE MARKETING', title: 'Demand becomes', titleAccent: 'a manageable system.',
@@ -404,6 +422,15 @@ Object.assign(serviceContent.de.development, {
     ['Umsetzen', 'Design, Entwicklung und Integrationen.'],
     ['Veröffentlichen', 'Tests und Launch; Domain und Hosting nach Bedarf.'],
   ] },
+  handoff: {
+    label: 'ÜBERGABE & NACH DEM START',
+    title: 'Startklar. Unter Ihrer Kontrolle.',
+    items: [
+      ['Übergabe', 'Vor dem Start prüfen Sie eine öffentlich erreichbare Arbeitsversion. Rückmeldungen im vereinbarten Projektumfang setzen wir vor der Freigabe um. Danach erhalten Sie das fertige Ergebnis: Quelldateien und Code für eigenes Hosting oder eine von OSNOVA veröffentlichte und technisch eingerichtete Website.'],
+      ['Start & Zugriff', 'Veröffentlichung, Domainanbindung und technische Einrichtung gehören zum Projekt. Kosten für Domain und Hosting bei Drittanbietern tragen Sie. Infrastruktur und Konten bleiben unter Ihrer Kontrolle; nach der Übergabe haben Sie vollen Zugriff auf Ihre Website und verbundene Dienste.'],
+      ['45 Tage nach dem Start', 'Wir beheben entdeckte Fehler, kleinere Probleme und Unstimmigkeiten in der vereinbarten Umsetzung. Neues Seitendesign, größere Strukturänderungen, neue Funktionen, wesentliche Erweiterungen, SEO und andere separate Leistungen gehören nicht dazu. Weitere Betreuung und Entwicklung sind gesondert vereinbar.'],
+    ],
+  },
 })
 Object.assign(serviceContent.de.performance, {
   label: '03 / ONLINE-MARKETING',
@@ -521,6 +548,15 @@ Object.assign(serviceContent.uk.development, {
     ['Створити', 'Дизайн, розробка, інтеграції.'],
     ['Запустити', 'Перевірка й публікація; домен і хостинг — за потреби.'],
   ] },
+  handoff: {
+    label: 'ПЕРЕДАЧА Й ПІСЛЯ ЗАПУСКУ',
+    title: 'Готовий до роботи. Під вашим контролем.',
+    items: [
+      ['Передача', 'До запуску ви переглядаєте робочу публічну версію. Зауваження в межах погодженого проєкту виправляємо до затвердження. Потім передаємо фінальний результат: вихідні файли й код для самостійного розміщення або вже опублікований і технічно налаштований сайт від OSNOVA.'],
+      ['Запуск і доступ', 'Публікація, підключення домену й технічне налаштування входять у проєкт. Сторонні домен і хостинг оплачуєте ви. Інфраструктура та акаунти залишаються під вашим контролем; після передачі ви маєте повний доступ до сайту й пов’язаних сервісів.'],
+      ['45 днів після запуску', 'Виправляємо виявлені дефекти, невеликі проблеми й неточності в погодженій реалізації. Новий дизайн сторінок, значна зміна структури, нові функції, суттєве розширення, SEO та інші окремі послуги не входять у цей період. Подальша підтримка й розвиток можливі за окремою домовленістю.'],
+    ],
+  },
 })
 Object.assign(serviceContent.uk.performance, {
   label: '03 / РЕКЛАМА ТА ПРОСУВАННЯ',

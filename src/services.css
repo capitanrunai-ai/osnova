@@ -1114,6 +1114,22 @@
 .build-sequence strong { margin-top: auto; font: 500 19px var(--display); }
 .build-sequence p { min-height: 40px; margin: 12px 0 14px; color: #65656d; font-size: 15px; line-height: 1.45; }
 .build-sequence .reveal > span { width: var(--progress); height: 3px; position: absolute; left: 0; bottom: 0; background: var(--violet); }
+.development-handoff { background: var(--paper); }
+.development-handoff-head { display: grid; grid-template-columns: minmax(128px, .35fr) minmax(0, 1.65fr); gap: clamp(30px, 3.4vw, 52px); align-items: start; padding-bottom: 42px; border-bottom: 1px solid var(--line); }
+.development-handoff-head h2 { max-width: 900px; margin: 0; font: 500 clamp(38px, 4vw, 65px)/1.04 var(--display); letter-spacing: -.052em; }
+.development-handoff-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.development-handoff-item { padding: 30px 30px 0 0; }
+.development-handoff-item + .development-handoff-item { padding-left: 30px; border-left: 1px solid var(--line); }
+.development-handoff-item > span { color: var(--muted); font: 9px var(--mono); }
+.development-handoff-item h3 { margin: 28px 0 16px; font: 500 clamp(25px, 2.2vw, 34px)/1.08 var(--display); letter-spacing: -.04em; }
+.development-handoff-item p { max-width: 460px; margin: 0; color: #65656d; font-size: 15px; line-height: 1.6; }
+@media (max-width: 900px) {
+  .development-handoff-grid { grid-template-columns: 1fr; }
+  .development-handoff-item { padding: 25px 0; border-bottom: 1px solid var(--line); }
+  .development-handoff-item + .development-handoff-item { padding-left: 0; border-left: 0; }
+  .development-handoff-item h3 { margin: 18px 0 10px; }
+  .development-handoff-item p { max-width: 620px; }
+}
 .development-proof-cta { display: flex; justify-content: flex-end; padding-top: 28px; }
 
 /* Performance */
@@ -1475,6 +1491,8 @@
   .landing-new-copy .button { width: 100%; }
   .build-sequence > .container > div { grid-template-columns: 1fr 1fr; }
   .build-sequence .reveal { min-height: 190px; }
+  .development-handoff-head { grid-template-columns: 1fr; gap: 24px; }
+  .development-handoff-head h2 { font-size: clamp(37px, 10vw, 52px); }
   .development-proof-cta .button { width: 100%; }
   .channel-navigation button { min-height: 95px; padding: 14px 8px; display: flex; flex-direction: column; justify-content: center; gap: 5px; text-align: center; }
   .channel-navigation button > span { display: none; }

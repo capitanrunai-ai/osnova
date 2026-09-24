@@ -1262,6 +1262,19 @@ const automationWorkLabels = {
   uk: { label: 'РЕАЛЬНІ СИСТЕМИ', title: 'Автоматизація в роботі', open: 'Дивитися кейс' },
 }
 
+function DevelopmentHandoff({ data }) {
+  return (
+    <section className="development-handoff section-pad" aria-labelledby="development-handoff-title">
+      <div className="container">
+        <Reveal className="development-handoff-head"><span className="eyebrow">{data.label}</span><h2 id="development-handoff-title">{data.title}</h2></Reveal>
+        <div className="development-handoff-grid">
+          {data.items.map(([title, description], index) => <Reveal className="development-handoff-item" key={title} delay={index * 50}><span>0{index + 1}</span><h3>{title}</h3><p>{description}</p></Reveal>)}
+        </div>
+      </div>
+    </section>
+  )
+}
+
 const developmentWorkLabels = {
   ru: { label: 'WEB-КЕЙСЫ', title: 'Разработка в работе', open: 'Смотреть кейс' },
   en: { label: 'WEB CASES', title: 'Development in practice', open: 'View case' },
@@ -1375,7 +1388,7 @@ function DevelopmentPage({ s, t, lang, navigate }) {
   return (
     <main className="direction-page development-page">
       <DirectionHero direction="development" data={data} action={<DevelopmentQuoteLink className="button button-primary development-hero-cta" t={t} lang={lang} navigate={navigate} />}><DevelopmentVisual labels={data.visual} /></DirectionHero>
-      <DevelopmentCatalogue data={data} /><LandingFeature data={data.landing} t={t} lang={lang} navigate={navigate} /><BuildSequence data={data.build} />
+      <DevelopmentCatalogue data={data} /><LandingFeature data={data.landing} t={t} lang={lang} navigate={navigate} /><BuildSequence data={data.build} /><DevelopmentHandoff data={data.handoff} />
       <section className="service-related section-pad" aria-label={work.label}>
         <div className="container"><span className="eyebrow light">{work.label}</span><h2>{work.title}</h2>
           <div className="service-related-grid">{related.map(item => <RouteLink key={item.slug} href={`/${lang}/cases/${item.slug}`} navigate={navigate} world="development"><small>{item.webCase.delivery} · {item.recovery ? caseUi[lang].restored : item.categoryLabel}</small><h3>{item.title}</h3><p>{item.summary}</p><span>{work.open}<ArrowUpRight size={16} /></span></RouteLink>)}</div>
