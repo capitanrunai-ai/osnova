@@ -1250,10 +1250,11 @@ function Footer({ t, s, p, lang, navigate }) {
   )
 }
 
-function CommercialOffers({ lang, navigate }) {
+function CommercialOffers({ lang, navigate, asTitle = false }) {
   const data = commercialContent[lang].offers
+  const Heading = asTitle ? 'h1' : 'h2'
   return <section className="commercial-section commercial-offers" id="pricing"><div className="container">
-    <Reveal><span className="eyebrow">{data.label}</span><h2>{data.title}</h2><p className="commercial-lead">{data.note}</p></Reveal>
+    <Reveal><span className="eyebrow">{data.label}</span><Heading>{data.title}</Heading><p className="commercial-lead">{data.note}</p></Reveal>
     <div className="commercial-card-grid">{data.items.map((item, index) => <Reveal as="article" className="commercial-card" key={item.title} delay={index * 70}><span className="commercial-number">0{index + 1}</span><div className="commercial-price">{item.price}</div><h3>{item.title}</h3><p>{item.text}</p><RouteLink href={`/${lang}/services/${item.route}`} navigate={navigate} world={item.route}>{item.cta}<ArrowUpRight size={17} /></RouteLink></Reveal>)}</div>
   </div></section>
 }
@@ -1301,7 +1302,7 @@ function HomePage({ t, s, p, lang, navigate }) {
 }
 
 function ServicesPage({ s, lang, navigate }) {
-  return <main className="services-page"><ServiceWorlds s={s} lang={lang} navigate={navigate} /></main>
+  return <main className="services-page"><CommercialOffers lang={lang} navigate={navigate} asTitle /><CommercialBridge lang={lang} navigate={navigate} /><CommercialSecondary lang={lang} navigate={navigate} /></main>
 }
 
 const automationWorkLabels = {
@@ -1647,7 +1648,7 @@ export default function App() {
       : caseItem
         ? [`${caseItem.title} — OSNOVA`, caseItem.summary]
         : resolved.kind === 'services'
-          ? s.meta.services
+          ? [`${commercialContent[lang].offers.title} — OSNOVA`, commercialContent[lang].offers.note]
           : resolved.kind === 'service'
             ? commercialContent[lang].meta[resolved.id] || s.meta[resolved.id]
             : commercialContent[lang].meta.home

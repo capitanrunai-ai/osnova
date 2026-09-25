@@ -29,7 +29,7 @@ try {
     await page.setViewport({ width, height, deviceScaleFactor: 1, isMobile: width < 600, hasTouch: width < 900 })
     for (const lang of languages) {
       const result = { device, lang }
-      for (const [route, key] of [['', 'home'], ['services/development', 'development'], ['services/automation', 'automation']]) {
+      for (const [route, key] of [['', 'home'], ['services', 'services'], ['services/development', 'development'], ['services/automation', 'automation']]) {
         await page.goto(`${origin}/${lang}/${route}`, { waitUntil: 'networkidle0' })
         await page.evaluate(() => document.querySelectorAll('.reveal').forEach(node => node.classList.add('is-visible')))
         const state = await page.evaluate(() => ({
@@ -42,11 +42,11 @@ try {
         }))
         assert.ok(state.heading.length > 10, `${device}/${lang}/${route}: heading`)
         assert.equal(state.overflow, false, `${device}/${lang}/${route}: horizontal overflow`)
-        assert.equal(state.process, 8, `${device}/${lang}/${route}: process`)
-        if (key === 'home') {
+        assert.equal(state.process, key === 'services' ? 0 : 8, `${device}/${lang}/${route}: process`)
+        if (key === 'home' || key === 'services') {
           assert.equal(state.cards, 3, `${device}/${lang}: home offers`)
           assert.ok(state.text.includes('€250') && state.text.includes('€500') && state.text.includes('€149'), `${device}/${lang}: offer prices`)
-          assert.ok(state.custom, `${device}/${lang}: custom CTA`)
+          if (key === 'home') assert.ok(state.custom, `${device}/${lang}: custom CTA`)
         } else if (key === 'development') {
           assert.equal(state.cards, 2, `${device}/${lang}: development offers`)
           assert.ok(state.text.includes('45') && state.text.includes('Telegram'), `${device}/${lang}: development terms`)
@@ -63,7 +63,7 @@ try {
   }
   assert.deepEqual(errors, [], 'browser errors')
   await writeFile(resolve(output, 'report.json'), JSON.stringify({ report, errors }, null, 2))
-  console.log(`PASS: ${report.length} localized layouts across desktop, tablet and mobile; home, Development and Automation.`)
+  console.log(`PASS: ${report.length} localized layouts across desktop, tablet and mobile; home, Services, Development and Automation.`)
 } finally {
   await browser?.close()
   server.kill()

@@ -6,7 +6,9 @@
 .hero-offer-card strong { font: 500 clamp(92px, 10vw, 160px)/.9 var(--display); letter-spacing: -.09em; }
 .hero-offer-card i { align-self: end; font-size: 48px; font-style: normal; }
 .commercial-section { padding: clamp(82px, 8vw, 125px) 0; background: var(--paper); color: var(--ink); }
-.commercial-section h2 { max-width: 950px; margin: 18px 0 24px; font-size: clamp(44px, 5vw, 76px); font-weight: 500; line-height: 1.03; letter-spacing: -.055em; }
+.commercial-section h1, .commercial-section h2 { max-width: 950px; margin: 18px 0 24px; font-size: clamp(44px, 5vw, 76px); font-weight: 500; line-height: 1.03; letter-spacing: -.055em; }
+.services-page .commercial-offers { padding-top: 170px; color: white; background: #111115; }
+.services-page .commercial-offers .commercial-card { color: var(--ink); }
 .commercial-lead, .commercial-scope-note { max-width: 850px; font-size: clamp(16px, 1.6vw, 20px); line-height: 1.6; }
 .commercial-card-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 42px; }
 .commercial-card-grid.two-col { grid-template-columns: repeat(2, minmax(0, 1fr)); }
