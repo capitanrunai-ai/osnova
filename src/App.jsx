@@ -19,6 +19,7 @@ import {
   X,
 } from 'lucide-react'
 import { content, languages } from './data/content'
+import { commercialContent } from './data/commercialContent'
 import { paymentContent } from './data/paymentContent'
 import { caseCategories, caseUi, getLocalizedCases } from './data/cases'
 import { serviceContent } from './data/serviceContent'
@@ -34,6 +35,7 @@ import { getTeam } from './data/team'
 import './team.css'
 import './email.css'
 import './payment.css'
+import './commercial.css'
 
 const portfolioMemory = { featured: {}, archive: {} }
 
@@ -241,21 +243,22 @@ function SystemMap({ nodes, signal }) {
 }
 
 function HomeHero({ t, s, lang, navigate }) {
+  const c = commercialContent[lang]
   return (
     <main id="top">
       <section className="hero home-hero">
         <div className="hero-image" aria-hidden="true" /><div className="hero-grid" aria-hidden="true" />
         <div className="hero-content">
           <Reveal className="hero-copy">
-            <div className="eyebrow light"><span className="live-dot" />{t.hero.eyebrow}</div>
-            <h1><span>{t.hero.titleA}</span><em>{t.hero.titleB}</em></h1>
-            <p>{t.hero.text}</p>
+            <div className="eyebrow light"><span className="live-dot" />{c.hero.eyebrow}</div>
+            <h1><span>{c.hero.a}</span><em>{c.hero.b}</em></h1>
+            <p>{c.hero.text}</p>
             <div className="hero-actions">
-              <RouteLink className="button button-primary" href={`/${lang}/#contact`} navigate={navigate}>{t.hero.primary}<ArrowUpRight size={18} /></RouteLink>
-              <RouteLink className="button button-ghost" href={`/${lang}/services`} navigate={navigate}>{t.hero.secondary}<ArrowRight size={18} /></RouteLink>
+              <RouteLink className="button button-primary" href={`/${lang}/services/development`} navigate={navigate} world="development">{c.hero.primary}<ArrowUpRight size={18} /></RouteLink>
+              <RouteLink className="button button-ghost" href={`/${lang}/services/development#packages`} navigate={navigate} world="development">{c.hero.secondary}<ArrowRight size={18} /></RouteLink>
             </div>
           </Reveal>
-          <Reveal className="hero-map-wrap" delay={160}><SystemMap nodes={t.hero.nodes} signal={t.hero.signal} /></Reveal>
+          <Reveal className="hero-offer-wrap" delay={160}><div className="hero-offer-card"><span>OS / DEVELOPMENT</span><strong>€250</strong><small>{c.offers.items[0].title}</small><i>↗</i></div></Reveal>
         </div>
         <div className="hero-index"><span>OS / 01</span><span>PARIS · REMOTE</span><span>SYSTEMS, CONNECTED</span></div>
       </section>
@@ -1247,8 +1250,54 @@ function Footer({ t, s, p, lang, navigate }) {
   )
 }
 
+function CommercialOffers({ lang, navigate }) {
+  const data = commercialContent[lang].offers
+  return <section className="commercial-section commercial-offers" id="pricing"><div className="container">
+    <Reveal><span className="eyebrow">{data.label}</span><h2>{data.title}</h2><p className="commercial-lead">{data.note}</p></Reveal>
+    <div className="commercial-card-grid">{data.items.map((item, index) => <Reveal as="article" className="commercial-card" key={item.title} delay={index * 70}><span className="commercial-number">0{index + 1}</span><div className="commercial-price">{item.price}</div><h3>{item.title}</h3><p>{item.text}</p><RouteLink href={`/${lang}/services/${item.route}`} navigate={navigate} world={item.route}>{item.cta}<ArrowUpRight size={17} /></RouteLink></Reveal>)}</div>
+  </div></section>
+}
+
+function CommercialWebCases({ lang, navigate }) {
+  const data = commercialContent[lang].web
+  const related = getLocalizedCases(lang).filter(item => item.serviceCase === 'development').slice(0, 3)
+  return <section className="commercial-section commercial-cases" id="cases"><div className="container"><Reveal><span className="eyebrow light">{data.label}</span><h2>{data.title}</h2></Reveal><div className="service-related-grid">{related.map(item => <RouteLink key={item.slug} href={`/${lang}/cases/${item.slug}`} navigate={navigate} world="development"><small>{item.webCase?.delivery || item.categoryLabel}</small><h3>{item.title}</h3><p>{item.summary}</p><span>{caseUi[lang].viewAll}<ArrowUpRight size={16} /></span></RouteLink>)}</div><RouteLink className="commercial-text-link" href={`/${lang}/cases`} navigate={navigate}>{data.cta}<ArrowRight size={17} /></RouteLink></div></section>
+}
+
+function CommercialProcess({ lang }) {
+  const data = commercialContent[lang].process
+  return <section className="commercial-section commercial-process" id="process"><div className="container"><Reveal><span className="eyebrow">{data.label}</span><h2>{data.title}</h2></Reveal><ol>{data.steps.map((step, index) => <Reveal as="li" key={step} delay={(index % 4) * 45}><span>{String(index + 1).padStart(2, '0')}</span><p>{step}</p></Reveal>)}</ol></div></section>
+}
+
+function CommercialBridge({ lang, navigate }) {
+  const data = commercialContent[lang].bridge
+  return <section className="commercial-section commercial-bridge"><div className="container"><Reveal><span className="eyebrow light">{data.label}</span><h2>{data.title}</h2><p>{data.text}</p><RouteLink className="button button-primary" href={`/${lang}/services/automation`} navigate={navigate} world="automation">{data.cta}<ArrowUpRight size={18} /></RouteLink></Reveal></div></section>
+}
+
+function CommercialAutomationCases({ lang, navigate }) {
+  const work = automationWorkLabels[lang]
+  const related = getLocalizedCases(lang).filter(item => ['ai-news-automation', 'retail-stock-monitor'].includes(item.slug))
+  return <section className="commercial-section commercial-cases commercial-automation-cases"><div className="container"><Reveal><span className="eyebrow light">{work.label}</span><h2>{work.title}</h2></Reveal><div className="service-related-grid">{related.map(item => <RouteLink key={item.slug} href={`/${lang}/cases/${item.slug}`} navigate={navigate} world="automation"><small>{item.categoryLabel}</small><h3>{item.title}</h3><p>{item.summary}</p><span>{work.open}<ArrowUpRight size={16} /></span></RouteLink>)}</div></div></section>
+}
+
+function CommercialTrust({ lang }) {
+  const data = commercialContent[lang].trust
+  return <section className="commercial-section commercial-trust"><div className="container"><Reveal><span className="eyebrow">{data.label}</span><h2>{data.title}</h2></Reveal><div className="commercial-trust-grid">{data.items.map((item, index) => <Reveal key={item} as="p" delay={index * 50}><Check size={20} /><span>{item}</span></Reveal>)}</div><p className="commercial-footnote">{data.note}</p></div></section>
+}
+
+function CommercialCustom({ lang, navigate }) {
+  const data = commercialContent[lang].custom
+  return <section className="commercial-section commercial-custom"><div className="container"><Reveal><h2>{data.title}</h2><p>{data.text}</p><RouteLink className="button button-primary" href={`/${lang}/#contact-form`} navigate={navigate} onClick={() => selectContactService('')}>{data.cta}<ArrowUpRight size={18} /></RouteLink></Reveal></div></section>
+}
+
+function CommercialSecondary({ lang, navigate }) {
+  const data = commercialContent[lang].secondary
+  const links = [['seo', 'SEO'], ['performance', 'Performance'], ['ai-visibility', 'AI Visibility'], ['email-deliverability', 'Email Deliverability']]
+  return <section className="commercial-secondary"><div className="container"><span className="eyebrow">{data.label}</span><h2>{data.title}</h2><div>{links.map(([slug, title]) => <RouteLink key={slug} href={`/${lang}/services/${slug}`} navigate={navigate}>{title}<ArrowUpRight size={15} /></RouteLink>)}</div></div></section>
+}
+
 function HomePage({ t, s, p, lang, navigate }) {
-  return <><HomeHero t={t} s={s} lang={lang} navigate={navigate} /><SystemContinuum s={s} /><ServiceWorlds s={s} lang={lang} navigate={navigate} compact /><FeaturedCases lang={lang} navigate={navigate} /><About t={t} lang={lang} /><Pricing t={t} lang={lang} navigate={navigate} /><Contact t={t} p={p} lang={lang} navigate={navigate} /></>
+  return <><HomeHero t={t} s={s} lang={lang} navigate={navigate} /><CommercialOffers lang={lang} navigate={navigate} /><CommercialWebCases lang={lang} navigate={navigate} /><CommercialProcess lang={lang} /><CommercialBridge lang={lang} navigate={navigate} /><CommercialAutomationCases lang={lang} navigate={navigate} /><CommercialTrust lang={lang} /><CommercialCustom lang={lang} navigate={navigate} /><CommercialSecondary lang={lang} navigate={navigate} /><Contact t={t} p={p} lang={lang} navigate={navigate} /></>
 }
 
 function ServicesPage({ s, lang, navigate }) {
@@ -1282,27 +1331,25 @@ const developmentWorkLabels = {
   uk: { label: 'WEB-КЕЙСИ', title: 'Розробка в роботі', open: 'Дивитися кейс' },
 }
 
+function CommercialDevelopmentProducts({ lang }) {
+  const data = commercialContent[lang].development
+  return <section className="commercial-section commercial-product-section" id="packages"><div className="container"><Reveal><span className="eyebrow">{data.label}</span><h2>{data.title}</h2></Reveal><div className="commercial-card-grid two-col">{data.items.map((item, index) => <Reveal className="commercial-card" as="article" key={item.title} delay={index * 70}><div className="commercial-price">{item.price}</div><h3>{item.title}</h3><strong className="commercial-time">{item.time}</strong><ul>{item.details.map(detail => <li key={detail}><Check size={16} />{detail}</li>)}</ul></Reveal>)}</div><p className="commercial-scope-note">{data.scope}</p><p className="commercial-scope-note">{data.launch}</p></div></section>
+}
+
+function CommercialAutomationProducts({ lang, navigate }) {
+  const data = commercialContent[lang].automation
+  return <><section className="commercial-section commercial-product-section" id="products"><div className="container"><Reveal><span className="eyebrow">{data.label}</span><h2>{data.title}</h2><p className="commercial-lead">{data.intro}</p></Reveal><div className="commercial-card-grid">{data.items.map(([title, price, detail], index) => <Reveal className="commercial-card" as="article" key={title} delay={(index % 3) * 60}><span className="commercial-number">{String(index + 1).padStart(2, '0')}</span><div className="commercial-price">{price}</div><h3>{title}</h3><p>{detail}</p></Reveal>)}</div><p className="commercial-scope-note">{data.terms}</p></div></section><section className="commercial-section commercial-managed"><div className="container"><Reveal><span className="eyebrow">MANAGED AUTOMATION</span><h2>{data.managed.title}</h2></Reveal><div className="commercial-managed-grid">{data.managed.rows.map(([title, price, detail]) => <Reveal className="commercial-managed-row" key={title}><h3>{title}</h3><strong>{price}</strong><p>{detail}</p></Reveal>)}</div><p className="commercial-footnote">{data.managed.note}</p></div></section><CommercialProcess lang={lang} /><CommercialCustom lang={lang} navigate={navigate} /></>
+}
+
 function AutomationPage({ s, lang, navigate }) {
   const data = s.automation
+  const commercial = commercialContent[lang].automation
   const work = automationWorkLabels[lang]
   const related = getLocalizedCases(lang).filter(item => ['ai-voice-operator', 'ai-news-automation', 'retail-stock-monitor'].includes(item.slug))
   return (
     <main className="direction-page automation-page">
-      <DirectionHero direction="automation" data={data}><AutomationHeroVisual label={data.signal} flow={data.heroFlow} /></DirectionHero>
-      <section className="direction-proposition automation-principle">
-        <div className="container">
-          <Reveal className="automation-principle-panel">
-            <div className="automation-principle-label"><span>{data.propositionLabel}</span><i aria-hidden="true"><b /></i></div>
-            <h2>{data.proposition}</h2>
-            <ol className="automation-principle-flow" aria-label={data.propositionLabel}>
-              {data.heroFlow.map((step, index) => (
-                <li key={step}><span>0{index + 1}</span><strong>{step}</strong>{index < data.heroFlow.length - 1 && <ArrowRight aria-hidden="true" />}</li>
-              ))}
-            </ol>
-          </Reveal>
-        </div>
-      </section>
-      <VoiceOperator data={data.voice} /><AssistantsSection data={data.assistants} /><CrmIntegrations crm={data.crm} integrations={data.integrations} /><CustomAutomation data={data.custom} />
+      <DirectionHero direction="automation" data={{ ...data, title: commercial.title, titleAccent: '', intro: commercial.intro }}><AutomationHeroVisual label={data.signal} flow={data.heroFlow} /></DirectionHero>
+      <CommercialAutomationProducts lang={lang} navigate={navigate} />
       <section className="service-related section-pad" aria-label={work.label}>
         <div className="container"><span className="eyebrow light">{work.label}</span><h2>{work.title}</h2>
           <div className="service-related-grid">{related.map(item => <RouteLink key={item.slug} href={`/${lang}/cases/${item.slug}`} navigate={navigate} world="automation"><small>{item.categoryLabel}</small><h3>{item.title}</h3><p>{item.summary}</p><span>{work.open}<ArrowUpRight size={16} /></span></RouteLink>)}</div>
@@ -1383,12 +1430,13 @@ function PaymentPage({ p }) {
 
 function DevelopmentPage({ s, t, lang, navigate }) {
   const data = s.development
+  const commercial = commercialContent[lang].development
   const work = developmentWorkLabels[lang]
   const related = getLocalizedCases(lang).filter(item => item.serviceCase === 'development')
   return (
     <main className="direction-page development-page">
-      <DirectionHero direction="development" data={data} action={<DevelopmentQuoteLink className="button button-primary development-hero-cta" t={t} lang={lang} navigate={navigate} />}><DevelopmentVisual labels={data.visual} /></DirectionHero>
-      <DevelopmentCatalogue data={data} /><LandingFeature data={data.landing} t={t} lang={lang} navigate={navigate} /><BuildSequence data={data.build} /><DevelopmentHandoff data={data.handoff} />
+      <DirectionHero direction="development" data={{ ...data, title: commercial.title, titleAccent: '', intro: commercial.scope }} action={<DevelopmentQuoteLink className="button button-primary development-hero-cta" t={t} lang={lang} navigate={navigate} />}><DevelopmentVisual labels={data.visual} /></DirectionHero>
+      <CommercialDevelopmentProducts lang={lang} /><CommercialProcess lang={lang} /><CommercialTrust lang={lang} />
       <section className="service-related section-pad" aria-label={work.label}>
         <div className="container"><span className="eyebrow light">{work.label}</span><h2>{work.title}</h2>
           <div className="service-related-grid">{related.map(item => <RouteLink key={item.slug} href={`/${lang}/cases/${item.slug}`} navigate={navigate} world="development"><small>{item.webCase.delivery} · {item.recovery ? caseUi[lang].restored : item.categoryLabel}</small><h3>{item.title}</h3><p>{item.summary}</p><span>{work.open}<ArrowUpRight size={16} /></span></RouteLink>)}</div>
@@ -1601,8 +1649,8 @@ export default function App() {
         : resolved.kind === 'services'
           ? s.meta.services
           : resolved.kind === 'service'
-            ? s.meta[resolved.id]
-            : [t.meta.title, t.meta.description]
+            ? commercialContent[lang].meta[resolved.id] || s.meta[resolved.id]
+            : commercialContent[lang].meta.home
 
     const origin = window.location.origin
     const pathFor = (code) => (location.route ? `/${code}/${location.route}` : `/${code}/`)

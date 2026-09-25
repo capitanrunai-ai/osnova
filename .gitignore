@@ -28,6 +28,10 @@ heygen_tests/
 voice_samples/
 infidel-*.mjs
 tools_*
+tz.txt
+Screenshot_*.png
+h.png
+hh.png
 
 # Local Netlify folder
 .netlify
