@@ -202,34 +202,28 @@ try {
 
   await page.setViewport({ width: 390, height: 844, deviceScaleFactor: 1, isMobile: true, hasTouch: true })
   await page.goto(`${origin}/en/services/automation`, { waitUntil: 'networkidle0' })
+  // The v1 automation page presents products and managed plans instead of the former integration diagram.
   const automation = await page.evaluate(() => {
     document.querySelectorAll('.reveal').forEach((node) => node.classList.add('is-visible'))
-    const field = document.querySelector('.integration-field')?.getBoundingClientRect()
-    const nodes = [...document.querySelectorAll('.integration-node')].map((node) => {
-      const rect = node.getBoundingClientRect()
-      return { left: rect.left, right: rect.right, top: rect.top, bottom: rect.bottom }
-    })
     return {
-      processRows: document.querySelectorAll('.automation-hero-visual .ah-node').length,
-      voiceRows: document.querySelectorAll('.voice-mobile-flow > div').length,
-      assistantRows: document.querySelectorAll('.assistant-context-flow > div').length,
-      mobileConnections: document.querySelectorAll('.integration-lines-mobile path').length,
-      desktopConnectionsVisible: getComputedStyle(document.querySelector('.integration-lines-desktop')).display !== 'none',
-      integrationNodesInside: nodes.every((rect) => field && rect.left >= field.left && rect.right <= field.right && rect.top >= field.top && rect.bottom <= field.bottom),
+      products: document.querySelectorAll('#products .commercial-card').length,
+      managedRows: document.querySelectorAll('#managed .commercial-managed-row').length,
+      cases: document.querySelectorAll('.service-related .home-work-card').length,
     }
   })
-  if (automation.processRows !== 4 || automation.voiceRows !== 7 || automation.assistantRows !== 4 || automation.mobileConnections !== 6 || automation.desktopConnectionsVisible || !automation.integrationNodesInside) {
+  if (automation.products !== 6 || automation.managedRows !== 4 || automation.cases !== 3) {
     failures.push(`automation composition ${JSON.stringify(automation)}`)
   }
 
   await page.goto(`${origin}/ru/`, { waitUntil: 'networkidle0' })
-  const pricing = await page.$$eval('.price-row', (nodes) => nodes.map((node) => ({
-    text: node.textContent.replace(/\s+/g, ' ').trim(),
-    action: node.querySelector('.price-action')?.textContent.replace(/\s+/g, ' ').trim(),
-  })))
-  if (pricing.length !== 6
-    || pricing.some((row) => /€|\b(?:от|Индивидуально)\b/i.test(row.text))
-    || pricing.some((row) => row.action !== 'Узнать цену')) {
+  const pricing = await page.evaluate(() => ({
+    offers: [...document.querySelectorAll('.commercial-offers .commercial-price')].map((node) => node.textContent.trim()),
+    hero: document.querySelector('.hero-offer-card')?.textContent.replace(/\s+/g, ' ').trim() || '',
+    automation: document.querySelector('.automation-entry-prices')?.textContent || '',
+  }))
+  if (pricing.offers.join('|') !== 'от €250|от €500|от €149'
+    || !pricing.hero.includes('€250') || !pricing.hero.includes('€500')
+    || !['€149', '€250–300', '€350–500'].every((price) => pricing.automation.includes(price))) {
     failures.push(`pricing ${JSON.stringify(pricing)}`)
   }
 

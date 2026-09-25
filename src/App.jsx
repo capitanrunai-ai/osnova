@@ -17,9 +17,17 @@ import {
   Pause,
   Play,
   X,
+  Send,
+  Cable,
+  Radar,
+  Sparkles,
+  AudioLines,
+  Workflow,
+  ServerCog,
 } from 'lucide-react'
 import { content, languages } from './data/content'
 import { commercialContent } from './data/commercialContent'
+import { designContent } from './data/designContent'
 import { paymentContent } from './data/paymentContent'
 import { caseCategories, caseUi, getLocalizedCases } from './data/cases'
 import { serviceContent } from './data/serviceContent'
@@ -35,7 +43,6 @@ import { getTeam } from './data/team'
 import './team.css'
 import './email.css'
 import './payment.css'
-import './commercial.css'
 
 const portfolioMemory = { featured: {}, archive: {} }
 
@@ -182,6 +189,8 @@ function Header({ t, s, lang, route, setLang, navigate }) {
         <span className="brand-mark">O</span><span>OSNOVA</span>
       </RouteLink>
       <nav className={`main-nav ${open ? 'is-open' : ''}`} aria-label={s.common.menu}>
+        <RouteLink href={`/${lang}/services/development`} navigate={navigate} onClick={close}>{designContent[lang].nav.development}</RouteLink>
+        <RouteLink href={`/${lang}/services/automation`} navigate={navigate} onClick={close}>{designContent[lang].nav.automation}</RouteLink>
         <RouteLink href={`/${lang}/services`} navigate={navigate} onClick={close}>{s.common.services}</RouteLink>
         <RouteLink href={`/${lang}/cases`} navigate={navigate} onClick={close}>{s.common.cases}</RouteLink>
         <RouteLink href={`${home}#about`} navigate={navigate} onClick={close}>{s.common.about}</RouteLink>
@@ -250,15 +259,28 @@ function HomeHero({ t, s, lang, navigate }) {
         <div className="hero-image" aria-hidden="true" /><div className="hero-grid" aria-hidden="true" />
         <div className="hero-content">
           <Reveal className="hero-copy">
-            <div className="eyebrow light"><span className="live-dot" />{c.hero.eyebrow}</div>
+            <div className="eyebrow light"><span className="live-dot" />{designContent[lang].heroLabel}</div>
             <h1><span>{c.hero.a}</span><em>{c.hero.b}</em></h1>
             <p>{c.hero.text}</p>
             <div className="hero-actions">
               <RouteLink className="button button-primary" href={`/${lang}/services/development`} navigate={navigate} world="development">{c.hero.primary}<ArrowUpRight size={18} /></RouteLink>
-              <RouteLink className="button button-ghost" href={`/${lang}/services/development#packages`} navigate={navigate} world="development">{c.hero.secondary}<ArrowRight size={18} /></RouteLink>
+              <RouteLink className="button button-ghost" href={`/${lang}/#cases`} navigate={navigate} world="development">{designContent[lang].heroWork}<ArrowRight size={18} /></RouteLink>
             </div>
           </Reveal>
-          <Reveal className="hero-offer-wrap" delay={160}><div className="hero-offer-card"><span>OS / DEVELOPMENT</span><strong>€250</strong><small>{c.offers.items[0].title}</small><i>↗</i></div></Reveal>
+          <Reveal className="hero-offer-wrap" delay={160}>
+            <RouteLink className="hero-offer-card" href={`/${lang}/services/development#packages`} navigate={navigate} world="development">
+              <span className="offer-card-top"><span>01 / DEVELOPMENT</span><i className="offer-card-arrow"><ArrowUpRight size={20} /></i></span>
+              <div className="offer-wireframe" aria-hidden="true">
+                <div className="wf-bar"><b /><i /><i /><i /></div>
+                <div className="wf-hero"><i /><i /><i /><b /></div>
+                <div className="wf-cols"><i /><i /><i /></div>
+                <div className="wf-toast"><Send size={12} /><span>Telegram</span><em>+1</em></div>
+              </div>
+              <div className="offer-card-bottom"><small>{c.offers.items[0].title}</small><strong>{c.offers.items[0].price}</strong><span>{designContent[lang].included}</span></div>
+              <div className="offer-card-alt"><span>{c.offers.items[1].title}</span><b>{c.offers.items[1].price}</b></div>
+              <span className="offer-card-action">{designContent[lang].offerAction}<ArrowRight size={16} /></span>
+            </RouteLink>
+          </Reveal>
         </div>
         <div className="hero-index"><span>OS / 01</span><span>PARIS · REMOTE</span><span>SYSTEMS, CONNECTED</span></div>
       </section>
@@ -1254,15 +1276,32 @@ function CommercialOffers({ lang, navigate, asTitle = false }) {
   const data = commercialContent[lang].offers
   const Heading = asTitle ? 'h1' : 'h2'
   return <section className="commercial-section commercial-offers" id="pricing"><div className="container">
-    <Reveal><span className="eyebrow">{data.label}</span><Heading>{data.title}</Heading><p className="commercial-lead">{data.note}</p></Reveal>
-    <div className="commercial-card-grid">{data.items.map((item, index) => <Reveal as="article" className="commercial-card" key={item.title} delay={index * 70}><span className="commercial-number">0{index + 1}</span><div className="commercial-price">{item.price}</div><h3>{item.title}</h3><p>{item.text}</p><RouteLink href={`/${lang}/services/${item.route}`} navigate={navigate} world={item.route}>{item.cta}<ArrowUpRight size={17} /></RouteLink></Reveal>)}</div>
+    <Reveal className="commercial-offers-head"><span className="eyebrow">{data.label}</span><Heading>{data.title}</Heading><p className="commercial-lead">{data.note}</p></Reveal>
+    <div className="commercial-card-grid">{data.items.map((item, index) => <Reveal as="article" className="commercial-card" key={item.title} delay={index * 70}><span className="commercial-number">0{index + 1} / {index < 2 ? 'DEVELOPMENT' : 'AUTOMATION'}</span><div className="commercial-price">{item.price}</div><h3>{item.title}</h3><p>{item.text}</p><RouteLink href={`/${lang}/services/${item.route}`} navigate={navigate} world={item.route}>{item.cta}<ArrowUpRight size={17} /></RouteLink></Reveal>)}</div>
   </div></section>
+}
+
+function WorkCard({ item, lang, navigate }) {
+  return <RouteLink className="home-work-card" href={`/${lang}/cases/${item.slug}`} navigate={navigate} world={item.serviceCase || 'automation'}>
+    <CaseVisual item={item} />
+    <div className="home-work-copy"><small>{item.recovery ? caseUi[lang].restored : item.webCase?.delivery || item.categoryLabel}</small><h3>{item.title}</h3><p>{item.summary}</p><span>{caseUi[lang].openCase}<ArrowUpRight size={20} /></span></div>
+  </RouteLink>
+}
+
+function MoreWorkCard({ item, lang, navigate }) {
+  return <RouteLink className="home-more-card" href={`/${lang}/cases/${item.slug}`} navigate={navigate} world="development">
+    <div className="home-more-shot" style={{ '--project-accent': item.accent }}><img src={item.desktop} alt="" width="1440" height="960" loading="lazy" draggable="false" /></div>
+    <div><small>{item.categoryLabel}</small><h3>{item.title}</h3></div>
+    <ArrowUpRight size={18} aria-hidden="true" />
+  </RouteLink>
 }
 
 function CommercialWebCases({ lang, navigate }) {
   const data = commercialContent[lang].web
-  const related = getLocalizedCases(lang).filter(item => item.serviceCase === 'development').slice(0, 3)
-  return <section className="commercial-section commercial-cases" id="cases"><div className="container"><Reveal><span className="eyebrow light">{data.label}</span><h2>{data.title}</h2></Reveal><div className="service-related-grid">{related.map(item => <RouteLink key={item.slug} href={`/${lang}/cases/${item.slug}`} navigate={navigate} world="development"><small>{item.webCase?.delivery || item.categoryLabel}</small><h3>{item.title}</h3><p>{item.summary}</p><span>{caseUi[lang].viewAll}<ArrowUpRight size={16} /></span></RouteLink>)}</div><RouteLink className="commercial-text-link" href={`/${lang}/cases`} navigate={navigate}>{data.cta}<ArrowRight size={17} /></RouteLink></div></section>
+  const web = getLocalizedCases(lang).filter(item => item.category === 'development')
+  const featured = web.filter(item => item.serviceCase === 'development').slice(0, 3)
+  const more = web.filter(item => !featured.includes(item))
+  return <section className="commercial-section commercial-cases" id="cases"><div className="container"><Reveal className="home-work-head"><span className="eyebrow light">{data.label}</span><h2>{data.title}</h2><span className="home-work-count">{String(web.length).padStart(2, '0')} / WEB</span></Reveal><div className="home-work-grid">{featured.map(item => <WorkCard key={item.slug} item={item} lang={lang} navigate={navigate} />)}</div>{more.length > 0 && <div className="home-more-work"><span className="home-more-label">{designContent[lang].moreWork}</span><div className="home-more-grid">{more.map(item => <MoreWorkCard key={item.slug} item={item} lang={lang} navigate={navigate} />)}</div></div>}<RouteLink className="commercial-text-link" href={`/${lang}/cases`} navigate={navigate}>{data.cta}<ArrowRight size={17} /></RouteLink></div></section>
 }
 
 function CommercialProcess({ lang }) {
@@ -1270,20 +1309,32 @@ function CommercialProcess({ lang }) {
   return <section className="commercial-section commercial-process" id="process"><div className="container"><Reveal><span className="eyebrow">{data.label}</span><h2>{data.title}</h2></Reveal><ol>{data.steps.map((step, index) => <Reveal as="li" key={step} delay={(index % 4) * 45}><span>{String(index + 1).padStart(2, '0')}</span><p>{step}</p></Reveal>)}</ol></div></section>
 }
 
+const automationUseCaseIcons = [Bot, Cable, Radar, Sparkles, AudioLines, Workflow]
+
 function CommercialBridge({ lang, navigate }) {
-  const data = commercialContent[lang].bridge
-  return <section className="commercial-section commercial-bridge"><div className="container"><Reveal><span className="eyebrow light">{data.label}</span><h2>{data.title}</h2><p>{data.text}</p><RouteLink className="button button-primary" href={`/${lang}/services/automation`} navigate={navigate} world="automation">{data.cta}<ArrowUpRight size={18} /></RouteLink></Reveal></div></section>
+  const d = designContent[lang]
+  const c = commercialContent[lang]
+  const managed = c.automation.managed.rows[0]
+  return <section className="commercial-section commercial-bridge" id="automation"><div className="container">
+    <div className="automation-heading"><Reveal><span className="eyebrow light">02 / AUTOMATION</span><h2>{d.automationTitle}</h2></Reveal><Reveal><p>{d.automationText}</p><RouteLink className="button button-primary" href={`/${lang}/#contact-form`} navigate={navigate} onClick={() => selectContactService(content[lang].contact.options[0])}>{c.custom.cta}<ArrowUpRight size={18} /></RouteLink></Reveal></div>
+    <Reveal className="automation-circuit"><div className="circuit-stamp" aria-hidden="true">OS<span> / AUTOMATION</span></div><ol>{d.flow.map((label, i) => <li key={label}><span className="circuit-node">0{i + 1}</span><div><h3>{label}</h3><p>{d.flowDetail[i]}</p></div>{i < 2 && <ArrowRight className="circuit-arrow" aria-hidden="true" />}</li>)}</ol>
+      <div className="automation-usecases"><span className="automation-usecases-label">{d.useCasesLabel}</span><ul>{d.useCases.map(([title, text], i) => { const Icon = automationUseCaseIcons[i]; return <li key={title}><Icon size={22} strokeWidth={1.5} aria-hidden="true" /><h3>{title}</h3><p>{text}</p></li> })}</ul></div>
+    </Reveal>
+    <div className="automation-entry-prices">{c.automation.items.slice(0, 3).map(([title, price]) => <RouteLink key={title} href={`/${lang}/services/automation#products`} navigate={navigate} world="automation"><span>{title}</span><strong>{price}</strong><ArrowUpRight size={18} /></RouteLink>)}</div>
+    <RouteLink className="automation-managed" href={`/${lang}/services/automation#managed`} navigate={navigate} world="automation"><ServerCog size={22} strokeWidth={1.5} aria-hidden="true" /><span><b>Managed Automation</b><small>{d.managed}</small></span><strong>{managed[1]}</strong><ArrowUpRight size={18} aria-hidden="true" /></RouteLink>
+    <RouteLink className="commercial-text-link" href={`/${lang}/services/automation`} navigate={navigate} world="automation">{d.automationMore}<ArrowRight size={18} /></RouteLink>
+  </div></section>
 }
 
 function CommercialAutomationCases({ lang, navigate }) {
   const work = automationWorkLabels[lang]
   const related = getLocalizedCases(lang).filter(item => ['ai-news-automation', 'retail-stock-monitor'].includes(item.slug))
-  return <section className="commercial-section commercial-cases commercial-automation-cases"><div className="container"><Reveal><span className="eyebrow light">{work.label}</span><h2>{work.title}</h2></Reveal><div className="service-related-grid">{related.map(item => <RouteLink key={item.slug} href={`/${lang}/cases/${item.slug}`} navigate={navigate} world="automation"><small>{item.categoryLabel}</small><h3>{item.title}</h3><p>{item.summary}</p><span>{work.open}<ArrowUpRight size={16} /></span></RouteLink>)}</div></div></section>
+  return <section className="commercial-section commercial-cases commercial-automation-cases"><div className="container"><Reveal><span className="eyebrow light">{work.label}</span><h2>{work.title}</h2></Reveal><div className="home-work-grid automation-work-grid">{related.map(item => <WorkCard key={item.slug} item={item} lang={lang} navigate={navigate} />)}</div></div></section>
 }
 
 function CommercialTrust({ lang }) {
   const data = commercialContent[lang].trust
-  return <section className="commercial-section commercial-trust"><div className="container"><Reveal><span className="eyebrow">{data.label}</span><h2>{data.title}</h2></Reveal><div className="commercial-trust-grid">{data.items.map((item, index) => <Reveal key={item} as="p" delay={index * 50}><Check size={20} /><span>{item}</span></Reveal>)}</div><p className="commercial-footnote">{data.note}</p></div></section>
+  return <section className="commercial-section commercial-trust" id="about"><div className="container"><Reveal><span className="eyebrow">{data.label}</span><h2>{data.title}</h2><p className="commercial-lead">{designContent[lang].about}</p></Reveal><div className="commercial-trust-grid">{data.items.map((item, index) => <Reveal key={item} as="p" delay={index * 50}><Check size={20} /><span>{item}</span></Reveal>)}</div><p className="commercial-footnote">{data.note}</p></div></section>
 }
 
 function CommercialCustom({ lang, navigate }) {
@@ -1291,18 +1342,24 @@ function CommercialCustom({ lang, navigate }) {
   return <section className="commercial-section commercial-custom"><div className="container"><Reveal><h2>{data.title}</h2><p>{data.text}</p><RouteLink className="button button-primary" href={`/${lang}/#contact-form`} navigate={navigate} onClick={() => selectContactService('')}>{data.cta}<ArrowUpRight size={18} /></RouteLink></Reveal></div></section>
 }
 
-function CommercialSecondary({ lang, navigate }) {
+const specialistSlugs = ['seo', 'performance', 'ai-visibility', 'email-deliverability']
+const specialistCodes = { seo: 'SEO', performance: 'PERFORMANCE', 'ai-visibility': 'AI VISIBILITY', 'email-deliverability': 'EMAIL' }
+
+function CommercialSecondary({ s, lang, navigate }) {
   const data = commercialContent[lang].secondary
-  const links = [['seo', 'SEO'], ['performance', 'Performance'], ['ai-visibility', 'AI Visibility'], ['email-deliverability', 'Email Deliverability']]
-  return <section className="commercial-secondary"><div className="container"><span className="eyebrow">{data.label}</span><h2>{data.title}</h2><div>{links.map(([slug, title]) => <RouteLink key={slug} href={`/${lang}/services/${slug}`} navigate={navigate}>{title}<ArrowUpRight size={15} /></RouteLink>)}</div></div></section>
+  const d = designContent[lang]
+  return <section className="commercial-secondary" id="specializations"><div className="container"><Reveal className="specialist-head"><div><span className="eyebrow">03–06 / {data.label}</span><h2>{d.specializationTitle}</h2></div><p>{d.specializationLead}</p></Reveal><div className="specialist-grid">{specialistSlugs.map((slug, i) => {
+    const direction = s.directions.find(item => item.id === slug)
+    return <RouteLink className={`specialist-card specialist-${slug}`} key={slug} href={`/${lang}/services/${slug}`} navigate={navigate} world={slug}><div className="specialist-art" aria-hidden="true"><span>0{i + 3} / {specialistCodes[slug]}</span><div><i /><i /><i /><i /></div></div><h3>{direction.name}</h3><p>{d.services[i]}</p><ul className="specialist-tags">{direction.items.slice(0, 3).map(item => <li key={item}>{item}</li>)}</ul><span className="specialist-link">{d.explore}<ArrowUpRight size={19} /></span></RouteLink>
+  })}</div></div></section>
 }
 
 function HomePage({ t, s, p, lang, navigate }) {
-  return <><HomeHero t={t} s={s} lang={lang} navigate={navigate} /><CommercialOffers lang={lang} navigate={navigate} /><CommercialWebCases lang={lang} navigate={navigate} /><CommercialProcess lang={lang} /><CommercialBridge lang={lang} navigate={navigate} /><CommercialAutomationCases lang={lang} navigate={navigate} /><CommercialTrust lang={lang} /><CommercialCustom lang={lang} navigate={navigate} /><CommercialSecondary lang={lang} navigate={navigate} /><Contact t={t} p={p} lang={lang} navigate={navigate} /></>
+  return <><HomeHero t={t} s={s} lang={lang} navigate={navigate} /><CommercialOffers lang={lang} navigate={navigate} /><CommercialWebCases lang={lang} navigate={navigate} /><CommercialBridge lang={lang} navigate={navigate} /><CommercialAutomationCases lang={lang} navigate={navigate} /><CommercialSecondary s={s} lang={lang} navigate={navigate} /><CommercialProcess lang={lang} /><CommercialTrust lang={lang} /><CommercialCustom lang={lang} navigate={navigate} /><Contact t={t} p={p} lang={lang} navigate={navigate} /></>
 }
 
 function ServicesPage({ s, lang, navigate }) {
-  return <main className="services-page"><CommercialOffers lang={lang} navigate={navigate} asTitle /><CommercialBridge lang={lang} navigate={navigate} /><CommercialSecondary lang={lang} navigate={navigate} /></main>
+  return <main className="services-page"><CommercialOffers lang={lang} navigate={navigate} asTitle /><CommercialBridge lang={lang} navigate={navigate} /><CommercialSecondary s={s} lang={lang} navigate={navigate} /></main>
 }
 
 const automationWorkLabels = {
@@ -1339,7 +1396,7 @@ function CommercialDevelopmentProducts({ lang }) {
 
 function CommercialAutomationProducts({ lang, navigate }) {
   const data = commercialContent[lang].automation
-  return <><section className="commercial-section commercial-product-section" id="products"><div className="container"><Reveal><span className="eyebrow">{data.label}</span><h2>{data.title}</h2><p className="commercial-lead">{data.intro}</p></Reveal><div className="commercial-card-grid">{data.items.map(([title, price, detail], index) => <Reveal className="commercial-card" as="article" key={title} delay={(index % 3) * 60}><span className="commercial-number">{String(index + 1).padStart(2, '0')}</span><div className="commercial-price">{price}</div><h3>{title}</h3><p>{detail}</p></Reveal>)}</div><p className="commercial-scope-note">{data.terms}</p></div></section><section className="commercial-section commercial-managed"><div className="container"><Reveal><span className="eyebrow">MANAGED AUTOMATION</span><h2>{data.managed.title}</h2></Reveal><div className="commercial-managed-grid">{data.managed.rows.map(([title, price, detail]) => <Reveal className="commercial-managed-row" key={title}><h3>{title}</h3><strong>{price}</strong><p>{detail}</p></Reveal>)}</div><p className="commercial-footnote">{data.managed.note}</p></div></section><CommercialProcess lang={lang} /><CommercialCustom lang={lang} navigate={navigate} /></>
+  return <><section className="commercial-section commercial-product-section" id="products"><div className="container"><Reveal><span className="eyebrow">{data.label}</span><h2>{data.title}</h2><p className="commercial-lead">{data.intro}</p></Reveal><div className="commercial-card-grid">{data.items.map(([title, price, detail], index) => <Reveal className="commercial-card" as="article" key={title} delay={(index % 3) * 60}><span className="commercial-number">{String(index + 1).padStart(2, '0')}</span><div className="commercial-price">{price}</div><h3>{title}</h3><p>{detail}</p></Reveal>)}</div><p className="commercial-scope-note">{data.terms}</p></div></section><section className="commercial-section commercial-managed" id="managed"><div className="container"><Reveal><span className="eyebrow">MANAGED AUTOMATION</span><h2>{data.managed.title}</h2></Reveal><div className="commercial-managed-grid">{data.managed.rows.map(([title, price, detail]) => <Reveal className="commercial-managed-row" key={title}><h3>{title}</h3><strong>{price}</strong><p>{detail}</p></Reveal>)}</div><p className="commercial-footnote">{data.managed.note}</p></div></section><CommercialProcess lang={lang} /><CommercialCustom lang={lang} navigate={navigate} /></>
 }
 
 function AutomationPage({ s, lang, navigate }) {
@@ -1353,7 +1410,7 @@ function AutomationPage({ s, lang, navigate }) {
       <CommercialAutomationProducts lang={lang} navigate={navigate} />
       <section className="service-related section-pad" aria-label={work.label}>
         <div className="container"><span className="eyebrow light">{work.label}</span><h2>{work.title}</h2>
-          <div className="service-related-grid">{related.map(item => <RouteLink key={item.slug} href={`/${lang}/cases/${item.slug}`} navigate={navigate} world="automation"><small>{item.categoryLabel}</small><h3>{item.title}</h3><p>{item.summary}</p><span>{work.open}<ArrowUpRight size={16} /></span></RouteLink>)}</div>
+          <div className="home-work-grid service-work-grid automation-work-grid automation-work-grid-three">{related.map(item => <WorkCard key={item.slug} item={item} lang={lang} navigate={navigate} />)}</div>
         </div>
       </section>
       <DirectionFooter s={s} lang={lang} current="automation" navigate={navigate} />
@@ -1440,7 +1497,7 @@ function DevelopmentPage({ s, t, lang, navigate }) {
       <CommercialDevelopmentProducts lang={lang} /><CommercialProcess lang={lang} /><CommercialTrust lang={lang} />
       <section className="service-related section-pad" aria-label={work.label}>
         <div className="container"><span className="eyebrow light">{work.label}</span><h2>{work.title}</h2>
-          <div className="service-related-grid">{related.map(item => <RouteLink key={item.slug} href={`/${lang}/cases/${item.slug}`} navigate={navigate} world="development"><small>{item.webCase.delivery} · {item.recovery ? caseUi[lang].restored : item.categoryLabel}</small><h3>{item.title}</h3><p>{item.summary}</p><span>{work.open}<ArrowUpRight size={16} /></span></RouteLink>)}</div>
+          <div className="home-work-grid service-work-grid">{related.map(item => <WorkCard key={item.slug} item={item} lang={lang} navigate={navigate} />)}</div>
           <div className="development-proof-cta"><DevelopmentQuoteLink className="button button-primary" t={t} lang={lang} navigate={navigate} /></div>
         </div>
       </section>

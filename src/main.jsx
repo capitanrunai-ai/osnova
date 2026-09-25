@@ -3,6 +3,7 @@ import { createRoot, hydrateRoot } from 'react-dom/client'
 import App from './App.jsx'
 import './styles.css'
 import './closing.css'
+import './commercial.css'
 
 const root = document.getElementById('root')
 const app = <StrictMode><App /></StrictMode>
