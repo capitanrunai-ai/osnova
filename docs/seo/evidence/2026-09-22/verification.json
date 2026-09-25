@@ -1,0 +1,28 @@
+{
+  "date": "2026-09-22",
+  "timezone": "Europe/Paris",
+  "notion": {
+    "root": "https://app.notion.com/p/3e23f22d3563812788e7f3031c2a92e2",
+    "seo": "https://app.notion.com/p/3e23f22d356381ca82a5c2558de3d71a",
+    "database": "https://app.notion.com/p/3e0d8424774946258e5abb1911b1850e",
+    "root_children": [
+      "SEO"
+    ],
+    "tasks": 26,
+    "statuses": {
+      "НЕ ГОТОВО": 26,
+      "ГОТОВО": 0
+    },
+    "priorities": {
+      "CRITICAL": 0,
+      "HIGH": 12,
+      "MEDIUM": 11,
+      "LOW": 3
+    },
+    "verified_by": "Fetch root, SEO, data source; SQL aggregate priority/status"
+  },
+  "site_mutations": 0,
+  "source_mutations": 0,
+  "commits": 0,
+  "deployments": 0
+}

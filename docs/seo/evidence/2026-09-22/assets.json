@@ -1,0 +1,170 @@
+[
+  {
+    "url": "https://osnovaai.com/assets/cases/bala-group-desktop.webp",
+    "status": 200,
+    "content_type": "image/webp",
+    "size": "87702",
+    "cache": "public,max-age=31536000,immutable"
+  },
+  {
+    "url": "https://osnovaai.com/assets/cases/bala-group-detail.webp",
+    "status": 200,
+    "content_type": "image/webp",
+    "size": "89848",
+    "cache": "public,max-age=31536000,immutable"
+  },
+  {
+    "url": "https://osnovaai.com/assets/cases/bala-group-mobile.webp",
+    "status": 200,
+    "content_type": "image/webp",
+    "size": "40572",
+    "cache": "public,max-age=31536000,immutable"
+  },
+  {
+    "url": "https://osnovaai.com/assets/cases/comfort-home-desktop.webp",
+    "status": 200,
+    "content_type": "image/webp",
+    "size": "118940",
+    "cache": "public,max-age=31536000,immutable"
+  },
+  {
+    "url": "https://osnovaai.com/assets/cases/comfort-home-detail.webp",
+    "status": 200,
+    "content_type": "image/webp",
+    "size": "61636",
+    "cache": "public,max-age=31536000,immutable"
+  },
+  {
+    "url": "https://osnovaai.com/assets/cases/comfort-home-mobile.webp",
+    "status": 200,
+    "content_type": "image/webp",
+    "size": "34468",
+    "cache": "public,max-age=31536000,immutable"
+  },
+  {
+    "url": "https://osnovaai.com/assets/cases/comfort-lab-desktop.webp",
+    "status": 200,
+    "content_type": "image/webp",
+    "size": "97450",
+    "cache": "public,max-age=31536000,immutable"
+  },
+  {
+    "url": "https://osnovaai.com/assets/cases/comfort-lab-detail.webp",
+    "status": 200,
+    "content_type": "image/webp",
+    "size": "92018",
+    "cache": "public,max-age=31536000,immutable"
+  },
+  {
+    "url": "https://osnovaai.com/assets/cases/comfort-lab-mobile.webp",
+    "status": 200,
+    "content_type": "image/webp",
+    "size": "39858",
+    "cache": "public,max-age=31536000,immutable"
+  },
+  {
+    "url": "https://osnovaai.com/assets/cases/dds-service-desktop.webp",
+    "status": 200,
+    "content_type": "image/webp",
+    "size": "78746",
+    "cache": "public,max-age=31536000,immutable"
+  },
+  {
+    "url": "https://osnovaai.com/assets/cases/dds-service-detail.webp",
+    "status": 200,
+    "content_type": "image/webp",
+    "size": "44358",
+    "cache": "public,max-age=31536000,immutable"
+  },
+  {
+    "url": "https://osnovaai.com/assets/cases/dds-service-mobile.webp",
+    "status": 200,
+    "content_type": "image/webp",
+    "size": "15982",
+    "cache": "public,max-age=31536000,immutable"
+  },
+  {
+    "url": "https://osnovaai.com/assets/cases/primer.mp3",
+    "status": 200,
+    "content_type": "audio/mpeg",
+    "size": "3997100",
+    "cache": "public,max-age=31536000,immutable"
+  },
+  {
+    "url": "https://osnovaai.com/assets/cases/retatrutide-landing-desktop.webp",
+    "status": 200,
+    "content_type": "image/webp",
+    "size": "63902",
+    "cache": "public,max-age=31536000,immutable"
+  },
+  {
+    "url": "https://osnovaai.com/assets/cases/retatrutide-landing-detail.webp",
+    "status": 200,
+    "content_type": "image/webp",
+    "size": "58816",
+    "cache": "public,max-age=31536000,immutable"
+  },
+  {
+    "url": "https://osnovaai.com/assets/cases/retatrutide-landing-mobile.webp",
+    "status": 200,
+    "content_type": "image/webp",
+    "size": "24768",
+    "cache": "public,max-age=31536000,immutable"
+  },
+  {
+    "url": "https://osnovaai.com/assets/cases/retatrutide-silver-signal-desktop.webp",
+    "status": 200,
+    "content_type": "image/webp",
+    "size": "49320",
+    "cache": "public,max-age=31536000,immutable"
+  },
+  {
+    "url": "https://osnovaai.com/assets/cases/retatrutide-silver-signal-detail.webp",
+    "status": 200,
+    "content_type": "image/webp",
+    "size": "55958",
+    "cache": "public,max-age=31536000,immutable"
+  },
+  {
+    "url": "https://osnovaai.com/assets/cases/retatrutide-silver-signal-mobile.webp",
+    "status": 200,
+    "content_type": "image/webp",
+    "size": "29378",
+    "cache": "public,max-age=31536000,immutable"
+  },
+  {
+    "url": "https://osnovaai.com/assets/index-BcfwR0F-.js",
+    "status": 200,
+    "content_type": "application/javascript; charset=UTF-8",
+    "size": "127059",
+    "cache": "public,max-age=31536000,immutable"
+  },
+  {
+    "url": "https://osnovaai.com/assets/index-UYjRh0s1.css",
+    "status": 200,
+    "content_type": "text/css; charset=UTF-8",
+    "size": "42426",
+    "cache": "public,max-age=31536000,immutable"
+  },
+  {
+    "url": "https://osnovaai.com/assets/meta-symbol.svg",
+    "status": 200,
+    "content_type": "image/svg+xml",
+    "size": "2859",
+    "cache": "public,max-age=31536000,immutable"
+  },
+  {
+    "url": "https://osnovaai.com/assets/system-convergence.jpg",
+    "status": 200,
+    "content_type": "image/jpeg",
+    "size": "199766",
+    "cache": "public,max-age=31536000,immutable"
+  },
+  {
+    "url": "https://osnovaai.com/favicon.svg",
+    "status": 200,
+    "content_type": "image/svg+xml",
+    "size": "323",
+    "cache": "public,max-age=0,must-revalidate"
+  }
+]

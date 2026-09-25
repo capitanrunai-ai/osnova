@@ -1,0 +1,789 @@
+[
+  {
+    "path": "/",
+    "url": "https://osnovaai.com/ru/",
+    "title": "OSNOVA — AI, автоматизация и digital-системы",
+    "h1": [
+      "Меньше рутины.\nБольше бизнеса."
+    ],
+    "canonical": "https://osnovaai.com/ru/",
+    "robots": "index, follow",
+    "overflow": false,
+    "width": 390,
+    "metrics": {
+      "lcp": 2452,
+      "cls": 0
+    },
+    "transfer": 450616,
+    "audio": [],
+    "links": [
+      {
+        "href": "https://osnovaai.com/ru/",
+        "text": "O\nOSNOVA"
+      },
+      {
+        "href": "https://osnovaai.com/ru/services",
+        "text": "Услуги"
+      },
+      {
+        "href": "https://osnovaai.com/ru/cases",
+        "text": "Кейсы"
+      },
+      {
+        "href": "https://osnovaai.com/ru/#about",
+        "text": "О нас"
+      },
+      {
+        "href": "https://osnovaai.com/ru/#pricing",
+        "text": "Цены"
+      },
+      {
+        "href": "https://osnovaai.com/ru/#contact",
+        "text": "Обсудить проект"
+      },
+      {
+        "href": "https://osnovaai.com/ru/#contact",
+        "text": "ОБСУДИТЬ ПРОЕКТ"
+      },
+      {
+        "href": "https://osnovaai.com/ru/services",
+        "text": "ПОСМОТРЕТЬ УСЛУГИ"
+      },
+      {
+        "href": "https://osnovaai.com/ru/services/automation",
+        "text": "01\nАвтоматизация бизнеса\n\nПроцессы, сигналы, данные и интеллект.\n\nAI-ОПЕРАТОР\nAI-АССИСТЕНТЫ\nCRM-АВТОМАТИЗАЦИЯ\nИНТЕГРАЦИИ\nИНДИВИДУАЛЬНАЯ АВТОМАТИЗАЦИЯ\nОТКРЫТЬ НАПРАВЛЕНИЕ"
+      },
+      {
+        "href": "https://osnovaai.com/ru/services/development",
+        "text": "02\nРазработка\n\nСтруктура, интерфейсы, логика и продукт.\n\nLANDING PAGES\nКОРПОРАТИВНЫЕ САЙТЫ\nWEB APPLICATIONS\nINTERNAL TOOLS\nMVP DEVELOPMENT\nCUSTOM SOFTWARE\nОТКРЫТЬ НАПРАВЛЕНИЕ"
+      },
+      {
+        "href": "https://osnovaai.com/ru/services/performance",
+        "text": "03\nРеклама и продвижение\n\nВнимание, спрос, конверсия и измерение.\n\nGOOGLE ADS\nMETA ADS\nTIKTOK ADS\nАНАЛИТИКА И TRACKING\nОТКРЫТЬ НАПРАВЛЕНИЕ"
+      },
+      {
+        "href": "https://osnovaai.com/ru/services/seo",
+        "text": "04\nSEO-продвижение\n\nЧтобы вас находили в обычном поиске.\n\nСПРОС И АУДИТ\nСТРУКТУРА САЙТА\nПОЛЕЗНЫЕ СТРАНИЦЫ\nТЕХНИЧЕСКАЯ ОСНОВА\nАНАЛИТИКА\nОТКРЫТЬ НАПРАВЛЕНИЕ"
+      },
+      {
+        "href": "https://osnovaai.com/ru/services/ai-visibility",
+        "text": "05\nПродвижение в AI\n\nЧтобы AI точнее понимал ваш бизнес.\n\nПОЗИЦИОНИРОВАНИЕ\nСТРАНИЦЫ УСЛУГ\nЭКСПЕРТНЫЕ ОТВЕТЫ\nФАКТЫ О КОМПАНИИ\nМОНИТОРИНГ\nОТКРЫТЬ НАПРАВЛЕНИЕ"
+      },
+      {
+        "href": "https://osnovaai.com/ru/services/email-deliverability",
+        "text": "06\nEmail Deliverability\n\nПомогаем письмам доходить до клиентов, а не теряться в спаме.\n\nКОРПОРАТИВНЫЕ ПИСЬМА\nАВТОМАТИЧЕСКИЕ ПИСЬМА\nEMAIL-РАССЫЛКИ\nУВЕДОМЛЕНИЯ\nПИСЬМА ПОТЕНЦИАЛЬНЫМ КЛИЕНТАМ\nБОЛЬШИЕ ОБЪЁМЫ ОТПРАВКИ\nОТКРЫТЬ НАПРАВЛЕНИЕ"
+      },
+      {
+        "href": "https://osnovaai.com/ru/cases/dds-service",
+        "text": "ddsservice.com.ua\n01 / 07\nWEBSITE / DEVELOPMENT\nDDS SERVICE\n\nСайт автосервиса: услуги, информация для клиентов и контакты. Полностью разработан с нуля."
+      },
+      {
+        "href": "https://osnovaai.com/ru/cases/bala-group",
+        "text": "bala-group.com.ua\n02 / 07\nWEBSITE / DEVELOPMENT\nBALA GROUP\n\nСайт строительных и ремонтных услуг. Дизайн и разработка полностью с нуля."
+      },
+      {
+        "href": "https://osnovaai.com/ru/cases/retatrutide-silver-signal",
+        "text": "shalomesp11-creator.github.io\n03 / 07\nLANDING PAGE / DEVELOPMENT\nRETATRUTIDE\nSILVER SIGNAL\n\nЛендинг с серебристой визуальной системой. Дизайн и web-разработка полностью с нуля."
+      },
+      {
+        "href": "https://osnovaai.com/ru/cases/ai-voice-operator",
+        "text": "ДЕМОНСТРАЦИЯ / СТОМАТОЛОГИЯ\nHUMAN × AI\n04:09\n04 / 07\nAI / AUTOMATION / AI VOICE\nAI VOICE OPERATOR\n\nAI-оператор стоматологической клиники. Принимает звонок, отвечает на вопросы и записывает на консультацию."
+      },
+      {
+        "href": "https://osnovaai.com/ru/cases/comfort-lab",
+        "text": "comfortlabkiev.com.ua\n05 / 07\nWEBSITE / DEVELOPMENT\nCOMFORT LAB\n\nСайт студии автомобильного комфорта: шумоизоляция, защита, звук и CarPlay. Дизайн и разработка с нуля."
+      },
+      {
+        "href": "https://osnovaai.com/ru/cases/comfort-home",
+        "text": "comforthomekiev.com.ua\n06 / 07\nВОССТАНОВЛЕНИЕ САЙТА\nCOMFORT HOME\n\nПосле потери доступа к прежнему сайту восстановили рабочую версию на его основе. Клиент снова получил собственный функционирующий ресурс."
+      },
+      {
+        "href": "https://osnovaai.com/ru/cases/retatrutide-landing",
+        "text": "shalomesp11-creator.github.io\n07 / 07\nLANDING PAGE / DEVELOPMENT\nRETATRUTIDE\nLANDING PAGE\n\nОтдельный лендинг RETATRUTIDE. Собственная визуальная концепция и полная web-разработка с нуля."
+      },
+      {
+        "href": "https://osnovaai.com/ru/cases",
+        "text": "Все работы"
+      },
+      {
+        "href": "https://osnovaai.com/ru/#contact-form",
+        "text": "Узнать цену"
+      },
+      {
+        "href": "https://osnovaai.com/ru/#contact-form",
+        "text": "Узнать цену"
+      },
+      {
+        "href": "https://osnovaai.com/ru/#contact-form",
+        "text": "Узнать цену"
+      },
+      {
+        "href": "https://osnovaai.com/ru/#contact-form",
+        "text": "Узнать цену"
+      },
+      {
+        "href": "https://osnovaai.com/ru/#contact-form",
+        "text": "Узнать цену"
+      },
+      {
+        "href": "https://osnovaai.com/ru/#contact-form",
+        "text": "Узнать цену"
+      },
+      {
+        "href": "mailto:capitanrunai@gmail.com",
+        "text": "EMAIL\ncapitanrunai@gmail.com"
+      },
+      {
+        "href": "https://t.me/capitanrun",
+        "text": "TELEGRAM\n@capitanrun"
+      },
+      {
+        "href": "https://osnovaai.com/ru/payment",
+        "text": "ОПЛАТА\nПосмотреть способы оплаты"
+      },
+      {
+        "href": "https://osnovaai.com/ru/",
+        "text": "O\nOSNOVA"
+      },
+      {
+        "href": "https://osnovaai.com/ru/services",
+        "text": "УСЛУГИ"
+      },
+      {
+        "href": "https://osnovaai.com/ru/payment",
+        "text": "ОПЛАТА"
+      }
+    ],
+    "body": "O\nOSNOVA\nУслуги\nКейсы\nО нас\nЦены\nОбсудить проект\nRU\nAI × АВТОМАТИЗАЦИЯ × РАЗРАБОТКА × PERFORMANCE\nМеньше рутины.\nБольше бизнеса.\n\nНаходим процессы, которые тормозят команду, и превращаем AI, CRM, разработку и рекламу в одну работающую систему.\n\nОБСУДИТЬ ПРОЕКТ\nПОСМОТРЕТЬ УСЛУГИ\nСИСТЕМА В РАБОТЕ\n01\nСайт\n02\nAI\n04\nКоманда\n05\nДанные\nOS / 01\nSYSTEMS, CONNECTED\n01\nПривлечь\n02\nПринять\n03\nОбработать\n04\nАвтоматизировать\n05\nУправлять\n06\nАнализировать\n07\nОптимизировать\n01\nПривлечь\n02\nПринять\n03\nОбработать\n04\nАвтоматизировать\n05\nУправлять\n06\nАнализировать\n07\nОптимизировать\nУСЛУГИ / 01—06\n6 направлений.\nОдна система.\n\nАвтоматизация, разработка, продвижение и доставка писем. Начните с одной задачи — объединим решения в систему вашего бизнеса.\n\n01\nАвтоматизация бизнеса\n\nПроцессы, сигналы, данные и интеллект.\n\nAI-ОПЕРАТОР\nAI-АССИСТЕНТЫ\nCRM-АВТОМАТИЗАЦИЯ\nИНТЕГРАЦИИ\nИНДИВИДУАЛЬНАЯ АВТОМАТИЗАЦИЯ\nОТКРЫТЬ НАПРАВЛЕНИЕ\n02\nРазработка\n\nСтруктура, интерфейсы, логика и продукт.\n\nLANDING PAGES\nКОРПОРАТИВНЫЕ САЙТЫ\nWEB APPLICATIONS\nINTERNAL TOOLS\nMVP DEVELOPMENT\nCUSTOM SOFTWARE\nОТКРЫТЬ НАПРАВЛЕНИЕ\n03\nРеклама и продвижение\n\nВнимание, спрос, конверсия и измерение.\n\nGOOGLE ADS\nMETA ADS\nTIKTOK ADS\nАНАЛИТИКА И TRACKING\nОТКРЫТЬ НАПРАВЛЕНИЕ\n04\nSEO-продвижение\n\nЧтобы вас находили в обычном поиске.\n\nСПРОС И АУДИТ\nСТРУКТУРА САЙТА\nПОЛЕЗНЫЕ СТРАНИЦЫ\nТЕХНИЧЕСКАЯ ОСНОВА\nАНАЛИТИКА\nОТКРЫТЬ НАПРАВЛЕНИЕ\n05\nПродвижение в AI\n\nЧтобы AI точнее понимал ваш бизнес.\n\nПОЗИЦИОНИРОВАНИЕ\nСТРАНИЦЫ УСЛУГ\nЭКСПЕРТНЫЕ ОТВЕТЫ\nФАКТЫ О КОМПАНИИ\nМОНИТОРИНГ\nОТКРЫТЬ НАПРАВЛЕНИЕ\n06\nEmail Deliverability\n\nПомогаем письмам доходить до клиентов, а не теряться в спаме.\n\nКОРПОРАТИВНЫЕ ПИСЬМА\nАВТОМАТИЧЕСКИЕ ПИСЬМА\nEMAIL-РАССЫЛКИ\nУВЕДОМЛЕНИЯ\nПИСЬМА ПОТЕНЦИАЛЬНЫМ КЛИЕНТАМ\nБОЛЬШИЕ ОБЪЁМЫ ОТПРАВКИ\nОТКРЫТЬ НАПРАВЛЕНИЕ\nИЗБРАННЫЕ РАБОТЫ\nИдеи, которые работают.\n\nРазные задачи. Наш дизайн, разработка и автоматизация. Листайте и смотрите результат.\n\nВСЕ\nСАЙТЫ / РАЗРАБОТКА\nAI / АВТОМАТИЗАЦИЯ\nddsservice.com.ua\n01 / 07\nWEBSITE / DEVELOPMENT\nDDS SERVICE\n\nСайт автосервиса: услуги, информация для клиентов и контакты. Полностью разработан с нуля.\n\nbala-group.com.ua\n02 / 07\nWEBSITE / DEVELOPMENT\nBALA GROUP\n\nСайт строительных и ремонтных услуг. Дизайн и разработка полностью с нуля.\n\nshalomesp11-creator.github.io\n03 / 07\nLANDING PAGE / DEVELOPMENT\nRETATRUTIDE\nSILVER SIGNAL\n\nЛендинг с серебристой визуальной системой. Дизайн и web-разработка полностью с нуля.\n\nДЕМОНСТРАЦИЯ / СТОМАТОЛОГИЯ\nHUMAN × AI\n04:09\n04 / 07\nAI / AUTOMATION / AI VOICE\nAI VOICE OPERATOR\n\nAI-оператор стоматологической клиники. Принимает звонок, отвечает на вопросы и записывает на консультацию.\n\ncomfortlabkiev.com.ua\n05 / 07\nWEBSITE / DEVELOPMENT\nCOMFORT LAB\n\nСайт студии автомобильного комфорта: шумоизоляция, защита, звук и CarPlay. Дизайн и разработка с нуля.\n\ncomforthomekiev.com.ua\n06 / 07\nВОССТАНОВЛЕНИЕ САЙТА\nCOMFORT HOME\n\nПосле потери доступа к прежнему сайту восстановили рабочую версию на его основе. Клиент снова получил собственный функционирующий ресурс.\n\nshalomesp11-creator.github.io\n07 / 07\nLANDING PAGE / DEVELOPMENT\nRETATRUTIDE\nLANDING PAGE\n\nОтдельный лендинг RETATRUTIDE. Собственная визуальная концепция и полная web-разработка с нуля.\n\nПЕРВАЯ РАБОТА\n01\nДАЛЕЕ\n02\nЛИСТАЙТЕ / СВАЙП\nПРОЕКТ\n01\n/\n07\nВсе работы\nО КОМПАНИИ\nНебольшая команда. Системное мышление.\n\nOSNOVA объединяет дизайн, разработку, AI, автоматизацию, маркетинг и email-инфраструктуру. Каждый специалист отвечает за свою часть общей системы бизнеса.\n\nКОМАНДА / НАПРАВЛЕНИЯ\n01\nCEO\nСтратегия и развитие\n\nСвязывает задачи бизнеса с работой команды. Определяет приоритеты и отвечает за общее направление проекта.\n\n02\nPRODUCT DESIGNER\nПонятный цифровой опыт\n\nПревращает задачи бизнеса в удобные сайты и интерфейсы. Помогает клиенту быстро понять предложение и сделать следующий шаг.\n\n03\nWEB DEVELOPER\nОт дизайна к рабочему продукту\n\nРазрабатывает сайты и web-приложения. Отвечает за функциональность, адаптацию под разные устройства и связь с сервисами бизнеса.\n\n04\nAI & AUTOMATION SPECIALIST\nМеньше ручной работы\n\nНастраивает AI-ассистентов и автоматические процессы. Соединяет инструменты, чтобы команда меньше занималась повторяющимися задачами.\n\n05\nDIGITAL MARKETING SPECIALIST\nСвязь с вашей аудиторией\n\nРаботает с рекламой и цифровыми каналами привлечения. Помогает бизнесу находить клиентов и понимать, какие обращения приходят из каждого канала.\n\n06\nEMAIL DELIVERABILITY SPECIALIST\nПисьма доходят до клиентов\n\nПомогает письмам компании попадать во «Входящие», а не в спам или под блокировку. Настраивает отправку с домена компании, следит за репутацией отправителя и причинами сбоев — чтобы рассылки, уведомления и автоматические сообщения доставлялись стабильно, в том числе при больших объёмах.\n\nЦЕНЫ\nПонятная точка входа. Честная оценка сложности.\n\nФинальная стоимость зависит от объёма, интеграций, бизнес-логики, дизайна, разработки и сопровождения.\n\n01\nАвтоматизация бизнеса\nУзнать цену\n02\nРазработка\nУзнать цену\n03\nРеклама и продвижение\nУзнать цену\n04\nSEO\nУзнать цену\n05\nПродвижение в AI\nУзнать цену\n06\nEmail Deliverability\nУзнать цену\nДЛЯ РЕКЛАМЫ МЕДИАБЮДЖЕТ ОПЛАЧИВАЕТСЯ ОТДЕЛЬНО.\nСЛЕДУЮЩИЙ ШАГ / ВАША ЗАДАЧА\nУ бизнеса есть задача.\nНачнём с неё.\n\nКакой процесс забирает у команды слишком много времени? Расскажите, что хотите изменить. Вместе определим, какое решение поможет бизнесу.\n\n01\nРазберём задачу\n02\nПредложим решение\n03\nОбсудим следующий шаг\nИЛИ НАПИШИТЕ НАПРЯМУЮ\nEMAIL\ncapitanrunai@gmail.com\nTELEGRAM\n@capitanrun\nОПЛАТА\nПосмотреть способы оплаты\nРасскажите о задаче\n\nДостаточно нескольких предложений.\n\nВаше имя\nEmail или Telegram\nКомпания (необязательно)\nНаправление\nПока не знаю\nАвтоматизация бизнеса\nРазработка\nРеклама и продвижение\nSEO\nПродвижение в AI\nEmail Deliverability\nCRM и интеграции\nСайт\nЧто происходит сейчас?\nОбсудить задачу\nПривлечь · Принять · Обработать · Автоматизировать · Управлять · Анализировать · Оптимизировать\nПривлечь · Принять · Обработать · Автоматизировать · Управлять · Анализировать · Оптимизировать\nO\nOSNOVA\n\n© 2026 OSNOVA. Все права защищены.\n\nУСЛУГИ\nОПЛАТА\nOSNOVA / NEUTRAL",
+    "errors": [],
+    "requests": [
+      "https://osnovaai.com/",
+      "https://osnovaai.com/assets/index-UYjRh0s1.css",
+      "https://osnovaai.com/assets/index-BcfwR0F-.js",
+      "https://osnovaai.com/assets/system-convergence.jpg",
+      "https://osnovaai.com/assets/cases/dds-service-desktop.webp",
+      "https://osnovaai.com/favicon.svg",
+      "https://osnovaai.com/favicon.svg"
+    ]
+  },
+  {
+    "path": "/en/",
+    "url": "https://osnovaai.com/en/",
+    "title": "OSNOVA — AI, automation & digital systems",
+    "h1": [
+      "Less busywork.\nMore business."
+    ],
+    "canonical": "https://osnovaai.com/en/",
+    "robots": "index, follow",
+    "overflow": false,
+    "width": 390,
+    "metrics": {
+      "lcp": 780,
+      "cls": 0
+    },
+    "transfer": 0,
+    "audio": [],
+    "links": [
+      {
+        "href": "https://osnovaai.com/en/",
+        "text": "O\nOSNOVA"
+      },
+      {
+        "href": "https://osnovaai.com/en/services",
+        "text": "Services"
+      },
+      {
+        "href": "https://osnovaai.com/en/cases",
+        "text": "Cases"
+      },
+      {
+        "href": "https://osnovaai.com/en/#about",
+        "text": "About"
+      },
+      {
+        "href": "https://osnovaai.com/en/#pricing",
+        "text": "Pricing"
+      },
+      {
+        "href": "https://osnovaai.com/en/#contact",
+        "text": "Discuss a project"
+      },
+      {
+        "href": "https://osnovaai.com/en/#contact",
+        "text": "DISCUSS A PROJECT"
+      },
+      {
+        "href": "https://osnovaai.com/en/services",
+        "text": "EXPLORE SERVICES"
+      },
+      {
+        "href": "https://osnovaai.com/en/services/automation",
+        "text": "01\nBusiness Automation\n\nProcesses, signals, data and intelligence.\n\nAI VOICE OPERATOR\nAI ASSISTANTS\nCRM AUTOMATION\nINTEGRATIONS\nCUSTOM AUTOMATION\nENTER CAPABILITY"
+      },
+      {
+        "href": "https://osnovaai.com/en/services/development",
+        "text": "02\nDevelopment\n\nStructure, interfaces, logic and product.\n\nLANDING PAGES\nCORPORATE WEBSITES\nWEB APPLICATIONS\nINTERNAL TOOLS\nMVP DEVELOPMENT\nCUSTOM SOFTWARE\nENTER CAPABILITY"
+      },
+      {
+        "href": "https://osnovaai.com/en/services/performance",
+        "text": "03\nPerformance Marketing\n\nAttention, demand, conversion and measurement.\n\nGOOGLE ADS\nMETA ADS\nTIKTOK ADS\nANALYTICS & TRACKING\nENTER CAPABILITY"
+      },
+      {
+        "href": "https://osnovaai.com/en/services/seo",
+        "text": "04\nSEO\n\nSo people can find you in search.\n\nDEMAND AND AUDIT\nSITE STRUCTURE\nUSEFUL PAGES\nTECHNICAL FOUNDATION\nANALYTICS\nENTER CAPABILITY"
+      },
+      {
+        "href": "https://osnovaai.com/en/services/ai-visibility",
+        "text": "05\nAI Visibility\n\nSo AI can understand your business.\n\nPOSITIONING\nSERVICE PAGES\nEXPERT ANSWERS\nCOMPANY FACTS\nMONITORING\nENTER CAPABILITY"
+      },
+      {
+        "href": "https://osnovaai.com/en/services/email-deliverability",
+        "text": "06\nEmail Deliverability\n\nWe help your emails reach customers instead of getting lost in spam.\n\nBUSINESS EMAILS\nAUTOMATED EMAILS\nEMAIL CAMPAIGNS\nNOTIFICATIONS\nEMAILS TO POTENTIAL CUSTOMERS\nHIGH-VOLUME SENDING\nENTER CAPABILITY"
+      },
+      {
+        "href": "https://osnovaai.com/en/cases/dds-service",
+        "text": "ddsservice.com.ua\n01 / 07\nWEBSITE / DEVELOPMENT\nDDS SERVICE\n\nAn auto service website with services, customer information and contacts. Built entirely from scratch."
+      },
+      {
+        "href": "https://osnovaai.com/en/cases/bala-group",
+        "text": "bala-group.com.ua\n02 / 07\nWEBSITE / DEVELOPMENT\nBALA GROUP\n\nA website for construction and renovation services. Designed and developed from scratch."
+      },
+      {
+        "href": "https://osnovaai.com/en/cases/retatrutide-silver-signal",
+        "text": "shalomesp11-creator.github.io\n03 / 07\nLANDING PAGE / DEVELOPMENT\nRETATRUTIDE\nSILVER SIGNAL\n\nA landing page with a silver visual identity. Original design and web development from scratch."
+      },
+      {
+        "href": "https://osnovaai.com/en/cases/ai-voice-operator",
+        "text": "DEMONSTRATION / DENTAL CLINIC\nHUMAN × AI\n04:09\n04 / 07\nAI / AUTOMATION / AI VOICE\nAI VOICE OPERATOR\n\nAn AI voice operator for a dental clinic. Takes the call, answers questions and books a consultation."
+      },
+      {
+        "href": "https://osnovaai.com/en/cases/comfort-lab",
+        "text": "comfortlabkiev.com.ua\n05 / 07\nWEBSITE / DEVELOPMENT\nCOMFORT LAB\n\nA website for an automotive comfort studio: soundproofing, protection, audio and CarPlay. Designed and built from scratch."
+      },
+      {
+        "href": "https://osnovaai.com/en/cases/comfort-home",
+        "text": "comforthomekiev.com.ua\n06 / 07\nWEBSITE RECOVERY\nCOMFORT HOME\n\nAfter the client lost access to the previous website, we rebuilt a working version based on it, giving the client their own functioning website again."
+      },
+      {
+        "href": "https://osnovaai.com/en/cases/retatrutide-landing",
+        "text": "shalomesp11-creator.github.io\n07 / 07\nLANDING PAGE / DEVELOPMENT\nRETATRUTIDE\nLANDING PAGE\n\nA separate RETATRUTIDE landing page. Its own visual concept and complete web development from scratch."
+      },
+      {
+        "href": "https://osnovaai.com/en/cases",
+        "text": "Explore all work"
+      },
+      {
+        "href": "https://osnovaai.com/en/#contact-form",
+        "text": "Get a price"
+      },
+      {
+        "href": "https://osnovaai.com/en/#contact-form",
+        "text": "Get a price"
+      },
+      {
+        "href": "https://osnovaai.com/en/#contact-form",
+        "text": "Get a price"
+      },
+      {
+        "href": "https://osnovaai.com/en/#contact-form",
+        "text": "Get a price"
+      },
+      {
+        "href": "https://osnovaai.com/en/#contact-form",
+        "text": "Get a price"
+      },
+      {
+        "href": "https://osnovaai.com/en/#contact-form",
+        "text": "Get a price"
+      },
+      {
+        "href": "mailto:capitanrunai@gmail.com",
+        "text": "EMAIL\ncapitanrunai@gmail.com"
+      },
+      {
+        "href": "https://t.me/capitanrun",
+        "text": "TELEGRAM\n@capitanrun"
+      },
+      {
+        "href": "https://osnovaai.com/en/payment",
+        "text": "PAYMENT\nView payment methods"
+      },
+      {
+        "href": "https://osnovaai.com/en/",
+        "text": "O\nOSNOVA"
+      },
+      {
+        "href": "https://osnovaai.com/en/services",
+        "text": "SERVICES"
+      },
+      {
+        "href": "https://osnovaai.com/en/payment",
+        "text": "PAYMENT"
+      }
+    ],
+    "body": "O\nOSNOVA\nServices\nCases\nAbout\nPricing\nDiscuss a project\nEN\nAI × AUTOMATION × DEVELOPMENT × PERFORMANCE\nLess busywork.\nMore business.\n\nWe find the processes slowing your team down and turn AI, CRM, development and performance into one working system.\n\nDISCUSS A PROJECT\nEXPLORE SERVICES\nSYSTEM ONLINE\n01\nWebsite\n02\nAI\n04\nTeam\n05\nData\nOS / 01\nSYSTEMS, CONNECTED\n01\nAttract\n02\nCapture\n03\nProcess\n04\nAutomate\n05\nManage\n06\nAnalyze\n07\nOptimize\n01\nAttract\n02\nCapture\n03\nProcess\n04\nAutomate\n05\nManage\n06\nAnalyze\n07\nOptimize\nSERVICES / 01—06\n6 capabilities.\nOne system.\n\nAutomation, development, growth and email delivery. Start with one task — we’ll connect the solutions your business needs.\n\n01\nBusiness Automation\n\nProcesses, signals, data and intelligence.\n\nAI VOICE OPERATOR\nAI ASSISTANTS\nCRM AUTOMATION\nINTEGRATIONS\nCUSTOM AUTOMATION\nENTER CAPABILITY\n02\nDevelopment\n\nStructure, interfaces, logic and product.\n\nLANDING PAGES\nCORPORATE WEBSITES\nWEB APPLICATIONS\nINTERNAL TOOLS\nMVP DEVELOPMENT\nCUSTOM SOFTWARE\nENTER CAPABILITY\n03\nPerformance Marketing\n\nAttention, demand, conversion and measurement.\n\nGOOGLE ADS\nMETA ADS\nTIKTOK ADS\nANALYTICS & TRACKING\nENTER CAPABILITY\n04\nSEO\n\nSo people can find you in search.\n\nDEMAND AND AUDIT\nSITE STRUCTURE\nUSEFUL PAGES\nTECHNICAL FOUNDATION\nANALYTICS\nENTER CAPABILITY\n05\nAI Visibility\n\nSo AI can understand your business.\n\nPOSITIONING\nSERVICE PAGES\nEXPERT ANSWERS\nCOMPANY FACTS\nMONITORING\nENTER CAPABILITY\n06\nEmail Deliverability\n\nWe help your emails reach customers instead of getting lost in spam.\n\nBUSINESS EMAILS\nAUTOMATED EMAILS\nEMAIL CAMPAIGNS\nNOTIFICATIONS\nEMAILS TO POTENTIAL CUSTOMERS\nHIGH-VOLUME SENDING\nENTER CAPABILITY\nFEATURED WORK\nIdeas put to work.\n\nDifferent challenges. Our design, development and automation. Browse the results.\n\nALL\nWEBSITES / DEVELOPMENT\nAI / AUTOMATION\nddsservice.com.ua\n01 / 07\nWEBSITE / DEVELOPMENT\nDDS SERVICE\n\nAn auto service website with services, customer information and contacts. Built entirely from scratch.\n\nbala-group.com.ua\n02 / 07\nWEBSITE / DEVELOPMENT\nBALA GROUP\n\nA website for construction and renovation services. Designed and developed from scratch.\n\nshalomesp11-creator.github.io\n03 / 07\nLANDING PAGE / DEVELOPMENT\nRETATRUTIDE\nSILVER SIGNAL\n\nA landing page with a silver visual identity. Original design and web development from scratch.\n\nDEMONSTRATION / DENTAL CLINIC\nHUMAN × AI\n04:09\n04 / 07\nAI / AUTOMATION / AI VOICE\nAI VOICE OPERATOR\n\nAn AI voice operator for a dental clinic. Takes the call, answers questions and books a consultation.\n\ncomfortlabkiev.com.ua\n05 / 07\nWEBSITE / DEVELOPMENT\nCOMFORT LAB\n\nA website for an automotive comfort studio: soundproofing, protection, audio and CarPlay. Designed and built from scratch.\n\ncomforthomekiev.com.ua\n06 / 07\nWEBSITE RECOVERY\nCOMFORT HOME\n\nAfter the client lost access to the previous website, we rebuilt a working version based on it, giving the client their own functioning website again.\n\nshalomesp11-creator.github.io\n07 / 07\nLANDING PAGE / DEVELOPMENT\nRETATRUTIDE\nLANDING PAGE\n\nA separate RETATRUTIDE landing page. Its own visual concept and complete web development from scratch.\n\nFIRST PROJECT\n01\nNEXT\n02\nDRAG / SWIPE\nPROJECT\n01\n/\n07\nExplore all work\nTHE COMPANY\nA compact team. Systems thinking.\n\nOSNOVA brings design, development, AI, automation, marketing and email infrastructure together. Each specialist takes care of one part of the wider business system.\n\nTEAM / EXPERTISE\n01\nCEO\nStrategy and direction\n\nConnects business goals with the team’s work. Sets priorities and takes responsibility for the overall direction of the project.\n\n02\nPRODUCT DESIGNER\nA clear digital experience\n\nTurns business needs into intuitive websites and interfaces. Helps customers understand the offer and take the next step.\n\n03\nWEB DEVELOPER\nFrom design to a working product\n\nBuilds websites and web applications. Takes care of functionality, different screen sizes and connections with business tools.\n\n04\nAI & AUTOMATION SPECIALIST\nLess manual work\n\nBuilds AI assistants and automated workflows. Connects tools so the team spends less time on repetitive tasks.\n\n05\nDIGITAL MARKETING SPECIALIST\nConnecting with your audience\n\nWorks with advertising and digital acquisition channels. Helps businesses reach customers and understand where enquiries come from.\n\n06\nEMAIL DELIVERABILITY SPECIALIST\nCompany emails reach customers\n\nHelps company emails reach the inbox instead of landing in spam or being blocked. Sets up sending from the company domain, monitors sender reputation and investigates delivery issues — keeping campaigns, notifications and automated messages reliable, even at high volumes.\n\nPRICING\nA clear entry point. An honest estimate of complexity.\n\nFinal cost depends on scope, integrations, business logic, design, engineering and support.\n\n01\nBusiness Automation\nGet a price\n02\nDevelopment\nGet a price\n03\nPerformance Marketing\nGet a price\n04\nSEO\nGet a price\n05\nAI Visibility\nGet a price\n06\nEmail Deliverability\nGet a price\nMEDIA SPEND FOR ADVERTISING IS PAID SEPARATELY.\nNEXT STEP / YOUR BUSINESS\nYour business has a challenge.\nLet’s start there.\n\nWhich process takes up too much of your team’s time? Tell us what you want to change. Together, we’ll find the right approach for your business.\n\n01\nUnderstand the challenge\n02\nExplore a solution\n03\nAgree on the next step\nOR WRITE DIRECTLY\nEMAIL\ncapitanrunai@gmail.com\nTELEGRAM\n@capitanrun\nPAYMENT\nView payment methods\nTell us about your challenge\n\nA few sentences are enough.\n\nYour name\nEmail or Telegram\nCompany (optional)\nArea\nNot sure yet\nBusiness Automation\nDevelopment\nPerformance Marketing\nSEO\nAI Visibility\nEmail Deliverability\nCRM & Integrations\nWebsite\nWhat happens today?\nDiscuss your project\nAttract · Capture · Process · Automate · Manage · Analyze · Optimize\nAttract · Capture · Process · Automate · Manage · Analyze · Optimize\nO\nOSNOVA\n\n© 2026 OSNOVA. All rights reserved.\n\nSERVICES\nPAYMENT\nOSNOVA / NEUTRAL",
+    "errors": [],
+    "requests": [
+      "https://osnovaai.com/en/",
+      "https://osnovaai.com/assets/system-convergence.jpg",
+      "https://osnovaai.com/assets/index-UYjRh0s1.css",
+      "https://osnovaai.com/assets/index-BcfwR0F-.js",
+      "https://osnovaai.com/assets/cases/dds-service-desktop.webp"
+    ]
+  },
+  {
+    "path": "/de/",
+    "url": "https://osnovaai.com/de/",
+    "title": "OSNOVA — AI, Automatisierung & digitale Systeme",
+    "h1": [
+      "Weniger Routine.\nMehr Business."
+    ],
+    "canonical": "https://osnovaai.com/de/",
+    "robots": "index, follow",
+    "overflow": false,
+    "width": 390,
+    "metrics": {
+      "lcp": 732,
+      "cls": 0
+    },
+    "transfer": 0,
+    "audio": [],
+    "links": [
+      {
+        "href": "https://osnovaai.com/de/",
+        "text": "O\nOSNOVA"
+      },
+      {
+        "href": "https://osnovaai.com/de/services",
+        "text": "Leistungen"
+      },
+      {
+        "href": "https://osnovaai.com/de/cases",
+        "text": "Projekte"
+      },
+      {
+        "href": "https://osnovaai.com/de/#about",
+        "text": "Über uns"
+      },
+      {
+        "href": "https://osnovaai.com/de/#pricing",
+        "text": "Preise"
+      },
+      {
+        "href": "https://osnovaai.com/de/#contact",
+        "text": "Projekt besprechen"
+      },
+      {
+        "href": "https://osnovaai.com/de/#contact",
+        "text": "PROJEKT BESPRECHEN"
+      },
+      {
+        "href": "https://osnovaai.com/de/services",
+        "text": "LEISTUNGEN ANSEHEN"
+      },
+      {
+        "href": "https://osnovaai.com/de/services/automation",
+        "text": "01\nGeschäfts­automatisierung\n\nProzesse, Signale, Daten und Intelligenz.\n\nAI-TELEFONASSISTENT\nAI-ASSISTENTEN\nCRM-AUTOMATISIERUNG\nINTEGRATIONEN\nINDIVIDUELLE AUTOMATISIERUNG\nBEREICH ÖFFNEN"
+      },
+      {
+        "href": "https://osnovaai.com/de/services/development",
+        "text": "02\nEntwicklung\n\nStruktur, Interfaces, Logik und Produkt.\n\nLANDINGPAGES\nUNTERNEHMENS­WEBSITES\nWEB-APPLIKATIONEN\nINTERNE TOOLS\nMVP-ENTWICKLUNG\nINDIVIDUELLE SOFTWARE\nBEREICH ÖFFNEN"
+      },
+      {
+        "href": "https://osnovaai.com/de/services/performance",
+        "text": "03\nOnline-Marketing\n\nAufmerksamkeit, Nachfrage, Conversion und Messung.\n\nGOOGLE ADS\nMETA ADS\nTIKTOK ADS\nANALYTICS & TRACKING\nBEREICH ÖFFNEN"
+      },
+      {
+        "href": "https://osnovaai.com/de/services/seo",
+        "text": "04\nSEO\n\nDamit man Sie in der Suche findet.\n\nNACHFRAGE UND AUDIT\nWEBSITE-STRUKTUR\nNÜTZLICHE SEITEN\nTECHNISCHE BASIS\nANALYSE\nBEREICH ÖFFNEN"
+      },
+      {
+        "href": "https://osnovaai.com/de/services/ai-visibility",
+        "text": "05\nAI Visibility\n\nDamit AI Ihr Unternehmen versteht.\n\nPOSITIONIERUNG\nLEISTUNGSSEITEN\nEXPERTENANTWORTEN\nUNTERNEHMENSFAKTEN\nMONITORING\nBEREICH ÖFFNEN"
+      },
+      {
+        "href": "https://osnovaai.com/de/services/email-deliverability",
+        "text": "06\nEmail Deliverability\n\nWir helfen, dass Ihre E-Mails Kunden erreichen und nicht im Spam landen.\n\nGESCHÄFTLICHE E-MAILS\nAUTOMATISCHE E-MAILS\nNEWSLETTER\nBENACHRICHTIGUNGEN\nE-MAILS AN INTERESSENTEN\nGROSSE VERSANDMENGEN\nBEREICH ÖFFNEN"
+      },
+      {
+        "href": "https://osnovaai.com/de/cases/dds-service",
+        "text": "ddsservice.com.ua\n01 / 07\nWEBSITE / DEVELOPMENT\nDDS SERVICE\n\nWebsite einer Autowerkstatt mit Leistungen, Kundeninformationen und Kontakt. Komplett neu entwickelt."
+      },
+      {
+        "href": "https://osnovaai.com/de/cases/bala-group",
+        "text": "bala-group.com.ua\n02 / 07\nWEBSITE / DEVELOPMENT\nBALA GROUP\n\nWebsite für Bau- und Renovierungsleistungen. Von Grund auf gestaltet und entwickelt."
+      },
+      {
+        "href": "https://osnovaai.com/de/cases/retatrutide-silver-signal",
+        "text": "shalomesp11-creator.github.io\n03 / 07\nLANDING PAGE / DEVELOPMENT\nRETATRUTIDE\nSILVER SIGNAL\n\nLandingpage mit einer silbernen Bildsprache. Eigenständiges Design und Webentwicklung von Grund auf."
+      },
+      {
+        "href": "https://osnovaai.com/de/cases/ai-voice-operator",
+        "text": "DEMONSTRATION / ZAHNARZTPRAXIS\nHUMAN × AI\n04:09\n04 / 07\nAI / AUTOMATION / AI VOICE\nAI VOICE OPERATOR\n\nEin KI-Telefonassistent für eine Zahnarztpraxis. Nimmt den Anruf an, beantwortet Fragen und vereinbart einen Beratungstermin."
+      },
+      {
+        "href": "https://osnovaai.com/de/cases/comfort-lab",
+        "text": "comfortlabkiev.com.ua\n05 / 07\nWEBSITE / DEVELOPMENT\nCOMFORT LAB\n\nWebsite für ein Studio für Fahrzeugkomfort: Dämmung, Schutz, Audio und CarPlay. Von Grund auf gestaltet und entwickelt."
+      },
+      {
+        "href": "https://osnovaai.com/de/cases/comfort-home",
+        "text": "comforthomekiev.com.ua\n06 / 07\nWIEDERHERSTELLUNG\nCOMFORT HOME\n\nNach dem Verlust des Zugangs zur bisherigen Website haben wir auf deren Grundlage eine funktionsfähige Version wiederhergestellt."
+      },
+      {
+        "href": "https://osnovaai.com/de/cases/retatrutide-landing",
+        "text": "shalomesp11-creator.github.io\n07 / 07\nLANDING PAGE / DEVELOPMENT\nRETATRUTIDE\nLANDING PAGE\n\nEine eigenständige RETATRUTIDE-Landingpage. Eigenes visuelles Konzept und vollständige Webentwicklung von Grund auf."
+      },
+      {
+        "href": "https://osnovaai.com/de/cases",
+        "text": "Alle Arbeiten ansehen"
+      },
+      {
+        "href": "https://osnovaai.com/de/#contact-form",
+        "text": "Preis anfragen"
+      },
+      {
+        "href": "https://osnovaai.com/de/#contact-form",
+        "text": "Preis anfragen"
+      },
+      {
+        "href": "https://osnovaai.com/de/#contact-form",
+        "text": "Preis anfragen"
+      },
+      {
+        "href": "https://osnovaai.com/de/#contact-form",
+        "text": "Preis anfragen"
+      },
+      {
+        "href": "https://osnovaai.com/de/#contact-form",
+        "text": "Preis anfragen"
+      },
+      {
+        "href": "https://osnovaai.com/de/#contact-form",
+        "text": "Preis anfragen"
+      },
+      {
+        "href": "mailto:capitanrunai@gmail.com",
+        "text": "EMAIL\ncapitanrunai@gmail.com"
+      },
+      {
+        "href": "https://t.me/capitanrun",
+        "text": "TELEGRAM\n@capitanrun"
+      },
+      {
+        "href": "https://osnovaai.com/de/payment",
+        "text": "ZAHLUNG\nZahlungsarten ansehen"
+      },
+      {
+        "href": "https://osnovaai.com/de/",
+        "text": "O\nOSNOVA"
+      },
+      {
+        "href": "https://osnovaai.com/de/services",
+        "text": "LEISTUNGEN"
+      },
+      {
+        "href": "https://osnovaai.com/de/payment",
+        "text": "ZAHLUNG"
+      }
+    ],
+    "body": "O\nOSNOVA\nLeistungen\nProjekte\nÜber uns\nPreise\nProjekt besprechen\nDE\nAI × AUTOMATION × ENTWICKLUNG × PERFORMANCE\nWeniger Routine.\nMehr Business.\n\nWir finden Prozesse, die Ihr Team bremsen, und verbinden AI, CRM, Entwicklung und Online-Marketing zu einem funktionierenden System.\n\nPROJEKT BESPRECHEN\nLEISTUNGEN ANSEHEN\nSYSTEM ONLINE\n01\nWebsite\n02\nAI\n04\nTeam\n05\nDaten\nOS / 01\nSYSTEMS, CONNECTED\n01\nGewinnen\n02\nErfassen\n03\nVerarbeiten\n04\nAutomatisieren\n05\nSteuern\n06\nAnalysieren\n07\nOptimieren\n01\nGewinnen\n02\nErfassen\n03\nVerarbeiten\n04\nAutomatisieren\n05\nSteuern\n06\nAnalysieren\n07\nOptimieren\nLEISTUNGEN / 01—06\n6 Bereiche.\nEin System.\n\nAutomatisierung, Entwicklung, Marketing und E-Mail-Zustellung. Starten Sie mit einer Aufgabe — wir verbinden die passenden Lösungen für Ihr Unternehmen.\n\n01\nGeschäfts­automatisierung\n\nProzesse, Signale, Daten und Intelligenz.\n\nAI-TELEFONASSISTENT\nAI-ASSISTENTEN\nCRM-AUTOMATISIERUNG\nINTEGRATIONEN\nINDIVIDUELLE AUTOMATISIERUNG\nBEREICH ÖFFNEN\n02\nEntwicklung\n\nStruktur, Interfaces, Logik und Produkt.\n\nLANDINGPAGES\nUNTERNEHMENS­WEBSITES\nWEB-APPLIKATIONEN\nINTERNE TOOLS\nMVP-ENTWICKLUNG\nINDIVIDUELLE SOFTWARE\nBEREICH ÖFFNEN\n03\nOnline-Marketing\n\nAufmerksamkeit, Nachfrage, Conversion und Messung.\n\nGOOGLE ADS\nMETA ADS\nTIKTOK ADS\nANALYTICS & TRACKING\nBEREICH ÖFFNEN\n04\nSEO\n\nDamit man Sie in der Suche findet.\n\nNACHFRAGE UND AUDIT\nWEBSITE-STRUKTUR\nNÜTZLICHE SEITEN\nTECHNISCHE BASIS\nANALYSE\nBEREICH ÖFFNEN\n05\nAI Visibility\n\nDamit AI Ihr Unternehmen versteht.\n\nPOSITIONIERUNG\nLEISTUNGSSEITEN\nEXPERTENANTWORTEN\nUNTERNEHMENSFAKTEN\nMONITORING\nBEREICH ÖFFNEN\n06\nEmail Deliverability\n\nWir helfen, dass Ihre E-Mails Kunden erreichen und nicht im Spam landen.\n\nGESCHÄFTLICHE E-MAILS\nAUTOMATISCHE E-MAILS\nNEWSLETTER\nBENACHRICHTIGUNGEN\nE-MAILS AN INTERESSENTEN\nGROSSE VERSANDMENGEN\nBEREICH ÖFFNEN\nAUSGEWÄHLTE ARBEITEN\nIdeen, die funktionieren.\n\nVerschiedene Aufgaben. Unser Design, unsere Entwicklung und Automatisierung. Entdecken Sie die Ergebnisse.\n\nALLE\nWEBSITES / ENTWICKLUNG\nKI / AUTOMATISIERUNG\nddsservice.com.ua\n01 / 07\nWEBSITE / DEVELOPMENT\nDDS SERVICE\n\nWebsite einer Autowerkstatt mit Leistungen, Kundeninformationen und Kontakt. Komplett neu entwickelt.\n\nbala-group.com.ua\n02 / 07\nWEBSITE / DEVELOPMENT\nBALA GROUP\n\nWebsite für Bau- und Renovierungsleistungen. Von Grund auf gestaltet und entwickelt.\n\nshalomesp11-creator.github.io\n03 / 07\nLANDING PAGE / DEVELOPMENT\nRETATRUTIDE\nSILVER SIGNAL\n\nLandingpage mit einer silbernen Bildsprache. Eigenständiges Design und Webentwicklung von Grund auf.\n\nDEMONSTRATION / ZAHNARZTPRAXIS\nHUMAN × AI\n04:09\n04 / 07\nAI / AUTOMATION / AI VOICE\nAI VOICE OPERATOR\n\nEin KI-Telefonassistent für eine Zahnarztpraxis. Nimmt den Anruf an, beantwortet Fragen und vereinbart einen Beratungstermin.\n\ncomfortlabkiev.com.ua\n05 / 07\nWEBSITE / DEVELOPMENT\nCOMFORT LAB\n\nWebsite für ein Studio für Fahrzeugkomfort: Dämmung, Schutz, Audio und CarPlay. Von Grund auf gestaltet und entwickelt.\n\ncomforthomekiev.com.ua\n06 / 07\nWIEDERHERSTELLUNG\nCOMFORT HOME\n\nNach dem Verlust des Zugangs zur bisherigen Website haben wir auf deren Grundlage eine funktionsfähige Version wiederhergestellt.\n\nshalomesp11-creator.github.io\n07 / 07\nLANDING PAGE / DEVELOPMENT\nRETATRUTIDE\nLANDING PAGE\n\nEine eigenständige RETATRUTIDE-Landingpage. Eigenes visuelles Konzept und vollständige Webentwicklung von Grund auf.\n\nERSTES PROJEKT\n01\nWEITER\n02\nZIEHEN / WISCHEN\nPROJEKT\n01\n/\n07\nAlle Arbeiten ansehen\nDAS UNTERNEHMEN\nEin kompaktes Team. Systemisches Denken.\n\nOSNOVA verbindet Design, Entwicklung, KI, Automatisierung, Marketing und E-Mail-Infrastruktur. Jede Fachkraft betreut einen Teil des gemeinsamen Geschäftssystems.\n\nTEAM / KOMPETENZEN\n01\nCEO\nStrategie und Ausrichtung\n\nVerbindet die Unternehmensziele mit der Arbeit des Teams. Setzt Prioritäten und verantwortet die Gesamtausrichtung des Projekts.\n\n02\nPRODUCT DESIGNER\nEin verständliches digitales Erlebnis\n\nEntwickelt aus geschäftlichen Anforderungen intuitive Websites und Oberflächen. Hilft Kunden, das Angebot zu verstehen und den nächsten Schritt zu gehen.\n\n03\nWEB DEVELOPER\nVom Design zum fertigen Produkt\n\nEntwickelt Websites und Webanwendungen. Kümmert sich um Funktionen, verschiedene Bildschirmgrößen und die Anbindung an Geschäftsanwendungen.\n\n04\nAI & AUTOMATION SPECIALIST\nWeniger manuelle Arbeit\n\nRichtet KI-Assistenten und automatisierte Abläufe ein. Verbindet Werkzeuge, damit das Team weniger Zeit mit wiederkehrenden Aufgaben verbringt.\n\n05\nDIGITAL MARKETING SPECIALIST\nKontakt zu Ihrer Zielgruppe\n\nBetreut Werbung und digitale Kanäle zur Kundengewinnung. Hilft Unternehmen, Kunden zu erreichen und die Herkunft ihrer Anfragen nachzuvollziehen.\n\n06\nEMAIL DELIVERABILITY SPECIALIST\nE-Mails erreichen Ihre Kunden\n\nHilft, dass Unternehmensmails im Posteingang ankommen, statt im Spam zu landen oder blockiert zu werden. Richtet den Versand über die Unternehmensdomain ein, überwacht die Absenderreputation und untersucht Zustellprobleme — für zuverlässige Newsletter, Benachrichtigungen und automatische Nachrichten, auch bei großen Versandmengen.\n\nPREISE\nKlarer Einstieg. Ehrliche Komplexität.\n\nDer finale Preis hängt von Umfang, Integrationen, Geschäftslogik, Design, Entwicklung und Betreuung ab.\n\n01\nGeschäftsautomatisierung\nPreis anfragen\n02\nEntwicklung\nPreis anfragen\n03\nOnline-Marketing\nPreis anfragen\n04\nSEO\nPreis anfragen\n05\nAI Visibility\nPreis anfragen\n06\nEmail Deliverability\nPreis anfragen\nDAS WERBEBUDGET WIRD SEPARAT BEZAHLT.\nNÄCHSTER SCHRITT / IHR VORHABEN\nIhr Unternehmen hat eine Aufgabe.\nFangen wir damit an.\n\nWelcher Prozess kostet Ihr Team zu viel Zeit? Erzählen Sie uns, was Sie verändern möchten. Gemeinsam finden wir eine passende Lösung für Ihr Unternehmen.\n\n01\nAufgabe verstehen\n02\nLösung vorschlagen\n03\nNächsten Schritt besprechen\nODER DIREKT SCHREIBEN\nEMAIL\ncapitanrunai@gmail.com\nTELEGRAM\n@capitanrun\nZAHLUNG\nZahlungsarten ansehen\nWorum geht es bei Ihnen?\n\nEin paar Sätze genügen.\n\nIhr Name\nE-Mail oder Telegram\nUnternehmen (optional)\nBereich\nNoch unsicher\nGeschäftsautomatisierung\nEntwicklung\nOnline-Marketing\nSEO\nAI Visibility\nEmail Deliverability\nCRM und Integrationen\nWebsite\nWas passiert heute?\nVorhaben besprechen\nGewinnen · Erfassen · Verarbeiten · Automatisieren · Steuern · Analysieren · Optimieren\nGewinnen · Erfassen · Verarbeiten · Automatisieren · Steuern · Analysieren · Optimieren\nO\nOSNOVA\n\n© 2026 OSNOVA. Alle Rechte vorbehalten.\n\nLEISTUNGEN\nZAHLUNG\nOSNOVA / NEUTRAL",
+    "errors": [],
+    "requests": [
+      "https://osnovaai.com/de/",
+      "https://osnovaai.com/assets/system-convergence.jpg",
+      "https://osnovaai.com/assets/index-UYjRh0s1.css",
+      "https://osnovaai.com/assets/cases/dds-service-desktop.webp",
+      "https://osnovaai.com/assets/index-BcfwR0F-.js"
+    ]
+  },
+  {
+    "path": "/en/services/automation",
+    "url": "https://osnovaai.com/en/services/automation",
+    "title": "Business Automation — OSNOVA",
+    "h1": [
+      "We design the work,\nnot a bundle of AI features."
+    ],
+    "canonical": "https://osnovaai.com/en/services/automation",
+    "robots": "index, follow",
+    "overflow": false,
+    "width": 390,
+    "metrics": {
+      "lcp": 624,
+      "cls": 0
+    },
+    "transfer": 0,
+    "audio": [],
+    "links": [
+      {
+        "href": "https://osnovaai.com/en/",
+        "text": "O\nOSNOVA"
+      },
+      {
+        "href": "https://osnovaai.com/en/services",
+        "text": "Services"
+      },
+      {
+        "href": "https://osnovaai.com/en/cases",
+        "text": "Cases"
+      },
+      {
+        "href": "https://osnovaai.com/en/#about",
+        "text": "About"
+      },
+      {
+        "href": "https://osnovaai.com/en/#pricing",
+        "text": "Pricing"
+      },
+      {
+        "href": "https://osnovaai.com/en/#contact",
+        "text": "Discuss a project"
+      },
+      {
+        "href": "https://osnovaai.com/en/services/development",
+        "text": "NEXT CAPABILITY / 02\nDevelopment\n\nWe create tools built to solve a concrete business problem."
+      },
+      {
+        "href": "https://osnovaai.com/en/",
+        "text": "O\nOSNOVA"
+      },
+      {
+        "href": "https://osnovaai.com/en/services",
+        "text": "SERVICES"
+      },
+      {
+        "href": "https://osnovaai.com/en/payment",
+        "text": "PAYMENT"
+      }
+    ],
+    "body": "O\nOSNOVA\nServices\nCases\nAbout\nPricing\nDiscuss a project\nEN\nOSNOVA\n01 / BUSINESS AUTOMATION\nWe design the work,\nnot a bundle of AI features.\n\nWe study how the company works today, find repetitive actions and bottlenecks, then build a system around that specific business.\n\n01\nINPUT\n02\nCONTEXT\n03\nDECISION\n04\nACTION\nAI\n02 / SYSTEM PRINCIPLE\nIf a process repeats inside the company, it can be mapped, measured and assessed for meaningful automation.\n01\nInput\n02\nContext\n03\nDecision\n04\nAction\nAI VOICE OPERATOR / LIVE SYSTEM\nA conversation that ends in action.\n\nVoice AI understands intent, works with scheduling and CRM, records the outcome and hands complex conversations to a person.\n\nInbound & outbound calls\nPricing and common questions\nBook, move and cancel\nLead qualification\nCRM actions\nHuman handoff\nCLINICS · DENTISTS · GARAGES · RESTAURANTS · SALONS · SERVICE BUSINESSES · CALL CENTERS\nINCOMING CALL\nAI / LIVE SYSTEM\n01\nIncoming call\n02\nCustomer language\n03\nAI answers\n04\nKnowledge\n05\nBooking / consultation / service\n06\nTelegram control\n07\nCRM\nRUN SCENARIO\nAI ASSISTANTS\nA working tool inside the process.\n\nNot a detached chatbot, but a controlled layer between the request, company knowledge and an action in the system.\n\n01\nRequest\n02\nContext\n03\nDecision\n04\nAction\n01\nSales\n\nQualification, lead context and next action.\n\n02\nSupport\n\nAccurate answers and escalation of edge cases.\n\n03\nEmployees\n\nCompany information and internal policies.\n\n04\nOperations\n\nDocuments, requests, reports and API actions.\n\nCRM AUTOMATION\nA lead should not disappear between tools.\n\nWe connect the website, phone, AI, Telegram, email and CRM into a controlled flow with clear ownership.\n\nLead creation and routing\nStages, tasks and reminders\nFollow-up and lead scoring\nPhone and AI operator\nDocuments and sync\nReporting and dashboards\nLIVE / PIPELINE\n01\nNew request\n02\nQualification\n03\nOwner\n04\nFollow-up\n05\nWon\n06\nAnalytics\nINTEGRATIONS\nData moves. The system retains context.\nOS\nCONTEXT\nWEBSITE\nCRM\nAI\nMESSENGERS\nEMAIL\nANALYTICS\nCUSTOM AUTOMATION\nThe product list does not define our limit.\n\nWe start with the process, not a package. The solution architecture follows the company’s real work.\n\n01\nAnalysis\n02\nArchitecture\n03\nImplementation\n04\nIntegration\n05\nOptimization\nNEXT CAPABILITY / 02\nDevelopment\n\nWe create tools built to solve a concrete business problem.\n\nAttract · Capture · Process · Automate · Manage · Analyze · Optimize\nAttract · Capture · Process · Automate · Manage · Analyze · Optimize\nO\nOSNOVA\n\n© 2026 OSNOVA. All rights reserved.\n\nSERVICES\nPAYMENT\nOSNOVA / NEUTRAL",
+    "errors": [],
+    "requests": [
+      "https://osnovaai.com/en/services/automation",
+      "https://osnovaai.com/assets/index-UYjRh0s1.css",
+      "https://osnovaai.com/assets/index-BcfwR0F-.js"
+    ]
+  },
+  {
+    "path": "/en/services/development",
+    "url": "https://osnovaai.com/en/services/development",
+    "title": "Digital Product Development — OSNOVA",
+    "h1": [
+      "Software with a clear\nreason to exist."
+    ],
+    "canonical": "https://osnovaai.com/en/services/development",
+    "robots": "index, follow",
+    "overflow": false,
+    "width": 390,
+    "metrics": {
+      "lcp": 632,
+      "cls": 0
+    },
+    "transfer": 0,
+    "audio": [],
+    "links": [
+      {
+        "href": "https://osnovaai.com/en/",
+        "text": "O\nOSNOVA"
+      },
+      {
+        "href": "https://osnovaai.com/en/services",
+        "text": "Services"
+      },
+      {
+        "href": "https://osnovaai.com/en/cases",
+        "text": "Cases"
+      },
+      {
+        "href": "https://osnovaai.com/en/#about",
+        "text": "About"
+      },
+      {
+        "href": "https://osnovaai.com/en/#pricing",
+        "text": "Pricing"
+      },
+      {
+        "href": "https://osnovaai.com/en/#contact",
+        "text": "Discuss a project"
+      },
+      {
+        "href": "https://osnovaai.com/en/#contact",
+        "text": "DISCUSS A WEBSITE"
+      },
+      {
+        "href": "https://osnovaai.com/en/services/performance",
+        "text": "NEXT CAPABILITY / 03\nPerformance Marketing\n\nWe acquire demand and build measurement before campaigns scale."
+      },
+      {
+        "href": "https://osnovaai.com/en/",
+        "text": "O\nOSNOVA"
+      },
+      {
+        "href": "https://osnovaai.com/en/services",
+        "text": "SERVICES"
+      },
+      {
+        "href": "https://osnovaai.com/en/payment",
+        "text": "PAYMENT"
+      }
+    ],
+    "body": "O\nOSNOVA\nServices\nCases\nAbout\nPricing\nDiscuss a project\nEN\nOSNOVA\n02 / DEVELOPMENT\nSoftware with a clear\nreason to exist.\n\nWe do not sell a technology stack. We create a tool built to solve a concrete business problem.\n\nINTERFACE / 01\nLOGIC\nDATA\n02 / DEVELOPMENT\n\nFrom a public website to an internal operating system, the discipline is the same: a clear job, strong interface and reliable logic.\n\n01\nLanding Pages\n\nSingle-page websites with a clear argument and precise conversion path.\n\nFROM €120\n02\nCorporate Websites\n\nComplete websites for companies, brands, services and products.\n\nFROM €250\n03\nWeb Applications\n\nWeb products with bespoke business logic.\n\nCUSTOM\n04\nInternal Tools\n\nDashboards, admin panels, management systems and reporting interfaces.\n\nCUSTOM\n05\nMVP Development\n\nThe first complete working version of a product for a real-world test.\n\nCUSTOM\n06\nCustom Software\n\nA solution for a job without a suitable off-the-shelf tool.\n\nCUSTOM\nOS / WEB\nMAKE THE\nCOMPLEX\nINEVITABLE.\nENTRY POINT / LANDING PAGE\nSmall format. Full design discipline.\n\n€120 is the minimum entry point for a simple landing page, not a promise of a template site. Complexity, content, motion and integrations are scoped separately.\n\nfrom €120\nDISCUSS A WEBSITE\nHOW A PRODUCT IS BUILT\n01\nProblem\n02\nScenario\n03\nArchitecture\n04\nInterface\n05\nDevelopment\n06\nLaunch\nNEXT CAPABILITY / 03\nPerformance Marketing\n\nWe acquire demand and build measurement before campaigns scale.\n\nAttract · Capture · Process · Automate · Manage · Analyze · Optimize\nAttract · Capture · Process · Automate · Manage · Analyze · Optimize\nO\nOSNOVA\n\n© 2026 OSNOVA. All rights reserved.\n\nSERVICES\nPAYMENT\nOSNOVA / NEUTRAL",
+    "errors": [],
+    "requests": [
+      "https://osnovaai.com/en/services/development",
+      "https://osnovaai.com/assets/index-UYjRh0s1.css",
+      "https://osnovaai.com/assets/index-BcfwR0F-.js"
+    ]
+  },
+  {
+    "path": "/en/cases/ai-voice-operator",
+    "url": "https://osnovaai.com/en/cases/ai-voice-operator",
+    "title": "AI VOICE OPERATOR — OSNOVA",
+    "h1": [
+      "AI VOICE OPERATOR"
+    ],
+    "canonical": "https://osnovaai.com/en/cases/ai-voice-operator",
+    "robots": "index, follow",
+    "overflow": false,
+    "width": 390,
+    "metrics": {
+      "lcp": 536,
+      "cls": 0
+    },
+    "transfer": 300,
+    "audio": [
+      {
+        "src": "https://osnovaai.com/assets/cases/primer.mp3",
+        "readyState": 0,
+        "duration": null
+      }
+    ],
+    "links": [
+      {
+        "href": "https://osnovaai.com/en/",
+        "text": "O\nOSNOVA"
+      },
+      {
+        "href": "https://osnovaai.com/en/services",
+        "text": "Services"
+      },
+      {
+        "href": "https://osnovaai.com/en/cases",
+        "text": "Cases"
+      },
+      {
+        "href": "https://osnovaai.com/en/#about",
+        "text": "About"
+      },
+      {
+        "href": "https://osnovaai.com/en/#pricing",
+        "text": "Pricing"
+      },
+      {
+        "href": "https://osnovaai.com/en/#contact",
+        "text": "Discuss a project"
+      },
+      {
+        "href": "https://osnovaai.com/en/cases",
+        "text": "Back to work"
+      },
+      {
+        "href": "https://osnovaai.com/en/cases/retatrutide-silver-signal",
+        "text": "Previous"
+      },
+      {
+        "href": "https://osnovaai.com/en/cases/comfort-lab",
+        "text": "Next project\nCOMFORT LAB"
+      },
+      {
+        "href": "https://osnovaai.com/en/",
+        "text": "O\nOSNOVA"
+      },
+      {
+        "href": "https://osnovaai.com/en/services",
+        "text": "SERVICES"
+      },
+      {
+        "href": "https://osnovaai.com/en/payment",
+        "text": "PAYMENT"
+      }
+    ],
+    "body": "O\nOSNOVA\nServices\nCases\nAbout\nPricing\nDiscuss a project\nEN\nBack to work\n04 / 07\nAI / AUTOMATION / AI VOICE\nAI VOICE OPERATOR\n\nAn AI voice operator for a dental clinic. Takes the call, answers questions and books a consultation.\n\nDEMONSTRATION / DENTAL CLINIC\nOne call. A booked appointment.\n00:00\n—:—\nListen to the call\n1×\n\nDemonstration call recorded in Russian.\n\n01\n\nIncoming call\n\n02\n\nAI conversation\n\n03\n\nQuestions answered\n\n04\n\nConsultation booked\n\nPrevious\nNext project\nCOMFORT LAB\nAttract · Capture · Process · Automate · Manage · Analyze · Optimize\nAttract · Capture · Process · Automate · Manage · Analyze · Optimize\nO\nOSNOVA\n\n© 2026 OSNOVA. All rights reserved.\n\nSERVICES\nPAYMENT\nOSNOVA / NEUTRAL",
+    "errors": [],
+    "requests": [
+      "https://osnovaai.com/en/cases/ai-voice-operator",
+      "https://osnovaai.com/assets/index-UYjRh0s1.css",
+      "https://osnovaai.com/assets/index-BcfwR0F-.js",
+      "https://osnovaai.com/assets/cases/primer.mp3"
+    ]
+  },
+  {
+    "path": "/en/services/automation/index.html",
+    "url": "https://osnovaai.com/en/services/automation/index.html",
+    "title": "Page not found — OSNOVA",
+    "h1": [
+      "This page\ndoes not exist."
+    ],
+    "robots": "noindex, follow",
+    "overflow": false,
+    "width": 390,
+    "metrics": {
+      "lcp": 680,
+      "cls": 0
+    },
+    "transfer": 0,
+    "audio": [],
+    "links": [
+      {
+        "href": "https://osnovaai.com/en/",
+        "text": "O\nOSNOVA"
+      },
+      {
+        "href": "https://osnovaai.com/en/services",
+        "text": "Services"
+      },
+      {
+        "href": "https://osnovaai.com/en/cases",
+        "text": "Cases"
+      },
+      {
+        "href": "https://osnovaai.com/en/#about",
+        "text": "About"
+      },
+      {
+        "href": "https://osnovaai.com/en/#pricing",
+        "text": "Pricing"
+      },
+      {
+        "href": "https://osnovaai.com/en/#contact",
+        "text": "Discuss a project"
+      },
+      {
+        "href": "https://osnovaai.com/en/",
+        "text": "BACK TO HOMEPAGE"
+      },
+      {
+        "href": "https://osnovaai.com/en/services",
+        "text": "ALL CAPABILITIES"
+      },
+      {
+        "href": "https://osnovaai.com/en/",
+        "text": "O\nOSNOVA"
+      },
+      {
+        "href": "https://osnovaai.com/en/services",
+        "text": "SERVICES"
+      },
+      {
+        "href": "https://osnovaai.com/en/payment",
+        "text": "PAYMENT"
+      }
+    ],
+    "body": "O\nOSNOVA\nServices\nCases\nAbout\nPricing\nDiscuss a project\nEN\n404 / PAGE NOT FOUND\nThis page\ndoes not exist.\n\nThe address may have changed, or the link contains a typo. Return to the homepage or open the list of capabilities.\n\nBACK TO HOMEPAGE\nALL CAPABILITIES\nAttract · Capture · Process · Automate · Manage · Analyze · Optimize\nAttract · Capture · Process · Automate · Manage · Analyze · Optimize\nO\nOSNOVA\n\n© 2026 OSNOVA. All rights reserved.\n\nSERVICES\nPAYMENT\nOSNOVA / NEUTRAL",
+    "errors": [],
+    "requests": [
+      "https://osnovaai.com/en/services/automation/index.html",
+      "https://osnovaai.com/assets/index-UYjRh0s1.css",
+      "https://osnovaai.com/assets/index-BcfwR0F-.js"
+    ]
+  }
+]
