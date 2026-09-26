@@ -63,6 +63,7 @@ try {
           moreWork: [...document.querySelectorAll('.home-more-card')].map(n => n.getAttribute('href')),
           useCases: [...document.querySelectorAll('.automation-usecases li')].map(n => n.innerText.trim()),
           managed: document.querySelector('.automation-managed')?.innerText || '',
+          managedPrice: document.querySelector('.automation-managed > strong')?.textContent.trim() || '',
           navFirst: document.querySelector('.main-nav a')?.textContent.trim(),
           smallTargets: [...document.querySelectorAll('.hero-offer-card, .offer-card-action, .home-more-card, .home-work-card, .specialist-card, .automation-entry-prices a, .automation-managed, .commercial-text-link')].filter(n => { const r = n.getBoundingClientRect(); return r.width && (r.height < 44 || r.width < 44) }).map(n => n.className),
           brokenImages: [...document.images].filter(n => !n.complete || !n.naturalWidth).map(n => n.src),
@@ -79,7 +80,10 @@ try {
       assert.equal(state.moreWork.length, 3, 'every other real web project is shown')
       assert.equal(state.useCases.length, 6, 'automation use cases')
       assert.ok(state.useCases.every(text => text.length > 40), 'use cases carry a description')
-      assert.ok(state.managed.includes('49'), 'managed automation price')
+      // Managed Automation starts at the first managed tier; €49–99 is only the client-paid support option.
+      assert.match(state.managedPrice, /€150\//, `${device}/${lang}: managed automation starts from €150`)
+      assert.ok(!state.managedPrice.includes('49'), `${device}/${lang}: managed price is not the support tier`)
+      assert.ok(state.managed.includes('€49–99'), `${device}/${lang}: support-only option stays explained`)
       assert.equal(state.navFirst, { ru: 'Разработка', en: 'Development', de: 'Entwicklung', uk: 'Розробка' }[lang], 'localized nav')
       assert.deepEqual(state.smallTargets, [], 'touch targets')
       assert.deepEqual(state.brokenImages, [], 'all real evidence images load')

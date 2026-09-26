@@ -1,9 +1,15 @@
 import assert from 'node:assert/strict'
+import { spawn } from 'node:child_process'
 import { mkdir } from 'node:fs/promises'
 import puppeteer from 'puppeteer-core'
 
-// Run against a local Vite server: node scripts/email-direction-audit.mjs [origin]
+// Starts its own Vite server unless an origin is given: node scripts/email-direction-audit.mjs [origin]
 const origin = process.argv[2] || 'http://127.0.0.1:5187'
+const server = process.argv[2] ? null : spawn(process.execPath, ['node_modules/vite/bin/vite.js', '--host', '127.0.0.1', '--port', '5187', '--strictPort'], { cwd: new URL('..', import.meta.url), stdio: 'ignore', windowsHide: true })
+for (let attempt = 0; attempt < 40; attempt += 1) {
+  try { if ((await fetch(origin)).ok) break } catch {}
+  await new Promise(resolve => setTimeout(resolve, 250))
+}
 const output = new URL('../.visual-audit/email-direction/', import.meta.url)
 await mkdir(output, { recursive: true })
 const browser = await puppeteer.launch({
@@ -53,7 +59,8 @@ try {
   for (const lang of ['ru', 'en', 'de', 'uk']) {
     for (const entry of ['', 'services']) {
       await page.goto(`${origin}/${lang}/${entry}`, { waitUntil: 'domcontentloaded' })
-      const card = '.world-email-deliverability'
+      // Email is the fourth specialization card (06) on the homepage and in the service directory.
+      const card = '#specializations .specialist-email-deliverability'
       await page.waitForSelector(card)
       assert.equal(await page.$eval(card, node => node.getAttribute('href')), `/${lang}/services/email-deliverability`)
       await page.$eval(card, node => node.click())
@@ -84,4 +91,5 @@ try {
   console.log(`PASS: ${layouts} localized layouts; service cards, CTA selection, history, reload, direction navigation and language switch.`)
 } finally {
   await browser.close()
+  server?.kill()
 }

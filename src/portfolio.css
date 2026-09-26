@@ -31,6 +31,7 @@
 .spatial-controls { min-height: 62px; }
 .spatial-guidance, .spatial-status small { font-size: 10px; }
 .spatial-progress { gap: 0; }
+.spatial-progress-bar { display: none; }
 .real-website { height: 100%; min-height: 200px; position: relative; overflow: hidden; background: radial-gradient(ellipse at 50% 70%, color-mix(in srgb, var(--project-accent) 16%, transparent), transparent 75%), #17171c; }
 .real-website .project-browser { width: 78%; position: absolute; top: 10%; left: 6%; border: 1px solid #ffffff30; border-radius: 5px; overflow: hidden; transform: rotate(-3deg); box-shadow: 0 28px 65px #0008; transition: transform .8s var(--ease); }
 .project-browser-bar { height: 24px; display: flex; align-items: center; gap: 4px; padding: 0 9px; background: #242429; color: #c8c8cd; }
@@ -148,7 +149,7 @@
 .audio-play { display: flex; align-items: center; gap: 12px; min-height: 54px; padding: 12px 20px; border: 0; background: var(--lime); color: #0a0a0c; cursor: pointer; font-size: 14px; }
 .audio-rate { min-height: 48px; min-width: 56px; border: 1px solid #ffffff30; color: #ddd5e9; background: transparent; cursor: pointer; font: 12px var(--mono); }
 .audio-note { margin: 22px 0 0; font-size: 12px; line-height: 1.55; color: #a49bb5; }
-.audio-error { color: #eab59d; font-size: 13px; line-height: 1.6; }
+.audio-error { color: #eab59d; font-size: 15px; line-height: 1.6; }
 .audio-error a { display: inline-flex; align-items: center; text-decoration: underline; }
 .voice-scenario { list-style: none; padding: 0; margin: 0; align-self: center; }
 .voice-scenario li { display: grid; grid-template-columns: 28px 1fr 24px; gap: 16px; align-items: center; padding: 28px 0; border-bottom: 1px solid #ffffff24; }
@@ -201,7 +202,7 @@
   .spatial-card-copy h3 { font-size: 28px; margin-top: 12px; }
   .spatial-card-copy small { font-size: 9px; }
   .spatial-card-copy h3 .card-subtitle { font-size: 11px; }
-  .case-preview-fact p { font-size: 14px; line-height: 1.5; display: block; -webkit-line-clamp: unset; }
+  .case-preview-fact p { font-size: 15px; line-height: 1.5; display: block; -webkit-line-clamp: unset; }
   .case-open-action { align-self: end; }
   .case-card-index { top: 13px; right: 13px; font-size: 9px; }
   .real-website .project-browser { width: 91%; left: -8%; top: 12%; transform: rotate(-6deg); }
@@ -218,9 +219,10 @@
   .spatial-status small { font-size: 9px; }
   .spatial-navigation { width: var(--container); }
   .spatial-nav-copy small { font-size: 10px; }
-  .spatial-progress { display: flex; grid-column: 1 / -1; justify-content: center; }
+  .spatial-progress { display: none; }
+  .spatial-progress-bar { display: block; grid-column: 1 / -1; position: relative; height: 3px; margin: 20px 0 21px; background: linear-gradient(rgba(255,255,255,.2), rgba(255,255,255,.2)) center / 100% 1px no-repeat; }
+  .spatial-progress-bar i { position: absolute; inset: 0 auto 0 0; width: calc(100% / var(--count)); background: var(--lime); transform: translateX(calc(var(--active) * 100%)); transition: transform .35s var(--ease); }
   .spatial-controls { gap: 0 12px; padding-top: 16px; }
-  .spatial-progress button { min-width: 36px; width: 36px; }
   .portfolio-index { display: grid; grid-template-columns: 1fr; padding-top: 22px; gap: 0; }
   .portfolio-index button { border-width: 0 0 1px; padding: 16px 2px; gap: 13px; }
   .portfolio-index button b { flex: 1; font-size: 10px; line-height: 1.5; }
@@ -258,7 +260,7 @@
   .audio-controls { gap: 10px; }
   .audio-play { padding: 12px 14px; gap: 9px; font-size: 13px; }
   .audio-rate { min-width: 48px; }
-  .audio-note { font-size: 11px; }
+  .audio-note { font-size: 15px; }
   .voice-scenario li { padding: 20px 0; }
   .voice-scenario p { font-size: 17px; }
 }
@@ -266,7 +268,6 @@
   .spatial-card { height: 550px; }
   .spatial-stage { height: 580px; }
   .spatial-card-copy { padding: 16px; min-height: 230px; }
-  .case-preview-fact p { font-size: 13px; }
   .case-filter-main { gap: 3px; }
   .case-filter-main button { font-size: 9px; }
   .portfolio-detail-heading h1 { font-size: 33px; }

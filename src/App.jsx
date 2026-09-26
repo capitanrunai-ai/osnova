@@ -586,6 +586,8 @@ function SpatialCaseGallery({ items, lang, navigate, ui, memoryKey = 'featured',
           <small>{ui.index}</small><strong>{activeNumber}</strong><i>/</i><b>{totalNumber}</b>
         </div>
         <div className="spatial-progress">{items.map((item, index) => <button key={item.id} className={index === active ? 'active' : ''} onClick={() => go(index)} aria-label={`${ui.index} ${index + 1} / ${items.length}`} aria-current={index === active ? 'true' : undefined}><i /></button>)}</div>
+        {/* Mobile shows position only; jumping uses the 44px+ previous/next buttons and the case index below. */}
+        <div className="spatial-progress-bar" aria-hidden="true" style={{ '--count': items.length, '--active': active }}><i /></div>
       </div>
       {showIndex && <div className="container portfolio-index" aria-label={ui.allCases}>
         {items.map((item, index) => <button key={item.id} className={index === active ? 'active' : ''} aria-current={index === active ? 'true' : undefined} onClick={() => {
@@ -1314,7 +1316,8 @@ const automationUseCaseIcons = [Bot, Cable, Radar, Sparkles, AudioLines, Workflo
 function CommercialBridge({ lang, navigate }) {
   const d = designContent[lang]
   const c = commercialContent[lang]
-  const managed = c.automation.managed.rows[0]
+  // Support/monitoring (client-paid resources) is not Managed Automation; the card shows the first Managed tier.
+  const managed = c.automation.managed.rows.find(([title]) => title.startsWith('Managed'))
   return <section className="commercial-section commercial-bridge" id="automation"><div className="container">
     <div className="automation-heading"><Reveal><span className="eyebrow light">02 / AUTOMATION</span><h2>{d.automationTitle}</h2></Reveal><Reveal><p>{d.automationText}</p><RouteLink className="button button-primary" href={`/${lang}/#contact-form`} navigate={navigate} onClick={() => selectContactService(content[lang].contact.options[0])}>{c.custom.cta}<ArrowUpRight size={18} /></RouteLink></Reveal></div>
     <Reveal className="automation-circuit"><div className="circuit-stamp" aria-hidden="true">OS<span> / AUTOMATION</span></div><ol>{d.flow.map((label, i) => <li key={label}><span className="circuit-node">0{i + 1}</span><div><h3>{label}</h3><p>{d.flowDetail[i]}</p></div>{i < 2 && <ArrowRight className="circuit-arrow" aria-hidden="true" />}</li>)}</ol>

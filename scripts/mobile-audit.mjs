@@ -220,10 +220,13 @@ try {
     offers: [...document.querySelectorAll('.commercial-offers .commercial-price')].map((node) => node.textContent.trim()),
     hero: document.querySelector('.hero-offer-card')?.textContent.replace(/\s+/g, ' ').trim() || '',
     automation: document.querySelector('.automation-entry-prices')?.textContent || '',
+    managed: document.querySelector('.automation-managed > strong')?.textContent.trim() || '',
   }))
   if (pricing.offers.join('|') !== 'от €250|от €500|от €149'
     || !pricing.hero.includes('€250') || !pricing.hero.includes('€500')
-    || !['€149', '€250–300', '€350–500'].every((price) => pricing.automation.includes(price))) {
+    || !['€149', '€250–300', '€350–500'].every((price) => pricing.automation.includes(price))
+    // Managed Automation starts at €150/mo; €49–99/mo is only the client-paid support option.
+    || pricing.managed !== 'от €150/мес.') {
     failures.push(`pricing ${JSON.stringify(pricing)}`)
   }
 
