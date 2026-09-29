@@ -12,7 +12,7 @@ const origin = 'http://127.0.0.1:5193'
 await mkdir(output, { recursive: true })
 const server = spawn(process.execPath, ['node_modules/vite/bin/vite.js', '--host', '127.0.0.1', '--port', '5193', '--strictPort'], { cwd: root, stdio: 'ignore', windowsHide: true })
 const pause = ms => new Promise(resolve => setTimeout(resolve, ms))
-const viewports = [['desktop', 1440, 1000], ['laptop', 1280, 800], ['tablet', 768, 1024], ['mobile', 390, 844], ['small-mobile', 320, 740]]
+const viewports = [['desktop', 1440, 1000], ['laptop', 1280, 800], ['tablet', 768, 1024], ['wide-mobile', 430, 932], ['mobile', 390, 844], ['small-mobile', 320, 740]]
 const specialists = ['seo', 'performance', 'ai-visibility', 'email-deliverability']
 const report = []
 const errors = []

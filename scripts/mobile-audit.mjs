@@ -14,7 +14,7 @@ const server = spawn(
 )
 
 const locales = ['ru', 'en', 'de', 'uk']
-const routes = ['', 'services', 'services/automation', 'services/development', 'services/performance', 'services/seo', 'services/ai-visibility', 'payment', 'cases', 'cases/ai-voice-operator', 'cases/bala-group']
+const routes = ['', 'services', 'services/automation', 'services/development', 'services/performance', 'services/seo', 'services/ai-visibility', 'services/email-deliverability', 'payment', 'cases', 'cases/ai-voice-operator', 'cases/ai-news-automation', 'cases/bala-group']
 const viewports = [
   [320, 568],
   [360, 740],
@@ -53,6 +53,7 @@ try {
     args: ['--no-sandbox', '--disable-gpu'],
   })
   const page = await browser.newPage()
+  await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }])
   page.on('console', (message) => {
     if (message.type() === 'error') consoleErrors.push(message.text())
   })

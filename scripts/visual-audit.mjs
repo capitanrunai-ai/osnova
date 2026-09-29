@@ -55,6 +55,7 @@ try {
     ['payment', '/ru/payment'],
     ['cases', '/ru/cases'],
     ['case-detail', '/ru/cases/ai-voice-operator'],
+    ['ai-news-detail', '/ru/cases/ai-news-automation'],
     ['home', '/ru/'],
   ]
 
@@ -205,6 +206,24 @@ try {
     audit.push(cases)
   }
   const allCases = audit.find((item) => item.name === 'cases-locale-ru').cards
+
+  for (const code of ['ru', 'en', 'de', 'uk']) {
+    await page.setViewport({ width: 390, height: 844, deviceScaleFactor: 1, isMobile: true, hasTouch: true })
+    await page.goto(`http://127.0.0.1:5173/${code}/cases/ai-news-automation`, { waitUntil: 'networkidle0' })
+    const news = await page.evaluate(() => ({
+      width: document.documentElement.clientWidth,
+      scrollWidth: document.documentElement.scrollWidth,
+      workflow: [...document.querySelectorAll('.automation-study-flow li strong')].map(node => node.textContent.trim()),
+      captions: [...document.querySelectorAll('.automation-study-gallery figcaption')].map(node => node.textContent.trim()),
+      solution: document.querySelector('.automation-study-overview')?.textContent || '',
+    }))
+    assert.equal(news.scrollWidth, news.width, `${code}: AI news mobile overflow`)
+    assert.equal(news.workflow.length, 7, `${code}: complete human-in-the-loop workflow`)
+    assert.equal(news.captions.length, 3, `${code}: editorial screenshots`)
+    assert.ok(news.solution.includes('Telegram'), `${code}: Telegram editor handoff`)
+    assert.ok(!/Подготовленный пост на проверке|Prepared post awaiting review|Vorbereiteter Beitrag zur Prüfung|Підготовлений допис на перевірці/.test(news.captions.join(' ')), `${code}: outdated caption`)
+    audit.push({ name: `ai-news-locale-${code}`, ...news })
+  }
 
   for (const code of ['ru', 'en', 'de', 'uk']) {
     await page.setViewport({ width: 390, height: 844, deviceScaleFactor: 1 })

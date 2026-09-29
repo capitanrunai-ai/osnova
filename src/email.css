@@ -64,6 +64,7 @@
   .email-page .direction-title h1 { font-size: clamp(43px, 12.5vw, 64px); line-height: .98; }
   .email-page .direction-title p { font-size: 16px; }
   .email-journey { padding: 22px; }
+  .email-journey > p, .email-outcome-note { font-size: 15px; }
   .email-journey li { min-height: 65px; gap: 12px; }
   .email-journey li strong { font-size: 17px; }
   .email-situation-list, .email-outcome-layout { grid-template-columns: 1fr; gap: 28px; }

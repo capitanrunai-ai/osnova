@@ -22,14 +22,14 @@ try {
   const page = await browser.newPage()
   page.on('pageerror', error => errors.push(error.message))
   await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }])
-  for (const width of [1440, 1024, 768, 390, 320]) {
+  for (const width of [1440, 1024, 768, 430, 390, 320]) {
     await page.setViewport({ width, height: 1000, deviceScaleFactor: 1 })
     for (const lang of ['ru', 'en', 'de', 'uk']) {
       const path = `/${lang}/services/email-deliverability`
       await page.goto(`${origin}${path}`, { waitUntil: 'domcontentloaded' })
       await page.waitForSelector('.email-page')
       await page.waitForFunction(() => document.title.includes('Email Deliverability'))
-      const result = await page.evaluate(() => {
+      const result = await page.evaluate((width) => {
         document.querySelectorAll('.reveal').forEach(node => node.classList.add('is-visible'))
         const overflow = [...document.querySelectorAll('.email-page h1, .email-page h2, .email-page h3, .email-page p, .email-page li, .email-page .button')].filter(node => {
           const r = node.getBoundingClientRect()
@@ -41,9 +41,13 @@ try {
           sections: document.querySelectorAll('.email-page > section').length,
           canonical: document.querySelector('link[rel="canonical"]').href,
           alternate: document.querySelector('link[hreflang="de"]').href,
+          smallTargets: width <= 430 ? [...document.querySelectorAll('.email-page a, .email-page button')]
+            .filter(node => { const box = node.getBoundingClientRect(); return box.width && box.height && (box.width < 44 || box.height < 44) })
+            .map(node => node.className || node.tagName) : [],
         }
-      })
+      }, width)
       assert.deepEqual(result.overflow, [], `${lang}@${width}: overflow`)
+      assert.deepEqual(result.smallTargets, [], `${lang}@${width}: touch targets`)
       assert.equal(result.headings, 1)
       assert.equal(result.sections, 7)
       assert.equal(result.canonical, `${origin}${path}`)
