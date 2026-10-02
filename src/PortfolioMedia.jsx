@@ -124,17 +124,17 @@ function AutomationCaseDetail({ item, ui, lang, navigate, Link }) {
         <div className="automation-study-pair"><span>{study.task}</span><p>{item.task}</p></div>
         <div className="automation-study-pair"><span>{study.solution}</span><p>{item.solution}</p></div>
       </div>
-      <section className="automation-study-flow" aria-label={study.workflow}>
+      {!item.audio && <section className="automation-study-flow" aria-label={study.workflow}>
         <span className="automation-study-label">{study.workflow}</span>
         <ol>{item.workflow.map((step, index) => <li key={step}><small>{String(index + 1).padStart(2, '0')}</small><strong>{step}</strong></li>)}</ol>
-      </section>
+      </section>}
       <div className="automation-study-facts">
         <div className="automation-study-main"><span className="automation-study-label">{study.capabilities}</span><p>{item.capabilities}</p></div>
         <div><span className="automation-study-label">{study.ai}</span><p>{item.aiRole}</p></div>
         <div><span className="automation-study-label">{study.human}</span><p>{item.humanRole}</p></div>
         <div><span className="automation-study-label">{study.channels}</span><p>{item.channels}</p></div>
       </div>
-      <section className="automation-study-evidence" aria-label={study.evidence}>
+      {item.screenshots && <section className="automation-study-evidence" aria-label={study.evidence}>
         <div className="automation-study-evidence-head"><span className="automation-study-label">{study.evidence}</span><p>{item.sourceNote}</p></div>
         <div className={`automation-study-gallery ${item.screenshots.length === 3 ? 'is-news' : 'is-retail'}`}>
           {item.screenshots.map((shot, index) => <figure key={shot.src}>
@@ -144,15 +144,15 @@ function AutomationCaseDetail({ item, ui, lang, navigate, Link }) {
             <figcaption><span>{String(index + 1).padStart(2, '0')}</span>{item.captions[index]}</figcaption>
           </figure>)}
         </div>
-      </section>
+      </section>}
       <Link className="automation-study-service" href={`/${lang}/services/automation`} navigate={navigate}>{study.service}<ArrowUpRight size={17} /></Link>
-      <dialog className="automation-lightbox" ref={dialogRef} onClose={() => setSelected(null)} onClick={event => { if (event.target === event.currentTarget) setSelected(null) }} aria-label={study.evidence}>
+      {item.screenshots && <dialog className="automation-lightbox" ref={dialogRef} onClose={() => setSelected(null)} onClick={event => { if (event.target === event.currentTarget) setSelected(null) }} aria-label={study.evidence}>
         {selected !== null && <div className="automation-lightbox-content">
           <button type="button" onClick={() => setSelected(null)} aria-label={study.close}>×</button>
           <img src={item.screenshots[selected].src} width={item.screenshots[selected].width} height={item.screenshots[selected].height} alt={item.captions[selected]} />
           <p>{item.captions[selected]}</p>
         </div>}
-      </dialog>
+      </dialog>}
     </div>
   )
 }
@@ -195,12 +195,13 @@ export function PortfolioDetail({ item, lang, navigate, Link }) {
             {item.originalUrl && <a className="portfolio-original" href={item.originalUrl} target="_blank" rel="noopener noreferrer">{ui.original}<ArrowUpRight size={14} /></a>}
           </div>
         </header>
-        {isAutomation ? <AutomationCaseDetail item={item} ui={ui} lang={lang} navigate={navigate} Link={Link} /> : isVoice ? (
+        {isAutomation ? <AutomationCaseDetail item={item} ui={ui} lang={lang} navigate={navigate} Link={Link} /> : isVoice ? (<>
           <section className="portfolio-voice-demo">
             <VoicePlayer item={item} ui={ui} lang={lang} />
             <ol className="voice-scenario">{ui.steps.map((step, i) => <li key={step}><span>{String(i + 1).padStart(2, '0')}</span><p>{step}</p>{i === 3 ? <Check size={21} /> : <ArrowDownIcon />}</li>)}</ol>
           </section>
-        ) : (<>
+          <AutomationCaseDetail item={item} ui={ui} lang={lang} navigate={navigate} Link={Link} />
+        </>) : (<>
           {item.webCase && <WebCaseFacts item={item} ui={ui} lang={lang} navigate={navigate} Link={Link} />}
           <section className="portfolio-site-demo" aria-label={ui.preview}>
             <div className="portfolio-preview-toolbar"><span>{new URL(item.url).hostname.replace('www.', '')}</span>
@@ -211,6 +212,7 @@ export function PortfolioDetail({ item, lang, navigate, Link }) {
             </div>
             <div className="portfolio-secondary"><span>{ui.preview}<ArrowDownIcon /></span><img src={item.detail} alt={`${item.title} — ${ui.preview}`} width="1440" height="960" loading="lazy" /></div>
           </section>
+          {!item.webCase && <Link className="web-case-service" href={`/${lang}/services/development`} navigate={navigate}>{ui.webStudy.service}<ArrowUpRight size={17} /></Link>}
         </>)}
         <nav className="portfolio-detail-nav" aria-label={ui.navigationLabel}>
           <Link className="portfolio-prev" href={`/${lang}/cases/${previous.slug}`} navigate={navigate} world={previous.category}><ArrowLeft size={18} /><span>{ui.previous}</span></Link>

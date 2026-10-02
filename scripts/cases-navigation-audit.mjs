@@ -89,7 +89,7 @@ try {
   await page.click('.language-menu button:nth-child(3)')
   await wait(200)
   assert.equal(await page.$eval('html', node => node.lang), 'de')
-  assert.equal(await page.$eval('h1', node => node.textContent), 'AI VOICE OPERATOR')
+  assert.equal(await page.$eval('h1', node => node.textContent), cases.find(item => item.slug === 'ai-voice-operator').title.replace(' — ', ''))
   assert.ok((await page.$eval('.audio-note', node => node.textContent)).includes('Russisch'))
   report.localeSwitchPreservesCase = true
   assert.deepEqual(errors, [])

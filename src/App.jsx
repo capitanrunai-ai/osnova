@@ -1399,7 +1399,7 @@ function CommercialDevelopmentProducts({ lang }) {
 
 function CommercialAutomationProducts({ lang, navigate }) {
   const data = commercialContent[lang].automation
-  return <><section className="commercial-section commercial-product-section" id="products"><div className="container"><Reveal><span className="eyebrow">{data.label}</span><h2>{data.title}</h2><p className="commercial-lead">{data.intro}</p></Reveal><div className="commercial-card-grid">{data.items.map(([title, price, detail], index) => <Reveal className="commercial-card" as="article" key={title} delay={(index % 3) * 60}><span className="commercial-number">{String(index + 1).padStart(2, '0')}</span><div className="commercial-price">{price}</div><h3>{title}</h3><p>{detail}</p></Reveal>)}</div><p className="commercial-scope-note">{data.terms}</p></div></section><section className="commercial-section commercial-managed" id="managed"><div className="container"><Reveal><span className="eyebrow">MANAGED AUTOMATION</span><h2>{data.managed.title}</h2></Reveal><div className="commercial-managed-grid">{data.managed.rows.map(([title, price, detail]) => <Reveal className="commercial-managed-row" key={title}><h3>{title}</h3><strong>{price}</strong><p>{detail}</p></Reveal>)}</div><p className="commercial-footnote">{data.managed.note}</p></div></section><CommercialProcess lang={lang} /><CommercialCustom lang={lang} navigate={navigate} /></>
+  return <><section className="commercial-section commercial-product-section" id="products"><div className="container"><Reveal><span className="eyebrow">{data.label}</span><h2>{data.title}</h2><p className="commercial-lead">{data.intro}</p></Reveal><div className="commercial-card-grid">{data.items.map(([title, price, detail], index) => <Reveal className="commercial-card" as="article" key={title} delay={(index % 3) * 60}><span className="commercial-number">{String(index + 1).padStart(2, '0')}</span><div className="commercial-price">{price}</div><h3>{title}</h3><p>{detail}</p></Reveal>)}</div><p className="commercial-scope-note">{data.timeline}</p><p className="commercial-scope-note">{data.terms}</p></div></section><section className="commercial-section commercial-managed" id="managed"><div className="container"><Reveal><span className="eyebrow">{data.managed.label}</span><h2>{data.managed.title}</h2></Reveal><div className="commercial-managed-grid">{data.managed.rows.map(([title, price, detail]) => <Reveal className="commercial-managed-row" key={title}><h3>{title}</h3><strong>{price}</strong><p>{detail}</p></Reveal>)}</div><p className="commercial-footnote">{data.managed.note}</p></div></section><CommercialProcess lang={lang} /><CommercialCustom lang={lang} navigate={navigate} /></>
 }
 
 function AutomationPage({ s, lang, navigate }) {
@@ -1494,6 +1494,7 @@ function DevelopmentPage({ s, t, lang, navigate }) {
   const commercial = commercialContent[lang].development
   const work = developmentWorkLabels[lang]
   const related = getLocalizedCases(lang).filter(item => item.serviceCase === 'development')
+  const more = getLocalizedCases(lang).filter(item => item.category === 'development' && item.serviceCase !== 'development')
   return (
     <main className="direction-page development-page">
       <DirectionHero direction="development" data={{ ...data, title: commercial.title, titleAccent: '', intro: commercial.scope }} action={<DevelopmentQuoteLink className="button button-primary development-hero-cta" t={t} lang={lang} navigate={navigate} />}><DevelopmentVisual labels={data.visual} /></DirectionHero>
@@ -1501,6 +1502,7 @@ function DevelopmentPage({ s, t, lang, navigate }) {
       <section className="service-related section-pad" aria-label={work.label}>
         <div className="container"><span className="eyebrow light">{work.label}</span><h2>{work.title}</h2>
           <div className="home-work-grid service-work-grid">{related.map(item => <WorkCard key={item.slug} item={item} lang={lang} navigate={navigate} />)}</div>
+          <div className="home-more-work"><span className="home-more-label">{designContent[lang].moreWork}</span><div className="home-more-grid">{more.map(item => <MoreWorkCard key={item.slug} item={item} lang={lang} navigate={navigate} />)}</div></div>
           <div className="development-proof-cta"><DevelopmentQuoteLink className="button button-primary" t={t} lang={lang} navigate={navigate} /></div>
         </div>
       </section>
