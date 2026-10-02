@@ -83,7 +83,7 @@ try {
       payment: document.querySelector('.contact-payment-link')?.getAttribute('href'),
       placeholders: document.body.innerText.includes('hello@your-agency.com') || document.body.innerText.includes('@your_agency'),
     }))
-    if (contacts.email !== 'mailto:capitanrunai@gmail.com') failures.push(`${locale}: email link incorrect`)
+    if (contacts.email !== 'mailto:capitanrun@osnova.ai') failures.push(`${locale}: email link incorrect`)
     if (contacts.telegram !== 'https://t.me/capitanrun') failures.push(`${locale}: Telegram link incorrect`)
     if (contacts.payment !== `/${locale}/payment`) failures.push(`${locale}: contact payment link incorrect`)
     if (contacts.placeholders) failures.push(`${locale}: placeholder contact remains`)

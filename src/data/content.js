@@ -6,7 +6,7 @@ export const languages = {
 }
 
 const shared = {
-  email: 'capitanrunai@gmail.com',
+  email: 'capitanrun@osnova.ai',
   telegram: '@capitanrun',
 }
 
