@@ -18,6 +18,7 @@ import { buildRoutes, buildUtilityRoutes } from './site-routes.mjs'
 
 const root = resolve(import.meta.dirname, '..')
 const dist = resolve(root, 'dist')
+const manifest = JSON.parse(await readFile(resolve(dist, '.vite/manifest.json'), 'utf8'))
 
 const MIME = {
   '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css',
@@ -110,6 +111,9 @@ async function snapshot(page, origin, path) {
     // Reveal classes are runtime state. The inline override keeps the saved
     // document visible; the client observer will reveal visible nodes again.
     for (const node of document.querySelectorAll('.reveal.is-visible')) node.classList.remove('is-visible')
+    // Scrolling during the snapshot walk can leave the header's scroll state
+    // pending. Save its initial state, matching the first client render.
+    document.querySelector('.site-header')?.classList.remove('is-scrolled')
     // Audio metadata can arrive during the prerender walk. Save the player's
     // initial state so hydration matches; the client reads loaded metadata.
     for (const player of document.querySelectorAll('.voice-player')) {
@@ -141,8 +145,13 @@ async function snapshot(page, origin, path) {
 // the entrance animations intact without a flash in between.
 const REVEAL_OVERRIDE = '<style id="prerender-reveal">.reveal{opacity:1;transform:none;transition:none}</style>'
 
-function finalize(html, previewOrigin, { isHome }) {
+function finalize(html, previewOrigin, { isHome, lang }) {
   let out = html.replaceAll(previewOrigin, siteUrl)
+  const localeChunk = manifest[`src/data/services/${lang}.js`]?.file
+  if (!localeChunk) throw new Error(`Missing service locale chunk: ${lang}`)
+  // Start fetching only this page's language alongside the entry script,
+  // avoiding a second network round trip before hydration.
+  out = out.replace('</head>', `    <link rel="modulepreload" crossorigin href="/${localeChunk}" />\n  </head>`)
   if (isHome) {
     // The hero background is critical first-screen media on the homepage only.
     out = out.replace(
@@ -181,7 +190,7 @@ try {
     const html = await snapshot(page, origin, entry.path)
     results.push({
       path: entry.path,
-      html: finalize(html, origin, { isHome: entry.route === '' }),
+      html: finalize(html, origin, { isHome: entry.route === '', lang: entry.lang }),
     })
     process.stdout.write(`  ${entry.path}\n`)
   }

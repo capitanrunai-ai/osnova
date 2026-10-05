@@ -19,11 +19,12 @@ const SOURCE_BY_ROUTE = {
   payment: ['src/data/paymentContent.js'],
 }
 
-function sourcesFor(route) {
-  if (SOURCE_BY_ROUTE[route]) return SOURCE_BY_ROUTE[route]
-  if (route === 'services/email-deliverability') return ['src/data/emailContent.js']
-  if (route === 'services/seo' || route === 'services/ai-visibility') return ['src/data/visibilityContent.js']
-  if (route.startsWith('services/')) return ['src/data/serviceContent.js']
+function sourcesFor(route, lang) {
+  const locale = `src/data/services/${lang}.js`
+  if (SOURCE_BY_ROUTE[route]) return [...SOURCE_BY_ROUTE[route], ...(route === '' || route === 'services' ? [locale] : [])]
+  if (route === 'services/email-deliverability') return ['src/data/emailContent.js', locale]
+  if (route === 'services/seo' || route === 'services/ai-visibility') return ['src/data/visibilityContent.js', locale]
+  if (route.startsWith('services/')) return ['src/data/serviceContent.js', locale]
   if (route.startsWith('cases/')) return ['src/data/cases.js']
   return ['src/data/content.js']
 }
@@ -61,7 +62,7 @@ export function buildRoutes() {
     // /ru/ for a language home, /ru/services (no trailing slash) otherwise —
     // matching the canonical the app already emits and every internal href.
     path: route ? `/${lang}/${route}` : `/${lang}/`,
-    lastmod: sourcesFor(route).map(lastModified).sort().at(-1),
+    lastmod: sourcesFor(route, lang).map(lastModified).sort().at(-1),
   })))
 }
 

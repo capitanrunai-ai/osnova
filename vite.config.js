@@ -7,6 +7,7 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [react(), contactApiPlugin(env)],
     build: {
+      manifest: true,
       target: 'es2020',
       cssCodeSplit: true,
     },

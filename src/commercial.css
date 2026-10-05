@@ -282,6 +282,7 @@
   .trust-proof { margin-top: 38px; }
   .trust-proof-grid, .trust-last-row { grid-template-columns: 1fr; gap: 22px; }
   .trust-last-row { margin-top: 36px; }
+  .trust-last-row a { min-height: 44px; }
   .consent-bar { bottom: 10px; left: 10px; right: 10px; padding: 14px; }
 }
 @media (prefers-reduced-motion: reduce) {

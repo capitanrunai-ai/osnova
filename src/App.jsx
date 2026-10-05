@@ -31,8 +31,7 @@ import { trustContent, trustCases } from './data/trustContent'
 import { designContent } from './data/designContent'
 import { paymentContent } from './data/paymentContent'
 import { caseCategories, caseUi, getLocalizedCases } from './data/cases'
-import { serviceContent } from './data/serviceContent'
-import { extendServiceContent } from './data/visibilityContent'
+import { getServiceContent, loadServiceContent } from './data/serviceContentLoader'
 import { closingContent } from './data/closingContent'
 import { defaultLanguage, serviceRoutes } from './data/routes'
 import './services.css'
@@ -99,7 +98,7 @@ function setLinkTag(rel, hreflang, href) {
   }).setAttribute('href', href)
 }
 
-function getInitialLanguage() {
+export function getInitialLanguage() {
   const { lang } = parseLocation()
   if (lang) return lang
   const saved = localStorage.getItem('osnova-language')
@@ -202,7 +201,10 @@ function Header({ t, s, lang, route, setLang, navigate }) {
       </nav>
       <div className="header-actions">
         <div className="language-control">
-          <button className="language-current" onClick={() => setLanguageOpen(!languageOpen)} aria-expanded={languageOpen}>
+          <button className="language-current" onClick={() => {
+            if (!languageOpen) languageCodes.forEach(code => { void loadServiceContent(code).catch(() => {}) })
+            setLanguageOpen(!languageOpen)
+          }} aria-expanded={languageOpen}>
             {languages[lang].label}<ChevronDown size={13} />
           </button>
           {languageOpen && (
@@ -1630,12 +1632,13 @@ function PageTransition({ state }) {
   )
 }
 
-export default function App() {
-  const [lang, setLangState] = useState(getInitialLanguage)
+export default function App({ initialLanguage }) {
+  const [lang, setLangState] = useState(initialLanguage)
   const [location, setLocation] = useState(parseLocation)
   const [transition, setTransition] = useState({ phase: '', world: 'neutral' })
+  const navigationVersion = useRef(0)
   const t = useMemo(() => content[lang], [lang])
-  const s = useMemo(() => extendServiceContent(serviceContent[lang], lang), [lang])
+  const s = getServiceContent(lang)
   const p = useMemo(() => paymentContent[lang], [lang])
   const resolved = useMemo(() => resolveRoute(location.route, lang), [location.route, lang])
 
@@ -1646,22 +1649,34 @@ export default function App() {
       document.querySelector(target.hash || '#top')?.scrollIntoView({ block: 'start' })
       return
     }
+    const version = ++navigationVersion.current
+    const targetLang = target.pathname.split('/')[1]
+    const nextLang = languageCodes.includes(targetLang) ? targetLang : lang
+    // Start the language fetch during the existing transition. Same-language
+    // routes reuse the cache and retain the original transition timing.
+    const contentReady = loadServiceContent(nextLang).catch(() => null)
     setTransition({ phase: 'cover', world })
-    window.setTimeout(() => {
+    window.setTimeout(async () => {
+      const nextContent = await contentReady
+      if (version !== navigationVersion.current) return
+      if (!nextContent) { window.location.assign(target.href); return }
       window.history[replace ? 'replaceState' : 'pushState']({}, '', `${target.pathname}${target.hash}`)
+      setLangState(nextLang)
       setLocation(parseLocation())
       window.scrollTo(0, 0)
       window.setTimeout(() => {
+        if (version !== navigationVersion.current) return
         if (target.hash) document.querySelector(target.hash)?.scrollIntoView({ block: 'start' })
         setTransition({ phase: 'reveal', world })
-        window.setTimeout(() => setTransition({ phase: '', world }), reducedMotion ? 0 : 720)
+        window.setTimeout(() => {
+          if (version === navigationVersion.current) setTransition({ phase: '', world })
+        }, reducedMotion ? 0 : 720)
       }, 40)
     }, reducedMotion ? 0 : 520)
   }
 
   const setLang = (nextLang) => {
     const currentRoute = location.route ? `/${location.route}` : '/'
-    setLangState(nextLang)
     localStorage.setItem('osnova-language', nextLang)
     navigate(`/${nextLang}${currentRoute}${location.hash}`, 'neutral', true)
   }
@@ -1688,14 +1703,22 @@ export default function App() {
   useEffect(() => { initAnalytics() }, [])
 
   useEffect(() => {
-    const onPopState = () => {
+    const onPopState = async () => {
       const next = parseLocation()
-      if (next.lang) setLangState(next.lang)
+      const nextLang = next.lang || getInitialLanguage()
+      const version = ++navigationVersion.current
+      try { await loadServiceContent(nextLang) } catch { window.location.reload(); return }
+      if (version !== navigationVersion.current) return
+      setLangState(nextLang)
       setLocation(next)
+      setTransition({ phase: '', world: 'neutral' })
       window.scrollTo(0, 0)
     }
     window.addEventListener('popstate', onPopState)
-    return () => window.removeEventListener('popstate', onPopState)
+    return () => {
+      window.removeEventListener('popstate', onPopState)
+      navigationVersion.current += 1
+    }
   }, [])
 
   useEffect(() => {
