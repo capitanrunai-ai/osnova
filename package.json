@@ -14,6 +14,7 @@
     "audit:typography": "node scripts/typography-audit.mjs",
     "audit:visibility": "node scripts/visibility-visual-audit.mjs",
     "audit:payment": "node scripts/payment-audit.mjs",
+    "audit:trust": "node scripts/trust-audit.mjs",
     "preview": "vite preview",
     "build:nossr": "vite build && node scripts/generate-sitemap.mjs",
     "verify:seo": "node scripts/seo-verify.mjs",

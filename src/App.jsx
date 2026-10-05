@@ -27,6 +27,7 @@ import {
 } from 'lucide-react'
 import { content, languages } from './data/content'
 import { commercialContent } from './data/commercialContent'
+import { trustContent, trustCases } from './data/trustContent'
 import { designContent } from './data/designContent'
 import { paymentContent } from './data/paymentContent'
 import { caseCategories, caseUi, getLocalizedCases } from './data/cases'
@@ -1335,9 +1336,17 @@ function CommercialAutomationCases({ lang, navigate }) {
   return <section className="commercial-section commercial-cases commercial-automation-cases"><div className="container"><Reveal><span className="eyebrow light">{work.label}</span><h2>{work.title}</h2></Reveal><div className="home-work-grid automation-work-grid">{related.map(item => <WorkCard key={item.slug} item={item} lang={lang} navigate={navigate} />)}</div></div></section>
 }
 
-function CommercialTrust({ lang }) {
+function CommercialTrust({ lang, navigate }) {
   const data = commercialContent[lang].trust
-  return <section className="commercial-section commercial-trust" id="about"><div className="container"><Reveal><span className="eyebrow">{data.label}</span><h2>{data.title}</h2><p className="commercial-lead">{designContent[lang].about}</p></Reveal><div className="commercial-trust-grid">{data.items.map((item, index) => <Reveal key={item} as="p" delay={index * 50}><Check size={20} /><span>{item}</span></Reveal>)}</div><p className="commercial-footnote">{data.note}</p></div></section>
+  const trust = trustContent[lang]
+  return <section className="commercial-section commercial-trust" id="about"><div className="container">
+    <Reveal className="commercial-trust-intro"><span className="eyebrow">{data.label}</span><h2>{data.title}</h2><p className="commercial-lead">{designContent[lang].about}</p></Reveal>
+    <Reveal className="trust-team"><span className="eyebrow">{trust.teamLabel}</span><p>{trust.team}</p><ul>{trust.roles.map(role => <li key={role}>{role}</li>)}</ul></Reveal>
+    <div className="commercial-trust-grid">{data.items.map((item, index) => <Reveal key={item} as="p" delay={index * 50}><Check size={20} /><span>{item}</span></Reveal>)}</div>
+    <p className="commercial-footnote">{data.note}</p>
+    <div className="trust-proof"><span className="eyebrow">{trust.proofLabel}</span><div className="trust-proof-grid">{Object.entries(trustCases).map(([category, cases]) => <div key={category}><h3>{trust[category]}</h3><ul>{cases.map(([title, slug]) => <li key={slug}><RouteLink href={`/${lang}/cases/${slug}`} navigate={navigate}>{title}<ArrowUpRight size={17} aria-hidden="true" /></RouteLink></li>)}</ul></div>)}</div></div>
+    <div className="trust-last-row"><div><span className="eyebrow">{trust.supportLabel}</span><p>{trust.support}</p><RouteLink href={`/${lang}/services/automation#managed`} navigate={navigate}>{trust.supportLink}<ArrowUpRight size={16} aria-hidden="true" /></RouteLink></div><div><span className="eyebrow">{trust.contactLabel}</span><p>{trust.contact}</p><a href="mailto:capitanrun@osnova.ai" onClick={() => track('email_click', { site_language: lang, page_path: window.location.pathname, link_location: 'trust' })}>capitanrun@osnova.ai<ArrowUpRight size={16} aria-hidden="true" /></a><a href="https://t.me/capitanrun" target="_blank" rel="noreferrer" onClick={() => track('telegram_click', { site_language: lang, page_path: window.location.pathname, link_location: 'trust' })}>Telegram · @capitanrun<ArrowUpRight size={16} aria-hidden="true" /></a></div></div>
+  </div></section>
 }
 
 function CommercialCustom({ lang, navigate }) {
@@ -1358,7 +1367,7 @@ function CommercialSecondary({ s, lang, navigate }) {
 }
 
 function HomePage({ t, s, p, lang, navigate }) {
-  return <><HomeHero t={t} s={s} lang={lang} navigate={navigate} /><CommercialOffers lang={lang} navigate={navigate} /><CommercialWebCases lang={lang} navigate={navigate} /><CommercialBridge lang={lang} navigate={navigate} /><CommercialAutomationCases lang={lang} navigate={navigate} /><CommercialSecondary s={s} lang={lang} navigate={navigate} /><CommercialProcess lang={lang} /><CommercialTrust lang={lang} /><CommercialCustom lang={lang} navigate={navigate} /><Contact t={t} p={p} lang={lang} navigate={navigate} /></>
+  return <><HomeHero t={t} s={s} lang={lang} navigate={navigate} /><CommercialOffers lang={lang} navigate={navigate} /><CommercialWebCases lang={lang} navigate={navigate} /><CommercialBridge lang={lang} navigate={navigate} /><CommercialAutomationCases lang={lang} navigate={navigate} /><CommercialSecondary s={s} lang={lang} navigate={navigate} /><CommercialProcess lang={lang} /><CommercialTrust lang={lang} navigate={navigate} /><CommercialCustom lang={lang} navigate={navigate} /><Contact t={t} p={p} lang={lang} navigate={navigate} /></>
 }
 
 function ServicesPage({ s, lang, navigate }) {
@@ -1498,7 +1507,7 @@ function DevelopmentPage({ s, t, lang, navigate }) {
   return (
     <main className="direction-page development-page">
       <DirectionHero direction="development" data={{ ...data, title: commercial.title, titleAccent: '', intro: commercial.scope }} action={<DevelopmentQuoteLink className="button button-primary development-hero-cta" t={t} lang={lang} navigate={navigate} />}><DevelopmentVisual labels={data.visual} /></DirectionHero>
-      <CommercialDevelopmentProducts lang={lang} /><CommercialProcess lang={lang} /><CommercialTrust lang={lang} />
+      <CommercialDevelopmentProducts lang={lang} /><CommercialProcess lang={lang} /><CommercialTrust lang={lang} navigate={navigate} />
       <section className="service-related section-pad" aria-label={work.label}>
         <div className="container"><span className="eyebrow light">{work.label}</span><h2>{work.title}</h2>
           <div className="home-work-grid service-work-grid">{related.map(item => <WorkCard key={item.slug} item={item} lang={lang} navigate={navigate} />)}</div>
