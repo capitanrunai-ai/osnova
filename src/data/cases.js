@@ -1,5 +1,6 @@
 import { automationCases } from './automationCases.js'
 import { dentistryCase } from './dentistryCase.js'
+import { slavabudCase } from './slavabudCase.js'
 
 const localized = (ru, en, de, uk) => ({ ru, en, de, uk })
 
@@ -25,7 +26,7 @@ export const caseUi = {
     audioDownload: 'Открыть аудио', seek: 'Позиция воспроизведения', speed: 'Скорость воспроизведения',
     steps: ['Входящий звонок', 'Диалог с AI', 'Ответы на вопросы', 'Запрос на консультацию'],
     study: { task: 'Задача', solution: 'Решение', workflow: 'Сценарий', capabilities: 'Что умеет система', ai: 'Роль AI', human: 'Роль человека', channels: 'Каналы и интеграции', evidence: 'Реальные экраны системы', enlarge: 'Увеличить скриншот', close: 'Закрыть', service: 'Об автоматизации' },
-    webStudy: { challenge: 'Задача', work: 'Что сделали', delivery: 'Срок', result: 'Результат', service: 'О разработке' },
+    webStudy: { challenge: 'Задача', work: 'Что сделали', delivery: 'Срок', result: 'Результат', service: 'О разработке', googleAdsTracking: 'Google Ads tracking / Google tag подключён.' },
   },
   en: {
     pageLabel: 'OSNOVA / SELECTED WORK', pageTitle: 'Built. And live.',
@@ -46,7 +47,7 @@ export const caseUi = {
     audioDownload: 'Open audio', seek: 'Playback position', speed: 'Playback speed',
     steps: ['Incoming call', 'AI conversation', 'Questions answered', 'Consultation request'],
     study: { task: 'Task', solution: 'Solution', workflow: 'Workflow', capabilities: 'What the system does', ai: 'AI role', human: 'Human role', channels: 'Channels and integrations', evidence: 'Real system screens', enlarge: 'Enlarge screenshot', close: 'Close', service: 'Explore Automation' },
-    webStudy: { challenge: 'Challenge', work: 'What we built', delivery: 'Delivery', result: 'Result', service: 'Explore Development' },
+    webStudy: { challenge: 'Challenge', work: 'What we built', delivery: 'Delivery', result: 'Result', service: 'Explore Development', googleAdsTracking: 'Google Ads tracking / Google tag installed.' },
   },
   de: {
     pageLabel: 'OSNOVA / UNSERE ARBEITEN', pageTitle: 'Entwickelt. Und live.',
@@ -67,7 +68,7 @@ export const caseUi = {
     audioDownload: 'Audio öffnen', seek: 'Wiedergabeposition', speed: 'Wiedergabegeschwindigkeit',
     steps: ['Eingehender Anruf', 'Dialog mit KI', 'Fragen beantwortet', 'Beratungsanfrage'],
     study: { task: 'Aufgabe', solution: 'Lösung', workflow: 'Ablauf', capabilities: 'Funktionen', ai: 'Rolle der KI', human: 'Rolle des Menschen', channels: 'Kanäle und Integrationen', evidence: 'Echte Systemansichten', enlarge: 'Screenshot vergrößern', close: 'Schließen', service: 'Automatisierung entdecken' },
-    webStudy: { challenge: 'Aufgabe', work: 'Umsetzung', delivery: 'Projektdauer', result: 'Ergebnis', service: 'Entwicklung entdecken' },
+    webStudy: { challenge: 'Aufgabe', work: 'Umsetzung', delivery: 'Projektdauer', result: 'Ergebnis', service: 'Entwicklung entdecken', googleAdsTracking: 'Google Ads Tracking / Google tag eingerichtet.' },
   },
   uk: {
     pageLabel: 'OSNOVA / НАШІ РОБОТИ', pageTitle: 'Зроблено. Працює.',
@@ -88,7 +89,7 @@ export const caseUi = {
     audioDownload: 'Відкрити аудіо', seek: 'Позиція відтворення', speed: 'Швидкість відтворення',
     steps: ['Вхідний дзвінок', 'Діалог з AI', 'Відповіді на запитання', 'Запит на консультацію'],
     study: { task: 'Завдання', solution: 'Рішення', workflow: 'Сценарій', capabilities: 'Що вміє система', ai: 'Роль AI', human: 'Роль людини', channels: 'Канали та інтеграції', evidence: 'Реальні екрани системи', enlarge: 'Збільшити скриншот', close: 'Закрити', service: 'Про автоматизацію' },
-    webStudy: { challenge: 'Завдання', work: 'Що зробили', delivery: 'Термін', result: 'Результат', service: 'Про розробку' },
+    webStudy: { challenge: 'Завдання', work: 'Що зробили', delivery: 'Термін', result: 'Результат', service: 'Про розробку', googleAdsTracking: 'Google Ads tracking / Google tag підключено.' },
   },
 }
 
@@ -126,6 +127,7 @@ export const cases = [
     ),
   }),
   website('bala-group', 'BALA GROUP', 'https://www.bala-group.com.ua/', {
+    googleAdsTracking: true,
     featured: true, serviceCase: 'development', accent: '#e4b887',
     copy: localized(
       { summary: 'Коммерческий сайт строительных и ремонтных услуг, созданный под рекламный трафик Google Ads и запущенный под ключ.', webCase: {
@@ -151,6 +153,7 @@ export const cases = [
     ),
   }),
   website('retatrutide-silver-signal', 'RETATRUTIDE — SILVER SIGNAL', 'https://shalomesp11-creator.github.io/retatrutide-silver-signal/', {
+    googleAdsTracking: true,
     featured: true, categoryLabel: 'Landing Page / Development', accent: '#b0bec5',
     copy: localized(
       { summary: 'Лендинг с серебристой визуальной системой. Дизайн и web-разработка полностью с нуля.' },
@@ -159,6 +162,7 @@ export const cases = [
       { summary: 'Лендинг зі сріблястою візуальною системою. Дизайн і web-розробка повністю з нуля.' },
     ),
   }),
+  slavabudCase,
   dentistryCase,
   ...automationCases,
   website('comfort-lab', 'COMFORT LAB', 'https://comfortlabkiev.com.ua/', {
@@ -171,6 +175,7 @@ export const cases = [
     ),
   }),
   website('comfort-home', 'COMFORT HOME', 'https://comforthomekiev.com.ua/', {
+    googleAdsTracking: true,
     recovery: true, serviceCase: 'development', originalUrl: 'https://www.comforthome.kyiv.ua/', categoryLabel: 'Website / Recovery', accent: '#aa927a',
     copy: localized(
       { summary: 'Восстановили сайт после потери доступа к исходному проекту, используя его публичную версию как единственный референс.', webCase: {
@@ -196,6 +201,7 @@ export const cases = [
     ),
   }),
   website('retatrutide-landing', 'RETATRUTIDE — LANDING PAGE', 'https://shalomesp11-creator.github.io/retatrutide-landing-preview/', {
+    googleAdsTracking: true,
     categoryLabel: 'Landing Page / Development', accent: '#baccb9',
     copy: localized(
       { summary: 'Отдельный лендинг RETATRUTIDE. Собственная визуальная концепция и полная web-разработка с нуля.' },

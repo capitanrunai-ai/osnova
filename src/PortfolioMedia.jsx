@@ -191,6 +191,7 @@ export function PortfolioDetail({ item, lang, navigate, Link }) {
           <div><span className="portfolio-category">{item.recovery ? ui.restored : item.categoryLabel}</span><h1>{item.title.split(' — ').map((part, i) => <span key={part} className={i ? 'project-subtitle' : ''}>{part}</span>)}</h1></div>
           <div className="portfolio-detail-intro">
             <p>{item.summary}</p>
+            {item.googleAdsTracking && <p className="portfolio-tracking">{ui.webStudy.googleAdsTracking}</p>}
             {!isVoice && !isAutomation && <a className="portfolio-visit" href={item.url} target="_blank" rel="noopener noreferrer">{ui.visit}<ArrowUpRight size={19} /></a>}
             {item.originalUrl && <a className="portfolio-original" href={item.originalUrl} target="_blank" rel="noopener noreferrer">{ui.original}<ArrowUpRight size={14} /></a>}
           </div>

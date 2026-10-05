@@ -14,7 +14,7 @@ const output = resolve(root, '.visual-audit/case-services')
 const origin = 'http://127.0.0.1:5186'
 const locales = ['ru', 'en', 'de', 'uk']
 const automation = ['ai-voice-operator', 'ai-news-automation', 'retail-stock-monitor']
-const development = ['dds-service', 'bala-group', 'comfort-home']
+const development = cases.filter(item => item.serviceCase === 'development').map(item => item.slug)
 const report = { internalLinks: 0, pages: [], errors: [], failures: [] }
 await mkdir(output, { recursive: true })
 
@@ -115,6 +115,20 @@ try {
           const item = cases.find(item => route === `cases/${item.slug}`)
           const links = await page.$$eval(`main a[href="/${lang}/services/${item.category}"]`, nodes => nodes.length)
           assert.equal(links, 1, `${path}: exactly one service backlink`)
+          const tracking = await page.$$('.portfolio-tracking')
+          assert.equal(tracking.length, item.googleAdsTracking ? 1 : 0, `${path}: confirmed tracking scope only`)
+          if (item.googleAdsTracking) assert.ok(await page.$eval('.portfolio-tracking', node => /Google Ads.*Google tag/.test(node.textContent)))
+          if (item.slug === 'slavabud') {
+            assert.ok(await page.$eval('.web-case-facts-top strong', node => {
+              const rect = node.getBoundingClientRect()
+              return rect.left >= 0 && rect.right <= document.documentElement.clientWidth && node.scrollWidth <= node.clientWidth + 1
+            }), `${path}@${width}: delivery label fully visible`)
+            const text = await page.$eval('main', node => node.innerText)
+            for (const term of ['GitHub', 'Telegram', 'Google', 'SEO', '2']) assert.ok(text.includes(term), `${path}: missing delivered scope ${term}`)
+            assert.ok(!/ROAS|CTR|CPC|CPA|revenue|conversion rate|organic growth/i.test(text), `${path}: unsupported results`)
+            const media = await page.$$eval('.portfolio-screen img, .portfolio-secondary img', images => images.map(image => new URL(image.src).pathname))
+            assert.ok(media.every(file => file.startsWith('/assets/cases/slavabud-')), `${path}: dedicated live screenshots`)
+          }
           assert.ok(await page.$('.portfolio-prev'))
           assert.ok(await page.$('.portfolio-next'))
           if (item.visual === 'voice') {
@@ -137,7 +151,7 @@ try {
             assert.equal(await page.$('dialog[open]'), null)
           }
         }
-        if ([320, 390, 1440].includes(width) && ['cases/ai-voice-operator', 'services/automation'].includes(route)) {
+        if ([320, 390, 1440].includes(width) && ['cases/ai-voice-operator', 'cases/slavabud', 'services/automation'].includes(route)) {
           await page.screenshot({ path: resolve(output, `${lang}-${route.replaceAll('/', '-')}-${width}.png`), fullPage: true })
         }
       }

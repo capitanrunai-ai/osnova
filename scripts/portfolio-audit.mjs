@@ -74,7 +74,7 @@ try {
     for (const item of cases) {
       await open(`/${lang}/cases/${item.slug}`, 390, 844)
       await checkLayout(`/${lang}/cases/${item.slug}`)
-      if (item.url) assert.equal(await page.$eval('.portfolio-visit', node => node.href), item.url)
+      if (item.url) assert.equal(await page.$eval('.portfolio-visit', node => node.href), new URL(item.url).href)
     }
   }
   await open('/en/cases/dds-service')
@@ -84,7 +84,7 @@ try {
   await open('/ru/cases/ai-voice-operator', 390, 844)
   await page.screenshot({ path: resolve(output, 'portfolio-audio-mobile.png'), fullPage: true })
   await page.click('.audio-play')
-  await wait(1100)
+  await page.waitForFunction(() => { const audio = document.querySelector('audio'); return audio && !audio.paused && audio.currentTime > 0 }, { timeout: 15000 })
   report.audio = await page.$eval('audio', audio => ({ playing: !audio.paused, time: audio.currentTime, duration: audio.duration, source: audio.currentSrc }))
   assert.ok(report.audio.playing && report.audio.time > 0)
   assert.ok(Math.abs(report.audio.duration - 249.754) < .1)
@@ -112,7 +112,7 @@ try {
   await open('/ru/', 1440, 1000)
   assert.equal(await page.$$eval('.commercial-cases .home-work-card', nodes => nodes.length), 5)
   assert.equal(await page.$eval('#cases .home-work-card h3', node => node.textContent), 'DDS SERVICE')
-  assert.equal(await page.$$eval('#cases .home-more-card', nodes => nodes.length), 3)
+  assert.equal(await page.$$eval('#cases .home-more-card', nodes => nodes.length), cases.filter(item => item.category === 'development').length - 3)
   await page.$eval('#cases', node => node.scrollIntoView())
   await wait(700)
   await (await page.$('#cases')).screenshot({ path: resolve(output, 'portfolio-home-desktop.png') })

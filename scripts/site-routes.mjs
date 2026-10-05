@@ -25,6 +25,7 @@ function sourcesFor(route, lang) {
   if (route === 'services/email-deliverability') return ['src/data/emailContent.js', locale]
   if (route === 'services/seo' || route === 'services/ai-visibility') return ['src/data/visibilityContent.js', locale]
   if (route.startsWith('services/')) return ['src/data/serviceContent.js', locale]
+  if (route === 'cases/slavabud') return ['src/data/slavabudCase.js']
   if (route.startsWith('cases/')) return ['src/data/cases.js']
   return ['src/data/content.js']
 }
