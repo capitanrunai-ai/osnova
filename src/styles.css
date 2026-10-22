@@ -2499,6 +2499,7 @@ footer {
 
 .footer-links {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: flex-end;
   gap: 22px;
@@ -2511,6 +2512,12 @@ footer {
   color: rgba(255, 255, 255, .55);
   font: 400 9px var(--mono);
   text-transform: uppercase;
+}
+
+@media (max-width: 640px) {
+  footer .footer-bottom { grid-template-columns: minmax(0, 1fr); gap: 12px; padding-block: 28px; }
+  footer .footer-links { justify-content: flex-start; gap: 4px 20px; }
+  footer .footer-bottom p { grid-column: 1; grid-row: 3; }
 }
 
 @media (max-width: 1180px) {

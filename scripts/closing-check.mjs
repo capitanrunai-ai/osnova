@@ -1,4 +1,4 @@
-// Closing half of the v1 homepage: specializations 03–06, process, terms, custom CTA and the contact form.
+// Homepage closing sections and the separate contact-page journey.
 // /api/contact is answered inside the browser so the check never sends a real Telegram lead.
 import { spawn } from 'node:child_process'
 import { mkdir, writeFile } from 'node:fs/promises'
@@ -34,7 +34,7 @@ try {
   })
   await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }])
   const submitEmailLead = async (lang, expectedPage) => {
-    await page.waitForFunction(() => location.hash === '#contact' && document.querySelector('select[name="service"]')?.value === 'Email Deliverability')
+    await page.waitForFunction(() => location.pathname.endsWith('/contact') && document.querySelector('select[name="service"]')?.value === 'Email Deliverability')
     assert.equal(await page.$eval('#contact form', form => form.checkValidity()), false, 'empty form is invalid')
     await page.type('input[name="name"]', 'OSNOVA check')
     await page.type('input[name="contact"]', 'test@example.com')
@@ -59,7 +59,7 @@ try {
         document.documentElement.style.scrollBehavior = 'auto'
       })
       const result = await page.evaluate(() => {
-        const sections = [...document.querySelectorAll('#specializations, #process, #about, .commercial-custom, #contact')]
+        const sections = [...document.querySelectorAll('#specializations, #process, #about, .commercial-custom')]
         const overflow = sections.flatMap(section => [...section.querySelectorAll('h2, h3, p, a, li, label, input, select, textarea, button')].filter(el => {
           const box = el.getBoundingClientRect()
           return box.width && (box.left < -1 || box.right > innerWidth + 1 || el.scrollWidth > el.clientWidth + 2)
@@ -79,12 +79,9 @@ try {
           terms: document.querySelectorAll('#about .commercial-trust-grid p').length,
           overflow,
           targets,
-          contactBackground: getComputedStyle(document.querySelector('#contact')).backgroundColor,
-          contactTitle: document.querySelector('#contact h2')?.textContent,
-          fields: ['name', 'contact', 'company', 'service', 'message'].filter(name => document.querySelector(`#contact [name="${name}"]`)),
         }
       })
-      assert.deepEqual(result.order, ['specializations', 'process', 'about', 'commercial-custom', 'contact'], `${device}/${lang}: closing sections in order`)
+      assert.deepEqual(result.order, ['specializations', 'process', 'about', 'commercial-custom'], `${device}/${lang}: closing sections in order`)
       assert.ok(result.heading?.trim(), `${device}/${lang}: specializations heading`)
       assert.deepEqual(result.numbers, ['03', '04', '05', '06'], `${device}/${lang}: specializations follow Development and Automation`)
       assert.deepEqual(result.hrefs, specialists.map(slug => `/${lang}/services/${slug}`))
@@ -93,26 +90,24 @@ try {
       assert.equal(result.terms, 4, `${device}/${lang}: working terms`)
       assert.deepEqual(result.overflow, [], `${device}/${lang}: overflow`)
       assert.deepEqual(result.targets, [], `${device}/${lang}: touch targets`)
-      assert.equal(result.contactBackground, 'rgb(10, 10, 12)')
-      assert.ok(result.contactTitle?.trim(), `${device}/${lang}: contact heading`)
-      assert.deepEqual(result.fields, ['name', 'contact', 'company', 'service', 'message'])
       // Keep the fixed header out of isolated section captures.
       await page.$eval('.site-header', node => { node.style.visibility = 'hidden' })
-      for (const [section, selector] of [['specializations', '#specializations'], ['process', '#process'], ['contact', '#contact']]) {
+      for (const [section, selector] of [['specializations', '#specializations'], ['process', '#process']]) {
         const element = await page.$(selector)
         await element.screenshot({ path: resolve(output, `${lang}-${device}-${section}.png`) })
       }
       await page.$eval('.site-header', node => { node.style.visibility = '' })
+      assert.equal(await page.$('#contact form'), null, 'no embedded form')
       // The generic CTA opens the form without a preselected service.
       await page.$eval('.commercial-custom .button', node => node.click())
-      await page.waitForFunction(() => location.hash === '#contact-form')
+      await page.waitForFunction(() => location.pathname.endsWith('/contact'))
       assert.equal(await page.$eval('select[name="service"]', node => node.selectedIndex), 0, `${device}/${lang}: custom CTA leaves the neutral "not sure yet" option`)
       // A specialization card leads to its page, whose CTA preselects that service in the form.
       await page.goto(`${origin}/${lang}/`, { waitUntil: 'networkidle0' })
       await page.$eval('.specialist-email-deliverability', node => node.click())
       await page.waitForSelector('.email-page')
       await page.$eval('.cta-email .button', node => node.click())
-      await submitEmailLead(lang, `/${lang}/#contact`)
+      await submitEmailLead(lang, `/${lang}/contact`)
       report.push({ device, lang, ...result, interaction: 'passed' })
       process.stdout.write(`${device}/${lang}: passed\n`)
     }
@@ -124,7 +119,7 @@ try {
     await page.$eval('.specialist-email-deliverability', node => node.click())
     await page.waitForSelector('.email-page')
     await page.$eval('.cta-email .button', node => node.click())
-    await page.waitForFunction(() => location.hash === '#contact' && document.querySelector('select[name="service"]')?.value === 'Email Deliverability')
+    await page.waitForFunction(() => location.pathname.endsWith('/contact') && document.querySelector('select[name="service"]')?.value === 'Email Deliverability')
   }
   assert.deepEqual(errors, [])
   await writeFile(resolve(output, 'report.json'), JSON.stringify({ report, errors, leads: leads.length, directoryLinks: 'passed' }, null, 2))

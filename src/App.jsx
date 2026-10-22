@@ -35,6 +35,8 @@ import { paymentContent } from './data/paymentContent'
 import { caseCategories, caseUi, getLocalizedCases } from './data/cases'
 import { getServiceContent, loadServiceContent } from './data/serviceContentLoader'
 import { closingContent } from './data/closingContent'
+import { contactContent } from './data/contactContent'
+import { getDevelopmentShowcase } from './data/developmentShowcase'
 import { defaultLanguage, serviceRoutes } from './data/routes'
 import './services.css'
 import './cases.css'
@@ -67,6 +69,7 @@ function resolveRoute(route, lang) {
   if (route === 'services') return { kind: 'services' }
   if (route === 'cases') return { kind: 'cases' }
   if (route === 'payment') return { kind: 'payment' }
+  if (route === 'contact') return { kind: 'contact' }
   if (route.startsWith('services/')) {
     const id = route.slice('services/'.length)
     return serviceRoutes.includes(id) ? { kind: 'service', id } : { kind: 'notFound' }
@@ -204,7 +207,7 @@ function Header({ t, s, lang, route, setLang, navigate }) {
         <RouteLink href={`/${lang}/cases`} navigate={navigate} onClick={close}>{s.common.cases}</RouteLink>
         <RouteLink href={`${home}#about`} navigate={navigate} onClick={close}>{s.common.about}</RouteLink>
         <RouteLink href={`${home}#pricing`} navigate={navigate} onClick={close}>{s.common.pricing}</RouteLink>
-        <RouteLink className="nav-cta" href={`${home}#contact`} navigate={navigate} onClick={close}>
+        <RouteLink className="nav-cta" href={`/${lang}/contact`} navigate={navigate} onClick={close}>
           {s.common.discuss}<ArrowUpRight size={15} />
         </RouteLink>
       </nav>
@@ -710,7 +713,7 @@ function Pricing({ t, lang, navigate }) {
               <strong>{service}</strong>
               <RouteLink
                 className="price-action"
-                href={`/${lang}/#contact-form`}
+                href={`/${lang}/contact`}
                 navigate={navigate}
                 onClick={() => {
                   selectContactService(service)
@@ -729,11 +732,12 @@ function Pricing({ t, lang, navigate }) {
   )
 }
 
-function Contact({ t, p, lang, navigate }) {
+function ContactPage({ t, p, lang, navigate }) {
   const [status, setStatus] = useState('idle')
   const [service, setService] = useState(() => sessionStorage.getItem('osnova:contact-service') || '')
   const startedAtRef = useRef(Date.now())
   const c = closingContent[lang]
+  const intro = contactContent[lang]
   useEffect(() => {
     sessionStorage.removeItem('osnova:contact-service')
     const selectService = (event) => {
@@ -745,7 +749,8 @@ function Contact({ t, p, lang, navigate }) {
     return () => window.removeEventListener('osnova:contact-service', selectService)
   }, [])
   const serviceOptions = t.contact.options
-  const selectedService = serviceOptions.includes(service) ? service : serviceOptions.at(-1)
+  const serviceIndex = Object.values(content).map(item => item.contact.options.indexOf(service)).find(index => index >= 0)
+  const selectedService = serviceOptions[serviceIndex] || serviceOptions.at(-1)
   const handleSubmit = async (event) => {
     event.preventDefault()
     if (status === 'sending') return
@@ -791,13 +796,11 @@ function Contact({ t, p, lang, navigate }) {
   const clearValidation = (event) => event.currentTarget.setCustomValidity('')
   const localizeValidation = (event) => event.currentTarget.setCustomValidity(c.validation[event.currentTarget.name])
   return (
-    <section className="contact contact-finale section-pad" id="contact" aria-labelledby="contact-title">
-      <div className="container contact-topline"><span className="eyebrow light"><i />{c.label}</span><span aria-hidden="true">OS / NEXT</span></div>
+    <main className="contact-page" id="top"><section className="contact contact-finale section-pad" id="contact" aria-labelledby="contact-title">
+      <div className="container contact-topline"><span className="eyebrow light"><i />{intro.label}</span><span aria-hidden="true">OS / CONTACT</span></div>
       <div className="container contact-layout">
         <Reveal className="contact-copy">
-          <h2 id="contact-title">{c.title}<em>{c.accent}</em></h2><p>{c.text}</p>
-          <ol className="contact-steps">{c.steps.map((step, index) => <li key={step}><span>0{index + 1}</span>{step}</li>)}</ol>
-          <div className="direct-contact"><small>{t.contact.or}</small><a href={`mailto:${t.contact.email}`} onClick={() => track('email_click', { site_language: lang, page_path: window.location.pathname, link_location: 'contact' })}><span><small>Email</small>{t.contact.email}</span><ArrowUpRight size={20} /></a><a href="https://t.me/capitanrun" target="_blank" rel="noreferrer" onClick={() => track('telegram_click', { site_language: lang, page_path: window.location.pathname, link_location: 'contact' })}><span><small>Telegram</small>{t.contact.telegram}</span><ArrowUpRight size={20} /></a><RouteLink className="contact-payment-link" href={`/${lang}/payment`} navigate={navigate}><span><small>{p.navLabel}</small>{p.contactLink}</span><ArrowUpRight size={20} /></RouteLink></div>
+          <h1 id="contact-title">{intro.title}</h1><p>{intro.intro}</p>
         </Reveal>
         <Reveal className="contact-form-wrap" delay={120}>
           <span className="contact-form-anchor" id="contact-form" aria-hidden="true" />
@@ -812,7 +815,7 @@ function Contact({ t, p, lang, navigate }) {
                 <label><span>{t.contact.fields.email} <i>({c.optional})</i></span><input name="email" type="email" inputMode="email" maxLength={254} autoComplete="email" autoCapitalize="none" spellCheck={false} onInput={clearValidation} onInvalid={localizeValidation} /></label>
                 <label><span>{t.contact.fields.company} <i>({c.optional})</i></span><input name="company" maxLength={160} autoComplete="organization" /></label>
               </div>
-              <label><span>{t.contact.fields.help}</span><select name="service" value={selectedService} onChange={(event) => setService(event.target.value)}><option value={serviceOptions.at(-1)}>{serviceOptions.at(-1)}</option>{serviceOptions.slice(0, -1).map((option) => <option key={option}>{option}</option>)}</select></label>
+              <label><span>{t.contact.fields.help}</span><select name="service" required value={selectedService} onChange={(event) => setService(event.target.value)}><option value={serviceOptions.at(-1)}>{serviceOptions.at(-1)}</option>{serviceOptions.slice(0, -1).map((option) => <option key={option}>{option}</option>)}</select></label>
               <label><span>{t.contact.fields.message} <i>({c.optional})</i></span><textarea name="message" rows="4" maxLength={2000} placeholder={c.messageHint} /></label>
               <input type="text" name="hp" className="hp-field" tabIndex={-1} autoComplete="off" aria-hidden="true" />
               {status === 'error' && <p className="form-error" role="alert">{c.error}</p>}
@@ -820,8 +823,12 @@ function Contact({ t, p, lang, navigate }) {
             </form>
           )}
         </Reveal>
+        <Reveal className="contact-context">
+          <ol className="contact-steps">{c.steps.map((step, index) => <li key={step}><span>0{index + 1}</span>{step}</li>)}</ol>
+          <div className="direct-contact"><small>{t.contact.or}</small><a href={`mailto:${t.contact.email}`} onClick={() => track('email_click', { site_language: lang, page_path: window.location.pathname, link_location: 'contact' })}><span><small>Email</small>{t.contact.email}</span><ArrowUpRight size={20} /></a><a href="https://t.me/capitanrun" target="_blank" rel="noreferrer" onClick={() => track('telegram_click', { site_language: lang, page_path: window.location.pathname, link_location: 'contact' })}><span><small>Telegram</small>{t.contact.telegram}</span><ArrowUpRight size={20} /></a><RouteLink className="contact-payment-link" href={`/${lang}/payment`} navigate={navigate}><span><small>{p.navLabel}</small>{p.contactLink}</span><ArrowUpRight size={20} /></RouteLink></div>
+        </Reveal>
       </div>
-    </section>
+    </section></main>
   )
 }
 
@@ -1003,7 +1010,7 @@ function DevelopmentVisual({ labels }) {
 
 function DevelopmentQuoteLink({ t, lang, navigate, className = '' }) {
   const service = t.pricing.items[1]
-  return <RouteLink className={className} href={`/${lang}/#contact-form`} navigate={navigate} onClick={() => {
+  return <RouteLink className={className} href={`/${lang}/contact`} navigate={navigate} onClick={() => {
     selectContactService(service)
     track('pricing_cta_click', { site_language: lang, service: serviceSlug(service, t.contact.options) })
   }} aria-label={`${t.pricing.action}: ${service}`}>{t.pricing.action}<ArrowUpRight size={18} /></RouteLink>
@@ -1259,7 +1266,7 @@ function VisibilityCta({ data, lang, navigate, variant = 'seo', service }) {
     <section className={`visibility-cta cta-${variant}`}>
       <div className="container visibility-cta-grid">
         <Reveal><span className="eyebrow light">{data.label}</span><h2>{data.title}</h2></Reveal>
-        <Reveal delay={90}><p>{data.text}</p><RouteLink className="button button-primary" href={`/${lang}/#contact`} navigate={navigate} onClick={() => {
+        <Reveal delay={90}><p>{data.text}</p><RouteLink className="button button-primary" href={`/${lang}/contact`} navigate={navigate} onClick={() => {
           if (service) sessionStorage.setItem('osnova:contact-service', service)
         }}>{data.button}<ArrowUpRight /></RouteLink></Reveal>
       </div>
@@ -1290,6 +1297,9 @@ function Footer({ t, s, p, lang, navigate }) {
         <div className="footer-links">
           <RouteLink href={`/${lang}/services`} navigate={navigate}>{s.common.services}<ArrowUpRight size={14} /></RouteLink>
           <RouteLink href={`/${lang}/payment`} navigate={navigate}>{p.navLabel}<ArrowUpRight size={14} /></RouteLink>
+          <RouteLink href={`/${lang}/contact`} navigate={navigate}>{s.common.discuss}<ArrowUpRight size={14} /></RouteLink>
+          <a href={`mailto:${t.contact.email}`}>Email<ArrowUpRight size={14} /></a>
+          <a href="https://t.me/capitanrun" target="_blank" rel="noreferrer">Telegram<ArrowUpRight size={14} /></a>
         </div>
       </div>
     </footer>
@@ -1322,10 +1332,8 @@ function MoreWorkCard({ item, lang, navigate }) {
 
 function CommercialWebCases({ lang, navigate }) {
   const data = commercialContent[lang].web
-  const web = getLocalizedCases(lang).filter(item => item.category === 'development')
-  const featured = web.filter(item => item.serviceCase === 'development').slice(0, 3)
-  const more = web.filter(item => !featured.includes(item))
-  return <section className="commercial-section commercial-cases" id="cases"><div className="container"><Reveal className="home-work-head"><span className="eyebrow light">{data.label}</span><h2>{data.title}</h2><span className="home-work-count">{String(web.length).padStart(2, '0')} / WEB</span></Reveal><div className="home-work-grid">{featured.map(item => <WorkCard key={item.slug} item={item} lang={lang} navigate={navigate} />)}</div>{more.length > 0 && <div className="home-more-work"><span className="home-more-label">{designContent[lang].moreWork}</span><div className="home-more-grid">{more.map(item => <MoreWorkCard key={item.slug} item={item} lang={lang} navigate={navigate} />)}</div></div>}<RouteLink className="commercial-text-link" href={`/${lang}/cases`} navigate={navigate}>{data.cta}<ArrowRight size={17} /></RouteLink></div></section>
+  const { featured, more, total } = getDevelopmentShowcase(lang)
+  return <section className="commercial-section commercial-cases" id="cases"><div className="container"><Reveal className="home-work-head"><span className="eyebrow light">{data.label}</span><h2>{data.title}</h2><span className="home-work-count">{String(total).padStart(2, '0')} / WEB</span></Reveal><div className="home-work-grid">{featured.map(item => <WorkCard key={item.slug} item={item} lang={lang} navigate={navigate} />)}</div>{more.length > 0 && <div className="home-more-work"><span className="home-more-label">{designContent[lang].moreWork}</span><div className="home-more-grid">{more.map(item => <MoreWorkCard key={item.slug} item={item} lang={lang} navigate={navigate} />)}</div></div>}<RouteLink className="commercial-text-link" href={`/${lang}/cases`} navigate={navigate}>{data.cta}<ArrowRight size={17} /></RouteLink></div></section>
 }
 
 function CommercialProcess({ lang }) {
@@ -1341,7 +1349,7 @@ function CommercialBridge({ lang, navigate }) {
   // Support/monitoring (client-paid resources) is not Managed Automation; the card shows the first Managed tier.
   const managed = c.automation.managed.rows.find(([title]) => title.startsWith('Managed'))
   return <section className="commercial-section commercial-bridge" id="automation"><div className="container">
-    <div className="automation-heading"><Reveal><span className="eyebrow light">02 / AUTOMATION</span><h2>{d.automationTitle}</h2></Reveal><Reveal><p>{d.automationText}</p><RouteLink className="button button-primary" href={`/${lang}/#contact-form`} navigate={navigate} onClick={() => selectContactService(content[lang].contact.options[0])}>{c.custom.cta}<ArrowUpRight size={18} /></RouteLink></Reveal></div>
+    <div className="automation-heading"><Reveal><span className="eyebrow light">02 / AUTOMATION</span><h2>{d.automationTitle}</h2></Reveal><Reveal><p>{d.automationText}</p><RouteLink className="button button-primary" href={`/${lang}/contact`} navigate={navigate} onClick={() => selectContactService(content[lang].contact.options[0])}>{c.custom.cta}<ArrowUpRight size={18} /></RouteLink></Reveal></div>
     <Reveal className="automation-circuit"><div className="circuit-stamp" aria-hidden="true">OS<span> / AUTOMATION</span></div><ol>{d.flow.map((label, i) => <li key={label}><span className="circuit-node">0{i + 1}</span><div><h3>{label}</h3><p>{d.flowDetail[i]}</p></div>{i < 2 && <ArrowRight className="circuit-arrow" aria-hidden="true" />}</li>)}</ol>
       <div className="automation-usecases"><span className="automation-usecases-label">{d.useCasesLabel}</span><ul>{d.useCases.map(([title, text], i) => { const Icon = automationUseCaseIcons[i]; return <li key={title}><Icon size={22} strokeWidth={1.5} aria-hidden="true" /><h3>{title}</h3><p>{text}</p></li> })}</ul></div>
     </Reveal>
@@ -1372,7 +1380,7 @@ function CommercialTrust({ lang, navigate }) {
 
 function CommercialCustom({ lang, navigate }) {
   const data = commercialContent[lang].custom
-  return <section className="commercial-section commercial-custom"><div className="container"><Reveal><h2>{data.title}</h2><p>{data.text}</p><RouteLink className="button button-primary" href={`/${lang}/#contact-form`} navigate={navigate} onClick={() => selectContactService('')}>{data.cta}<ArrowUpRight size={18} /></RouteLink></Reveal></div></section>
+  return <section className="commercial-section commercial-custom"><div className="container"><Reveal><h2>{data.title}</h2><p>{data.text}</p><RouteLink className="button button-primary" href={`/${lang}/contact`} navigate={navigate} onClick={() => selectContactService('')}>{data.cta}<ArrowUpRight size={18} /></RouteLink></Reveal></div></section>
 }
 
 const specialistSlugs = ['seo', 'performance', 'ai-visibility', 'email-deliverability']
@@ -1388,7 +1396,7 @@ function CommercialSecondary({ s, lang, navigate }) {
 }
 
 function HomePage({ t, s, p, lang, navigate }) {
-  return <><HomeHero t={t} s={s} lang={lang} navigate={navigate} /><CommercialOffers lang={lang} navigate={navigate} /><CommercialWebCases lang={lang} navigate={navigate} /><CommercialBridge lang={lang} navigate={navigate} /><CommercialAutomationCases lang={lang} navigate={navigate} /><CommercialSecondary s={s} lang={lang} navigate={navigate} /><CommercialProcess lang={lang} /><CommercialTrust lang={lang} navigate={navigate} /><CommercialCustom lang={lang} navigate={navigate} /><Contact t={t} p={p} lang={lang} navigate={navigate} /></>
+  return <><HomeHero t={t} s={s} lang={lang} navigate={navigate} /><CommercialOffers lang={lang} navigate={navigate} /><CommercialWebCases lang={lang} navigate={navigate} /><CommercialBridge lang={lang} navigate={navigate} /><CommercialAutomationCases lang={lang} navigate={navigate} /><CommercialSecondary s={s} lang={lang} navigate={navigate} /><CommercialProcess lang={lang} /><CommercialTrust lang={lang} navigate={navigate} /><CommercialCustom lang={lang} navigate={navigate} /></>
 }
 
 function ServicesPage({ s, lang, navigate }) {
@@ -1525,8 +1533,7 @@ function DevelopmentPage({ s, t, lang, navigate }) {
   const data = s.development
   const commercial = commercialContent[lang].development
   const work = developmentWorkLabels[lang]
-  const related = getLocalizedCases(lang).filter(item => item.serviceCase === 'development')
-  const more = getLocalizedCases(lang).filter(item => item.category === 'development' && item.serviceCase !== 'development')
+  const { featured: related, more } = getDevelopmentShowcase(lang)
   return (
     <main className="direction-page development-page">
       <DirectionHero direction="development" data={{ ...data, title: commercial.title, titleAccent: '', intro: commercial.scope }} action={<DevelopmentQuoteLink className="button button-primary development-hero-cta" t={t} lang={lang} navigate={navigate} />}><DevelopmentVisual labels={data.visual} /></DirectionHero>
@@ -1758,6 +1765,8 @@ export default function App({ initialLanguage }) {
       ? t.notFound.meta
       : resolved.kind === 'payment'
       ? [p.metaTitle, p.metaDescription]
+      : resolved.kind === 'contact'
+      ? contactContent[lang].meta
       : resolved.kind === 'cases'
       ? [`${caseUi[lang].pageTitle} — OSNOVA`, caseUi[lang].pageIntro]
       : caseItem
@@ -1807,6 +1816,7 @@ export default function App({ initialLanguage }) {
     page = <ServicePage s={s} t={t} lang={lang} navigate={navigate} />
   }
   else if (resolved.kind === 'payment') page = <PaymentPage p={p} />
+  else if (resolved.kind === 'contact') page = <ContactPage t={t} p={p} lang={lang} navigate={navigate} />
   else if (resolved.kind === 'cases') page = <CasesArchive lang={lang} navigate={navigate} />
   else if (resolved.kind === 'case') page = <PortfolioDetail key={resolved.item.slug} item={resolved.item} lang={lang} navigate={navigate} Link={RouteLink} />
   else if (resolved.kind === 'notFound') page = <NotFoundPage t={t} lang={lang} navigate={navigate} />

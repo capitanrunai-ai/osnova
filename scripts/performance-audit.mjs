@@ -131,7 +131,7 @@ try {
   await page.waitForNetworkIdle({ idleTime: 100 })
   assert.equal(googleRequests, 1, 'analytics loads once after consent')
   for (const lang of locales) {
-    await page.goto(`https://osnovaai.com/${lang}/#contact-form`, { waitUntil: 'networkidle0' })
+    await page.goto(`https://osnovaai.com/${lang}/contact`, { waitUntil: 'networkidle0' })
     await hydrated(page)
     assert.equal(await page.$eval('#contact form', form => form.checkValidity()), false)
     await page.type('input[name="name"]', 'Local performance QA')

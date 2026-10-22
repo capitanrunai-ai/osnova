@@ -61,12 +61,12 @@ try {
     await page.$eval('#contact .form-success button', button => button.click())
     await page.waitForSelector('#contact form')
   }
-  for (const width of [320, 375, 390, 430, 1280, 1440]) {
+  for (const width of [320, 375, 390, 430, 768, 1280, 1440]) {
     await page.setViewport({ width, height: width < 700 ? 844 : 1000, isMobile: width < 700, hasTouch: width < 700 })
     for (const lang of ['ru', 'en', 'de', 'uk']) {
       const where = `${lang}@${width}`
       const copy = closingContent[lang]
-      await page.goto(`${origin}/${lang}/#contact-form`, { waitUntil: 'domcontentloaded' })
+      await page.goto(`${origin}/${lang}/contact`, { waitUntil: 'domcontentloaded' })
       await page.waitForSelector('#contact form')
       await page.evaluate(async () => {
         document.querySelectorAll('.reveal').forEach(node => node.classList.add('is-visible'))
@@ -82,7 +82,7 @@ try {
         return { fields, clipped, overflow: document.documentElement.scrollWidth > innerWidth + 1, options: [...document.querySelector('select[name="service"]').options].map(n => n.value), textareaHeight: document.querySelector('textarea').getBoundingClientRect().height }
       })
       assert.deepEqual(layout.fields.map(field => field.name), ['name', 'contact', 'email', 'company', 'service', 'message'])
-      assert.deepEqual(layout.fields.filter(field => field.required).map(field => field.name), ['name', 'contact'])
+      assert.deepEqual(layout.fields.filter(field => field.required).map(field => field.name), ['name', 'contact', 'service'])
       assert.equal(layout.fields[1].label, content[lang].contact.fields.contact)
       assert.equal(layout.fields[1].type, 'text')
       assert.equal(layout.fields[1].inputMode, 'text')

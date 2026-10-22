@@ -14,7 +14,7 @@ const output = resolve(root, '.visual-audit/case-services')
 const origin = 'http://127.0.0.1:5186'
 const locales = ['ru', 'en', 'de', 'uk']
 const automation = ['ai-voice-operator', 'ai-news-automation', 'retail-stock-monitor']
-const development = cases.filter(item => item.serviceCase === 'development').map(item => item.slug)
+const development = ['dds-service', 'ds-repair-solutions', 'comfort-lab']
 const report = { internalLinks: 0, pages: [], errors: [], failures: [] }
 await mkdir(output, { recursive: true })
 
@@ -85,7 +85,7 @@ try {
           const slugs = await page.$$eval('.service-related .home-work-card', nodes => nodes.map(node => node.pathname.split('/').at(-1)))
           assert.deepEqual(slugs, direction === 'automation' ? automation : development, `${path}: service cases`)
           if (direction === 'development') {
-            assert.deepEqual(await page.$$eval('.service-related .home-more-card', nodes => nodes.map(node => node.pathname.split('/').at(-1))), cases.filter(item => item.category === 'development' && !development.includes(item.slug)).map(item => item.slug))
+            assert.deepEqual(await page.$$eval('.service-related .home-more-card', nodes => nodes.map(node => node.pathname.split('/').at(-1))), ['slavabud', 'comfort-home', 'bala-group'])
           }
           if (direction === 'automation') {
             // Detect a broken final letter of a long localized product name,
@@ -109,7 +109,7 @@ try {
             assert.deepEqual(await page.$$eval('#managed .commercial-managed-row > strong', prices), ['€49–99', '€150', '€300', '€700–800+'])
             const text = await page.$eval('main', node => node.innerText)
             for (const term of ['24', '2–5', '30', '70', '45', '2–3', '09:00–23:00', 'Dentistry']) assert.ok(text.includes(term), `${path}: missing ${term}`)
-            assert.ok(await page.$('.commercial-custom a[href$="#contact-form"]'), `${path}: custom-task CTA`)
+            assert.ok(await page.$('.commercial-custom a[href$="/contact"]'), `${path}: custom-task CTA`)
           }
         } else {
           const item = cases.find(item => route === `cases/${item.slug}`)

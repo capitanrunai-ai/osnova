@@ -75,7 +75,7 @@ try {
     await page.$eval('.cta-email .button', node => node.click())
     await page.waitForSelector('#contact select[name="service"]')
     assert.equal(await page.$eval('#contact select', node => node.value), 'Email Deliverability')
-    assert.equal(new URL(page.url()).hash, '#contact')
+    assert.equal(new URL(page.url()).pathname, `/${lang}/contact`)
     await page.goBack()
     await page.waitForSelector('.email-page')
     await page.reload({ waitUntil: 'domcontentloaded' })
@@ -83,6 +83,7 @@ try {
     await page.$eval('.next-direction a', node => node.click())
     await page.waitForSelector('.automation-page')
     await page.goto(`${origin}/${lang}/services/ai-visibility`, { waitUntil: 'domcontentloaded' })
+    await page.waitForSelector(`.next-direction a[href="/${lang}/services/email-deliverability"]`)
     await page.$eval('.next-direction a', node => node.click())
     await page.waitForSelector('.email-page')
   }

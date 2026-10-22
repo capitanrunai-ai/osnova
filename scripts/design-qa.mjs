@@ -77,7 +77,7 @@ try {
       assert.equal(state.services.length, 4)
       assert.ok(state.services.every(n => n.height > 200 && n.text.length > 70), 'full service cards')
       assert.equal(state.work.length, 5)
-      assert.deepEqual(state.moreWork, ['bala-group', 'retatrutide-silver-signal', 'slavabud', 'comfort-home', 'retatrutide-landing'].map(slug => `/${lang}/cases/${slug}`), 'every other real web project is shown')
+      assert.deepEqual(state.moreWork, ['slavabud', 'comfort-home', 'bala-group'].map(slug => `/${lang}/cases/${slug}`), 'curated extra Development projects keep the approved order')
       assert.equal(state.useCases.length, 6, 'automation use cases')
       assert.ok(state.useCases.every(text => text.length > 40), 'use cases carry a description')
       // Managed Automation starts at the first managed tier; €49–99 is only the client-paid support option.
@@ -90,7 +90,7 @@ try {
       assert.ok(['149', '250', '300', '350', '500'].every(p => state.prices.includes(p)))
       assert.equal(state.automationColor, 'rgb(16, 17, 19)')
       await page.screenshot({ path: resolve(output, `${device}-${lang}-full.png`), fullPage: true })
-      for (const [name, selector] of [['hero', '.home-hero'], ['development', '.commercial-offers'], ['web-cases', '#cases'], ['automation', '#automation'], ['automation-cases', '.commercial-automation-cases'], ['more-work', '.home-more-work'], ['services', '.commercial-secondary'], ['process', '.commercial-process'], ['contact', '#contact']]) {
+      for (const [name, selector] of [['hero', '.home-hero'], ['development', '.commercial-offers'], ['web-cases', '#cases'], ['automation', '#automation'], ['automation-cases', '.commercial-automation-cases'], ['more-work', '.home-more-work'], ['services', '.commercial-secondary'], ['process', '.commercial-process'], ['footer', 'footer']]) {
         await page.$eval(selector, n => n.scrollIntoView({ behavior: 'instant', block: 'start' }))
         await page.screenshot({ path: resolve(output, `${device}-${lang}-${name}.png`) })
       }
@@ -106,7 +106,7 @@ try {
       await page.click('.hero-actions .button-ghost')
       await page.waitForFunction(() => location.hash === '#cases')
       await page.click('.commercial-bridge .button')
-      await page.waitForFunction(() => location.hash === '#contact-form')
+      await page.waitForFunction(() => location.pathname.endsWith('/contact'))
       const selection = await page.$eval('select[name=service]', n => n.selectedIndex)
       assert.equal(selection, 1, 'Automation preselected')
       if (device === 'mobile') {

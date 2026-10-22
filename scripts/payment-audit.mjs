@@ -85,7 +85,7 @@ try {
 
   await page.setViewport({ width: 390, height: 844, deviceScaleFactor: 1, isMobile: true, hasTouch: true })
   for (const locale of ['ru', 'en', 'de', 'uk']) {
-    await page.goto(`${origin}/${locale}/`, { waitUntil: 'networkidle0' })
+    await page.goto(`${origin}/${locale}/contact`, { waitUntil: 'networkidle0' })
     const contacts = await page.evaluate(() => ({
       email: document.querySelector('.direct-contact a[href^="mailto:"]')?.getAttribute('href'),
       telegram: document.querySelector('.direct-contact a[href^="https://t.me/"]')?.getAttribute('href'),

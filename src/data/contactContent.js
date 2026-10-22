@@ -1,0 +1,6 @@
+export const contactContent = {
+  ru: { title: 'Обсудить задачу', label: 'OSNOVA / ОБРАЩЕНИЕ', intro: 'Расскажите, что нужно сделать. Мы уточним объём, сроки и стоимость.', meta: ['Обсудить задачу — OSNOVA', 'Расскажите о новом проекте или доработке: сайт, автоматизация, реклама и другие направления OSNOVA. Уточним объём, сроки и стоимость.'] },
+  en: { title: 'Discuss your project', label: 'OSNOVA / GET IN TOUCH', intro: 'Tell us what you need. We’ll clarify the scope, timeline and cost.', meta: ['Discuss your project — OSNOVA', 'Tell us about a new project or an improvement: websites, automation, advertising and other OSNOVA services. We’ll clarify the scope, timeline and cost.'] },
+  de: { title: 'Ihr Vorhaben besprechen', label: 'OSNOVA / KONTAKT', intro: 'Was möchten Sie umsetzen? Wir klären gemeinsam Umfang, Zeitrahmen und Kosten.', meta: ['Ihr Vorhaben besprechen — OSNOVA', 'Ob neues Projekt oder Weiterentwicklung: Websites, Automatisierung, Werbung und weitere OSNOVA-Leistungen. Wir klären Umfang, Zeitrahmen und Kosten.'] },
+  uk: { title: 'Обговорити завдання', label: 'OSNOVA / ЗВЕРНЕННЯ', intro: 'Розкажіть, що потрібно зробити. Ми уточнимо обсяг, строки й вартість.', meta: ['Обговорити завдання — OSNOVA', 'Розкажіть про новий проєкт чи доопрацювання: сайт, автоматизацію, рекламу та інші напрями OSNOVA. Уточнимо обсяг, строки й вартість.'] },
+}

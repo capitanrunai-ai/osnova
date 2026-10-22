@@ -5,7 +5,6 @@ import { resolve } from 'node:path'
 import puppeteer from 'puppeteer-core'
 import { buildRoutes, buildUtilityRoutes } from './site-routes.mjs'
 import { startProductionAuditServer } from './production-audit-server.mjs'
-import { content } from '../src/data/content.js'
 import { caseUi } from '../src/data/cases.js'
 import { paymentContent } from '../src/data/paymentContent.js'
 
@@ -130,7 +129,7 @@ try {
         const slugs = await page.$$eval('#cases .home-work-card', nodes => nodes.map(node => node.pathname.split('/').at(-1)))
         assert.deepEqual(slugs, ['dds-service', 'ds-repair-solutions', 'comfort-lab'])
         assert.ok(await page.$(`#cases .home-more-card[href="/${entry.lang}/cases/bala-group"]`))
-        assert.ok(state.text.includes(content[entry.lang].contact.fields.name))
+        assert.equal(await page.$('#contact form'), null, 'no embedded homepage form')
       }
       if (entry.route === 'payment') {
         const methods = await page.$$eval('.payment-method h2', nodes => nodes.map(node => node.textContent))

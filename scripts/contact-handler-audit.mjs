@@ -14,7 +14,7 @@ globalThis.fetch = async (url, options) => {
   deliveries.push(JSON.parse(options.body))
   return new Response(JSON.stringify({ ok: telegramStatus === 200 }), { status: telegramStatus })
 }
-const valid = () => ({ name: 'Local QA', contact: '@local_qa', service: 'Development', hp: '', startedAt: Date.now() - 5000, lang: 'uk', page: '/uk/#contact-form' })
+const valid = () => ({ name: 'Local QA', contact: '@local_qa', service: 'Development', hp: '', startedAt: Date.now() - 5000, lang: 'uk', page: '/uk/contact' })
 const request = body => new Request('https://local.invalid/api/contact', { method: 'POST', headers: { 'content-type': 'application/json' }, body: typeof body === 'string' ? body : JSON.stringify(body) })
 let checks = 0
 try {

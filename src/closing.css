@@ -160,3 +160,18 @@
 @media (prefers-reduced-motion: reduce) {
   .service-worlds .world-entry, .contact-finale * { transition: none; }
 }
+
+/* The inquiry is a page in its own right; the existing form and contacts stay shared. */
+.contact-page .contact-finale { min-height: 80vh; padding-top: 142px; }
+.contact-page .contact-layout { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); grid-template-areas: 'intro form' 'context form'; row-gap: 32px; }
+.contact-page .contact-copy { grid-area: intro; }
+.contact-page .contact-context { grid-area: context; min-width: 0; }
+.contact-page .contact-form-wrap { grid-area: form; }
+.contact-page .contact-copy h1 { margin: 0 0 24px; max-width: 12ch; font: 400 clamp(52px, 5.7vw, 84px)/1.16 var(--display); line-height: 1.16 !important; letter-spacing: -.018em !important; }
+.contact-page .contact-copy > p { margin: 0; font-size: 18px; }
+@media (max-width: 800px) {
+  .contact-page .contact-finale { padding-top: 116px; }
+  .contact-page .contact-layout { grid-template-columns: minmax(0, 1fr); grid-template-areas: 'intro' 'form' 'context'; }
+  .contact-page .contact-copy h1 { max-width: 18ch; font-size: clamp(42px, 8vw, 64px); }
+  .contact-page .contact-copy > p { font-size: 16px; }
+}

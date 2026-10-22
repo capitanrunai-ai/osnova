@@ -128,7 +128,7 @@ try {
   assert.equal(await page.$$eval('.commercial-cases .home-work-card', nodes => nodes.length), 5)
   assert.equal(await page.$eval('#cases .home-work-card h3', node => node.textContent), 'DDS SERVICE')
   assert.deepEqual(await page.$$eval('#cases .home-work-card h3', nodes => nodes.map(node => node.textContent)), ['DDS SERVICE', 'D&S Automotive Repair Solutions', 'COMFORT LAB'])
-  assert.equal(await page.$$eval('#cases .home-more-card', nodes => nodes.length), cases.filter(item => item.category === 'development').length - 3)
+  assert.equal(await page.$$eval('#cases .home-more-card', nodes => nodes.length), 3)
   await page.$eval('#cases', node => node.scrollIntoView())
   await wait(700)
   await (await page.$('#cases')).screenshot({ path: resolve(output, 'portfolio-home-desktop.png') })

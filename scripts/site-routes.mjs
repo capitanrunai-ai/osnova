@@ -17,6 +17,7 @@ const SOURCE_BY_ROUTE = {
   services: ['src/data/serviceContent.js', 'src/data/visibilityContent.js'],
   cases: ['src/data/cases.js'],
   payment: ['src/data/paymentContent.js'],
+  contact: ['src/data/contactContent.js', 'src/data/closingContent.js', 'src/data/content.js'],
 }
 
 function sourcesFor(route, lang) {
