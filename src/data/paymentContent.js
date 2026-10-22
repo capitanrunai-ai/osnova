@@ -4,9 +4,8 @@ export const paymentContent = {
     metaDescription: 'Оплата услуг OSNOVA банковским переводом, через IBAN, в криптовалюте USDT, BTC и ETH или через PayPal.',
     navLabel: 'Оплата',
     eyebrow: 'ОПЛАТА / 01—04',
-    title: 'Оплата без лишних шагов.',
-    accent: 'Четыре понятных способа.',
-    intro: 'Выберите удобный вариант. Конкретные реквизиты предоставим после согласования проекта или выставления счёта.',
+    title: 'Как оплатить проект',
+    intro: 'После согласования проекта отправляем счёт и реквизиты. Можно оплатить банковским переводом, по IBAN, криптовалютой или через PayPal.',
     accepted: 'Доступные способы',
     methods: [
       {
@@ -31,7 +30,7 @@ export const paymentContent = {
         title: 'Оплата в криптовалюте',
         text: 'Принимаем USDT, BTC и ETH. Адрес кошелька и подходящую сеть подтверждаем для каждого платежа отдельно.',
         detailLabel: 'WALLET / NETWORK',
-        detail: 'Предоставляются со счётом',
+        detail: 'Подтверждаем для каждого платежа',
       },
       {
         number: '04',
@@ -39,6 +38,8 @@ export const paymentContent = {
         label: 'PAYPAL',
         title: 'PayPal',
         text: 'Принимаем оплату услуг через PayPal.',
+        detailLabel: 'ДАННЫЕ ДЛЯ ПЛАТЕЖА',
+        detail: 'Предоставляются вместе со счётом',
       },
     ],
     contactLink: 'Посмотреть способы оплаты',
@@ -48,9 +49,8 @@ export const paymentContent = {
     metaDescription: 'Pay for OSNOVA services by bank transfer, IBAN, cryptocurrency in USDT, BTC and ETH, or PayPal.',
     navLabel: 'Payment',
     eyebrow: 'PAYMENT / 01—04',
-    title: 'Payment without friction.',
-    accent: 'Four clear options.',
-    intro: 'Choose the method that works for you. Exact payment details are provided after the project is agreed or an invoice is issued.',
+    title: 'How to pay for your project',
+    intro: 'Once we agree on the project, we send an invoice and payment details. You can pay by bank transfer, IBAN transfer, cryptocurrency or PayPal.',
     accepted: 'Available methods',
     methods: [
       {
@@ -75,7 +75,7 @@ export const paymentContent = {
         title: 'Cryptocurrency',
         text: 'We accept USDT, BTC and ETH. The wallet address and appropriate network are confirmed separately for each payment.',
         detailLabel: 'WALLET / NETWORK',
-        detail: 'Provided with the invoice',
+        detail: 'Confirmed for each payment',
       },
       {
         number: '04',
@@ -83,6 +83,8 @@ export const paymentContent = {
         label: 'PAYPAL',
         title: 'PayPal',
         text: 'We accept payment for our services via PayPal.',
+        detailLabel: 'PAYMENT DETAILS',
+        detail: 'Provided with the invoice',
       },
     ],
     contactLink: 'View payment methods',
@@ -92,9 +94,8 @@ export const paymentContent = {
     metaDescription: 'OSNOVA-Leistungen per Banküberweisung, IBAN, Kryptowährung in USDT, BTC und ETH oder PayPal bezahlen.',
     navLabel: 'Zahlung',
     eyebrow: 'ZAHLUNG / 01—04',
-    title: 'Zahlung ohne Umwege.',
-    accent: 'Vier klare Möglichkeiten.',
-    intro: 'Wählen Sie die passende Option. Die konkreten Zahlungsdaten erhalten Sie nach Projektabstimmung oder mit der Rechnung.',
+    title: 'So bezahlen Sie Ihr Projekt',
+    intro: 'Nach der Projektabstimmung erhalten Sie die Rechnung und Zahlungsdaten. Sie können per Banküberweisung, IBAN-Überweisung, Kryptowährung oder PayPal bezahlen.',
     accepted: 'Verfügbare Zahlungsarten',
     methods: [
       {
@@ -119,7 +120,7 @@ export const paymentContent = {
         title: 'Kryptowährung',
         text: 'Wir akzeptieren USDT, BTC und ETH. Wallet-Adresse und passendes Netzwerk werden für jede Zahlung separat bestätigt.',
         detailLabel: 'WALLET / NETZWERK',
-        detail: 'Wird mit der Rechnung bereitgestellt',
+        detail: 'Für jede Zahlung separat bestätigt',
       },
       {
         number: '04',
@@ -127,6 +128,8 @@ export const paymentContent = {
         label: 'PAYPAL',
         title: 'PayPal',
         text: 'Wir akzeptieren Zahlungen für unsere Leistungen über PayPal.',
+        detailLabel: 'ZAHLUNGSDATEN',
+        detail: 'Erhalten Sie mit der Rechnung',
       },
     ],
     contactLink: 'Zahlungsarten ansehen',
@@ -136,9 +139,8 @@ export const paymentContent = {
     metaDescription: 'Оплата послуг OSNOVA банківським переказом, через IBAN, у криптовалюті USDT, BTC та ETH або через PayPal.',
     navLabel: 'Оплата',
     eyebrow: 'ОПЛАТА / 01—04',
-    title: 'Оплата без зайвих кроків.',
-    accent: 'Чотири зрозумілі способи.',
-    intro: 'Оберіть зручний варіант. Конкретні реквізити надамо після погодження проєкту або виставлення рахунку.',
+    title: 'Як оплатити проєкт',
+    intro: 'Після погодження проєкту надсилаємо рахунок і реквізити. Оплатити можна банківським переказом, за IBAN, криптовалютою або через PayPal.',
     accepted: 'Доступні способи',
     methods: [
       {
@@ -163,7 +165,7 @@ export const paymentContent = {
         title: 'Оплата в криптовалюті',
         text: 'Приймаємо USDT, BTC та ETH. Адресу гаманця й відповідну мережу підтверджуємо окремо для кожного платежу.',
         detailLabel: 'WALLET / NETWORK',
-        detail: 'Надаються разом із рахунком',
+        detail: 'Підтверджуємо для кожного платежу',
       },
       {
         number: '04',
@@ -171,6 +173,8 @@ export const paymentContent = {
         label: 'PAYPAL',
         title: 'PayPal',
         text: 'Приймаємо оплату послуг через PayPal.',
+        detailLabel: 'ДАНІ ДЛЯ ПЛАТЕЖУ',
+        detail: 'Надаються разом із рахунком',
       },
     ],
     contactLink: 'Переглянути способи оплати',

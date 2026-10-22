@@ -77,7 +77,7 @@ try {
       assert.equal(state.services.length, 4)
       assert.ok(state.services.every(n => n.height > 200 && n.text.length > 70), 'full service cards')
       assert.equal(state.work.length, 5)
-      assert.equal(state.moreWork.length, 3, 'every other real web project is shown')
+      assert.deepEqual(state.moreWork, ['bala-group', 'retatrutide-silver-signal', 'slavabud', 'comfort-home', 'retatrutide-landing'].map(slug => `/${lang}/cases/${slug}`), 'every other real web project is shown')
       assert.equal(state.useCases.length, 6, 'automation use cases')
       assert.ok(state.useCases.every(text => text.length > 40), 'use cases carry a description')
       // Managed Automation starts at the first managed tier; €49–99 is only the client-paid support option.

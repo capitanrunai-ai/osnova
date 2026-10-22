@@ -14,6 +14,7 @@
     "audit:typography": "node scripts/typography-audit.mjs",
     "audit:visibility": "node scripts/visibility-visual-audit.mjs",
     "audit:payment": "node scripts/payment-audit.mjs",
+    "audit:polish": "node scripts/polish-audit.mjs",
     "audit:trust": "node scripts/trust-audit.mjs",
     "audit:performance": "node scripts/performance-audit.mjs",
     "audit:predeploy": "node scripts/predeploy-audit.mjs",

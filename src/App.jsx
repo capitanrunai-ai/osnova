@@ -24,6 +24,8 @@ import {
   AudioLines,
   Workflow,
   ServerCog,
+  Landmark,
+  ArrowLeftRight,
 } from 'lucide-react'
 import { content, languages } from './data/content'
 import { commercialContent } from './data/commercialContent'
@@ -1289,7 +1291,7 @@ function CommercialOffers({ lang, navigate, asTitle = false }) {
   const Heading = asTitle ? 'h1' : 'h2'
   return <section className="commercial-section commercial-offers" id="pricing"><div className="container">
     <Reveal className="commercial-offers-head"><span className="eyebrow">{data.label}</span><Heading>{data.title}</Heading><p className="commercial-lead">{data.note}</p></Reveal>
-    <div className="commercial-card-grid">{data.items.map((item, index) => <Reveal as="article" className="commercial-card" key={item.title} delay={index * 70}><span className="commercial-number">0{index + 1} / {index < 2 ? 'DEVELOPMENT' : 'AUTOMATION'}</span><div className="commercial-price">{item.price}</div><h3>{item.title}</h3><p>{item.text}</p><RouteLink href={`/${lang}/services/${item.route}`} navigate={navigate} world={item.route}>{item.cta}<ArrowUpRight size={17} /></RouteLink></Reveal>)}</div>
+    <div className="commercial-card-grid">{data.items.map((item, index) => <Reveal as="article" className="commercial-offer-reveal" key={item.title} delay={index * 70}><RouteLink className="commercial-card commercial-offer-card" href={`/${lang}/services/${item.route}`} navigate={navigate} world={item.route}><span className="commercial-number">0{index + 1} / {index < 2 ? 'DEVELOPMENT' : 'AUTOMATION'}</span><div className="commercial-price">{item.price}</div><h3>{item.title}</h3><p>{item.text}</p><span className="commercial-offer-action">{item.cta}<ArrowUpRight size={17} aria-hidden="true" /></span></RouteLink></Reveal>)}</div>
   </div></section>
 }
 
@@ -1477,7 +1479,7 @@ function PaymentPage({ p }) {
         <div className="container payment-hero-grid">
           <Reveal className="payment-heading">
             <span className="eyebrow light"><i />{p.eyebrow}</span>
-            <h1>{p.title}<em>{p.accent}</em></h1>
+            <h1>{p.title}</h1>
           </Reveal>
           <Reveal className="payment-intro" delay={90}>
             <p>{p.intro}</p>
@@ -1496,8 +1498,9 @@ function PaymentPage({ p }) {
               <div className="payment-method-index"><span>{method.number}</span><i /></div>
               <div className="payment-method-copy"><small>{method.label}</small><h2>{method.title}</h2><p>{method.text}</p></div>
               <div className="payment-method-detail">
+                {index < 2 && <div className="payment-visual"><span className="payment-bank-icon" aria-hidden="true">{index === 0 ? <Landmark size={32} strokeWidth={1.5} /> : <ArrowLeftRight size={32} strokeWidth={1.5} />}</span><strong>{index === 0 ? method.label : 'IBAN'}</strong></div>}
                 {index === 2 && <div className="crypto-assets">{currencies.map(([code, name]) => <div className="crypto-asset" key={code}><CryptoMark currency={code} /><span><strong>{code}</strong><small>{name}</small></span></div>)}</div>}
-                {method.type === 'paypal' && <div className="payment-paypal-mark"><img src="/assets/paypal.svg" alt="PayPal" width="128" height="34" loading="lazy" /></div>}
+                {method.type === 'paypal' && <div className="payment-visual payment-paypal-mark"><img src="/assets/paypal.svg" alt="PayPal" width="128" height="34" loading="lazy" /></div>}
                 {method.detail && <div className="payment-detail-slot"><span>{method.detailLabel}</span><strong>{method.detail}</strong></div>}
               </div>
             </Reveal>

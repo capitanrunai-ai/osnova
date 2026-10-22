@@ -33,7 +33,7 @@ try {
   page.on('console', (message) => message.type() === 'error' && consoleErrors.push(message.text()))
   page.on('pageerror', (error) => consoleErrors.push(error.message))
 
-  const viewports = [[1440, 1000], [1280, 800], [768, 900], [390, 844], [320, 568]]
+  const viewports = [[1440, 1000], [1280, 800], [768, 900], [430, 932], [390, 844], [375, 812], [320, 568]]
   for (const [width, height] of viewports) {
     await page.setViewport({ width, height, deviceScaleFactor: 1, isMobile: width <= 640, hasTouch: width <= 640 })
     for (const locale of ['ru', 'en', 'de', 'uk']) {
@@ -105,4 +105,4 @@ try {
 }
 
 if (failures.length) throw new Error(`Payment audit failed\n${failures.join('\n')}`)
-process.stdout.write('Payment audit passed: 4 locales × 5 responsive viewports; contacts and mobile header verified.\n')
+process.stdout.write('Payment audit passed: 4 locales × 7 responsive viewports; contacts and mobile header verified.\n')
