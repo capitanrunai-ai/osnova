@@ -749,18 +749,25 @@ function Contact({ t, p, lang, navigate }) {
   const handleSubmit = async (event) => {
     event.preventDefault()
     if (status === 'sending') return
-    const data = new FormData(event.currentTarget)
+    const form = event.currentTarget
+    for (const field of ['name', 'contact']) {
+      const input = form.elements.namedItem(field)
+      input.setCustomValidity(input.value.trim() ? '' : c.validation[field])
+    }
+    if (!form.reportValidity()) return
+    const data = new FormData(form)
     setStatus('sending')
     try {
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({
-          name: data.get('name'),
-          contact: data.get('contact'),
-          company: data.get('company'),
+          name: data.get('name').trim(),
+          contact: data.get('contact').trim(),
+          email: data.get('email').trim(),
+          company: data.get('company').trim(),
           service: selectedService,
-          message: data.get('message'),
+          message: data.get('message').trim(),
           hp: data.get('hp'),
           startedAt: startedAtRef.current,
           lang,
@@ -781,6 +788,8 @@ function Contact({ t, p, lang, navigate }) {
       track('contact_submit_failed', { site_language: lang, page_path: window.location.pathname })
     }
   }
+  const clearValidation = (event) => event.currentTarget.setCustomValidity('')
+  const localizeValidation = (event) => event.currentTarget.setCustomValidity(c.validation[event.currentTarget.name])
   return (
     <section className="contact contact-finale section-pad" id="contact" aria-labelledby="contact-title">
       <div className="container contact-topline"><span className="eyebrow light"><i />{c.label}</span><span aria-hidden="true">OS / NEXT</span></div>
@@ -796,14 +805,15 @@ function Contact({ t, p, lang, navigate }) {
           {status === 'success' ? <div className="form-success" role="status"><Check size={24} /><p>{c.sent}</p><button type="button" onClick={() => setStatus('idle')}>{c.back}</button></div> : (
             <form onSubmit={handleSubmit}>
               <div className="form-row">
-                <label><span>{t.contact.fields.name}</span><input name="name" required autoComplete="name" /></label>
-                <label><span>{t.contact.fields.contact}</span><input name="contact" required autoComplete="email" /></label>
+                <label><span>{t.contact.fields.name}</span><input name="name" required maxLength={120} autoComplete="name" onInput={clearValidation} onInvalid={localizeValidation} /></label>
+                <label><span>{t.contact.fields.contact}</span><input name="contact" type="text" inputMode="text" required maxLength={160} autoComplete="off" autoCapitalize="none" spellCheck={false} placeholder={c.contactHint} onInput={clearValidation} onInvalid={localizeValidation} /></label>
               </div>
               <div className="form-row">
-                <label><span>{t.contact.fields.company} <i>({c.optional})</i></span><input name="company" autoComplete="organization" /></label>
-                <label><span>{t.contact.fields.help}</span><select name="service" value={selectedService} onChange={(event) => setService(event.target.value)}><option value={serviceOptions.at(-1)}>{serviceOptions.at(-1)}</option>{serviceOptions.slice(0, -1).map((option) => <option key={option}>{option}</option>)}</select></label>
+                <label><span>{t.contact.fields.email} <i>({c.optional})</i></span><input name="email" type="email" inputMode="email" maxLength={254} autoComplete="email" autoCapitalize="none" spellCheck={false} onInput={clearValidation} onInvalid={localizeValidation} /></label>
+                <label><span>{t.contact.fields.company} <i>({c.optional})</i></span><input name="company" maxLength={160} autoComplete="organization" /></label>
               </div>
-              <label><span>{t.contact.fields.message}</span><textarea name="message" rows="4" placeholder={c.messageHint} required /></label>
+              <label><span>{t.contact.fields.help}</span><select name="service" value={selectedService} onChange={(event) => setService(event.target.value)}><option value={serviceOptions.at(-1)}>{serviceOptions.at(-1)}</option>{serviceOptions.slice(0, -1).map((option) => <option key={option}>{option}</option>)}</select></label>
+              <label><span>{t.contact.fields.message} <i>({c.optional})</i></span><textarea name="message" rows="4" maxLength={2000} placeholder={c.messageHint} /></label>
               <input type="text" name="hp" className="hp-field" tabIndex={-1} autoComplete="off" aria-hidden="true" />
               {status === 'error' && <p className="form-error" role="alert">{c.error}</p>}
               <button className="form-submit" type="submit" disabled={status === 'sending'}>{status === 'sending' ? c.sending : c.submit}<ArrowUpRight size={20} /></button>

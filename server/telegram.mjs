@@ -1,7 +1,4 @@
-// Shared lead-submission logic used by the Vite dev/preview API middleware.
-// The production edge worker (scripts/prepare-sites.mjs) keeps its own
-// self-contained copy of this logic since the deployed worker ships as a
-// single file with no bundler step.
+// Shared lead-submission logic used by the local API and contact handler.
 
 const MIN_ELAPSED_MS = 1200
 const MAX_ELAPSED_MS = 1000 * 60 * 60
@@ -13,10 +10,11 @@ function clean(value, max = 800) {
 export function buildLeadMessage(fields) {
   const lines = ['НОВАЯ ЗАЯВКА — OSNOVA', '']
   lines.push(`Имя: ${fields.name}`)
-  lines.push(`Компания: ${fields.company || '—'}`)
-  lines.push(`Контакт: ${fields.contact}`)
-  lines.push(`Выбранная услуга: ${fields.service || '—'}`)
-  lines.push(`Сообщение: ${fields.message}`)
+  lines.push(`Телефон / Telegram: ${fields.contact}`)
+  if (fields.email) lines.push(`Email: ${fields.email}`)
+  if (fields.company) lines.push(`Компания: ${fields.company}`)
+  if (fields.service) lines.push(`Направление: ${fields.service}`)
+  if (fields.message) lines.push(`Описание задачи: ${fields.message}`)
   if (fields.lang || fields.page) {
     lines.push('')
     if (fields.lang) lines.push(`Язык сайта: ${fields.lang.toUpperCase()}`)
@@ -26,8 +24,14 @@ export function buildLeadMessage(fields) {
 }
 
 export function validateLead(body) {
-  if (!body || typeof body !== 'object') return 'invalid'
-  if (!clean(body.name, 120) || !clean(body.contact, 160) || !clean(body.message, 2000)) return 'invalid'
+  if (!body || typeof body !== 'object' || Array.isArray(body)) return 'invalid'
+  if (typeof body.name !== 'string' || typeof body.contact !== 'string') return 'invalid'
+  if (!clean(body.name, 120) || !clean(body.contact, 160)) return 'invalid'
+  for (const field of ['email', 'company', 'message']) {
+    if (body[field] != null && typeof body[field] !== 'string') return 'invalid'
+  }
+  const email = clean(body.email, 255)
+  if (email && (email.length > 254 || !/^[^\s@]+@[^\s@]+$/.test(email))) return 'invalid'
   return null
 }
 
@@ -43,6 +47,7 @@ export async function sendTelegramLead(body, { token, chatId }) {
   const text = buildLeadMessage({
     name: clean(body.name, 120),
     contact: clean(body.contact, 160),
+    email: clean(body.email, 254),
     company: clean(body.company, 160),
     service: clean(body.service, 160),
     message: clean(body.message, 2000),
