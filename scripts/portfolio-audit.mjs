@@ -68,6 +68,10 @@ try {
   assert.equal(await page.$eval('.spatial-card.is-active h3', node => node.textContent), 'DDS SERVICE')
   report.navigation.filtersAndKeyboard = true
   for (const lang of ['ru', 'en', 'de', 'uk']) {
+    await open(`/${lang}/`, 390, 844)
+    await checkLayout(`/${lang}/`)
+    assert.deepEqual(await page.$$eval('#cases .home-work-card', nodes => nodes.map(node => node.getAttribute('href').split('/').at(-1))), ['dds-service', 'ds-repair-solutions', 'comfort-lab'])
+    assert.ok(await page.$(`#cases .home-more-card[href="/${lang}/cases/bala-group"]`))
     await open(`/${lang}/cases`, 390, 844)
     await checkLayout(`/${lang}/cases`)
     if (lang === 'ru') await page.screenshot({ path: resolve(output, 'portfolio-mobile.png'), fullPage: true })
@@ -75,6 +79,17 @@ try {
       await open(`/${lang}/cases/${item.slug}`, 390, 844)
       await checkLayout(`/${lang}/cases/${item.slug}`)
       if (item.url) assert.equal(await page.$eval('.portfolio-visit', node => node.href), new URL(item.url).href)
+    }
+  }
+  for (const width of [320, 390, 768, 1024, 1440]) {
+    for (const lang of ['ru', 'en', 'de', 'uk']) {
+      await open(`/${lang}/cases/ds-repair-solutions`, width, width < 700 ? 844 : 1000)
+      await checkLayout(`/${lang}/cases/ds-repair-solutions@${width}`)
+      assert.deepEqual(await page.$$eval('.web-case-highlights dd', nodes => nodes.map(node => node.textContent)), ['16', '138', '45'])
+      assert.equal(await page.$$eval('.web-case-facts-grid li', nodes => nodes.length), 5)
+      assert.ok((await page.$eval('.web-case-facts', node => node.textContent)).includes('Columbus, Ohio, USA'))
+      assert.equal(await page.$eval('.portfolio-visit', node => node.href), 'https://dsrepairsolutions.com/')
+      if (lang === 'uk' && [390, 1440].includes(width)) await page.screenshot({ path: resolve(output, `ds-repair-case-${width}.png`), fullPage: true })
     }
   }
   await open('/en/cases/dds-service')
@@ -112,6 +127,7 @@ try {
   await open('/ru/', 1440, 1000)
   assert.equal(await page.$$eval('.commercial-cases .home-work-card', nodes => nodes.length), 5)
   assert.equal(await page.$eval('#cases .home-work-card h3', node => node.textContent), 'DDS SERVICE')
+  assert.deepEqual(await page.$$eval('#cases .home-work-card h3', nodes => nodes.map(node => node.textContent)), ['DDS SERVICE', 'D&S Automotive Repair Solutions', 'COMFORT LAB'])
   assert.equal(await page.$$eval('#cases .home-more-card', nodes => nodes.length), cases.filter(item => item.category === 'development').length - 3)
   await page.$eval('#cases', node => node.scrollIntoView())
   await wait(700)

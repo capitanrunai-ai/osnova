@@ -161,9 +161,10 @@ function WebCaseFacts({ item, ui, lang, navigate, Link }) {
   const labels = ui.webStudy
   return (
     <section className="web-case-facts" aria-label={labels.challenge}>
-      <div className="web-case-facts-top"><span>{item.categoryLabel}</span><strong><small>{labels.delivery}</small>{item.webCase.delivery}</strong></div>
+      <div className="web-case-facts-top"><span>{item.location || item.categoryLabel}</span><strong><small>{labels.delivery}</small>{item.webCase.delivery}</strong></div>
+      {item.highlights && <dl className="web-case-highlights">{item.highlights.map(fact => <div key={fact.label}><dt>{fact.label}</dt><dd>{fact.value}</dd></div>)}</dl>}
       <div className="web-case-facts-grid">
-        {['challenge', 'work', 'result'].map(field => <div key={field}><span>{labels[field]}</span><p>{item.webCase[field]}</p></div>)}
+        {['challenge', 'work', 'result'].map(field => <div key={field}><span>{labels[field]}</span>{Array.isArray(item.webCase[field]) ? <ul>{item.webCase[field].map(point => <li key={point}>{point}</li>)}</ul> : <p>{item.webCase[field]}</p>}</div>)}
       </div>
       <Link className="web-case-service" href={`/${lang}/services/development`} navigate={navigate}>{labels.service}<ArrowUpRight size={17} /></Link>
     </section>
@@ -176,7 +177,12 @@ export function PortfolioDetail({ item, lang, navigate, Link }) {
   const index = allItems.findIndex(candidate => candidate.slug === item.slug)
   const next = allItems[(index + 1) % allItems.length]
   const previous = allItems[(index + allItems.length - 1) % allItems.length]
-  const [device, setDevice] = useState(() => window.matchMedia('(max-width: 700px)').matches ? 'mobile' : 'desktop')
+  // Match the prerendered desktop markup on the first render. Resolve the
+  // viewport after hydration so the first device-button click always works.
+  const [device, setDevice] = useState('desktop')
+  useEffect(() => {
+    if (window.matchMedia('(max-width: 700px)').matches) setDevice('mobile')
+  }, [])
   const isVoice = item.visual === 'voice'
   const isAutomation = item.visual === 'automation'
 

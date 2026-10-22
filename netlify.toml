@@ -5,6 +5,10 @@
 [build.environment]
   NODE_VERSION = "22"
 
+# Keep production canonical URLs independent of a developer's local env.
+[context.production.environment]
+  SITE_URL = "https://osnovaai.com"
+
 [functions]
   directory = "netlify/functions"
   node_bundler = "esbuild"

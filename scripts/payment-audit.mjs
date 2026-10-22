@@ -50,6 +50,14 @@ try {
           scrollWidth: document.documentElement.scrollWidth,
           title: document.title,
           methods: document.querySelectorAll('.payment-method').length,
+          paypal: {
+            title: document.querySelector('.payment-method:last-child h2')?.textContent,
+            logo: document.querySelector('.payment-paypal-mark img')?.getAttribute('src'),
+            rail: document.querySelector('.payment-rail')?.textContent.includes('PayPal'),
+            meta: document.querySelector('meta[name="description"]')?.content.includes('PayPal'),
+            controls: document.querySelector('.payment-method:last-child')?.querySelectorAll('a, button, form, input').length,
+            orbit: document.querySelector('.payment-orbit b')?.textContent,
+          },
           currencies: [...document.querySelectorAll('.crypto-asset strong')].map((node) => node.textContent.trim()),
           cryptoMarks: document.querySelectorAll('.crypto-asset svg').length,
           fakeData: /0x[a-f\d]{8}|[13][a-km-zA-HJ-NP-Z1-9]{25,}|DE\d{20}/.test(document.body.innerText),
@@ -63,7 +71,8 @@ try {
       })
       const name = `${locale}@${width}`
       if (result.width !== result.scrollWidth) failures.push(`${name}: horizontal overflow`)
-      if (result.methods !== 3) failures.push(`${name}: expected 3 methods`)
+      if (result.methods !== 4) failures.push(`${name}: expected 4 methods`)
+      if (result.paypal.title !== 'PayPal' || result.paypal.logo !== '/assets/paypal.svg' || !result.paypal.rail || !result.paypal.meta || result.paypal.controls !== 0 || result.paypal.orbit !== '04') failures.push(`${name}: PayPal presentation is incomplete`)
       if (result.currencies.join(',') !== 'USDT,BTC,ETH' || result.cryptoMarks !== 3) failures.push(`${name}: crypto methods or marks missing`)
       if (result.fakeData) failures.push(`${name}: fake payment data detected`)
       if (result.removedCta || result.removedCtaCopy) failures.push(`${name}: removed payment CTA is still present`)

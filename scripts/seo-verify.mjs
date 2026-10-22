@@ -70,7 +70,8 @@ for (const entry of routes) {
   if (meta(html, 'property', 'og:description') !== description) fail(where, 'og:description does not match meta description')
   if (!meta(html, 'property', 'og:image')?.startsWith(siteUrl)) fail(where, 'og:image is not absolute')
   if (!meta(html, 'property', 'og:locale')?.startsWith(entry.lang)) fail(where, `og:locale is "${meta(html, 'property', 'og:locale')}"`)
-  if (!/index/.test(meta(html, 'name', 'robots') || '')) fail(where, `robots is "${meta(html, 'name', 'robots')}"`)
+  const robotsDirectives = (meta(html, 'name', 'robots') || '').toLowerCase().split(/\s*,\s*/)
+  if (!robotsDirectives.includes('index') || robotsDirectives.includes('noindex')) fail(where, `robots is "${meta(html, 'name', 'robots')}"`)
 
   for (const code of languageCodes) {
     const expectedAlternate = `${siteUrl}${entry.route ? `/${code}/${entry.route}` : `/${code}/`}`
@@ -90,7 +91,7 @@ for (const entry of buildUtilityRoutes()) {
   if (!html) { fail(entry.path, 'no prerendered 404'); continue }
   if (!/noindex/.test(meta(html, 'name', 'robots') || '')) fail(entry.path, '404 is not noindex')
   if (link(html, 'canonical')) fail(entry.path, '404 declares a canonical')
-  if (link(html, 'alternate', 'en')) fail(entry.path, '404 declares hreflang alternates')
+  if (/<link[^>]*rel="alternate"[^>]*hreflang=/i.test(html)) fail(entry.path, '404 declares hreflang alternates')
   if (attr(html, /<html[^>]*>/i, 'lang') !== entry.lang) fail(entry.path, 'wrong html lang')
 }
 if (!existsSync(join(dist, '404.html'))) fail('/404.html', 'generic fallback missing')

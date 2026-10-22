@@ -1,6 +1,7 @@
 import { automationCases } from './automationCases.js'
 import { dentistryCase } from './dentistryCase.js'
 import { slavabudCase } from './slavabudCase.js'
+import { dsRepairCase } from './dsRepairCase.js'
 
 const localized = (ru, en, de, uk) => ({ ru, en, de, uk })
 
@@ -126,9 +127,19 @@ export const cases = [
       } },
     ),
   }),
+  dsRepairCase,
+  website('comfort-lab', 'COMFORT LAB', 'https://comfortlabkiev.com.ua/', {
+    featured: true, serviceCase: 'development', accent: '#b8bcce',
+    copy: localized(
+      { summary: 'Сайт студии автомобильного комфорта: шумоизоляция, защита, звук и CarPlay. Дизайн и разработка с нуля.' },
+      { summary: 'A website for an automotive comfort studio: soundproofing, protection, audio and CarPlay. Designed and built from scratch.' },
+      { summary: 'Website für ein Studio für Fahrzeugkomfort: Dämmung, Schutz, Audio und CarPlay. Von Grund auf gestaltet und entwickelt.' },
+      { summary: 'Сайт студії автомобільного комфорту: шумоізоляція, захист, звук і CarPlay. Дизайн та розробка з нуля.' },
+    ),
+  }),
   website('bala-group', 'BALA GROUP', 'https://www.bala-group.com.ua/', {
     googleAdsTracking: true,
-    featured: true, serviceCase: 'development', accent: '#e4b887',
+    serviceCase: 'development', accent: '#e4b887',
     copy: localized(
       { summary: 'Коммерческий сайт строительных и ремонтных услуг, созданный под рекламный трафик Google Ads и запущенный под ключ.', webCase: {
         challenge: 'Клиент пришёл по рекомендации: нужен коммерческий сайт специально для трафика Google Ads.',
@@ -165,15 +176,6 @@ export const cases = [
   slavabudCase,
   dentistryCase,
   ...automationCases,
-  website('comfort-lab', 'COMFORT LAB', 'https://comfortlabkiev.com.ua/', {
-    accent: '#b8bcce',
-    copy: localized(
-      { summary: 'Сайт студии автомобильного комфорта: шумоизоляция, защита, звук и CarPlay. Дизайн и разработка с нуля.' },
-      { summary: 'A website for an automotive comfort studio: soundproofing, protection, audio and CarPlay. Designed and built from scratch.' },
-      { summary: 'Website für ein Studio für Fahrzeugkomfort: Dämmung, Schutz, Audio und CarPlay. Von Grund auf gestaltet und entwickelt.' },
-      { summary: 'Сайт студії автомобільного комфорту: шумоізоляція, захист, звук і CarPlay. Дизайн та розробка з нуля.' },
-    ),
-  }),
   website('comfort-home', 'COMFORT HOME', 'https://comforthomekiev.com.ua/', {
     googleAdsTracking: true,
     recovery: true, serviceCase: 'development', originalUrl: 'https://www.comforthome.kyiv.ua/', categoryLabel: 'Website / Recovery', accent: '#aa927a',

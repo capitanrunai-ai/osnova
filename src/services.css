@@ -2639,6 +2639,7 @@
   }
 
   .visibility-process-head { grid-template-columns: 1fr; }
+  .visibility-cta-grid { grid-template-columns: 1fr; }
   .visibility-process-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .visibility-process-grid > .reveal:nth-child(2) { border-right: 1px solid rgba(255,255,255,.12); }
   .visibility-process-grid > .reveal:nth-child(-n+2) { border-bottom: 0; }

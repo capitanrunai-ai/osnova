@@ -22,8 +22,14 @@ const lines = [
 // back to itself (redirect loop) — simpler is safer here.
 
 for (const lang of languageCodes) {
+  // Utility documents also exist on disk. Force their error status so file
+  // shadowing cannot turn a direct visit to a 404 document into HTTP 200.
+  lines.push(`/${lang}/404 /${lang}/404/index.html 404!`)
+  lines.push(`/${lang}/404/ /${lang}/404/index.html 404!`)
+  lines.push(`/${lang}/404/index.html /${lang}/404/index.html 404!`)
   lines.push(`/${lang}/* /${lang}/404/index.html 404`)
 }
+lines.push('/404.html /404.html 404!')
 lines.push('/* /404.html 404')
 
 await writeFile(resolve(root, 'dist', '_redirects'), `${lines.join('\n')}\n`, 'utf8')

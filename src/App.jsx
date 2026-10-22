@@ -50,6 +50,9 @@ const languageCodes = Object.keys(languages)
 
 function parseLocation() {
   const parts = window.location.pathname.split('/').filter(Boolean)
+  // Static hosts can serve the generated document by its full filename too.
+  // Resolve it to the same page as the clean URL before hydration and SEO.
+  if (parts.at(-1) === 'index.html') parts.pop()
   const lang = languageCodes.includes(parts[0]) ? parts[0] : null
   const route = parts.slice(lang ? 1 : 0).join('/')
   return { lang, route, hash: window.location.hash }
@@ -101,6 +104,10 @@ function setLinkTag(rel, hreflang, href) {
 export function getInitialLanguage() {
   const { lang } = parseLocation()
   if (lang) return lang
+  // An unprefixed missing URL receives the generic prerendered 404 document.
+  // Hydrate its actual language before reading a saved/browser preference.
+  const renderedLanguage = document.documentElement.lang
+  if (document.getElementById('root')?.hasChildNodes() && languageCodes.includes(renderedLanguage)) return renderedLanguage
   const saved = localStorage.getItem('osnova-language')
   if (languageCodes.includes(saved)) return saved
   const browser = navigator.language?.slice(0, 2)
@@ -1475,11 +1482,11 @@ function PaymentPage({ p }) {
           <Reveal className="payment-intro" delay={90}>
             <p>{p.intro}</p>
             <div className="payment-rail" aria-label={p.accepted}>
-              <span>Bank</span><i /><span>IBAN</span><i /><span>USDT · BTC · ETH</span>
+              <span>Bank</span><i /><span>IBAN</span><i /><span>USDT · BTC · ETH</span><i /><span>PayPal</span>
             </div>
           </Reveal>
         </div>
-        <div className="payment-orbit" aria-hidden="true"><i /><i /><b>03</b></div>
+        <div className="payment-orbit" aria-hidden="true"><i /><i /><b>{String(p.methods.length).padStart(2, '0')}</b></div>
       </section>
 
       <section className="payment-methods" aria-label={p.accepted}>
@@ -1490,7 +1497,8 @@ function PaymentPage({ p }) {
               <div className="payment-method-copy"><small>{method.label}</small><h2>{method.title}</h2><p>{method.text}</p></div>
               <div className="payment-method-detail">
                 {index === 2 && <div className="crypto-assets">{currencies.map(([code, name]) => <div className="crypto-asset" key={code}><CryptoMark currency={code} /><span><strong>{code}</strong><small>{name}</small></span></div>)}</div>}
-                <div className="payment-detail-slot"><span>{method.detailLabel}</span><strong>{method.detail}</strong></div>
+                {method.type === 'paypal' && <div className="payment-paypal-mark"><img src="/assets/paypal.svg" alt="PayPal" width="128" height="34" loading="lazy" /></div>}
+                {method.detail && <div className="payment-detail-slot"><span>{method.detailLabel}</span><strong>{method.detail}</strong></div>}
               </div>
             </Reveal>
           ))}
@@ -1793,7 +1801,7 @@ export default function App({ initialLanguage }) {
 
   return (
     <>
-      <Header t={t} s={s} lang={lang} route={location.route} setLang={setLang} navigate={navigate} />
+      <Header t={t} s={s} lang={lang} route={resolved.kind === 'notFound' ? '404' : location.route} setLang={setLang} navigate={navigate} />
       {page}
       <Footer t={t} s={s} p={p} lang={lang} navigate={navigate} />
       <PageTransition state={transition} />

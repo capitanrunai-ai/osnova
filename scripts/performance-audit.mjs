@@ -98,11 +98,16 @@ try {
   observe(page)
   let googleRequests = 0
   const leads = []
+  let rejectNextSubmission = false
   await page.setRequestInterception(true)
   page.on('request', async request => {
     const url = new URL(request.url())
     if (url.pathname === '/api/contact') {
       leads.push(JSON.parse(request.postData()))
+      if (rejectNextSubmission) {
+        rejectNextSubmission = false
+        return request.respond({ status: 502, contentType: 'application/json', body: JSON.stringify({ ok: false, error: 'server' }) })
+      }
       return request.respond({ status: 200, contentType: 'application/json', body: JSON.stringify({ ok: true, delivered: true }) })
     }
     if (url.hostname !== 'osnovaai.com') {
@@ -142,9 +147,26 @@ try {
     report.forms++
   }
   assert.equal(leads.length, 4, 'one intercepted request per form')
+  // A delivery failure preserves the entered text and can be retried. Do not
+  // count it as a conversion or make any real request to the lead endpoint.
+  await page.click('.form-success button')
+  await page.type('input[name="name"]', 'Local retry QA')
+  await page.type('input[name="contact"]', 'retry@example.invalid')
+  await page.type('textarea[name="message"]', 'Keep this message after a failed delivery')
+  rejectNextSubmission = true
+  await page.click('.form-submit')
+  await page.waitForSelector('.form-error')
+  assert.equal(await page.$eval('textarea[name="message"]', node => node.value), 'Keep this message after a failed delivery')
+  assert.equal(await page.evaluate(() => (window.dataLayer || []).filter(event => event[0] === 'event' && event[1] === 'generate_lead').length), 1, 'failed delivery is not a conversion')
+  // Expected HTTP 502 is the one deliberate browser resource error in this test.
+  report.errors = report.errors.filter(message => !/^502 .*\/api\/contact$/.test(message) && !/^Failed to load resource:.*502/.test(message))
+  await page.click('.form-submit')
+  await page.waitForSelector('.form-success')
+  assert.equal(await page.evaluate(() => (window.dataLayer || []).filter(event => event[0] === 'event' && event[1] === 'generate_lead').length), 2, 'successful retry records one conversion')
+  report.retry = true
   await context.close()
   assert.deepEqual(report.errors, [], 'no browser, hydration or asset errors')
-  console.log(`PASS: ${routes.length} localized preload documents; four cold starts, cached routes/history/language switching, consent and four intercepted forms.`)
+  console.log(`PASS: ${routes.length} localized preload documents; four cold starts, cached routes/history/language switching, consent, four intercepted forms and delivery retry.`)
   console.log(JSON.stringify({ entry: report.entry, initial: report.initial, forms: report.forms, errors: report.errors }, null, 2))
 } finally {
   await writeFile(resolve(output, 'report.json'), JSON.stringify(report, null, 2))
