@@ -359,7 +359,7 @@ export const base = {
         "id": "google",
         "name": "Google",
         "label": "BESTEHENDE NACHFRAGE",
-        "verb": "Aktive Absicht erfassen.",
+        "verb": "Sichtbar, wenn Kunden suchen.",
         "text": "Google ist besonders nützlich, wenn jemand bereits nach einer Lösung sucht — nach einem Dienstleister in der Nähe, einem konkreten Produkt oder einem Anbieter.",
         "items": [
           "Search Ads",
@@ -598,7 +598,7 @@ export const visibility = {
     },
     "process": {
       "label": "SO STARTEN WIR",
-      "title": "Erst Prioritäten. Dann Umsetzung und Messung.",
+      "title": "Wir kümmern uns um das Wesentliche.",
       "steps": [
         [
           "01",

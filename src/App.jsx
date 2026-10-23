@@ -29,7 +29,7 @@ import {
 } from 'lucide-react'
 import { content, languages } from './data/content'
 import { commercialContent } from './data/commercialContent'
-import { trustContent, trustCases } from './data/trustContent'
+import { trustContent } from './data/trustContent'
 import { designContent } from './data/designContent'
 import { paymentContent } from './data/paymentContent'
 import { caseCategories, caseUi, getLocalizedCases } from './data/cases'
@@ -1373,7 +1373,6 @@ function CommercialTrust({ lang, navigate }) {
     <Reveal className="trust-team"><span className="eyebrow">{trust.teamLabel}</span><p>{trust.team}</p><ul>{trust.roles.map(role => <li key={role}>{role}</li>)}</ul></Reveal>
     <div className="commercial-trust-grid">{data.items.map((item, index) => <Reveal key={item} as="p" delay={index * 50}><Check size={20} /><span>{item}</span></Reveal>)}</div>
     <p className="commercial-footnote">{data.note}</p>
-    <div className="trust-proof"><span className="eyebrow">{trust.proofLabel}</span><div className="trust-proof-grid">{Object.entries(trustCases).map(([category, cases]) => <div key={category}><h3>{trust[category]}</h3><ul>{cases.map(([title, slug]) => <li key={slug}><RouteLink href={`/${lang}/cases/${slug}`} navigate={navigate}>{title}<ArrowUpRight size={17} aria-hidden="true" /></RouteLink></li>)}</ul></div>)}</div></div>
     <div className="trust-last-row"><div><span className="eyebrow">{trust.supportLabel}</span><p>{trust.support}</p><RouteLink href={`/${lang}/services/automation#managed`} navigate={navigate}>{trust.supportLink}<ArrowUpRight size={16} aria-hidden="true" /></RouteLink></div><div><span className="eyebrow">{trust.contactLabel}</span><p>{trust.contact}</p><a href="mailto:capitanrun@osnova.ai" onClick={() => track('email_click', { site_language: lang, page_path: window.location.pathname, link_location: 'trust' })}>capitanrun@osnova.ai<ArrowUpRight size={16} aria-hidden="true" /></a><a href="https://t.me/capitanrun" target="_blank" rel="noreferrer" onClick={() => track('telegram_click', { site_language: lang, page_path: window.location.pathname, link_location: 'trust' })}>Telegram · @capitanrun<ArrowUpRight size={16} aria-hidden="true" /></a></div></div>
   </div></section>
 }
@@ -1437,7 +1436,7 @@ function CommercialDevelopmentProducts({ lang }) {
 
 function CommercialAutomationProducts({ lang, navigate }) {
   const data = commercialContent[lang].automation
-  return <><section className="commercial-section commercial-product-section" id="products"><div className="container"><Reveal><span className="eyebrow">{data.label}</span><h2>{data.title}</h2><p className="commercial-lead">{data.intro}</p></Reveal><div className="commercial-card-grid">{data.items.map(([title, price, detail], index) => <Reveal className="commercial-card" as="article" key={title} delay={(index % 3) * 60}><span className="commercial-number">{String(index + 1).padStart(2, '0')}</span><div className="commercial-price">{price}</div><h3>{title}</h3><p>{detail}</p></Reveal>)}</div><p className="commercial-scope-note">{data.timeline}</p><p className="commercial-scope-note">{data.terms}</p></div></section><section className="commercial-section commercial-managed" id="managed"><div className="container"><Reveal><span className="eyebrow">{data.managed.label}</span><h2>{data.managed.title}</h2></Reveal><div className="commercial-managed-grid">{data.managed.rows.map(([title, price, detail]) => <Reveal className="commercial-managed-row" key={title}><h3>{title}</h3><strong>{price}</strong><p>{detail}</p></Reveal>)}</div><p className="commercial-footnote">{data.managed.note}</p></div></section><CommercialProcess lang={lang} /><CommercialCustom lang={lang} navigate={navigate} /></>
+  return <><section className="commercial-section commercial-product-section" id="products"><div className="container"><Reveal><span className="eyebrow">{data.label}</span><h2>{data.title}</h2></Reveal><div className="commercial-card-grid">{data.items.map(([title, price, detail], index) => <Reveal className="commercial-card" as="article" key={title} delay={(index % 3) * 60}><span className="commercial-number">{String(index + 1).padStart(2, '0')}</span><div className="commercial-price">{price}</div><h3>{title}</h3><p>{detail}</p></Reveal>)}</div><p className="commercial-scope-note">{data.timeline}</p><p className="commercial-scope-note">{data.terms}</p></div></section><section className="commercial-section commercial-managed" id="managed"><div className="container"><Reveal><span className="eyebrow">{data.managed.label}</span><h2>{data.managed.title}</h2></Reveal><div className="commercial-managed-grid">{data.managed.rows.map(([title, price, detail]) => <Reveal className="commercial-managed-row" key={title}><h3>{title}</h3><strong>{price}</strong><p>{detail}</p></Reveal>)}</div><p className="commercial-footnote">{data.managed.note}</p></div></section><CommercialProcess lang={lang} /><CommercialCustom lang={lang} navigate={navigate} /></>
 }
 
 function AutomationPage({ s, lang, navigate }) {
@@ -1447,7 +1446,7 @@ function AutomationPage({ s, lang, navigate }) {
   const related = getLocalizedCases(lang).filter(item => ['ai-voice-operator', 'ai-news-automation', 'retail-stock-monitor'].includes(item.slug))
   return (
     <main className="direction-page automation-page">
-      <DirectionHero direction="automation" data={{ ...data, title: commercial.title, titleAccent: '', intro: commercial.intro }}><AutomationHeroVisual label={data.signal} flow={data.heroFlow} /></DirectionHero>
+      <DirectionHero direction="automation" data={{ ...data, title: commercial.heroTitle, titleAccent: '', intro: commercial.intro }}><AutomationHeroVisual label={data.signal} flow={data.heroFlow} /></DirectionHero>
       <CommercialAutomationProducts lang={lang} navigate={navigate} />
       <section className="service-related section-pad" aria-label={work.label}>
         <div className="container"><span className="eyebrow light">{work.label}</span><h2>{work.title}</h2>
@@ -1536,7 +1535,7 @@ function DevelopmentPage({ s, t, lang, navigate }) {
   const { featured: related, more } = getDevelopmentShowcase(lang)
   return (
     <main className="direction-page development-page">
-      <DirectionHero direction="development" data={{ ...data, title: commercial.title, titleAccent: '', intro: commercial.scope }} action={<DevelopmentQuoteLink className="button button-primary development-hero-cta" t={t} lang={lang} navigate={navigate} />}><DevelopmentVisual labels={data.visual} /></DirectionHero>
+      <DirectionHero direction="development" data={{ ...data, title: commercial.heroTitle, titleAccent: '', intro: commercial.scope }} action={<DevelopmentQuoteLink className="button button-primary development-hero-cta" t={t} lang={lang} navigate={navigate} />}><DevelopmentVisual labels={data.visual} /></DirectionHero>
       <CommercialDevelopmentProducts lang={lang} /><CommercialProcess lang={lang} /><CommercialTrust lang={lang} navigate={navigate} />
       <section className="service-related section-pad" aria-label={work.label}>
         <div className="container"><span className="eyebrow light">{work.label}</span><h2>{work.title}</h2>

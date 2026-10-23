@@ -359,7 +359,7 @@ export const base = {
         "id": "google",
         "name": "Google",
         "label": "EXISTING DEMAND",
-        "verb": "Capture active intent.",
+        "verb": "Show up when people search.",
         "text": "Google is particularly useful when someone is already looking for a solution — a nearby service, a specific product or a provider.",
         "items": [
           "Search Ads",
@@ -598,7 +598,7 @@ export const visibility = {
     },
     "process": {
       "label": "HOW WE START",
-      "title": "Priorities first. Then implementation and measurement.",
+      "title": "Focus on the work that matters.",
       "steps": [
         [
           "01",

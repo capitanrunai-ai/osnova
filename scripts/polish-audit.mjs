@@ -1,4 +1,4 @@
-// Local regression coverage for payment, offer interactions, managed rows and proof links.
+// Local regression coverage for payment, offer interactions, managed rows and showcase links.
 import assert from 'node:assert/strict'
 import { spawn } from 'node:child_process'
 import { mkdir, writeFile } from 'node:fs/promises'
@@ -6,7 +6,7 @@ import { resolve } from 'node:path'
 import puppeteer from 'puppeteer-core'
 import { paymentContent } from '../src/data/paymentContent.js'
 import { commercialContent } from '../src/data/commercialContent.js'
-import { trustCases } from '../src/data/trustContent.js'
+import { featuredDevelopmentSlugs, moreDevelopmentSlugs } from '../src/data/developmentShowcase.js'
 
 const origin = 'http://127.0.0.1:5197'
 const output = resolve('.visual-audit/polish')
@@ -23,6 +23,7 @@ try {
   }
   browser = await puppeteer.launch({ executablePath: process.env.CHROME_PATH || 'C:/Program Files/Google/Chrome/Application/chrome.exe', headless: true, args: ['--no-sandbox'] })
   const page = await browser.newPage()
+  page.setDefaultNavigationTimeout(60_000)
   page.on('pageerror', error => report.errors.push(error.message))
   page.on('console', message => { if (message.type() === 'error') report.errors.push(message.text()) })
   await page.setRequestInterception(true)
@@ -48,7 +49,7 @@ try {
         await open(lang, route)
         const where = `${lang}/${route || 'home'}@${width}`
         const layout = await page.evaluate(() => {
-          const selectors = '.payment-heading h1, .payment-method h2, .payment-method p, .payment-detail-slot strong, .payment-visual, .crypto-asset, .commercial-offer-card, .commercial-offer-card h3, .commercial-offer-card p, .commercial-offer-action, .commercial-managed-row h3, .commercial-managed-row strong, .commercial-managed-row p, .trust-proof a'
+          const selectors = '.payment-heading h1, .payment-method h2, .payment-method p, .payment-detail-slot strong, .payment-visual, .crypto-asset, .commercial-offer-card, .commercial-offer-card h3, .commercial-offer-card p, .commercial-offer-action, .commercial-managed-row h3, .commercial-managed-row strong, .commercial-managed-row p, .trust-last-row a'
           const clipped = [...document.querySelectorAll(selectors)].filter(node => node.scrollWidth > node.clientWidth + 2 || node.scrollHeight > node.clientHeight + 2).map(node => node.textContent)
           const rows = [...document.querySelectorAll('.commercial-managed-row')].map(row => {
             const box = node => { const r = node.getBoundingClientRect(); return { x: r.x, y: r.y, right: r.right, bottom: r.bottom } }
@@ -66,7 +67,7 @@ try {
             crypto: [...document.querySelectorAll('.crypto-asset strong')].map(n => n.textContent),
             paypal: document.querySelector('.payment-paypal-mark img')?.naturalWidth,
             broken: [...document.images].filter(img => !img.complete || !img.naturalWidth).map(img => img.src),
-            proof: [...document.querySelectorAll('.trust-proof a')].map(a => a.getAttribute('href')),
+            proof: [...document.querySelectorAll('.commercial-trust a[href*="/cases/"]')].map(a => a.getAttribute('href')),
           }
         })
         assert.equal(layout.overflow, false, `${where}: horizontal overflow`)
@@ -106,9 +107,9 @@ try {
             }
           })
         }
-        if (route === '' || route === 'services/development') assert.deepEqual(layout.proof, Object.values(trustCases).flat().map(([, slug]) => `/${lang}/cases/${slug}`))
+        if (route === '' || route === 'services/development') assert.deepEqual(layout.proof, [], `${where}: case list appears only in the main showcase`)
         if ([320, 390, 768, 1440].includes(width)) {
-          const selector = route === 'payment' ? '.payment-page' : route === 'services/automation' ? '#managed' : route === 'services/development' ? '.trust-proof' : '.commercial-offers'
+          const selector = route === 'payment' ? '.payment-page' : route === 'services/automation' ? '#managed' : route === 'services/development' ? '.trust-last-row' : '.commercial-offers'
           // Fixed navigation otherwise appears across an element screenshot after auto-scrolling.
           await page.$eval('.site-header', node => { node.style.visibility = 'hidden' })
           await (await page.$(selector)).screenshot({ path: resolve(output, `${lang}-${route.replaceAll('/', '-') || 'home'}-${width}.png`) })
@@ -157,10 +158,11 @@ try {
       report.interactions.push({ route, index, hovered, focused, reduced })
     }
   }
-  // Exercise proof routes and offer links through the real client router in all locales.
+  // Exercise showcase routes and offer links through the real client router in all locales.
   await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }])
   for (const lang of ['ru', 'en', 'de', 'uk']) {
-    const selectors = [...Object.values(trustCases).flat().map(([, slug]) => `.trust-proof a[href="/${lang}/cases/${slug}"]`), ...[1, 2, 3].map(i => `.commercial-offer-reveal:nth-child(${i}) a`)]
+    const showcase = [...featuredDevelopmentSlugs, ...moreDevelopmentSlugs, 'ai-news-automation', 'retail-stock-monitor']
+    const selectors = [...showcase.map(slug => `.home-work-card[href="/${lang}/cases/${slug}"], .home-more-card[href="/${lang}/cases/${slug}"]`), ...[1, 2, 3].map(i => `.commercial-offer-reveal:nth-child(${i}) a`)]
     for (const selector of selectors) {
       await open(lang)
       const href = await page.$eval(selector, a => a.getAttribute('href'))
