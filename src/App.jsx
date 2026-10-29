@@ -1626,6 +1626,12 @@ function EmailDeliverabilityPage({ s, lang, navigate }) {
       </section>
       <VisibilityCapabilities data={data.deliverables} variant="email" />
       <VisibilityProcess data={data.process} variant="email" />
+      <section className="email-access section-pad">
+        <div className="container email-outcome-layout">
+          <Reveal className="email-section-heading"><span className="eyebrow">{data.access.label}</span><h2>{data.access.title}</h2></Reveal>
+          <Reveal><ul>{data.access.items.map(item => <li key={item}><Check size={20} aria-hidden="true" /><span>{item}</span></li>)}</ul><p className="email-outcome-note">{data.access.note}</p></Reveal>
+        </div>
+      </section>
       <section className="email-outcome section-pad">
         <div className="container email-outcome-layout">
           <Reveal className="email-section-heading"><span className="eyebrow">{data.outcome.label}</span><h2>{data.outcome.title}</h2></Reveal>

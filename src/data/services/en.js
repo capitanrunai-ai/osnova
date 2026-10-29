@@ -751,101 +751,122 @@ export const email = {
     "Help your company emails reach customers. We find out why messages land in spam, fix settings and check the results."
   ],
   "label": "06 / EMAIL DELIVERABILITY",
-  "title": "Your emails.",
-  "titleAccent": "Closer to customers.",
-  "scopeTitle": "The emails we help with",
-  "intro": "We help your company’s emails reach customers and stay out of spam. We find what is getting in the way and fix the settings — for newsletters, invoices, order confirmations and other important emails.",
+  "title": "Emails not arriving?",
+  "titleAccent": "Let’s find out why.",
+  "intro": "We diagnose delivery problems in Google Workspace / Gmail and Microsoft 365 / Outlook. We check your domain and sending configuration, agree on fixes and check the results again.",
+  "scopeTitle": "Our core systems",
   "visual": {
-    "label": "THE EMAIL JOURNEY",
+    "label": "FROM SYMPTOMS TO CLEAR FINDINGS",
     "steps": [
-      "Your company email",
-      "Sender check",
-      "Customer’s email service",
-      "Inbox"
+      "Diagnosis",
+      "Priorities and plan",
+      "Agreed fixes",
+      "Follow-up checks"
     ],
-    "note": "From your company to your customer"
+    "note": "Understand the causes, changes and remaining limitations."
   },
   "situations": {
-    "label": "WHY IT MATTERS TO YOUR BUSINESS",
+    "label": "WHEN TO GET HELP",
     "title": "Sent does not always mean received.",
-    "intro": "A customer is waiting for an invoice, order confirmation or login link. Without the email, they cannot pay, check their order or sign in. We help these messages and your newsletters reach customers.",
+    "intro": "For businesses whose important emails go missing, bounce back or are accepted inconsistently by Gmail and Outlook.",
     "items": [
       [
         "Emails land in spam",
-        "Customers miss offers, confirmations and reminders."
+        "Customers miss invoices, confirmations and business correspondence. You need to understand what may be triggering filters."
       ],
       [
-        "Emails do not arrive",
-        "Customers report delays, and you receive error messages."
+        "Some emails never arrive",
+        "Bounce rates are high. You see delays, rejections or delivery error messages."
       ],
       [
-        "You change how you send",
-        "You switch email services or plan to send more emails."
+        "Your sending setup has changed",
+        "Problems started after a domain setup or a change of sending system. Or you need SPF / DKIM / DMARC checked before making changes."
       ]
     ]
   },
   "deliverables": {
-    "label": "WHAT OSNOVA DOES",
-    "title": "Get your email setup in order.",
-    "intro": "We look at deliverability, sender and domain reputation, reasons for spam placement and the full email setup. We explain what blocked your emails and what we changed without burying you in technical detail.",
+    "label": "WHAT WE CHECK",
+    "title": "Your domain, sender and delivery errors.",
+    "intro": "We compare your configuration with sample messages and available provider data. Support for other ESPs and SMTP platforms must be confirmed separately before work begins.",
     "items": [
       [
         "01",
-        "Find the cause",
-        "Check emails, errors and rejections to learn why messages land in spam, arrive late or are not accepted."
+        "SPF: who can send",
+        "We check the DNS record that specifies which servers may send email on behalf of your domain."
       ],
       [
         "02",
-        "Check the domain and sender",
-        "Review the condition of your domain and sender reputation. Fix the settings that show email services the message really comes from your company."
+        "DKIM: the message signature",
+        "We check how messages are signed and whether the recipient can validate the signature, helping confirm the sender and message integrity."
       ],
       [
         "03",
-        "Set up the infrastructure",
-        "Connect the domain, email service, website, CRM and automated messages so each type of email sends predictably."
+        "DMARC: authentication rules",
+        "We check whether SPF / DKIM align with the domain in the From field, and review the policy for messages that fail authentication."
       ],
       [
         "04",
-        "Make sending reliable",
-        "Review addresses, frequency and volume, run tests and monitor errors — especially before you increase the number of emails."
+        "DNS and sending configuration",
+        "We review authentication records and available sending settings for errors and inconsistencies."
+      ],
+      [
+        "05",
+        "Reputation signals",
+        "We examine available domain and sender reputation signals, including Google or Microsoft data where available for your setup."
+      ],
+      [
+        "06",
+        "Bounces and spam placement",
+        "We review message headers, bounce messages, error codes and available logs to identify likely causes of delivery problems."
       ]
     ]
   },
   "process": {
-    "label": "HOW WE WORK",
-    "title": "Find out why your emails are not reaching customers.",
+    "label": "AFTER DIAGNOSIS",
+    "title": "From findings to checked changes.",
     "steps": [
       [
         "01",
-        "Show us the problem",
-        "Share an example email and explain how you send it. We examine errors and identify the cause."
+        "Issues and priorities",
+        "You receive a list of identified issues, an explanation of their impact and a recommended order for fixes."
       ],
       [
         "02",
-        "We fix the settings",
-        "We explain the changes, agree the work and correct the configuration."
+        "Agree and implement fixes",
+        "We agree on the scope and make changes within the available configuration and granted permissions."
       ],
       [
         "03",
-        "Test delivery again",
-        "We send test emails, review the results and give your team clear instructions."
+        "Recheck and hand over",
+        "We recheck settings and available signals after the changes, then give your team the findings and recommendations."
       ]
     ]
   },
+  "access": {
+    "label": "ACCESS",
+    "title": "The access your task needs.",
+    "items": [
+      "DNS and domain settings.",
+      "Google Workspace Admin or Microsoft 365 Admin, depending on your system.",
+      "Sending platform settings and available logs.",
+      "Sample messages with headers, bounce messages and delivery errors."
+    ],
+    "note": "We agree on access for your specific task. Wherever possible, we use delegated access with appropriate permissions; sharing ordinary passwords is not our standard access method."
+  },
   "outcome": {
     "label": "WHAT YOU RECEIVE",
-    "title": "Know what happens to your emails.",
+    "title": "Clear findings for your team.",
     "items": [
-      "An explanation of why emails were not arriving.",
-      "Fixed settings and the results of our checks.",
-      "Instructions on sending emails and handling problems."
+      "A prioritised issue list with an explanation of the causes.",
+      "A record of agreed fixes and follow-up check results.",
+      "Operating recommendations and remaining limitations."
     ],
-    "note": "Nobody can promise that every email will reach the inbox: your customer’s email service also decides what counts as spam. We fix what we can control and show you the test results."
+    "note": "OSNOVA does not guarantee that every email will reach the inbox. Results also depend on Google, Microsoft, receiving providers, domain history and sending behaviour. We do not guarantee a reputation score, blacklist removal or the lifting of third-party provider restrictions."
   },
   "cta": {
     "label": "EMAIL / START",
-    "title": "Find where your emails get lost.",
-    "text": "Tell us which emails are not arriving and show us an example. We will suggest where to start.",
+    "title": "Start with diagnosis.",
+    "text": "Tell us which emails are missing and which system you use to send them. Pricing is estimated individually by scope; fixes are quoted after diagnosis. We agree on timing after assessing the task.",
     "button": "Discuss email delivery"
   }
 }

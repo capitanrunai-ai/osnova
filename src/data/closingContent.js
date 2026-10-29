@@ -9,8 +9,8 @@ export const closingContent = {
     messageHint: 'Например: нужен новый сайт, автоматизация процесса, запуск рекламы или другая задача.', submit: 'Обсудить задачу', sending: 'Отправляем…',
     sent: 'Спасибо! Заявка отправлена — мы свяжемся с вами в ближайшее время.', back: 'Вернуться к форме',
     error: 'Не получилось отправить заявку. Попробуйте ещё раз или напишите нам напрямую.',
-    emailShort: 'Помогаем письмам доходить до клиентов, а не теряться в спаме.',
-    emailItems: ['Корпоративные письма', 'Автоматические письма', 'Email-рассылки', 'Уведомления', 'Письма потенциальным клиентам', 'Большие объёмы отправки'],
+    emailShort: 'Диагностика доставки email, SPF / DKIM / DMARC и согласованные исправления.',
+    emailItems: ['Google Workspace / Gmail', 'Microsoft 365 / Outlook'],
     emailAction: 'Обсудить доставку писем',
   },
   en: {
@@ -23,8 +23,8 @@ export const closingContent = {
     messageHint: 'For example: a new website, process automation, an ad campaign or another project.', submit: 'Discuss your project', sending: 'Sending…',
     sent: 'Thank you! Your request has been sent — we’ll get back to you shortly.', back: 'Back to the form',
     error: 'Something went wrong. Please try again or write to us directly.',
-    emailShort: 'We help your emails reach customers instead of getting lost in spam.',
-    emailItems: ['Business emails', 'Automated emails', 'Email campaigns', 'Notifications', 'Emails to potential customers', 'High-volume sending'],
+    emailShort: 'Email delivery diagnostics, SPF / DKIM / DMARC checks and agreed fixes.',
+    emailItems: ['Google Workspace / Gmail', 'Microsoft 365 / Outlook'],
     emailAction: 'Discuss email delivery',
   },
   de: {
@@ -37,8 +37,8 @@ export const closingContent = {
     messageHint: 'Zum Beispiel: eine neue Website, die Automatisierung eines Ablaufs, eine Werbekampagne oder ein anderes Vorhaben.', submit: 'Vorhaben besprechen', sending: 'Wird gesendet…',
     sent: 'Danke! Ihre Anfrage wurde gesendet — wir melden uns in Kürze bei Ihnen.', back: 'Zurück zum Formular',
     error: 'Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut oder schreiben Sie uns direkt.',
-    emailShort: 'Wir helfen, dass Ihre E-Mails Kunden erreichen und nicht im Spam landen.',
-    emailItems: ['Geschäftliche E-Mails', 'Automatische E-Mails', 'Newsletter', 'Benachrichtigungen', 'E-Mails an Interessenten', 'Große Versandmengen'],
+    emailShort: 'Analyse der E-Mail-Zustellung, SPF / DKIM / DMARC und vereinbarte Korrekturen.',
+    emailItems: ['Google Workspace / Gmail', 'Microsoft 365 / Outlook'],
     emailAction: 'E-Mail-Zustellung besprechen',
   },
   uk: {
@@ -51,8 +51,8 @@ export const closingContent = {
     messageHint: 'Наприклад: потрібен новий сайт, автоматизація процесу, запуск реклами чи інше завдання.', submit: 'Обговорити завдання', sending: 'Надсилаємо…',
     sent: 'Дякуємо! Заявку надіслано — ми зв’яжемося з вами найближчим часом.', back: 'Повернутися до форми',
     error: 'Не вдалося надіслати заявку. Спробуйте ще раз або напишіть нам напряму.',
-    emailShort: 'Допомагаємо листам доходити до клієнтів, а не губитися у спамі.',
-    emailItems: ['Корпоративні листи', 'Автоматичні листи', 'Email-розсилки', 'Сповіщення', 'Листи потенційним клієнтам', 'Великі обсяги надсилання'],
+    emailShort: 'Діагностика доставки email, SPF / DKIM / DMARC і погоджені виправлення.',
+    emailItems: ['Google Workspace / Gmail', 'Microsoft 365 / Outlook'],
     emailAction: 'Обговорити доставку листів',
   },
 }

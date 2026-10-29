@@ -37,11 +37,11 @@
 .email-page .visibility-capabilities-head > p { max-width: 720px; }
 .email-page .visibility-process-grid > .reveal > span { color: var(--email-accent); }
 .email-page .visibility-process-grid i { background: var(--email-accent); }
-.email-outcome { background: var(--paper); }
+.email-outcome, .email-access { background: var(--paper); }
 .email-outcome-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; }
-.email-outcome ul { margin: 0; padding: 0; list-style: none; }
-.email-outcome li { display: flex; align-items: flex-start; gap: 18px; padding: 22px 0; border-bottom: 1px solid var(--line); font: 400 18px/1.5 var(--sans); }
-.email-outcome li svg { flex-shrink: 0; margin-top: 4px; }
+.email-outcome-layout ul { margin: 0; padding: 0; list-style: none; }
+.email-outcome-layout li { display: flex; align-items: flex-start; gap: 18px; padding: 22px 0; border-bottom: 1px solid var(--line); font: 400 18px/1.5 var(--sans); }
+.email-outcome-layout li svg { flex-shrink: 0; margin-top: 4px; }
 .email-outcome-note { margin: 28px 0 0; color: #62625e; font: 400 14px/1.7 var(--sans); }
 .email-page .visibility-cta .button { background: var(--email-accent); color: var(--ink); white-space: normal; text-align: left; }
 .email-page .visibility-cta .button svg { flex-shrink: 0; }
@@ -74,5 +74,5 @@
   .email-page .visibility-capabilities-head h2,
   .email-page .visibility-process-head h2,
   .email-page .visibility-cta h2 { font-size: clamp(38px, 10vw, 52px); }
-  .email-outcome li { font-size: 16px; }
+  .email-outcome-layout li { font-size: 16px; }
 }

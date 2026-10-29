@@ -751,101 +751,122 @@ export const email = {
     "Damit Ihre E-Mails Kunden erreichen. Wir finden Ursachen für Spam-Probleme, korrigieren Einstellungen und prüfen das Ergebnis."
   ],
   "label": "06 / EMAIL DELIVERABILITY",
-  "title": "Ihre E-Mails.",
-  "titleAccent": "Näher am Kunden.",
-  "scopeTitle": "Bei diesen E-Mails helfen wir",
-  "intro": "Wir helfen, dass die E-Mails Ihres Unternehmens bei Kunden ankommen und nicht im Spam landen. Wir finden heraus, was die Zustellung verhindert, und korrigieren die Einstellungen — für Newsletter, Rechnungen, Bestellbestätigungen und andere wichtige Nachrichten.",
+  "title": "E-Mails kommen nicht an?",
+  "titleAccent": "Wir prüfen die Ursachen.",
+  "intro": "Wir analysieren Zustellprobleme in Google Workspace / Gmail und Microsoft 365 / Outlook. Wir prüfen Ihre Domain und Versandkonfiguration, stimmen Korrekturen ab und prüfen anschließend erneut.",
+  "scopeTitle": "Unsere wichtigsten Systeme",
   "visual": {
-    "label": "DER WEG EINER E-MAIL",
+    "label": "VOM PROBLEM ZUM KLAREN ERGEBNIS",
     "steps": [
-      "Ihre Nachricht",
-      "Absenderprüfung",
-      "E-Mail-Dienst des Kunden",
-      "Posteingang"
+      "Diagnose",
+      "Prioritäten und Plan",
+      "Vereinbarte Korrekturen",
+      "Erneute Prüfung"
     ],
-    "note": "Von Ihrem Unternehmen zum Kunden"
+    "note": "Ursachen, Änderungen und verbleibende Grenzen nachvollziehen."
   },
   "situations": {
-    "label": "WARUM DAS FÜR IHR UNTERNEHMEN ZÄHLT",
-    "title": "Versendet heißt noch nicht angekommen.",
-    "intro": "Ein Kunde wartet auf eine Rechnung, Bestellbestätigung oder einen Anmeldelink. Fehlt die E-Mail, kann er nicht bezahlen, seine Bestellung prüfen oder sich anmelden. Wir helfen, dass diese Nachrichten und Ihre Newsletter ankommen.",
+    "label": "WANN WIR HELFEN",
+    "title": "Gesendet heißt noch nicht zugestellt.",
+    "intro": "Für Unternehmen, deren wichtige E-Mails fehlen, als unzustellbar zurückkommen oder von Gmail und Outlook nicht zuverlässig angenommen werden.",
     "items": [
       [
         "E-Mails landen im Spam",
-        "Kunden übersehen Angebote, Bestätigungen und Erinnerungen."
+        "Kunden übersehen Rechnungen, Bestätigungen und Geschäftskorrespondenz. Sie möchten mögliche Ursachen der Filterung verstehen."
       ],
       [
-        "E-Mails kommen nicht an",
-        "Kunden berichten von Verzögerungen und Sie erhalten Fehlermeldungen."
+        "Ein Teil der E-Mails fehlt",
+        "Die Bounce-Rate ist hoch. Es gibt Verzögerungen, Ablehnungen oder Fehlermeldungen zur Zustellung."
       ],
       [
-        "Sie ändern den Versand",
-        "Sie wechseln den E-Mail-Dienst oder möchten mehr Nachrichten versenden."
+        "Der Versand wurde umgestellt",
+        "Nach der Einrichtung einer Domain oder eines neuen Versandsystems treten Probleme auf. Oder Sie möchten SPF / DKIM / DMARC vor einer Änderung prüfen lassen."
       ]
     ]
   },
   "deliverables": {
-    "label": "WAS OSNOVA TUT",
-    "title": "Ordnung in den E-Mail-Versand bringen.",
-    "intro": "Wir prüfen Zustellbarkeit, Absender- und Domainreputation, Ursachen für Spam sowie die gesamte E-Mail-Infrastruktur. Wir erklären verständlich, was die Zustellung verhindert hat und was wir geändert haben.",
+    "label": "WAS WIR PRÜFEN",
+    "title": "Domain, Absender und Zustellfehler.",
+    "intro": "Wir gleichen die Konfiguration mit Beispielnachrichten und verfügbaren Providerdaten ab. Die Unterstützung weiterer ESPs und SMTP-Plattformen klären wir vorab gesondert.",
     "items": [
       [
         "01",
-        "Die Ursache finden",
-        "E-Mails, Fehler und Ablehnungen prüfen. Herausfinden, warum Nachrichten im Spam landen, verspätet ankommen oder nicht angenommen werden."
+        "SPF: Wer darf senden?",
+        "Wir prüfen den DNS-Eintrag, der festlegt, welche Server E-Mails im Namen Ihrer Domain versenden dürfen."
       ],
       [
         "02",
-        "Domain und Absender prüfen",
-        "Zustand der Domain und Absenderreputation prüfen. Einstellungen korrigieren, die zeigen, dass die E-Mail wirklich von Ihrem Unternehmen stammt."
+        "DKIM: Signatur der Nachricht",
+        "Wir prüfen die Signaturkonfiguration und ihre Validierung beim Empfänger. Sie hilft, den Absender und die Unversehrtheit der Nachricht zu bestätigen."
       ],
       [
         "03",
-        "Infrastruktur einrichten",
-        "Domain, E-Mail-Dienst, Website, CRM und automatische Nachrichten so verbinden, dass jede Art von E-Mail planbar versendet wird."
+        "DMARC: Regeln zur Prüfung",
+        "Wir prüfen, ob SPF / DKIM zur Domain im Von-Feld passen, sowie die Richtlinie für Nachrichten, die die Authentifizierung nicht bestehen."
       ],
       [
         "04",
-        "Versand stabilisieren",
-        "Adressen, Häufigkeit und Volumen prüfen, Tests durchführen und Fehler überwachen — besonders bevor die Versandmenge wächst."
+        "DNS und Versandkonfiguration",
+        "Wir prüfen Authentifizierungseinträge und zugängliche Einstellungen des Versandsystems auf Fehler und Widersprüche."
+      ],
+      [
+        "05",
+        "Reputationssignale",
+        "Wir untersuchen verfügbare Signale zur Domain- und Absenderreputation, einschließlich Daten von Google oder Microsoft, soweit für Ihr System verfügbar."
+      ],
+      [
+        "06",
+        "Bounces und Spam-Einstufung",
+        "Wir analysieren Nachrichtenheader, Rückläufer, Fehlercodes und verfügbare Logs, um wahrscheinliche Ursachen der Zustellprobleme einzugrenzen."
       ]
     ]
   },
   "process": {
-    "label": "SO ARBEITEN WIR",
-    "title": "Wir klären, warum Ihre E-Mails nicht ankommen.",
+    "label": "NACH DER DIAGNOSE",
+    "title": "Von den Befunden zu geprüften Änderungen.",
     "steps": [
       [
         "01",
-        "Sie zeigen das Problem",
-        "Sie zeigen eine Beispielnachricht und erklären den Versand. Wir prüfen Fehlermeldungen und ermitteln die Ursache."
+        "Probleme und Prioritäten",
+        "Sie erhalten eine Liste der festgestellten Probleme mit einer Erklärung ihrer Auswirkungen und einer empfohlenen Reihenfolge der Korrekturen."
       ],
       [
         "02",
-        "Wir korrigieren die Einstellungen",
-        "Wir erklären die Änderungen, stimmen die Arbeit ab und passen die Konfiguration an."
+        "Korrekturen abstimmen und umsetzen",
+        "Wir vereinbaren den Umfang und ändern die zugängliche Konfiguration im Rahmen der erteilten Berechtigungen."
       ],
       [
         "03",
-        "Zustellung erneut testen",
-        "Wir versenden Testnachrichten, prüfen die Ergebnisse und geben Ihrem Team eine Anleitung."
+        "Erneut prüfen und übergeben",
+        "Nach den Änderungen prüfen wir Einstellungen und verfügbare Signale erneut. Ihr Team erhält die Ergebnisse und Empfehlungen."
       ]
     ]
   },
+  "access": {
+    "label": "ZUGÄNGE",
+    "title": "Passend zur Aufgabe.",
+    "items": [
+      "DNS- und Domaineinstellungen.",
+      "Google Workspace Admin oder Microsoft 365 Admin, je nach System.",
+      "Einstellungen der Versandplattform und verfügbare Logs.",
+      "Beispielnachrichten mit Headern, Rückläufer und Zustellfehler."
+    ],
+    "note": "Die erforderlichen Zugänge stimmen wir für Ihre Aufgabe ab. Wo möglich, nutzen wir delegierte Zugriffsrechte mit passenden Berechtigungen. Die Weitergabe regulärer Passwörter ist kein Standardverfahren."
+  },
   "outcome": {
     "label": "IHR ERGEBNIS",
-    "title": "Sie wissen, was mit Ihren E-Mails passiert.",
+    "title": "Klarheit für Ihr Team.",
     "items": [
-      "Eine Erklärung, warum E-Mails nicht ankamen.",
-      "Korrigierte Einstellungen und Prüfergebnisse.",
-      "Anleitungen zum Versand und zum Umgang mit Fehlern."
+      "Priorisierte Problemliste mit Erläuterung der Ursachen.",
+      "Übersicht der vereinbarten Korrekturen und Ergebnisse der erneuten Prüfung.",
+      "Empfehlungen für den Betrieb und Hinweise auf verbleibende Grenzen."
     ],
-    "note": "Niemand kann versprechen, dass jede E-Mail im Posteingang landet: Auch der E-Mail-Dienst Ihres Kunden entscheidet, was Spam ist. Wir beheben, was wir beeinflussen können, und zeigen die Prüfergebnisse."
+    "note": "OSNOVA garantiert nicht, dass jede E-Mail im Posteingang landet. Das Ergebnis hängt auch von Google, Microsoft, empfangenden Providern, der Domainhistorie und dem Versandverhalten ab. Wir garantieren weder einen Reputationswert noch die Entfernung aus Sperrlisten oder die Aufhebung von Beschränkungen anderer Anbieter."
   },
   "cta": {
     "label": "EMAIL / START",
-    "title": "Wo gehen Ihre E-Mails verloren?",
-    "text": "Sagen Sie uns, welche E-Mails nicht ankommen, und zeigen Sie ein Beispiel. Wir schlagen den ersten Schritt vor.",
+    "title": "Beginnen wir mit der Diagnose.",
+    "text": "Welche E-Mails fehlen und welches Versandsystem nutzen Sie? Sie erhalten ein individuelles Angebot nach Umfang; Korrekturen kalkulieren wir nach der Diagnose. Den Zeitrahmen stimmen wir nach Prüfung der Aufgabe ab.",
     "button": "E-Mail-Zustellung besprechen"
   }
 }
