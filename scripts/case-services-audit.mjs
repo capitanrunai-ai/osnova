@@ -108,7 +108,8 @@ try {
             assert.equal(await page.$$eval('#products .commercial-card', nodes => nodes.length), 6)
             assert.deepEqual(await page.$$eval('#managed .commercial-managed-row > strong', prices), ['€49–99', '€150', '€300', '€700–800+'])
             const text = await page.$eval('main', node => node.innerText)
-            for (const term of ['24', '2–5', '30', '70', '45', '2–3', '09:00–23:00', 'Dentistry']) assert.ok(text.includes(term), `${path}: missing ${term}`)
+            for (const term of ['24', '2–5', '30', '70', '45', '2–3', 'SLA', 'Dentistry']) assert.ok(text.includes(term), `${path}: missing ${term}`)
+            assert.ok(!text.includes('09:00–23:00'), `${path}: universal support hours are not approved`)
             assert.ok(await page.$('.commercial-custom a[href$="/contact"]'), `${path}: custom-task CTA`)
           }
         } else {

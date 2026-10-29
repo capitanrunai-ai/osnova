@@ -18,4 +18,4 @@ export const notFoundRoute = '404'
 
 // Static routes that exist in every language, in crawl-priority order.
 // Case routes are appended from src/data/cases.js.
-export const staticRoutes = ['', 'services', ...serviceRoutes.map(id => `services/${id}`), 'cases', 'contact', 'payment']
+export const staticRoutes = ['', 'services', ...serviceRoutes.map(id => `services/${id}`), 'cases', 'contact', 'terms', 'payment']

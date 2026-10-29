@@ -1,0 +1,24 @@
+.terms-page { background: var(--paper); color: var(--ink); }
+.terms-hero { padding: 160px 0 72px; color: white; background: #09090b; }
+.terms-hero h1 { max-width: 1000px; margin: 24px 0; font: 400 clamp(44px, 6vw, 86px)/1.05 var(--display); letter-spacing: -.04em; overflow-wrap: anywhere; }
+.terms-hero p { max-width: 720px; color: #ffffffb3; font: 18px/1.65 var(--sans); }
+.terms-summary { padding-block: 56px; border-bottom: 1px solid var(--line); }
+.terms-page h2 { margin: 0 0 24px; font: 400 clamp(28px, 3vw, 40px)/1.15 var(--display); letter-spacing: -.025em; overflow-wrap: anywhere; }
+.terms-summary ul { margin: 0; padding-left: 22px; max-width: 880px; }
+.terms-summary li { padding: 8px 0; font: 18px/1.6 var(--sans); }
+.terms-details { padding-block: 24px 72px; }
+.terms-details article { max-width: 880px; margin: auto; padding-block: 36px; border-bottom: 1px solid var(--line); }
+.terms-details p, .terms-context { font: 16px/1.75 var(--sans); color: #62625e; overflow-wrap: anywhere; }
+.terms-details p:last-child { margin-bottom: 0; }
+.terms-contact { padding-block: 48px 72px; background: var(--paper-2); }
+.terms-contact a { display: inline-block; margin: 8px 28px 8px 0; overflow-wrap: anywhere; }
+.terms-context { margin-top: 24px; }
+.terms-link { display: inline-flex; align-items: center; gap: 12px; margin-top: 12px; text-decoration: underline; text-underline-offset: 4px; }
+.terms-link svg { flex-shrink: 0; }
+.payment-intro .terms-context { color: #ffffffb3; font-size: 15px; }
+@media(max-width: 640px) {
+  .terms-hero { padding: 120px 0 48px; }
+  .terms-hero h1 { font-size: clamp(36px, 10vw, 44px); overflow-wrap: normal; }
+  .terms-hero p, .terms-summary li { font-size: 16px; }
+  .terms-details article { padding-block: 28px; }
+}

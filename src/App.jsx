@@ -32,6 +32,7 @@ import { commercialContent } from './data/commercialContent'
 import { trustContent } from './data/trustContent'
 import { designContent } from './data/designContent'
 import { paymentContent } from './data/paymentContent'
+import { termsContent } from './data/termsContent'
 import { caseCategories, caseUi, getLocalizedCases } from './data/cases'
 import { getServiceContent, loadServiceContent } from './data/serviceContentLoader'
 import { closingContent } from './data/closingContent'
@@ -47,6 +48,7 @@ import { getTeam } from './data/team'
 import './team.css'
 import './email.css'
 import './payment.css'
+import './terms.css'
 
 const portfolioMemory = { featured: {}, archive: {} }
 
@@ -69,6 +71,7 @@ function resolveRoute(route, lang) {
   if (route === 'services') return { kind: 'services' }
   if (route === 'cases') return { kind: 'cases' }
   if (route === 'payment') return { kind: 'payment' }
+  if (route === 'terms') return { kind: 'terms' }
   if (route === 'contact') return { kind: 'contact' }
   if (route.startsWith('services/')) {
     const id = route.slice('services/'.length)
@@ -820,6 +823,7 @@ function ContactPage({ t, p, lang, navigate }) {
               <input type="text" name="hp" className="hp-field" tabIndex={-1} autoComplete="off" aria-hidden="true" />
               {status === 'error' && <p className="form-error" role="alert">{c.error}</p>}
               <button className="form-submit" type="submit" disabled={status === 'sending'}>{status === 'sending' ? c.sending : c.submit}<ArrowUpRight size={20} /></button>
+              <TermsLink lang={lang} navigate={navigate} context />
             </form>
           )}
         </Reveal>
@@ -1312,6 +1316,7 @@ function Footer({ t, s, p, lang, navigate }) {
         <div className="footer-links">
           <RouteLink href={`/${lang}/services`} navigate={navigate}>{s.common.services}<ArrowUpRight size={14} /></RouteLink>
           <RouteLink href={`/${lang}/payment`} navigate={navigate}>{p.navLabel}<ArrowUpRight size={14} /></RouteLink>
+          <RouteLink href={`/${lang}/terms`} navigate={navigate}>{termsContent[lang].title}<ArrowUpRight size={14} /></RouteLink>
           <RouteLink href={`/${lang}/contact`} navigate={navigate}>{s.common.discuss}<ArrowUpRight size={14} /></RouteLink>
           <a href={`mailto:${t.contact.email}`}>Email<ArrowUpRight size={14} /></a>
           <a href="https://t.me/capitanrun" target="_blank" rel="noreferrer">Telegram<ArrowUpRight size={14} /></a>
@@ -1503,7 +1508,22 @@ function CryptoMark({ currency }) {
   )
 }
 
-function PaymentPage({ p }) {
+function TermsLink({ lang, navigate, context = false }) {
+  const data = termsContent[lang]
+  return <div className={context ? 'terms-context' : undefined}>{context && <p>{data.context}</p>}<RouteLink className="terms-link" href={`/${lang}/terms`} navigate={navigate}>{data.title}<ArrowUpRight size={16} /></RouteLink></div>
+}
+
+function TermsPage({ lang }) {
+  const data = termsContent[lang]
+  return <main className="terms-page" id="top">
+    <section className="terms-hero"><div className="container"><span className="eyebrow light">OSNOVA / TERMS</span><h1>{data.title}</h1><p>{data.intro}</p></div></section>
+    <section className="terms-summary"><div className="container"><h2>{data.summaryTitle}</h2><ul>{data.summary.map(item => <li key={item}>{item}</li>)}</ul></div></section>
+    <div className="container terms-details">{data.sections.map(([title, paragraphs], index) => <article key={title}><h2>{String(index + 1).padStart(2, '0')} / {title}</h2>{paragraphs.map(text => <p key={text}>{text}</p>)}</article>)}</div>
+    <section className="terms-contact"><div className="container"><h2>{data.contactTitle}</h2><a href="mailto:capitanrun@osnova.ai">capitanrun@osnova.ai</a><a href="https://t.me/capitanrun" target="_blank" rel="noreferrer">@capitanrun</a></div></section>
+  </main>
+}
+
+function PaymentPage({ p, lang, navigate }) {
   const currencies = [['USDT', 'Tether'], ['BTC', 'Bitcoin'], ['ETH', 'Ethereum']]
   return (
     <main className="payment-page" id="top">
@@ -1515,6 +1535,7 @@ function PaymentPage({ p }) {
           </Reveal>
           <Reveal className="payment-intro" delay={90}>
             <p>{p.intro}</p>
+            <TermsLink lang={lang} navigate={navigate} context />
             <div className="payment-rail" aria-label={p.accepted}>
               <span>Bank</span><i /><span>IBAN</span><i /><span>USDT · BTC · ETH</span><i /><span>PayPal</span>
             </div>
@@ -1783,6 +1804,8 @@ export default function App({ initialLanguage }) {
     const isDraft = caseItem?.status === 'draft'
     const meta = isNotFound
       ? t.notFound.meta
+      : resolved.kind === 'terms'
+      ? [`${termsContent[lang].title} — OSNOVA`, termsContent[lang].description]
       : resolved.kind === 'payment'
       ? [p.metaTitle, p.metaDescription]
       : resolved.kind === 'contact'
@@ -1835,7 +1858,8 @@ export default function App({ initialLanguage }) {
     const ServicePage = servicePages[resolved.id]
     page = <ServicePage s={s} t={t} lang={lang} navigate={navigate} />
   }
-  else if (resolved.kind === 'payment') page = <PaymentPage p={p} />
+  else if (resolved.kind === 'payment') page = <PaymentPage p={p} lang={lang} navigate={navigate} />
+  else if (resolved.kind === 'terms') page = <TermsPage lang={lang} />
   else if (resolved.kind === 'contact') page = <ContactPage t={t} p={p} lang={lang} navigate={navigate} />
   else if (resolved.kind === 'cases') page = <CasesArchive lang={lang} navigate={navigate} />
   else if (resolved.kind === 'case') page = <PortfolioDetail key={resolved.item.slug} item={resolved.item} lang={lang} navigate={navigate} Link={RouteLink} />

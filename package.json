@@ -18,6 +18,7 @@
     "audit:trust": "node scripts/trust-audit.mjs",
     "audit:performance": "node scripts/performance-audit.mjs",
     "audit:predeploy": "node scripts/predeploy-audit.mjs",
+    "audit:terms": "node scripts/terms-audit.mjs",
     "audit:contact": "node scripts/contact-handler-audit.mjs",
     "audit:contact-form": "node scripts/contact-form-audit.mjs",
     "audit:contact-page": "node scripts/contact-page-audit.mjs",
