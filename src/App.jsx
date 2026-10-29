@@ -1125,14 +1125,29 @@ function AnalyticsSystem({ data }) {
 }
 
 function SearchJourneyVisual({ data }) {
+  const [active, setActive] = useState(0)
   return (
-    <div className="search-journey-visual" aria-label={`${data.heroLabel}: ${data.heroSteps.join(' — ')}`}>
-      <div className="search-query-line"><span>⌕</span><b>{data.heroSteps[0]}</b><i /></div>
-      <div className="search-result-stack" aria-hidden="true"><span /><span className="is-relevant"><i>01</i><b>{data.heroSteps[2]}</b></span><span /></div>
-      <div className="search-route-line" aria-hidden="true">
-        {data.heroSteps.map((item, index) => <span key={item}><i>{String(index + 1).padStart(2, '0')}</i><b>{item}</b></span>)}
+    <div className="search-journey-visual search-flow">
+      <div className="search-flow-panels" aria-live="polite">
+        {data.heroSteps.map((title, index) => (
+          <div className="search-flow-panel" id={`search-step-${index}`} key={title} aria-hidden={active !== index}>
+            <span className="eyebrow light" aria-hidden="true">0{index + 1} / 05</span>
+            <h2>{title}</h2><p>{data.heroDescriptions[index]}</p>
+          </div>
+        ))}
       </div>
-      <small>{data.heroLabel} / LIVE PATH</small>
+      <div className="search-flow-nav" role="group" aria-label={data.heroLabel}>
+        {data.heroSteps.map((title, index) => (
+          <button type="button" key={title} aria-label={`0${index + 1} ${title}`} aria-pressed={active === index} aria-controls={`search-step-${index}`} onClick={() => setActive(index)} onKeyDown={event => {
+            const next = event.key === 'ArrowRight' ? (index + 1) % 5 : event.key === 'ArrowLeft' ? (index + 4) % 5 : event.key === 'Home' ? 0 : event.key === 'End' ? 4 : null
+            if (next === null) return
+            event.preventDefault()
+            setActive(next)
+            event.currentTarget.parentElement.querySelectorAll('button')[next].focus()
+          }}>0{index + 1}</button>
+        ))}
+        <i className="search-flow-indicator" style={{ '--step': active }} aria-hidden="true" />
+      </div>
     </div>
   )
 }

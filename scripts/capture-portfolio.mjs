@@ -9,7 +9,7 @@ await mkdir(resolve(root, '.visual-audit'), { recursive: true })
 const projects = [
   ['dds-service', 'https://ddsservice.com.ua/'],
   ['comfort-lab', 'https://comfortlabkiev.com.ua/'],
-  ['bala-group', 'https://www.bala-group.com.ua/'],
+  ['bala-group', 'https://balagroup.com.ua'],
   ['comfort-home', 'https://comforthomekiev.com.ua/'],
   ['retatrutide-silver-signal', 'https://shalomesp11-creator.github.io/retatrutide-silver-signal/'],
   ['retatrutide-landing', 'https://shalomesp11-creator.github.io/retatrutide-landing-preview/'],

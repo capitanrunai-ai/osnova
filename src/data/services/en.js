@@ -511,15 +511,15 @@ export const visibility = {
     "intro": "SEO helps your business appear in Google and other search engines in front of people already looking for your products or services.",
     "heroLabel": "FROM SEARCH TO CONTACT",
     "heroSteps": [
-      "Query",
-      "Results",
-      "Your site",
-      "Visit",
-      "Contact"
+      "Search query",
+      "Search results",
+      "Your business listing",
+      "Website visit",
+      "Enquiry"
     ],
     "journey": {
       "label": "HOW SEO BRINGS A CUSTOMER",
-      "title": "From query to contact.",
+      "title": "How a customer finds your company",
       "steps": [
         [
           "01",
@@ -598,22 +598,22 @@ export const visibility = {
     },
     "process": {
       "label": "HOW WE START",
-      "title": "Focus on the work that matters.",
+      "title": "Find out what holds your website back in search.",
       "steps": [
         [
           "01",
-          "Diagnosis",
-          "Review the website, demand and current data."
+          "Review the site and search data",
+          "Look at the website’s condition, customer searches and available data."
         ],
         [
           "02",
-          "Plan",
-          "Choose the pages and actions with the strongest potential."
+          "Address the main problems",
+          "Agree priorities and fix important technical issues, page structure and content."
         ],
         [
           "03",
-          "Development",
-          "Implement, measure and adjust priorities."
+          "Review real data",
+          "Monitor impressions, visits and enquiries to decide what to work on next."
         ]
       ]
     },
@@ -622,7 +622,14 @@ export const visibility = {
       "title": "Let’s find where your website loses demand.",
       "text": "We will show the main opportunities and honestly assess whether SEO fits the task.",
       "button": "Discuss SEO"
-    }
+    },
+    "heroDescriptions": [
+      "Someone searches Google for a service, product or answer.",
+      "Google displays pages that may answer the query.",
+      "They notice your company’s page among the results and read its description.",
+      "They open the website and look at your services, terms and examples of work.",
+      "If the offer suits them, they send an enquiry, call or message your company."
+    ]
   },
   "aiVisibility": {
     "label": "05 / AI VISIBILITY",
@@ -684,8 +691,8 @@ export const visibility = {
     },
     "comparison": {
       "label": "SEO AND AI VISIBILITY",
-      "title": "Two paths to the same goal: being found and understood.",
-      "intro": "Both rely on a strong website and clear information. What changes is how the person receives the answer.",
+      "title": "Finding your company through Google and AI",
+      "intro": "In Google’s regular results, people choose a page to visit. AI systems often put together an answer and select sources to support it.",
       "left": {
         "code": "SEO / LINKS",
         "title": "Classic search",
@@ -706,11 +713,11 @@ export const visibility = {
           "Answer, refinement or visit"
         ]
       },
-      "together": "AI visibility does not replace SEO. Together they cover two ways people search."
+      "together": "Both rely on a clear website, accurate information, a logical structure and facts people can check."
     },
     "process": {
       "label": "HOW WE START",
-      "title": "Review, simplify, strengthen.",
+      "title": "Start with what people can already learn about your company.",
       "steps": [
         [
           "01",
@@ -806,22 +813,22 @@ export const email = {
   },
   "process": {
     "label": "HOW WE WORK",
-    "title": "Understand. Fix. Check.",
+    "title": "Find out why your emails are not reaching customers.",
     "steps": [
       [
         "01",
         "Show us the problem",
-        "Tell us how you send emails, what is not working and show us an example."
+        "Share an example email and explain how you send it. We examine errors and identify the cause."
       ],
       [
         "02",
         "We fix the settings",
-        "Explain what needs doing, agree on the work and make the changes."
+        "We explain the changes, agree the work and correct the configuration."
       ],
       [
         "03",
-        "Check together",
-        "Review what changed and give your team clear instructions."
+        "Test delivery again",
+        "We send test emails, review the results and give your team clear instructions."
       ]
     ]
   },

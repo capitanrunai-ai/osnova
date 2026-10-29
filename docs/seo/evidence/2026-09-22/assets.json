@@ -1,26 +1,5 @@
 [
   {
-    "url": "https://osnovaai.com/assets/cases/bala-group-desktop.webp",
-    "status": 200,
-    "content_type": "image/webp",
-    "size": "87702",
-    "cache": "public,max-age=31536000,immutable"
-  },
-  {
-    "url": "https://osnovaai.com/assets/cases/bala-group-detail.webp",
-    "status": 200,
-    "content_type": "image/webp",
-    "size": "89848",
-    "cache": "public,max-age=31536000,immutable"
-  },
-  {
-    "url": "https://osnovaai.com/assets/cases/bala-group-mobile.webp",
-    "status": 200,
-    "content_type": "image/webp",
-    "size": "40572",
-    "cache": "public,max-age=31536000,immutable"
-  },
-  {
     "url": "https://osnovaai.com/assets/cases/comfort-home-desktop.webp",
     "status": 200,
     "content_type": "image/webp",

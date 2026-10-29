@@ -137,30 +137,46 @@ export const cases = [
       { summary: 'Сайт студії автомобільного комфорту: шумоізоляція, захист, звук і CarPlay. Дизайн та розробка з нуля.' },
     ),
   }),
-  website('bala-group', 'BALA GROUP', 'https://www.bala-group.com.ua/', {
-    googleAdsTracking: true,
+  website('bala-group', 'BALA GROUP', 'https://balagroup.com.ua', {
+    googleTagTracking: true,
     serviceCase: 'development', accent: '#e4b887',
     copy: localized(
-      { summary: 'Коммерческий сайт строительных и ремонтных услуг, созданный под рекламный трафик Google Ads и запущенный под ключ.', webCase: {
-        challenge: 'Клиент пришёл по рекомендации: нужен коммерческий сайт специально для трафика Google Ads.',
-        work: 'Разработали структуру страницы и адаптивный сайт, подготовили проект и настроили домен с хостингом.',
-        delivery: '≈ 1 день', result: 'Готовый сайт запущен и доступен по действующей ссылке.',
-      } },
-      { summary: 'A commercial construction and renovation website built for Google Ads traffic and delivered end to end.', webCase: {
-        challenge: 'The client came by referral and needed a commercial website specifically for Google Ads traffic.',
-        work: 'Built the page structure and responsive website, prepared the project and set up its domain and hosting.',
-        delivery: '≈ 1 day', result: 'The completed website was launched and is live at its existing URL.',
-      } },
-      { summary: 'Kommerzielle Website für Bau- und Renovierungsleistungen, für Google-Ads-Traffic entwickelt und vollständig umgesetzt.', webCase: {
-        challenge: 'Der Kunde kam auf Empfehlung und benötigte eine kommerzielle Website speziell für Google-Ads-Traffic.',
-        work: 'Seitenstruktur und responsive Website entwickelt, das Projekt vorbereitet sowie Domain und Hosting eingerichtet.',
-        delivery: 'ca. 1 Tag', result: 'Die fertige Website wurde veröffentlicht und ist unter der bestehenden Adresse erreichbar.',
-      } },
-      { summary: 'Комерційний сайт будівельних і ремонтних послуг, створений для трафіку Google Ads та запущений під ключ.', webCase: {
-        challenge: 'Клієнт звернувся за рекомендацією: потрібен комерційний сайт спеціально для трафіку Google Ads.',
-        work: 'Розробили структуру сторінки й адаптивний сайт, підготували проєкт і налаштували домен та хостинг.',
-        delivery: '≈ 1 день', result: 'Готовий сайт запущено; він доступний за чинним посиланням.',
-      } },
+      {
+        "summary": "Адаптивный сайт BALA GROUP, созданный OSNOVA примерно за 24 часа, с базовой SEO-структурой.",
+        "webCase": {
+          "challenge": "Клиенту нужен был готовый сайт для бизнеса без долгого запуска.",
+          "work": "Собрали структуру с учётом базовой SEO-логики, разработали адаптивный сайт и выполнили технический запуск.",
+          "delivery": "≈ 24 часа",
+          "result": "Готовый коммерческий сайт опубликован: посетители могут изучить услуги и связаться с компанией."
+        }
+      },
+      {
+        "summary": "A responsive BALA GROUP website built by OSNOVA in around 24 hours, with a basic SEO structure.",
+        "webCase": {
+          "challenge": "The client needed a working business website without a lengthy launch.",
+          "work": "Planned the initial structure with basic SEO in mind, built a responsive website and handled the technical launch.",
+          "delivery": "≈ 24 hours",
+          "result": "The commercial website is live: visitors can explore the services and contact the company."
+        }
+      },
+      {
+        "summary": "Responsive Website für BALA GROUP, von OSNOVA in rund 24 Stunden mit grundlegender SEO-Struktur erstellt.",
+        "webCase": {
+          "challenge": "Der Kunde brauchte eine einsatzfähige Unternehmenswebsite ohne lange Wartezeit.",
+          "work": "Die erste Seitenstruktur nach grundlegenden SEO-Kriterien geplant, die responsive Website entwickelt und technisch veröffentlicht.",
+          "delivery": "ca. 24 Stunden",
+          "result": "Die fertige Unternehmenswebsite ist online. Besucher können Leistungen ansehen und Kontakt aufnehmen."
+        }
+      },
+      {
+        "summary": "Адаптивний сайт BALA GROUP, створений OSNOVA приблизно за 24 години, з базовою SEO-структурою.",
+        "webCase": {
+          "challenge": "Клієнту потрібен був готовий сайт для бізнесу без тривалого запуску.",
+          "work": "Зібрали структуру з урахуванням базової SEO-логіки, розробили адаптивний сайт і виконали технічний запуск.",
+          "delivery": "≈ 24 години",
+          "result": "Готовий комерційний сайт опубліковано: відвідувачі можуть переглянути послуги та зв’язатися з компанією."
+        }
+      },
     ),
   }),
   website('retatrutide-silver-signal', 'RETATRUTIDE — SILVER SIGNAL', 'https://shalomesp11-creator.github.io/retatrutide-silver-signal/', {

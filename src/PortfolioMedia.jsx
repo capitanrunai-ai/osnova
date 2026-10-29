@@ -198,6 +198,7 @@ export function PortfolioDetail({ item, lang, navigate, Link }) {
           <div className="portfolio-detail-intro">
             <p>{item.summary}</p>
             {item.googleAdsTracking && <p className="portfolio-tracking">{ui.webStudy.googleAdsTracking}</p>}
+            {item.googleTagTracking && <p className="portfolio-tracking">{({ ru: 'Google tag подключён через Google Tag Manager.', en: 'Google tag installed through Google Tag Manager.', de: 'Google tag über Google Tag Manager eingebunden.', uk: 'Google tag підключено через Google Tag Manager.' })[lang]}</p>}
             {!isVoice && !isAutomation && <a className="portfolio-visit" href={item.url} target="_blank" rel="noopener noreferrer">{ui.visit}<ArrowUpRight size={19} /></a>}
             {item.originalUrl && <a className="portfolio-original" href={item.originalUrl} target="_blank" rel="noopener noreferrer">{ui.original}<ArrowUpRight size={14} /></a>}
           </div>

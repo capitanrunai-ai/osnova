@@ -116,8 +116,9 @@ try {
           const links = await page.$$eval(`main a[href="/${lang}/services/${item.category}"]`, nodes => nodes.length)
           assert.equal(links, 1, `${path}: exactly one service backlink`)
           const tracking = await page.$$('.portfolio-tracking')
-          assert.equal(tracking.length, item.googleAdsTracking ? 1 : 0, `${path}: confirmed tracking scope only`)
+          assert.equal(tracking.length, item.googleAdsTracking || item.googleTagTracking ? 1 : 0, `${path}: confirmed tracking scope only`)
           if (item.googleAdsTracking) assert.ok(await page.$eval('.portfolio-tracking', node => /Google Ads.*Google tag/.test(node.textContent)))
+          if (item.googleTagTracking) assert.ok(await page.$eval('.portfolio-tracking', node => /Google tag/.test(node.textContent) && !/Google Ads/.test(node.textContent)))
           if (item.slug === 'slavabud') {
             assert.ok(await page.$eval('.web-case-facts-top strong', node => {
               const rect = node.getBoundingClientRect()

@@ -30,3 +30,5 @@ Notion:
 
 Ограничения доступа: прямой Google — CAPTCHA; PSI API — 429 quota; GSC/GA4/CRM/полный backlink index не доступны. Формы, звонки, внешние сообщения и deployment не выполнялись.
 
+
+BALA GROUP: superseded case records, asset observations and outbound links were removed from crawl.json, browser.json, assets.json and url-inventory.csv on 2026-10-29. Historical page text containing the wrong project was omitted rather than rewritten as evidence. Current local verification uses https://balagroup.com.ua; the existing /cases/bala-group route is retained.

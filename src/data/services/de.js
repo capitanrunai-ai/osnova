@@ -511,15 +511,15 @@ export const visibility = {
     "intro": "SEO macht Ihr Unternehmen bei Google und anderen Suchmaschinen sichtbar, wenn Menschen bereits nach Ihren Produkten oder Leistungen suchen.",
     "heroLabel": "VON DER SUCHE ZUM KONTAKT",
     "heroSteps": [
-      "Anfrage",
-      "Ergebnisse",
-      "Ihre Seite",
-      "Besuch",
-      "Kontakt"
+      "Suchanfrage",
+      "Suchergebnisse",
+      "Ihr Unternehmenseintrag",
+      "Website besuchen",
+      "Kontaktaufnahme"
     ],
     "journey": {
       "label": "WIE SEO KUNDEN ERREICHT",
-      "title": "Von der Anfrage zum Kontakt.",
+      "title": "So finden Kunden Ihr Unternehmen",
       "steps": [
         [
           "01",
@@ -598,22 +598,22 @@ export const visibility = {
     },
     "process": {
       "label": "SO STARTEN WIR",
-      "title": "Wir kümmern uns um das Wesentliche.",
+      "title": "Wir klären, was Ihre Website in der Suche behindert.",
       "steps": [
         [
           "01",
-          "Analyse",
-          "Website, Nachfrage und vorhandene Daten prüfen."
+          "Website und Suchdaten prüfen",
+          "Wir betrachten den Zustand der Website, Suchanfragen und vorhandene Daten."
         ],
         [
           "02",
-          "Plan",
-          "Seiten und Aufgaben mit dem größten Potenzial wählen."
+          "Wichtige Probleme beheben",
+          "Wir stimmen Prioritäten ab und verbessern technische Fehler, Seitenstruktur und Inhalte."
         ],
         [
           "03",
-          "Entwicklung",
-          "Umsetzen, messen und Prioritäten anpassen."
+          "Ergebnisse auswerten",
+          "Impressionen, Besuche und Anfragen zeigen uns, welche Aufgaben als Nächstes sinnvoll sind."
         ]
       ]
     },
@@ -622,7 +622,14 @@ export const visibility = {
       "title": "Finden wir heraus, wo Ihre Website Nachfrage verliert.",
       "text": "Wir zeigen die wichtigsten Chancen und bewerten ehrlich, ob SEO zur Aufgabe passt.",
       "button": "SEO besprechen"
-    }
+    },
+    "heroDescriptions": [
+      "Jemand sucht bei Google nach einer Leistung, einem Produkt oder einer Antwort.",
+      "Google zeigt Seiten, die zur Suchanfrage passen könnten.",
+      "Die Person entdeckt Ihre Unternehmensseite und liest die Beschreibung im Suchergebnis.",
+      "Sie öffnet die Website und informiert sich über Leistungen, Konditionen und Arbeitsbeispiele.",
+      "Passt das Angebot, schickt sie eine Anfrage, ruft an oder schreibt dem Unternehmen."
+    ]
   },
   "aiVisibility": {
     "label": "05 / AI VISIBILITY",
@@ -684,8 +691,8 @@ export const visibility = {
     },
     "comparison": {
       "label": "SEO UND AI VISIBILITY",
-      "title": "Zwei Wege zum selben Ziel: gefunden und verstanden werden.",
-      "intro": "Beide brauchen eine starke Website und klare Informationen. Der Unterschied liegt darin, wie Menschen die Antwort erhalten.",
+      "title": "Ihr Unternehmen in Google und KI finden",
+      "intro": "In den regulären Google-Ergebnissen wählen Menschen eine Seite aus. KI-Systeme formulieren häufig eine Antwort und wählen passende Quellen dazu.",
       "left": {
         "code": "SEO / LINKS",
         "title": "Klassische Suche",
@@ -706,11 +713,11 @@ export const visibility = {
           "Antwort, Präzisierung oder Besuch"
         ]
       },
-      "together": "AI Visibility ersetzt SEO nicht. Zusammen decken sie zwei Arten der Suche ab."
+      "together": "Beide brauchen eine verständliche Website, korrekte Angaben, eine klare Struktur und überprüfbare Fakten."
     },
     "process": {
       "label": "SO STARTEN WIR",
-      "title": "Prüfen, vereinfachen, stärken.",
+      "title": "Wir prüfen, was über Ihr Unternehmen bereits zu finden ist.",
       "steps": [
         [
           "01",
@@ -806,22 +813,22 @@ export const email = {
   },
   "process": {
     "label": "SO ARBEITEN WIR",
-    "title": "Verstehen. Beheben. Prüfen.",
+    "title": "Wir klären, warum Ihre E-Mails nicht ankommen.",
     "steps": [
       [
         "01",
         "Sie zeigen das Problem",
-        "Sie erklären, wie Sie E-Mails versenden, was nicht klappt, und zeigen ein Beispiel."
+        "Sie zeigen eine Beispielnachricht und erklären den Versand. Wir prüfen Fehlermeldungen und ermitteln die Ursache."
       ],
       [
         "02",
-        "Wir ändern die Einstellungen",
-        "Wir erklären die nötigen Schritte, stimmen die Arbeit ab und setzen sie um."
+        "Wir korrigieren die Einstellungen",
+        "Wir erklären die Änderungen, stimmen die Arbeit ab und passen die Konfiguration an."
       ],
       [
         "03",
-        "Gemeinsam prüfen",
-        "Wir prüfen die Änderungen und geben Ihrem Team verständliche Anleitungen."
+        "Zustellung erneut testen",
+        "Wir versenden Testnachrichten, prüfen die Ergebnisse und geben Ihrem Team eine Anleitung."
       ]
     ]
   },
